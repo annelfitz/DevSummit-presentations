@@ -9,6 +9,10 @@
 <!-- .slide: data-background="../reveal.js/img/bg-4.png" -->
 ### Introductions
 
+- GeoJSON
+- CSV
+- OGC
+
 ----
 <!-- .slide: data-background="../reveal.js/img/bg-3.png" -->
 ### Agenda
