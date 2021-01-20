@@ -1,0 +1,32 @@
+html,
+body,
+#viewDiv {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+}
+#infoDiv {
+  padding: 10px;
+}
+#dropContainer {
+  height: 250px;
+  width: 250px;
+  border-style: dashed;
+  border-width: 4px;
+  border-color: #69DCFF;
+  text-align: center;
+  position: relative;
+}
+#imgContainer {
+  margin: 0 auto;
+  display: inline-block;
+  color: #69DCFF;
+  padding-top: 25px;
+}
+input {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
