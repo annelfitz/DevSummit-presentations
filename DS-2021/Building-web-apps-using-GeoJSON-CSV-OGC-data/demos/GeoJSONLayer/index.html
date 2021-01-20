@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+
+    <title>
+      GeoJSONLayer clustering and client-side filtering
+    </title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.18/esri/themes/dark-red/main.css"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="https://js.arcgis.com/4.18/"></script>
+    <script src="js/main.js"></script>
+
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+    <div id="infoDiv" class="esri-widget">Filter by magnitude:
+      <select id="filter" class="esri-select">
+        <option value="1=1">All</option>
+        <option value="mag >= 6 AND mag < 7">6 - 6.9 (Strong)</option>
+        <option value="mag >= 5 AND mag < 6">5 - 5.9 (Moderate)</option>
+        <option value="mag >= 4 AND mag < 5">4 - 4.9 (Light)</option>
+        <option value="mag >= 3 AND mag < 4">3 - 3.9 (Minor)</option>
+        <option value="mag < 3">
+          < 3 (Micro)</option>
+      </select>
+      <br />
+      <div id="legendDiv"></div>
+    </div>
+  </body>
+</html>
