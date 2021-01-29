@@ -24,9 +24,9 @@ body,
   }
 
   .windmill-item:focus {
-    background-color: dimgrey;
+    background-color: rgb(186, 185, 185);
   }
 
   .windmill-item:hover {
-    background-color: dimgrey;
+    background-color: rgb(186, 185, 185);
   }
