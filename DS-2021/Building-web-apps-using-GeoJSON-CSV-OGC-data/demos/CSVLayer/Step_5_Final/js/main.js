@@ -17,6 +17,25 @@ require([
   let timeSlider;
   let legendExpand;
 
+  const template = {
+    title: "{Name}",
+    content: [
+      {
+        type: "text",
+        text:
+          "A category {Category} storm with wind speeds of {wmo_wind} mph occurred at {ISO_time}."
+      }
+    ],
+    fieldInfos: [
+      {
+        fieldName: "ISO_time",
+        format: {
+          dateFormat: "short-date-short-time"
+        }
+      }
+    ]
+  };
+
   const map = new Map({
     basemap: "dark-gray"
   });
@@ -32,7 +51,8 @@ require([
     expandIconClass: "esri-icon-upload",
     view: view,
     content: document.getElementById("infoDiv"),
-    expanded: true
+    expanded: true,
+    group: "top-left"
   });
 
   view.ui.add(expand, 'top-left');
@@ -75,16 +95,13 @@ require([
     
     try {
       // obtain the file from the drop event
-      const dataTrans = new DataTransfer();
-      dataTrans.items.add(e.dataTransfer.files[0]);
+      const files = e.dataTransfer.files;
+      const file = files[0];
 
-      // set the file on the input to display the file
-      // name
-      fileInput.files = dataTrans.files;
-
-      if(fileInput.files[0].name.includes(".csv") || fileInput.files[0].name.includes(".xlsx") || 
-        fileInput.files[0].name.includes(".xls")) {
-        createUrlFromFile(fileInput.files[0]);
+      // set the file on the input to display the filename
+      if(file.type === "application/vnd.ms-excel") {
+        fileInput.files = files;
+        createUrlFromFile(file);
         dropContainer.style.background = defaultContainerColor;
       } else {
         // invalid file type
@@ -109,10 +126,52 @@ require([
       url: fileUrl,
       title: "Hurricanes",
       copyright: "NOAA",
+      spatialReference: view.spatialReference,
       renderer: {
-          type: "unique-value",
-          field: "Category",
-          uniqueValueInfos: createUniqueValueInfos()
+        type: "unique-value",
+        field: "Category",
+        defaultSymbol: {
+          type: "simple-marker",
+          color: "blue",
+          size: "8px"
+        },
+        uniqueValueInfos: [
+          {
+            value: 1,
+            symbol: {
+              type: "picture-marker",
+              url: "https://arcgis.github.io/arcgis-samples-javascript/sample-data/cat1.png"
+            }
+          },
+          {
+            value: 2,
+            symbol: {
+              type: "picture-marker",
+              url: "https://arcgis.github.io/arcgis-samples-javascript/sample-data/cat2.png"
+            }
+          },
+          {
+            value: 3,
+            symbol: {
+              type: "picture-marker",
+              url: "https://arcgis.github.io/arcgis-samples-javascript/sample-data/cat3.png"
+            }
+          },
+          {
+            value: 4,
+            symbol: {
+              type: "picture-marker",
+              url: "https://arcgis.github.io/arcgis-samples-javascript/sample-data/cat4.png"
+            }
+          },
+          {
+            value: 5,
+            symbol: {
+              type: "picture-marker",
+              url: "https://arcgis.github.io/arcgis-samples-javascript/sample-data/cat5.png"
+            }
+          }
+        ]
       },
       // csvlayer's timeInfo based on the date field
       timeInfo: {
@@ -124,24 +183,7 @@ require([
         }
       },
       //popup template
-      popupTemplate: {
-        title: "{Name}",
-        content: [
-          {
-            type: "text",
-            text:
-              "A category {Category} storm with wind speeds of {wmo_wind} mph occurred at {ISO_time}."
-          }
-        ],
-        fieldInfos: [
-          {
-            fieldName: "ISO_time",
-            format: {
-              dateFormat: "short-date-short-time"
-            }
-          }
-        ]
-      }
+      popupTemplate: template
     });
     map.add(csvLayer);
 
@@ -161,7 +203,8 @@ require([
           expandIconClass: "esri-icon-legend",
           view: view,
           content: legend,
-          expanded: false
+          expanded: false,
+          group: "top-left"
         });
 
         view.ui.add(legendExpand, 'top-left');
@@ -186,7 +229,6 @@ require([
 
         timeSlider.watch("timeExtent", () => {
           const layerView = event.layerView;
-          layerView.definitionExpression = "ISO_time <= " + timeSlider.timeExtent.end.getTime();
 
           // gray out the hurricanes that are not in the current
           // time frame being observed by the TimeSlider widget
@@ -200,28 +242,4 @@ require([
         });
     });
   }
-
-  function createUniqueValueInfos() {
-    const fireflyImages = [
-      "cat1.png",
-      "cat2.png",
-      "cat3.png",
-      "cat4.png",
-      "cat5.png"
-    ];
-
-    const baseUrl =
-      "https://arcgis.github.io/arcgis-samples-javascript/sample-data/";
-
-    return fireflyImages.map(function (url, i) {
-      return {
-        value: i + 1, // Category number
-        symbol: {
-          type: "picture-marker",
-          url: baseUrl + url
-        }
-      };
-    });
-  }
-
 });

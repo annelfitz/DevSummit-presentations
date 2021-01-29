@@ -11,18 +11,18 @@ require([
 ], function (Map, MapView, GeoJSONLayer) {
 
   // template for the PopupTemplate of the GeoJSONLayer
-  const template = {
-    title: "Earthquake information",
-    content: "Magnitude {mag} {type} hit {place} on {time}",
-    fieldInfos: [
-      {
-        fieldName: "time",
-        format: {
-          dateFormat: "short-date-short-time",
-        },
-      },
-    ],
-  };
+  // const template = {
+  //   title: "Earthquake information",
+  //   content: "Magnitude {mag} {type} hit {place} on {time}",
+  //   fieldInfos: [
+  //     {
+  //       fieldName: "time",
+  //       format: {
+  //         dateFormat: "short-date-short-time",
+  //       },
+  //     },
+  //   ],
+  // };
 
   const url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
 
@@ -36,7 +36,7 @@ require([
 
   // Adding the layer to the Map
   const map = new Map({
-    basemap: "gray-vector",
+    basemap: "dark-gray",
     layers: [geojsonLayer],
   });
 

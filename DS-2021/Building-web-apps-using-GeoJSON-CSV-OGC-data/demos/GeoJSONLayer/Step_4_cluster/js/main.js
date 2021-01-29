@@ -83,7 +83,7 @@ require([
         },
         symbol: {
           type: "text",
-          color: "#004a5d",
+          color: "#000000",
           font: {
             weight: "bold",
             family: "Noto Sans",
@@ -104,7 +104,7 @@ require([
           maxValue: 3,
           symbol: {
             type: "simple-marker",
-            color: "#ffa143",
+            color: "#ffed85",
             outline: {
                 color: "#ffffff",
                 width: 1
@@ -117,7 +117,7 @@ require([
           maxValue: 4,
           symbol: {
             type: "simple-marker",
-            color: "#ff7b22",
+            color: "#ffb454",
             outline: {
                 color: "#ffffff",
                 width: 1
@@ -130,7 +130,7 @@ require([
           maxValue: 5,
           symbol: {
             type: "simple-marker",
-            color: "#ef6a1d",
+            color: "#ff7b22",
             outline: {
                 color: "#ffffff",
                 width: 1
@@ -143,7 +143,7 @@ require([
           maxValue: 6,
           symbol: {
             type: "simple-marker",
-            color: "#e05919",
+            color: "#c0370f",
             outline: {
                 color: "#ffffff",
                 width: 1
@@ -156,7 +156,7 @@ require([
           maxValue: 7,
           symbol: {
             type: "simple-marker",
-            color: "#c0370f",
+            color: "#910000",
             outline: {
                 color: "#ffffff",
                 width: 1
@@ -192,7 +192,7 @@ require([
   });
 
   const map = new Map({
-    basemap: "gray-vector",
+    basemap: "dark-gray",
     layers: [geojsonLayer],
   });
 
