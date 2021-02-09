@@ -116,6 +116,13 @@ require([
     }
   });
 
+  // We also want to be able to directly upload a file with the filepicker
+  fileInput.addEventListener('input', (event) => {
+    console.log('fileinputchange: ', event);
+    const file = event.target.files[0];
+    createUrlFromFile(file);
+  });
+
   // function creates a DOMString containing a url representing
   // the specified File object uploaded
   function createUrlFromFile(uploadedFile) {
