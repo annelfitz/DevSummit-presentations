@@ -2,6 +2,7 @@ require([
     "esri/views/MapView",
     "esri/Map",
     "esri/layers/OGCFeatureLayer",
+    "esri/widgets/Expand"
   ], function (
     MapView,
     Map,
@@ -13,7 +14,7 @@ require([
       collectionId: "dutch_windmills", // unique id of the collection
     });
 
-    // create map with custom basemap
+    // create map with basemap
     const map = new Map({
       basemap: "gray-vector",
       layers: [windmillsLayer] // add OGCFeatureLayer

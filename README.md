@@ -5,7 +5,7 @@ Here you can access presentations and demos from the Esri Developer Summit.
 ### DevSummit 2021
 
 - Building Web Apps Using your GeoJSON, CSV, and OGC Data
-  - [Presentation]
+  - [Presentation - Download the slides](https://raw.githubusercontent.com/annelfitz/DevSummit-presentations/main/DS-2021/Building-web-apps-using-GeoJSON-CSV-OGC-data/slides.pptx)
   - [Demos](https://annelfitz.github.io/DevSummit-presentations/DS-2021/Building-web-apps-using-GeoJSON-CSV-OGC-data/demos/)
   
 - ArcGIS API for JavaScript: Dynamic Vector Symbology
