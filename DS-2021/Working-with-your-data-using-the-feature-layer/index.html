@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Working with FeatureLayers in the ArcGIS API for JavaScript</title>
+
+  <meta name="description" content="Presentation given at the Esri User Conference 2020.">
+  <meta name="author" content="Anne Fitz, Bjorn Svensson, Esri">
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+  <link rel="stylesheet" href="../reveal.js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal.js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal.js/dist/theme/dev-summit-2021.css" id="theme">
+
+    <!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../reveal.js/plugin/highlight/monokai.css" id="highlight-theme">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var createLink = function(url) {
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = url;
+      document.getElementsByTagName('head')[0].appendChild(link);
+    }
+    if (window.location.search.match(/print-pdf/gi)) {
+      createLink('../reveal.js/css/print/pdf.css');
+      createLink('./template/pdf.css');
+    } else {
+      createLink('../reveal.js/css/print/paper.css');
+    }
+
+  </script>
+
+  <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+            <!-- Use external markdown resource, separate slides by ---; separate vertical slides by ----- -->
+    <section data-markdown="./index.md" data-separator="^----$" data-separator-vertical="^---$" data-separator-notes="^Note:" data-background="../reveal.js/img/2021/dev-summit/bg-2.png">
+    </section>
+            
+            
+    </div>
+  </div>
+
+  <script src="../reveal.js/dist/reveal.js"></script>
+  <script src="../reveal.js/plugin/notes/notes.js"></script>
+  <script src="../reveal.js/plugin/markdown/markdown.js"></script>
+  <script src="../reveal.js/plugin/highlight/highlight.js"></script>
+  <script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+      hash: true,
+
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+    });
+  </script>
+</body>
+
+</html>

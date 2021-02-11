@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Intro to FeatureLayer - 4.16</title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.16/esri/themes/light/main.css"
+    />
+    <script src="https://jscore.esri.com/testbuilds/matt9222-pipeline-refactor-2/buildOutput/init.js"></script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/FeatureLayer"
+      ], function(Map, MapView, FeatureLayer) {
+        var map = new Map({
+          basemap: "gray"
+        });
+
+        var view = new MapView({
+          container: "viewDiv",
+          map: map,
+          zoom: 5,
+          center: [-95.71, 37]
+        });
+
+        /********************
+         * Add feature layer
+         ********************/
+
+        var featureLayer = new FeatureLayer({
+          // by URL or portal item
+          url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/Unemployment_in_the_United_States/FeatureServer/3",
+          // portalItem: {
+          //   id: "6aef049f5ceb47fb9989644c0412a32a"
+          // },
+          minScale: 0,
+          maxScale: 0,
+          definitionExpression: "STATE_NAME='California'" // only show data located in California 
+        });
+
+        map.add(featureLayer);
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

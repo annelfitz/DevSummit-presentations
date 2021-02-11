@@ -1,0 +1,192 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>
+    Filter features by attribute | ArcGIS API for JavaScript 4.16
+  </title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.16/esri/themes/dark/main.css" />
+  <script src="https://js.arcgis.com/4.16/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    #windspeed-filter {
+      width: 175px;
+      visibility: hidden;
+    }
+
+    .windspeed-title {
+      width: 100%;
+      margin: 0px;
+      padding: 10px;
+      text-align: center;
+      vertical-align: baseline;
+    }
+
+    .windspeed-item {
+      width: 100%;
+      padding: 12px;
+      text-align: center;
+      vertical-align: baseline;
+      cursor: pointer;
+      height: 40px;
+    }
+
+    .windspeed-item:focus {
+      background-color: dimgrey;
+    }
+
+    .windspeed-item:hover {
+      background-color: dimgrey;
+    }
+
+    #titleDiv {
+      padding: 10px;
+    }
+
+    #titleText {
+      font-size: 20pt;
+      font-weight: 60;
+      padding-bottom: 10px;
+    }
+  </style>
+  <script>
+    require([
+      "esri/views/MapView",
+      "esri/Map",
+      "esri/layers/FeatureLayer",
+      "esri/widgets/Expand",
+      "esri/widgets/Legend"
+    ], function(MapView, Map, FeatureLayer, Expand, Legend) {
+      let weatherLayerView;
+      const renderer = {
+        type: "simple", // autocasts as new SimpleRenderer()
+        symbol: {
+          type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+          // Arrow marker
+          path: "M14.5,29 23.5,0 14.5,9 5.5,0z",
+          color: [50, 50, 50],
+          outline: {
+            color: [0, 0, 0, 0.7],
+            width: 0.5
+          },
+          angle: 180,
+          size: 15
+        },
+        visualVariables: [{
+            type: "rotation",
+            field: "WIND_DIRECT",
+            rotationType: "geographic"
+          },
+          {
+            type: "color",
+            field: "TEMP",
+            stops: [{
+                value: 20,
+                color: "#2b83ba"
+              },
+              {
+                value: 35,
+                color: "#abdda4"
+              },
+              {
+                value: 50,
+                color: "#ffffbf"
+              },
+              {
+                value: 65,
+                color: "#fdae61"
+              },
+              {
+                value: 80,
+                color: "#d7191c"
+              }
+            ]
+          }
+        ]
+      };
+      // weather layer
+      const layer = new FeatureLayer({
+        portalItem: {
+          id: "cb1886ff0a9d4156ba4d2fadd7e8a139"
+        },
+        renderer: renderer,
+      });
+      const map = new Map({
+        basemap: "dark-gray-vector",
+        layers: [layer]
+      });
+      const view = new MapView({
+        map: map,
+        container: "viewDiv",
+        center: [-98, 40],
+        zoom: 4
+      });
+      const legend = new Legend({
+        view: view
+      });
+      view.ui.add(legend, "bottom-left");
+      const windspeedNodes = document.querySelectorAll(`.windspeed-item`);
+      const windspeedElement = document.getElementById("windspeed-filter");
+      // click event handler for wind speed choices
+      windspeedElement.addEventListener("click", filterByWindSpeed);
+
+      function filterByWindSpeed(event) {
+        const selectedWindSpeed = event.target.getAttribute("data-windspeed");
+        const filter = {
+          where: "WIND_SPEED " + selectedWindSpeed
+        };
+        weatherLayerView.effect = {
+          filter: filter,
+          excludedEffect: "opacity(20%) brightness(50%)"
+        }
+      }
+      view.whenLayerView(layer).then(function(layerView) {
+        weatherLayerView = layerView;
+        // set up UI items
+        windspeedElement.style.visibility = "visible";
+        const windspeedExpand = new Expand({
+          view: view,
+          content: windspeedElement,
+          expandIconClass: "esri-icon-filter",
+          group: "top-left"
+        });
+        //clear the filters when user closes the expand widget
+        windspeedExpand.watch("expanded", function() {
+          if (!windspeedExpand.expanded) {
+            weatherLayerView.effect = null;
+          }
+        });
+        view.ui.add(windspeedExpand, "top-left");
+        view.ui.add("titleDiv", "top-right");
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div id="windspeed-filter" class="esri-widget">
+    <h4 class="windspeed-title">Filter by wind speed</h4>
+    <div class="windspeed-item visible-windspeed" data-windspeed="< 15">Less than 15 km/hr</div>
+    <div class="windspeed-item visible-windspeed" data-windspeed=">= 15 AND WIND_SPEED < 30">15 to 30 km/hr</div>
+    <div class="windspeed-item visible-windspeed" data-windspeed=">= 30 AND WIND_SPEED < 45">30 to 45 km/hr</div>
+    <div class="windspeed-item visible-windspeed" data-windspeed=">= 45">Greater than 45 km/hr</div>
+  </div>
+  <div id="viewDiv"></div>
+  <div id="titleDiv" class="esri-widget">
+    <div id="titleText">Current Weather and Wind Station Data</div>
+    <div>Created from hourly METAR station data provided from NOAA</div>
+  </div>
+</body>
+
+</html>
