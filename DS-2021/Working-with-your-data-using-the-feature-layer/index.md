@@ -1,7 +1,7 @@
 <!-- .slide: data-background="../reveal.js/img/2021/dev-summit/bg-1.png" -->
 <!-- .slide: class="title" -->
 <h1 style="text-align: left; font-size: 50px;">ArcGIS API for JavaScript: Working with Your Data Using the Feature Layer</h1>
-<p style="text-align: left; font-size: 30px;">Bjorn Svensson and Anne Fitz</p>
+<p style="text-align: left; font-size: 30px;">Anne Fitz and Bjorn Svensson</p>
 <p style="text-align: left; font-size: 30px;">slides: <a href="https://arcg.is/WGXqn"><code>https://arcg.is/WGXqn<code></a></p>
 
 ----
@@ -9,14 +9,14 @@
 ### Introductions
 
 <div style="width:47%; float:left; padding: 10px;">
-<img src="Images/intro/bjorn2.png" style="width:38%"></img>
-<img src="Images/intro/Bjorn_Svensson1.jpg" style="width:58%"></img>
-Bjorn Svensson
+<img src="Images/intro/anne2.png" style="float:left; width: 49%"></img>
+<img src="Images/intro/anne.png" style="float:right; width: 50%"></img>
+Anne Fitz
 </div>
 <div style="width:47%; float:right; border-left: 2px solid white; padding: 10px;">
-<img src="Images/intro/anne.png" style="float:left; width: 50%"></img>
-<img src="Images/intro/anne2.png" style="float:right; width: 49%"></img>
-Anne Fitz
+<img src="Images/intro/Bjorn_Svensson1.jpg" style="width:58%"></img>
+<img src="Images/intro/bjorn2.png" style="width:38%"></img>
+Bjorn Svensson
 </div>
 
 ----
