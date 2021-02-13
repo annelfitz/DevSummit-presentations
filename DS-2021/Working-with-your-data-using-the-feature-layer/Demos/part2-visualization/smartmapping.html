@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+
+    <title>Bringing FeatureLayer by URL</title>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/dark/main.css">
+
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background: #282a2c;
+        }
+    </style>
+
+    <script src="https://js.arcgis.com/4.18/"></script>
+
+    <script>
+        require([
+            "esri/Map",
+            "esri/views/MapView",
+            "esri/layers/FeatureLayer",
+            "esri/widgets/Legend",
+            "esri/smartMapping/renderers/color",
+            "esri/smartMapping/statistics/histogram",
+            "esri/widgets/smartMapping/ColorSlider"
+        ], function (
+            Map,
+            MapView,
+            FeatureLayer,
+            Legend,
+            colorRendererCreator,
+            histogram,
+            ColorSlider
+        ) {
+
+            const layer = new FeatureLayer({
+                url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Employment_Status_Boundaries/FeatureServer/1",
+                minScale: 0,
+                maxScale: 0
+            });
+
+            const map = new Map({
+                basemap: "dark-gray-vector",
+            });
+
+            // Add the map to a MapView
+            const view = new MapView({
+                container: "viewDiv",
+                map: map,
+                center: [-100, 40],
+                zoom: 4,
+                constraints: {
+                    snapToZoom: false
+                }
+            });
+
+            Promise.all([
+                colorRendererCreator.createContinuousRenderer({
+                    layer: layer,
+                    field: "B23025_calc_pctUnempE",
+                    theme: "high-to-low",
+
+                    // Make the outline thinner for small scales
+                    outlineOptimizationEnabled: true,
+                    view: view,
+                }),
+                // Get information about the repartition of the income
+                histogram({
+                    layer: layer,
+                    field: "B23025_calc_pctUnempE",
+                    view: view,
+                    numBins: 70
+                })
+            ]).then(([rendererResult, histogramResult]) => {
+                layer.renderer = rendererResult.renderer;
+                map.add(layer);
+
+                // using color slider
+                // https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-smartMapping-ColorSlider.html
+
+                // create a slider from the renderer and the histogram
+                const colorSlider = ColorSlider.fromRendererResult(rendererResult, histogramResult);
+                view.ui.add(colorSlider, "bottom-right");
+                colorSlider.primaryHandleEnabled = true;
+
+                colorSlider.on(["thumb-change", "thumb-drag"], function () {
+                    const renderer = layer.renderer.clone();
+                    const colorVariable = renderer.visualVariables[0];
+                    colorVariable.stops = colorSlider.stops;
+                    layer.renderer = renderer;
+                });
+
+                // Add a legend instance to the panel of a
+                // ListItem in a LayerList instance
+                const legend = new Legend({
+                    view: view,
+                });
+                view.ui.add(legend, "top-right");
+            });
+
+        });
+    </script>
+
+</head>
+
+<body>
+    <div id="viewDiv"></div>
+</body>
+
+</html>

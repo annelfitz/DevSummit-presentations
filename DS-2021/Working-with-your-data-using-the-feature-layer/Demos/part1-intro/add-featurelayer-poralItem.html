@@ -48,31 +48,8 @@
          ********************/
 
         var featureLayer = new FeatureLayer({
-          // by URL
-          url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/housing_counties/FeatureServer/0",
-          renderer: {
-            type: "simple",
-            symbol: {
-              type: "simple-marker",
-              style: "diamond",
-              color: "#FF4040",
-              outline: {
-                color: "white"
-              }
-            },
-            visualVariables: {
-              type: "size",
-              valueExpression: "($feature['VACANT_CY']/$feature['TOTHU_CY']) *100",
-              valueExpressionTitle: "Vacant Housing (%)",
-              stops: [{
-                value: 2.7,
-                size: 18
-              },
-              {
-                value: 15,
-                size: 4
-              }]
-            }
+          portalItem: {
+            id: "3f5300d418a145cc92f93001729ce669"
           }
         });
 

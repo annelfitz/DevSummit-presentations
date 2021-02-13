@@ -21,28 +21,17 @@ Anne Fitz
 
 ----
 <!-- .slide: data-background="../reveal.js/img/2021/dev-summit/bg-3.png" -->
-
-### First time using the ArcGIS API for JavaScript?
-
- Watch [Getting Started with Web Development and the ArcGIS API for JavaScript](https://www.youtube.com/watch?v=zQTkkFUhzLI) to understand the basics, then come back to this presentation!
-
-[https://arcg.is/0vrHnv](https://arcg.is/0vrHnv)
-
-----
-<!-- .slide: data-background="../reveal.js/img/2021/dev-summit/bg-3.png" -->
 ### Agenda
 
-- FeatureLayer: what, why, how
+- Intro to FeatureLayer
+- Performance
 - Visualization
-  - Rendering
-  - Layer blending
-  - Clustering
 - Labeling
-- Layer vs. LayerView
+- Interacting with the FeatureLayer
   - Querying
   - Filtering
   - Highlighting
-- Editing Features
+- Editing features
 
 ----
 
@@ -94,22 +83,14 @@ map.add(layer);
 
 ### Adding a FeatureLayer to your map
 
-<p style="font-size:smaller;color:gray;font-style:italic">Unemployment in the United States by postal codes</p>
+<p style="font-size:smaller;color:gray;font-style:italic">Vacant housing in the United States by county</p>
 
 <iframe width="1200" height="500" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
     src="Demos/part1-intro/add-featurelayer.html"/>
 
 ----
 
-### Adding a FeatureLayer to your map: definitionExpression
-
-Limit the data retrieved from the feature service
-
-```js
-layer.definitionExpression = "STATE_NAME='California'";
-```
-
-<a href="Demos/part1-intro/add-featurelayer-california.html" target="_blank"><img src="Images/demo/d1-definition-expression.png"></img></a>
+### FeatureLayer Performance
 
 ----
 
@@ -127,92 +108,20 @@ layer.definitionExpression = "STATE_NAME='California'";
 
 ----
 
-### Visualization: SimpleRenderer Demo
+### Visualization: Rendering Demos
 
-Visualize streets with [SimpleLineSymbol](https://developers.arcgis.com/javascript/latest/api-reference/esri-symbols-SimpleLineSymbol.html)
+<a href="Demos/part2-visualization/class-breaks.html" target="_blank"><img src="Images/demo/d2-class-breaks.png" style="float:left;margin-top:0; width: 62%"></img></a>
 
-<a href="Demos/part2-visualization/simplerenderer.html" target="_blank"><img src="Images/demo/d2-simplerenderer.png" style="float:left;margin-top:0; width: 62%"></img>
-
-```js
-const streets = new FeatureLayer({
-  portalItem: {
-    id: "fad8da699eb1439ea9e20a8b97cffa7f"
-  },
-  renderer: {
-    type: "simple",
-    symbol: {
-      // autocasts as SimpleLineSymbol
-      type: "simple-line",
-      size: 1,
-      color: "black"
-    }
-  }
-});
-```
-</a>
-
-----
-
-### Visualization: UniqueValueRenderer Demo
-
-Visualize one-way streets with [CIMSymbols](https://developers.arcgis.com/javascript/latest/api-reference/esri-symbols-CIMSymbol.html)
-
-<a href="Demos/part2-visualization/cim-uniquevaluerenderer.html" target="_blank"><img src="Images/demo/d2-cim.png" style="float:left;margin-top:0;width:65%"></img>
-
-```js
-const streets = new FeatureLayer({
-  portalItem: {
-    id: "fad8da699eb1439ea9e20a8b97cffa7f"
-  },
-  renderer: {
-    type: "unique-value",
-    field: "oneway",
-    defaultSymbol: {
-      type: "simple-line"
-    },
-    uniqueValueInfos: [{
-      value: "yes",
-      symbol: { // CIMSymbol
-        type: "cim",
-        data: { ... }
-      }
-    }]
-  }
-});
-```
-</a>
-
-----
-
-### Visualization: Visual Variables
-
-**[Visual variables](https://developers.arcgis.com/javascript/latest/api-reference/esri-renderers-SimpleRenderer.html#visualVariables)**: used to create data-driven thematic visualizations
-<ul>
- <li>size</li>
- <li>color</li>
- <li>opacity</li>
- <li>rotation</li>
-</ul>
-</div>
-<div style="width:65%; float:right;">
-<a href="Demos/part2-visualization/visualvariables.html" target="_blank"><img src="Images/demo/d2-vvs.png"></img></a>
-</div>
+- [Simple Renderer](Demos/part2-visualization/simple.html)
+- [Class Breaks](Demos/part2-visualization/class-breaks.html)
+- [Visual Variables](Demos/part2-visualization/visVars.html)
 
 ----
 
 ### Visualization: Smart Mapping
 
 [Smart Mapping APIs](https://developers.arcgis.com/javascript/latest/guide/visualization-overview/#smart-mapping-apis): generate renderers with "smart" default symbols based on the summary statistics of the dataset and the basemap
-
-<a href="https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=visualization-sm-classbreaks" target="_blank"><img src="Images/smartmapping.png"></img></a>
-
-----
-
-### Visualization: Layer blending
-
-`featureLayer.blendMode`: a method of blending layers together to create interesting effects or produce a seemingly new layer
-
-<a href="Demos/part2-visualization/layerblend.html" target="_blank"><img src="Images/layer-blendmode.png"></img></a>
+<a href="Demos/part2-visualization/smartmapping.html" target="_blank"><img src="Images/demo/d2-smartmapping.png"></img></a>
 
 ----
 
@@ -220,7 +129,7 @@ const streets = new FeatureLayer({
 
 **Clustering:** a method of reducing points by grouping them into clusters based on their spatial proximity to one another.
 
-<a href="https://developers.arcgis.com/javascript/latest/sample-code/featurereduction-cluster/index.html" target="_blank"><img src="Images/clustering-horizontal.png" style="margin: 10px;"></img></a>
+<a href="Demos/part2-visualization/clustering.html" target="_blank"><img src="Images/clustering.png" style="margin: 10px;"></img></a>
 
 ----
 
@@ -251,6 +160,14 @@ const streets = new FeatureLayer({
 
 ----
 
+### Interacting with your layer
+
+- popups
+- widgets
+- client side filtering/querying/highlighting
+
+----
+
 ### Layer vs. LayerView
 
 - **LayerView**
@@ -273,6 +190,17 @@ const streets = new FeatureLayer({
 
 ----
 
+### Limit the data retrieved to the results of your query
+
+Limit the data retrieved from the feature service
+
+```js
+layer.definitionExpression = "STATE_NAME='California'";
+```
+
+<a href="Demos/part1-intro/add-featurelayer-california.html" target="_blank"><img src="Images/demo/d1-definition-expression.png"></img></a>
+
+----
 ### Server-side querying
 
 Bring features from your data into the web browser.
