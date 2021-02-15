@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Just another FeatureLayer</title>
+
+    <script>
+      dojoConfig = {
+        has: {
+          "esri-tiles-debug": 1
+        }
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.19/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.19/"></script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 20;
+        margin: 0;
+        height: 500px; 
+        width: 100%;
+      }
+      
+    </style>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/FeatureLayer"
+      ], function(Map, MapView, FeatureLayer) {
+        var map = new Map({
+          basemap: "gray-vector"
+        });
+
+        var view = new MapView({
+          container: "viewDiv",
+          map: map,
+          zoom: 2,
+          center: [-95.71, 37]
+        });
+
+        /********************
+         * Add feature layer
+         ********************/
+
+        var featureLayer = new FeatureLayer({
+          // by URL
+          url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/housing_counties/FeatureServer/0",
+          renderer: {
+            type: "simple",
+            symbol: {
+              type: "simple-marker",
+              style: "diamond",
+              color: "#FF4040",
+              outline: {
+                color: "white"
+              }
+            }
+          }
+        });
+
+        map.add(featureLayer);
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

@@ -90,7 +90,27 @@ map.add(layer);
 
 ----
 
-### FeatureLayer Performance
+### FeatureLayer network performance
+
+----
+
+### API optimized for performance
+
+* Compression: Broetli
+* Data format: [prototype buffers](https://developers.google.com/protocol-buffers)
+* Cacheabiliy
+  * requesting features by tile
+  * consistent, predictable application queries
+  * [cache-control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) for caching in browser and CDN
+
+----
+
+### Your configurations for optimal cacheability
+
+* disable editing on the feature layer
+  * or create non-editable view layer
+* set share level to everyone
+* increase cache time
 
 ----
 
