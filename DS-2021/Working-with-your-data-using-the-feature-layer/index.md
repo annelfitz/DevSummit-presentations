@@ -63,7 +63,7 @@ Bjorn Svensson
 **Sources**
 
 - Feature services or map services
-- Feature collections
+- [Feature collections](https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=layers-featurelayer-collection)
 - Portal item (from ArcGIS Online or Enterprise)
 
 ```js
