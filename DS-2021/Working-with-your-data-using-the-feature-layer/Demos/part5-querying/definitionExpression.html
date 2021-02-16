@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+
+  <title>Bringing FeatureLayer by URL</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/dark/main.css">
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      background: #282a2c;
+    }
+  </style>
+
+  <script src="https://js.arcgis.com/4.18/"></script>
+
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/FeatureLayer",
+      "esri/widgets/Legend"
+    ], function(
+      Map,
+      MapView,
+      FeatureLayer,
+      Legend
+    ) {
+
+      const layer = new FeatureLayer({
+        url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Employment_Status_Boundaries/FeatureServer/1",
+        definitionExpression: "State='California'",
+        minScale: 0,
+        maxScale: 0,
+        renderer: {
+            type: "simple",
+            symbol: {
+                type: "simple-fill",
+                outline: null
+            },
+            visualVariables: {
+                type: "color",
+                field: "B23025_calc_pctUnempE",
+                stops: [{
+                    value: 0.6,
+                    color: "#ffc4ae"
+                },{
+                    value: 5.3,
+                    color: "#ec5244"
+                }, {
+                    value: 10,
+                    color: "#7b4238"
+                }
+                ]
+            }
+        }
+      });
+
+      const map = new Map({
+        basemap: "dark-gray-vector",
+        layers: [layer]
+      });
+
+      // Add the map to a MapView
+      const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-100, 40],
+        zoom: 4,
+        constraints: {
+          snapToZoom: false
+        }
+      });
+
+      // Add a legend instance to the panel of a
+      // ListItem in a LayerList instance
+      const legend = new Legend({
+        view: view,
+      });
+      view.ui.add(legend, "top-right");
+
+    });
+  </script>
+
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

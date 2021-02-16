@@ -85,8 +85,7 @@ map.add(layer);
 
 <p style="font-size:smaller;color:gray;font-style:italic">Vacant housing in the United States by county</p>
 
-<iframe width="1200" height="500" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-    src="Demos/part1-intro/add-featurelayer.html"/>
+<a href="Demos/part1-intro/add-featurelayer.html"><img src="Images/add_featurelayer.png"/></a>
 
 ----
 
@@ -130,18 +129,18 @@ map.add(layer);
 
 ### Visualization: Rendering Demos
 
-<a href="Demos/part2-visualization/class-breaks.html" target="_blank"><img src="Images/demo/d2-class-breaks.png" style="float:left;margin-top:0; width: 62%"></img></a>
+<a href="Demos/part3-visualization/class-breaks.html" target="_blank"><img src="Images/demo/d2-class-breaks.png" style="float:left;margin-top:0; width: 62%"></img></a>
 
-- [Simple Renderer](Demos/part2-visualization/simple.html)
-- [Class Breaks](Demos/part2-visualization/class-breaks.html)
-- [Visual Variables](Demos/part2-visualization/visVars.html)
+- [Simple Renderer](Demos/part3-visualization/simple-renderer.html)
+- [Class Breaks](Demos/part3-visualization/class-breaks.html)
+- [Visual Variables](Demos/part3-visualization/visual-variables.html)
 
 ----
 
 ### Visualization: Smart Mapping
 
 [Smart Mapping APIs](https://developers.arcgis.com/javascript/latest/guide/visualization-overview/#smart-mapping-apis): generate renderers with "smart" default symbols based on the summary statistics of the dataset and the basemap
-<a href="Demos/part2-visualization/smartmapping.html" target="_blank"><img src="Images/demo/d2-smartmapping.png"></img></a>
+<a href="Demos/part3-visualization/smartmapping.html" target="_blank"><img src="Images/demo/d2-smartmapping.png" width="700px"></img></a>
 
 ----
 
@@ -149,7 +148,7 @@ map.add(layer);
 
 **Clustering:** a method of reducing points by grouping them into clusters based on their spatial proximity to one another.
 
-<a href="Demos/part2-visualization/clustering.html" target="_blank"><img src="Images/clustering.png" style="margin: 10px;"></img></a>
+<a href="Demos/part3-visualization/clustering.html" target="_blank"><img src="Images/clustering.png" style="margin: 10px;"></img></a>
 
 ----
 
@@ -182,9 +181,12 @@ map.add(layer);
 
 ### Interacting with your layer
 
-- popups
-- widgets
-- client side filtering/querying/highlighting
+- [Popups](https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=intro-popuptemplate)
+- Widgets ([Legend](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Legend.html), [LayerList](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-LayerList.html), etc)
+- Highlighting, querying, filtering
+
+<img src="Images/popup.png" style="float:right; width:480px"/>
+<img src="Images/layerlist.gif" style="float:left; width:450px"/>
 
 ----
 
@@ -209,23 +211,11 @@ map.add(layer);
   - returns statistics about the selected features
 
 ----
-
-### Limit the data retrieved to the results of your query
-
-Limit the data retrieved from the feature service
-
-```js
-layer.definitionExpression = "STATE_NAME='California'";
-```
-
-<a href="Demos/part1-intro/add-featurelayer-california.html" target="_blank"><img src="Images/demo/d1-definition-expression.png"></img></a>
-
-----
 ### Server-side querying
 
 Bring features from your data into the web browser.
 
-<a href="Demos/part4-querying/serverside.html" target="_blank"><img src="Images/query.png" style="float:left; margin-right: 20px;width:60%"></img></a>
+<a href="Demos/part5-querying/serverside.html" target="_blank"><img src="Images/query.png" style="float:left; margin-right: 20px;width:60%"></img></a>
 
 [Query features](https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=featurelayer-query-basic)
 
@@ -261,13 +251,13 @@ Query data already in the web browser.
 - Only works with available features
 - Make sure you have all the attributes you need
 
-<a href="Demos/part4-querying/clientside.html" target="_blank">Demo</a></br>
-<a href="Demos/part4-querying/clientside-hover.html" target="_blank">Demo - hover</a>
+<a href="Demos/part5-querying/clientside.html" target="_blank">Demo</a></br>
+<a href="Demos/part5-querying/clientside-hover.html" target="_blank">Demo - hover</a>
 
 ----
 
 ### Highlight
-<a href="https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=highlight-scenelayer" target="_blank"><img src="Images/highlight.png" style="float:right;width: 50%"></img></a>
+<a href="https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=view-hittest" target="_blank"><img src="Images/highlight.png" style="float:right;width: 50%"></img></a>
 
 <div style="width: 49%;">
   <ul>
@@ -292,9 +282,9 @@ highlight = layerView.highlight(result.features);
 - Define the filter criteria
 - Define the style for filtered features
 - Apply the filter to the LayerView
-- For server-side filtering, use `definitionExpression`
+- For server-side filtering, use [`definitionExpression`](Demos/part5-querying/definitionExpression.html)
 
-<a href="Demos/part4-querying/filter.html" target="_blank"><img src="Images/demo/d4-filtering.png"></img></a>
+<a href="Demos/part5-querying/filter.html" target="_blank"><img src="Images/demo/d4-filtering.png"></img></a>
 
 ----
 

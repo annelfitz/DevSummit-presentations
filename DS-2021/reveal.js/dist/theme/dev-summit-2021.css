@@ -185,7 +185,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   font-family: monospace;
   line-height: 1.2em;
   word-wrap: break-word;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); }
+}
 
 .reveal code {
   font-family: monospace;
@@ -196,7 +196,8 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   padding: 5px;
   overflow: auto;
   max-height: 400px;
-  word-wrap: normal; }
+  word-wrap: normal; 
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); }
 
 .reveal table {
   margin: auto;
