@@ -2,7 +2,7 @@
 <!-- .slide: class="title" -->
 <h1 style="text-align: left; font-size: 50px;">ArcGIS API for JavaScript: Working with Your Data Using the Feature Layer</h1>
 <p style="text-align: left; font-size: 30px;">Anne Fitz and Bjorn Svensson</p>
-<p style="text-align: left; font-size: 30px;">slides: <a href="https://arcg.is/WGXqn"><code>https://arcg.is/WGXqn<code></a></p>
+<p style="text-align: left; font-size: 30px;">slides: <a href="https://arcg.is/WGXqn"><code>https://arcg.is/1zevmz<code></a></p>
 
 ----
 <!-- .slide: data-background="../reveal.js/img/2021/dev-summit/bg-4.png" -->
