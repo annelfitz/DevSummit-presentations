@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
 
-  <title>Bringing FeatureLayer by URL</title>
+  <title>Class Breaks renderer</title>
 
   <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/dark/main.css">
 
@@ -45,8 +45,8 @@
           type: "class-breaks",
           field: "B23025_calc_pctUnempE",
           classBreakInfos: [{
-            minValue: 0, // 0 acres
-            maxValue: 4, // 200,000 acres
+            minValue: 0,
+            maxValue: 4, 
             symbol: {
               type: "simple-fill",
               color: "#ffc4ae",
@@ -54,8 +54,8 @@
             },
             label: "0-4%"
           }, {
-            minValue: 4, // 200,001 acres
-            maxValue: 6, // 500,000 acres
+            minValue: 4,
+            maxValue: 6,
             symbol: {
               type: "simple-fill",
               color: "#f9816c",
@@ -63,8 +63,8 @@
             },
             label: "4-6%"
           }, {
-            minValue: 6, // 500,001 acres
-            maxValue: 10, // 750,000 acres
+            minValue: 6,
+            maxValue: 10, 
             symbol: {
               type: "simple-fill",
               color: "#c23d33",
@@ -72,8 +72,8 @@
             },
             label: "6-10%"
           },{
-            minValue: 10, // 500,001 acres
-            maxValue: 100, // 750,000 acres
+            minValue: 10,
+            maxValue: 100, 
             symbol: {
               type: "simple-fill",
               color: "#7b4238",

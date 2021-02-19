@@ -4,11 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
   <title>
-    Filter features by attribute | ArcGIS API for JavaScript 4.16
+    Clustering
   </title>
 
-  <link rel="stylesheet" href="https://js.arcgis.com/4.16/esri/themes/dark/main.css" />
-  <script src="https://js.arcgis.com/4.16/"></script>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/dark/main.css" />
+  <script src="https://js.arcgis.com/4.19/"></script>
 
   <style>
     html,
@@ -90,9 +90,9 @@
           id: "cb1886ff0a9d4156ba4d2fadd7e8a139"
         },
         renderer: renderer,
-        // featureReduction: {
-        //   type: "cluster"
-        // }
+        featureReduction: {
+          type: "cluster"
+        }
       });
       const map = new Map({
         basemap: "dark-gray-vector",
