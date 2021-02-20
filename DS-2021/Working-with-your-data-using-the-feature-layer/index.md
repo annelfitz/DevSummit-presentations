@@ -167,9 +167,9 @@ map.add(layer);
   * labelingInfo is an array of [LabelClass](https://https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-LabelClass.html) with 
     * labelExpressionInfo, 
     * labelPlacement, 
-    * min and max scale,
-    * and symbol properties
-      * where symbol is [TextSymbol](https://developers.arcgis.com/javascript/latest/api-reference/esri-symbols-TextSymbol.html) or [LabelSymbol3D](https://developers.arcgis.com/javascript/latest/api-reference/esri-symbols-LabelSymbol3D.html)
+    * maxScale and minScale,
+    * where,
+    * and symbol as [TextSymbol](https://developers.arcgis.com/javascript/latest/api-reference/esri-symbols-TextSymbol.html) or [LabelSymbol3D](https://developers.arcgis.com/javascript/latest/api-reference/esri-symbols-LabelSymbol3D.html)
 
 * or a PortalItem with labels defined
 

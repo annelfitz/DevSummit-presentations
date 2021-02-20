@@ -29,23 +29,26 @@
       require([
         "esri/Map",
         "esri/views/MapView",
-        "esri/layers/FeatureLayer"
-      ], function (Map, MapView, FeatureLayer) {
+        "esri/layers/FeatureLayer",
+        "esri/widgets/Legend"
+      ], function (Map, MapView, FeatureLayer, Legend) {
         const scale = 9000000;
         const serviceUrl =
           "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/128peaks/FeatureServer/0";
 
         const view = new MapView({
           container: "viewDiv",
+          center: [-117, 37],
+          zoom: 7,
           map: new Map({
             basemap: "gray-vector",
             layers: [
               new FeatureLayer({
                 url: serviceUrl,
+                title: "128 prominent peaks in USA",
                 renderer: {
                   type: "unique-value",
                   field: "Climbed",
-                  defaultSymbol: { type: "simple-marker" },
                   uniqueValueInfos: [
                     {
                       value: "Yes",
@@ -53,7 +56,7 @@
                         type: "simple-marker",
                         style: "triangle",
                         color: "green",
-                        size: 14
+                        size: 16
                       }
                     },
                     {
@@ -62,14 +65,14 @@
                         type: "simple-marker",
                         style: "triangle",
                         color: "red",
-                        size: 14
+                        size: 16
                       }
                     }
                   ]
                 },
                 labelingInfo: [
                   {
-                    where: "Climbed='Yes'",
+                    where: "Climbed='Yes'", // SQL
                     labelExpressionInfo: {
                       expression: "$feature.Mountain_Peak" // arcade
                     },
@@ -78,7 +81,7 @@
                     symbol: {
                       type: "text", // autocasts as new TextSymbol()
                       font: {
-                        size: 11,
+                        size: 12,
                         family: "Noto Sans"
                       },
                       color: "green",
@@ -86,7 +89,7 @@
                     }
                   },
                   {
-                    where: "Climbed='No'",
+                    where: "Climbed='No'", // SQL
                     labelExpressionInfo: {
                       expression: "$feature.Mountain_Peak + TextFormatting.NewLine + Concatenate([$feature.Elevation], '', \"##,###\") + ' ft'"  // arcade
                     },
@@ -95,7 +98,7 @@
                     symbol: {
                       type: "text", // autocasts as new TextSymbol()
                       font: {
-                        size: 11,
+                        size: 12,
                         family: "Noto Sans"
                       },
                       color: "red",
@@ -105,10 +108,12 @@
                 ]
               })
             ]
-          }),
-          center: [-117, 37],
-          zoom: 7
+          })
         });
+        let legend = new Legend({
+          view: view,
+        });  
+        view.ui.add(legend, "bottom-right");      
       });
     </script>
   </head>
