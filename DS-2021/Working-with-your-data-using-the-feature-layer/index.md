@@ -95,16 +95,21 @@ map.add(layer);
 
 ### API optimized for performance
 
-* Compression: Broetli
+* Compression: [brotli](https://en.wikipedia.org/wiki/Brotli)
 * Data format: [prototype buffers](https://developers.google.com/protocol-buffers)
 * Cacheabiliy
-  * requesting features by tile
   * consistent, predictable application queries
+  * tiling
+    * dynamic feature tiles
   * [cache-control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) for caching in browser and CDN
 
 ----
 
-### Your configurations for optimal cacheability
+[demo](Demos/part2-performance/index.html)
+
+----
+
+### Your settings for optimal cacheability
 
 * disable editing on the feature layer
   * or create non-editable view layer
