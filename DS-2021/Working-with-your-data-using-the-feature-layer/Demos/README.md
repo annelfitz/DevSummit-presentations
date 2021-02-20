@@ -14,6 +14,10 @@
   - [Layer blending](https://annelfitz.github.io/UC-presentations/UC-2020/Getting-started-web-dev/Demos/part2-visualization/layerblend.html)
   - [Filtering](https://annelfitz.github.io/UC-presentations/UC-2020/Getting-started-web-dev/Demos/part2-visualization/filter.html)
   
+## Labeling
+
+  - [Labeling](https://annelfitz.github.io/DevSummit-presentations/DS-2021/Working-with-your-data-using-the-feature-layer/Demos/part4-labeling/index.html)
+
 ## Querying
 
   - [Server-side](https://annelfitz.github.io/UC-presentations/UC-2020/Getting-started-web-dev/Demos/part4-querying/serverside.html)

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Most prominent peaks in USA</title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.19/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.19/"></script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/FeatureLayer"
+      ], function (Map, MapView, FeatureLayer) {
+        const scale = 9000000;
+        const serviceUrl =
+          "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/128peaks/FeatureServer/0";
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: new Map({
+            basemap: "gray-vector",
+            layers: [
+              new FeatureLayer({
+                url: serviceUrl,
+                renderer: {
+                  type: "unique-value",
+                  field: "Climbed",
+                  defaultSymbol: { type: "simple-marker" },
+                  uniqueValueInfos: [
+                    {
+                      value: "Yes",
+                      symbol: {
+                        type: "simple-marker",
+                        style: "triangle",
+                        color: "green",
+                        size: 14
+                      }
+                    },
+                    {
+                      value: "No",
+                      symbol: {
+                        type: "simple-marker",
+                        style: "triangle",
+                        color: "red",
+                        size: 14
+                      }
+                    }
+                  ]
+                },
+                labelingInfo: [
+                  {
+                    where: "Climbed='Yes'",
+                    labelExpressionInfo: {
+                      expression: "$feature.Mountain_Peak" // arcade
+                    },
+                    labelPlacement: "above-center",
+                    minScale: scale,
+                    symbol: {
+                      type: "text", // autocasts as new TextSymbol()
+                      font: {
+                        size: 11,
+                        family: "Noto Sans"
+                      },
+                      color: "green",
+                      yoffset: -2
+                    }
+                  },
+                  {
+                    where: "Climbed='No'",
+                    labelExpressionInfo: {
+                      expression: "$feature.Mountain_Peak + TextFormatting.NewLine + Concatenate([$feature.Elevation], '', \"##,###\") + ' ft'"  // arcade
+                    },
+                    labelPlacement: "above-center",
+                    minScale: scale,
+                    symbol: {
+                      type: "text", // autocasts as new TextSymbol()
+                      font: {
+                        size: 11,
+                        family: "Noto Sans"
+                      },
+                      color: "red",
+                      yoffset: -2
+                    }
+                  }
+                ]
+              })
+            ]
+          }),
+          center: [-117, 37],
+          zoom: 7
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>
