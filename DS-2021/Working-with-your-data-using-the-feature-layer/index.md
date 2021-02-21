@@ -290,26 +290,28 @@ highlight = layerView.highlight(result.features);
 
 ### Editing
 
-Updating features directly from the web browser.
+An editable FeatureLayer
 
-How do I know if I can edit features?
-
-- Rest supported operations
-- ArcGIS Online/Portal settings
-- ArcGIS Server manager
-- FeatureLayer.capabilities
+<a href="https://jsapi.maps.arcgis.com/home/item.html?id=10f2d3cdad3241f3a054527deed72436#settings" target="_blank"><img src="Images/enable-editing.png"></img></a>
 
 ----
 
-### Editing
+### Editing options
 
-- FeatureLayer.applyEdits()
-- Editor widget
-- FeatureTable widget
+- [Editor widget](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Editor.html)
+- [FeatureTable widget](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-FeatureTable.html) with editingEnable/editing properties
+- [FeatureLayer.applyEdits()](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#applyEdits)
+- [FeatureForm widget](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-FeatureTable.html) & [FeatureLayer.applyEdits()](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#applyEdits)
 
 ----
 
 ### Editing demos
+
+<a href="https://developers.arcgis.com/javascript/latest/sample-code/widgets-editor-basic/" target="_blank">Samples</a>
+
+<video autoplay="true" muted="true" loop="true"> 
+  <source src="images/3d-editing-combo.mp4" type="video/mp4">
+</video>
 
 ----
 <!-- .slide: data-background="../reveal.js/img/2021/dev-summit/bg-5.png" -->
