@@ -15,6 +15,10 @@
   - [Smart Mapping](https://annelfitz.github.io/DevSummit-presentations/DS-2021/Working-with-your-data-using-the-feature-layer/Demos/part3-visualization/smartmapping.html)
   - [Clustering](https://annelfitz.github.io/DevSummit-presentations/DS-2021/Working-with-your-data-using-the-feature-layer/Demos/part3-visualization/clustering.html)
   
+## Labeling
+
+  - [Labeling](https://annelfitz.github.io/DevSummit-presentations/DS-2021/Working-with-your-data-using-the-feature-layer/Demos/part4-labeling/index.html)
+
 ## Querying
 
   - [Server-side](https://annelfitz.github.io/DevSummit-presentations/DS-2021/Working-with-your-data-using-the-feature-layer/Demos/part5-querying/serverside.html)

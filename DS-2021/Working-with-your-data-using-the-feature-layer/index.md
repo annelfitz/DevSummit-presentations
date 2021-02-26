@@ -95,16 +95,21 @@ map.add(layer);
 
 ### API optimized for performance
 
-* Compression: Broetli
+* Compression: [brotli](https://en.wikipedia.org/wiki/Brotli)
 * Data format: [prototype buffers](https://developers.google.com/protocol-buffers)
 * Cacheabiliy
-  * requesting features by tile
   * consistent, predictable application queries
+  * tiling
+    * dynamic feature tiles
   * [cache-control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) for caching in browser and CDN
 
 ----
 
-### Your configurations for optimal cacheability
+[demo](Demos/part2-performance/index.html)
+
+----
+
+### Your settings for optimal cacheability
 
 * disable editing on the feature layer
   * or create non-editable view layer
@@ -159,23 +164,18 @@ map.add(layer);
 <!--[Guide topic](https://developers.arcgis.com/javascript/latest/guide/labeling/index.html)-->
 
 * FeatureLayer has [labelingInfo](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#labelingInfo) and [labelsVisible](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#labelsVisible) properties
-  * labelingInfo is an array of [LabelClass](https://https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-LabelClass.html)
-    * with labelExpressionInfo, labelPlacement, and symbol properties
-    * where symbol is [TextSymbol](https://developers.arcgis.com/javascript/latest/api-reference/esri-symbols-TextSymbol.html) or [LabelSymbol3D](https://developers.arcgis.com/javascript/latest/api-reference/esri-symbols-LabelSymbol3D.html)
+  * labelingInfo is an array of [LabelClass](https://https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-LabelClass.html) with 
+    * labelExpressionInfo, 
+    * labelPlacement, 
+    * maxScale and minScale,
+    * where,
+    * and symbol as [TextSymbol](https://developers.arcgis.com/javascript/latest/api-reference/esri-symbols-TextSymbol.html) or [LabelSymbol3D](https://developers.arcgis.com/javascript/latest/api-reference/esri-symbols-LabelSymbol3D.html)
 
 * or a PortalItem with labels defined
 
-<!--
-  Click above API Reference, then on to samples.
-  The labelingInfo property is specified as an array of LabelClass objects, which contains the labelExpressionInfo, labelPlacement, and TextSymbol.
-  The TextSymbol class supports altering the color, font, halo, and other properties of the label graphic. Labeling is supported for Points, Polylines, and Polygons.
-
-  font set
--->
-
 ----
 
-### Labeling demos
+[demo](Demos/part4-labeling/index.html)
 
 ----
 
@@ -290,26 +290,28 @@ highlight = layerView.highlight(result.features);
 
 ### Editing
 
-Updating features directly from the web browser.
+An editable FeatureLayer
 
-How do I know if I can edit features?
-
-- Rest supported operations
-- ArcGIS Online/Portal settings
-- ArcGIS Server manager
-- FeatureLayer.capabilities
+<a href="https://jsapi.maps.arcgis.com/home/item.html?id=10f2d3cdad3241f3a054527deed72436#settings" target="_blank"><img src="Images/enable-editing.png"></img></a>
 
 ----
 
-### Editing
+### Editing options
 
-- FeatureLayer.applyEdits()
-- Editor widget
-- FeatureTable widget
+- [Editor widget](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-Editor.html)
+- [FeatureTable widget](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-FeatureTable.html) with editingEnable/editing properties
+- [FeatureLayer.applyEdits()](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#applyEdits)
+- [FeatureForm widget](https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-FeatureTable.html) & [FeatureLayer.applyEdits()](https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#applyEdits)
 
 ----
 
 ### Editing demos
+
+<a href="https://developers.arcgis.com/javascript/latest/sample-code/widgets-editor-basic/" target="_blank">Samples</a>
+
+<video autoplay="true" muted="true" loop="true"> 
+  <source src="images/3d-editing-combo.mp4" type="video/mp4">
+</video>
 
 ----
 <!-- .slide: data-background="../reveal.js/img/2021/dev-summit/bg-5.png" -->
