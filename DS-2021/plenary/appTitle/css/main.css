@@ -1,0 +1,57 @@
+html,
+body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#sidePanel {
+    height: 30%;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+#viewDiv {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    height: 70%;
+}
+
+#sliderDiv {
+    height: 250px;
+    width: 50px;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+}
+
+.cal-btn {
+    height: 50px;
+    margin: 5px;
+}
+
+#sliderDiv .esri-slider__segment-1 {
+    background-color: #0079c1;
+}
+
+#buttonFilters {
+    width: 250px;
+    float: left;
+}
+
+#chartPanel {
+    background: #fff;
+    font: "Avenir Next W00";
+    line-height: 1.5em;
+    overflow: auto;
+    padding: 10px;
+    width: 800px;
+    float: right;
+}
+
+.chart {
+    height: 380px;
+}

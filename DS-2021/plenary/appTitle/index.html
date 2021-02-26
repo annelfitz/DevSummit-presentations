@@ -1,0 +1,58 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Plenary | Developer Summit 2021</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css" />
+    <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/light/main.css" />
+    <link rel="stylesheet" href="https://unpkg.com/@esri/calcite-components@1.0.0-beta.50/dist/calcite/calcite.css" />
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="https://js.arcgis.com/4.19/"></script>
+    <script type="module" src="https://unpkg.com/@esri/calcite-components@1.0.0-beta.50/dist/calcite/calcite.esm.js">
+    </script>
+    <script nomodule="" src="https://unpkg.com/@esri/calcite-components@1.0.0-beta.50/dist/calcite/calcite.js"></script>
+
+    <script src="js/main.js"></script>
+</head>
+
+<body>
+    <div id="viewDiv"></div>
+    <div id="sidePanel">
+        <div id="buttonFilters">
+            <h3>Filter by age group:</h3>
+            <calcite-radio-group id="filterAge" layout="vertical" appearance="solid" scale="m" width="auto"
+                role="radiogroup" calcite-hydrated="">
+                <calcite-radio-group-item value="none" checked="" tabindex="0" appearance="solid" aria-checked="true"
+                    layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                    No filter
+                </calcite-radio-group-item>
+                <calcite-radio-group-item value="young" appearance="solid" aria-checked="false" layout="horizontal"
+                    role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                    Babies and Toddlers (0-3)
+                </calcite-radio-group-item>
+                <calcite-radio-group-item value="hs" appearance="solid" aria-checked="false" layout="horizontal"
+                    role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                    High School (14-18)
+                </calcite-radio-group-item>
+                <calcite-radio-group-item value="college" appearance="solid" aria-checked="false" layout="horizontal"
+                    role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                    College (18-22)
+                </calcite-radio-group-item>
+                <calcite-radio-group-item value="retired" appearance="solid" aria-checked="false" layout="horizontal"
+                    role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                    Retired (65+)
+                </calcite-radio-group-item>
+                <input type="hidden" />
+            </calcite-radio-group>
+        </div>
+        <div id="sliderDiv"></div>
+        <div id="chartPanel"><canvas id="chart" class="chart"></canvas></div>
+    </div>
+    <div id="queryBtn"></div>
+</body>
+
+</html>
