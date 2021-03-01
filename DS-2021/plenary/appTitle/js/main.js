@@ -28,14 +28,15 @@ require([
     // App 'globals'
     let sketchViewModel, featureLayerView, pausableWatchHandle, chartExpand;
     let statDefinitions, labels = [];
+    let aboveAndBelow = false;
 
     // graphics
     let centerGraphic,
-          edgeGraphic,
-          polylineGraphic,
-          bufferGraphic,
-          centerGeometryAtStart,
-          labelGraphic;
+        edgeGraphic,
+        polylineGraphic,
+        bufferGraphic,
+        centerGeometryAtStart,
+        labelGraphic;
 
     let unit = "miles";
 
@@ -51,7 +52,11 @@ require([
         }
     });
 
-    ageSlider.on(["thumb-change", "thumb-drag", "segment-drag"], updateVisualization);
+    ageSlider.on(["thumb-drag", "segment-drag"], function (event) {
+        if (event.state == "stop") {
+            updateVisualization();
+        }
+    });
 
     // Create layers
     const graphicsLayer = new GraphicsLayer();
@@ -60,31 +65,61 @@ require([
     });
     const featureLayer = new FeatureLayer({
         portalItem: {
-            id: "0fda5b2428694ce5b17d3953a89fb4da"
+            // id: "0fda5b2428694ce5b17d3953a89fb4da" // SoCal
+            id: "e2d3120d9ff0483da88d23d9a67d83a0"
         },
-        outFields: ["*"]
+        outFields: ["*"],
+        renderer: {
+            type: "simple",
+            symbol: {
+                type: "simple-fill",
+                color: "white",
+                outline: null
+            },
+            visualVariables: [{
+                type: "color",
+                valueExpression: createAgeRange(ageSlider.values[0], ageSlider.values[1]),
+                valueExpressionTitle: "Percent of population aged " + ageSlider.values[0] + " - " + ageSlider.values[1],
+                stops: [{
+                        value: 0,
+                        label: "0%",
+                        color: "#f7fbff"
+                    },
+                    {
+                        value: 10,
+                        label: "10%",
+                        color: "#084594"
+                    }
+                ]
+            }]
+        }
     });
 
     // create map with basemap
     const map = new Map({
         basemap: "gray-vector",
-        layers: [featureLayer, graphicsLayer, bufferLayer]
     });
 
     const view = new MapView({
         container: "viewDiv",
         map,
-        center: [-117.83873, 34.05580],
+        center: [-73.170, 41.313],
         zoom: 9
     });
 
-    updateVisualization();
+    map.addMany([featureLayer, graphicsLayer, bufferLayer]);
     generateStats();
     setUpAppUI();
     setUpSketch();
 
     const radio = document.getElementById("filterAge");
     radio.addEventListener("calciteRadioGroupChange", updateSlider);
+
+    const rendererSwitch = document.getElementById("switch");
+    rendererSwitch.addEventListener("calciteSwitchChange", function (event) {
+        aboveAndBelow = event.detail.switched;
+        updateVisualization();
+    });
 
     function updateSlider(event) {
         switch (event.detail) {
@@ -125,34 +160,86 @@ require([
         return str;
     }
 
-    function updateVisualization() {
-        let maxValue = 15;
-        let ageDiff = ageSlider.values[1] - ageSlider.values[0];
-
-        featureLayer.renderer = {
-            type: "simple",
-            symbol: {
-                type: "simple-fill",
-                color: "white",
-                outline: null
-            },
-            visualVariables: [{
-                type: "color",
-                valueExpression: createAgeRange(ageSlider.values[0], ageSlider.values[1]),
-                valueExpressionTitle: "Percent of population aged " + ageSlider.values[0] + " - " + ageSlider.values[1],
-                stops: [{
-                        value: 0,
-                        label: "0%",
-                        color: "#f7fbff"
-                    },
-                    {
-                        value: maxValue,
-                        label: maxValue + "%",
-                        color: "#084594"
-                    }
-                ]
-            }]
+    function findSqlAvg(low, high) {
+        str = "(";
+        for (let age = low; age <= high; age++) {
+            str += "MAGE" + age + "_CY + FAGE" + age + "_CY";
+            if (age != high) {
+                str += "+"
+            }
         }
+        str += ")/TOTPOP_CY * 100";
+        return str;
+    }
+
+    function updateVisualization() {
+        const avgStats = [{
+            onStatisticField: findSqlAvg(ageSlider.values[0], ageSlider.values[1]),
+            outStatisticFieldName: "pct_age_population_avg",
+            statisticType: "avg"
+        }, {
+            onStatisticField: findSqlAvg(ageSlider.values[0], ageSlider.values[1]),
+            outStatisticFieldName: "pct_age_population_stddev",
+            statisticType: "stddev"
+        }];
+        let query = featureLayerView.createQuery();
+        query.outStatistics = avgStats;
+
+        featureLayerView.queryFeatures(query)
+            .then(function (response) {
+                let stats = {
+                    avg: response.features[0].attributes.pct_age_population_avg,
+                    stddev: response.features[0].attributes.pct_age_population_stddev
+                }
+                let maxValue = stats.avg + stats.stddev;
+                featureLayer.renderer = {
+                    type: "simple",
+                    symbol: {
+                        type: "simple-fill",
+                        color: "white",
+                        outline: null
+                    },
+                    visualVariables: [{
+                        type: "color",
+                        valueExpression: createAgeRange(ageSlider.values[0], ageSlider.values[1]),
+                        valueExpressionTitle: "Percent of population aged " + ageSlider.values[0] + " - " + ageSlider.values[1],
+                        stops: createStops(maxValue, stats)
+                    }]
+                }
+            })
+    }
+
+    function createStops(max, stats) {
+        let stops = [];
+        if (aboveAndBelow) {
+            stops = [{
+                value: stats.avg - stats.stddev,
+                label: Math.round(stats.avg - stats.stddev) + "%",
+                color: "#b65151"
+            }, {
+                value: stats.avg,
+                label: Math.round(stats.avg) + "%",
+                color: "#ffffff"
+            }, {
+                value: max,
+                label: Math.round(max) + "%",
+                color: "#546b8c"
+            }]
+        } else {
+            stops = [{
+                    value: stats.avg - stats.stddev,
+                    label: Math.round(stats.avg - stats.stddev) + "%",
+                    color: "#f7fbff"
+                },
+                {
+                    value: max,
+                    label: Math.round(max) + "%",
+                    color: "#084594"
+                }
+            ]
+        }
+
+        return stops;
     }
 
     function generateStats() {
@@ -162,9 +249,9 @@ require([
             let maleStr = "MAGE" + i + "_CY";
             let femaleStr = "FAGE" + i + "_CY";
             arr.unshift(maleStr, femaleStr);
-            if (i==0){
+            if (i == 0) {
                 labels.unshift("<1");
-            } else{
+            } else {
                 labels.unshift(i)
             }
         }
@@ -219,6 +306,7 @@ require([
             event.toolEventInfo.mover.attributes.edge
         ) {
             const toolType = event.toolEventInfo.type;
+            console.log(toolType)
             if (toolType === "move-start") {
                 centerGeometryAtStart = centerGraphic.geometry;
             }
@@ -304,16 +392,13 @@ require([
         const query = featureLayerView.createQuery();
         query.outStatistics = statDefinitions;
         query.geometry = buffer;
-        console.log(query)
 
         // Query the features on the client using FeatureLayerView.queryFeatures
         return featureLayerView
             .queryFeatures(query)
             .then(function (results) {
-                console.log(results)
                 // Statistics query returns a feature with 'stats' as attributes
                 const attributes = results.features[0].attributes;
-                console.log(attributes)
                 // Loop through attributes and save the values for use in the population pyramid.
                 for (var key in attributes) {
                     if (key.includes("F")) {
@@ -325,7 +410,6 @@ require([
                     }
                 }
                 // Return information, seperated by gender
-                console.log(femaleAgeData, maleAgeData)
                 return [femaleAgeData, maleAgeData];
             })
             .catch(function (error) {
@@ -428,7 +512,7 @@ require([
             // call sketch's update method pass in the graphics so that users
             // can just drag these graphics to adjust the buffer
             setTimeout(function () {
-                sketchViewModel.update([edgeGraphic, centerGraphic], {
+                sketchViewModel.update([edgeGraphic, centerGraphic, polylineGraphic], {
                     tool: "move"
                 });
             }, 1000);
@@ -450,116 +534,117 @@ require([
     // Label polyline with its length
     function labelLength(geom, length) {
         return new Graphic({
-          geometry: geom,
-          symbol: {
-            type: "text",
-            color: "#FFEB00",
-            text: length.toFixed(2) + " kilometers",
-            xoffset: 50,
-            yoffset: 10,
-            font: {
-              // autocast as Font
-              size: 14,
-              family: "sans-serif"
+            geometry: geom,
+            symbol: {
+                type: "text",
+                color: "#FFEB00",
+                text: length.toFixed(2) + " kilometers",
+                xoffset: 50,
+                yoffset: 10,
+                font: {
+                    // autocast as Font
+                    size: 14,
+                    family: "sans-serif"
+                }
             }
-          }
         });
-      }
+    }
 
-      let chart;
+    let chart;
 
-      function updateChart(newData) {
+    function updateChart(newData) {
 
         const femaleAgeData = newData[0];
         const maleAgeData = newData[1];
 
-        
-
         if (!chart) {
             console.log("creating chart")
-          // Get the canvas element and render the chart in it
-          const canvasElement = document.getElementById("chart");
+            // Get the canvas element and render the chart in it
+            const canvasElement = document.getElementById("chart");
 
-          chart = new Chart(canvasElement.getContext("2d"), {
-            type: "horizontalBar",
-            data: {
-              // age groups
-              labels: labels,
-              datasets: [
-                {
-                  label: "Female",
-                  backgroundColor: "#B266FF",
-                  borderColor: "#7F00FF",
-                  borderWidth: 0.25,
-                  data: femaleAgeData
+            chart = new Chart(canvasElement.getContext("2d"), {
+                type: "horizontalBar",
+                data: {
+                    // age groups
+                    labels: labels,
+                    datasets: [{
+                            label: "Female",
+                            backgroundColor: "#B266FF",
+                            borderWidth: 0,
+                            data: femaleAgeData
+                        },
+                        {
+                            label: "Male",
+                            backgroundColor: "#0080FF",
+                            borderWidth: 0,
+                            data: maleAgeData
+                        }
+                    ]
                 },
-                {
-                  label: "Male",
-                  backgroundColor: "#0080FF",
-                  borderColor: "#004C99",
-                  borderWidth: 0.25,
-                  data: maleAgeData
-                }
-              ]
-            },
-            options: {
-              responsive: false,
-              legend: {
-                position: "bottom"
-              },
-              title: {
-                display: true,
-                text: "Population pyramid"
-              },
-              scales: {
-                yAxes: [
-                  {
-                    categorySpacing: 0,
-                    barThickness: 3,
-                    stacked: true,
-                    scaleLabel: {
-                      display: true,
-                      labelString: "Age group"
-                    }
-                  }
-                ],
-                xAxes: [
-                  {
-                    ticks: {
-                      callback: function (value) {
-                        const val = Math.abs(parseInt(value));
-                        return numberWithCommas(val);
-                      }
+                options: {
+                    responsive: false,
+                    legend: {
+                        position: "bottom"
                     },
-                    scaleLabel: {
-                      display: true,
-                      labelString: "Population"
+                    title: {
+                        display: true,
+                        text: "Population pyramid"
+                    },
+                    scales: {
+                        yAxes: [{
+                            categorySpacing: 0,
+                            barThickness: 3,
+                            stacked: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Age group"
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                callback: function (value) {
+                                    const val = Math.abs(parseInt(value));
+                                    return numberWithCommas(val);
+                                }
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Population"
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function (tooltipItem, data) {
+                                return (
+                                    data.datasets[tooltipItem.datasetIndex].label +
+                                    ": " +
+                                    numberWithCommas(Math.abs(tooltipItem.xLabel))
+                                );
+                            }
+                        }
                     }
-                  }
-                ]
-              },
-              tooltips: {
-                callbacks: {
-                  label: function (tooltipItem, data) {
-                    return (
-                      data.datasets[tooltipItem.datasetIndex].label +
-                      ": " +
-                      numberWithCommas(Math.abs(tooltipItem.xLabel))
-                    );
-                  }
                 }
-              }
-            }
-          });
+            });
+            canvasElement.addEventListener("click", function (event) {
+                let bars = chart.getElementsAtEvent(event);
+                let index = bars[0]._index;
+                let age = chart.data.labels[index];
+                if (age == "<1") {
+                    age = 0;
+                }
+                ageSlider.values = [age, age];
+                updateVisualization();
+            })
         } else {
-          chart.data.datasets[0].data = femaleAgeData;
-          chart.data.datasets[1].data = maleAgeData;
-          chart.update();
+            chart.data.datasets[0].data = femaleAgeData;
+            chart.data.datasets[1].data = maleAgeData;
+            chart.update();
         }
-      }
-      // Helper function for formatting number labels with commas
-      function numberWithCommas(value) {
+    }
+    // Helper function for formatting number labels with commas
+    function numberWithCommas(value) {
         value = value || 0;
         return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      }
+    }
 });
