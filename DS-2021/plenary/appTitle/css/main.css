@@ -22,8 +22,11 @@ body {
 }
 
 #sliderDiv {
-    height: 300px;
-    width: 400px;
+    height: 100px;
+    width: 900px;
+}
+#filterAge {
+    width: 900px;
 }
 
 .cal-btn {
@@ -36,8 +39,7 @@ body {
 }
 
 #buttonFilters {
-    width: 250px;
-    float: left;
+    padding: 10px;
 }
 
 #chartPanel {
@@ -60,4 +62,9 @@ body {
     overflow: auto;
     padding: 10px;
     width: 400px;
+    float: right;
+}
+#stats {
+    width: 20%;
+    float: left;
 }
