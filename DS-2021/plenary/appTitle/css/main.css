@@ -4,14 +4,14 @@ body {
     margin: 0;
     height: 100%;
     width: 100%;
+    background-color: #242424;
+    color: white;
 }
 
 #sidePanel {
-    height: 45%;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    overflow: auto;
+    height: 44%;
+    margin: auto;
+    width: 98%;
 }
 
 #viewDiv {
@@ -23,7 +23,11 @@ body {
 
 #sliderDiv {
     height: 100px;
+    width: 100%;
+}
+#sliderDivWrapper {
     width: 900px;
+    padding: 10px;
 }
 #filterAge {
     width: 900px;
@@ -43,28 +47,44 @@ body {
 }
 
 #chartPanel {
-    background: #fff;
-    font: "Avenir Next W00";
+    font: Avenir Next;
     line-height: 1.5em;
-    overflow: auto;
+    margin: auto;
     padding: 10px;
     width: 800px;
-    float: right;
 }
 
-.chart {
-    height: 380px;
+#chart {
+    height: 350px;
+    width: 100%;
 }
 #chartPanelPie {
-    background: #fff;
-    font: "Avenir Next W00";
+    font: Avenir Next;
     line-height: 1.5em;
     overflow: auto;
     padding: 10px;
-    width: 400px;
+    width: 475px;
     float: right;
+    margin-top: 10px;
 }
 #stats {
-    width: 20%;
+    width: 45%;
     float: left;
+    margin: auto;
+    margin-top: 10px;
+    height: 350px;
+}
+#cardText {
+    float: left;
+    width: 200px;
+}
+.tab {
+    width: 100%;
+}
+#population {
+    width: 54%;
+    float: right;
+    margin: auto;
+    margin-top: 10px;
+    height: 350px;
 }

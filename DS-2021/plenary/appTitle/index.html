@@ -7,7 +7,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css" />
-    <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/light/main.css" />
+    <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/dark/main.css" />
     <link rel="stylesheet" href="https://unpkg.com/@esri/calcite-components@1.0.0-beta.50/dist/calcite/calcite.css" />
     <link rel="stylesheet" href="css/main.css">
 
@@ -22,17 +22,18 @@
 <body>
     <div id="viewDiv"></div>
     <div id="sidePanel">
-        <calcite-tabs layout="inline" position="above">
+        <calcite-tabs layout="inline" position="above" theme="dark">
             <calcite-tab-nav slot="tab-nav">
                 <calcite-tab-title active="">Visualize your data</calcite-tab-title>
-                <calcite-tab-title>Query and Filter</calcite-tab-title>
+                <calcite-tab-title>Statistics</calcite-tab-title>
             </calcite-tab-nav>
 
-            <calcite-tab active="">
+            <calcite-tab active="" class="tab">
                 <div id="buttonFilters">
-                    <h3>Render by age group:</h3>
-                    <calcite-radio-group id="filterAge" layout="horizontal" appearance="solid" scale="m" width="auto"
-                        role="radiogroup" calcite-hydrated="">
+                    <h3>Render by age group</h3>
+                    <p>Choose from a predefined age range:</p>
+                    <calcite-radio-group id="filterAge" layout="horizontal" theme="dark" appearance="solid" scale="m"
+                        width="auto" role="radiogroup" calcite-hydrated="">
                         <calcite-radio-group-item value="none" checked="" tabindex="0" appearance="solid"
                             aria-checked="true" layout="horizontal" role="radio" scale="m" icon-position="start"
                             calcite-hydrated="">
@@ -68,17 +69,33 @@
                         <input type="hidden" />
                     </calcite-radio-group>
                 </div>
-                <div id="sliderDiv"></div>
+                <div id="sliderDivWrapper">
+                    <p>Use the slider to select an age range to be visualized:</p>
+                    <div id="sliderDiv"></div>
+                </div>
                 <label>
                     <calcite-switch id="switch" name="setting" value="enabled" scale="s">
                         <input type="checkbox" name="setting" value="enabled" />
                     </calcite-switch> Above and below color ramp
                 </label>
             </calcite-tab>
-            <calcite-tab>
-                <div id="stats"></div>
-                <div id="chartPanelPie"><canvas id="chartPie" class="chart"></canvas></div>
-                <div id="chartPanel"><canvas id="chart" class="chart"></canvas></div>
+            <calcite-tab class="tab">
+                <div id="stats">
+                        <calcite-card>
+                            <div id="cardText">
+                                <h3 slot="title">Housing Statistics</h3>
+                                <span slot="subtitle">
+                                    <b>Median Income:</b> $<span id="income"></span><br />
+                                    <b>Median Home Value:</b> $<span id="homeValue"></span>
+                                </span>
+                            </div>
+                            <div id="chartPanelPie"><canvas id="chartPie" class="chart"></canvas></div>
+                        </calcite-card>
+                    </div>
+                <div id="population"><calcite-card>
+                    <div id="chartPanel"><canvas id="chart" class="chart"></canvas></div>
+                </calcite-card>
+                </div>
             </calcite-tab>
         </calcite-tabs>
     </div>

@@ -451,16 +451,20 @@ require([
     }
     let chartPie;
 
+    // A plugin to draw the background color
+Chart.plugins.register({
+    beforeDraw: function(chartInstance) {
+      var ctx = chartInstance.chart.ctx;
+      ctx.fillStyle = '#2b2b2b';
+      ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
+    }
+  })
+
     function updateStats(data){
         let avgData = data[2];
         let housingData = data[3];
-        console.log(avgData);
-        console.log(housingData);
-        let str = "";
-        for(var key in avgData){
-            str+= avgData[key].name + ": " + Math.round(avgData[key].value) + "<br/>";
-        }
-        document.getElementById("stats").innerHTML = str;
+        document.getElementById("income").innerHTML = numberWithCommas(Math.round(avgData[0].value));
+        document.getElementById("homeValue").innerHTML = numberWithCommas(Math.round(avgData[1].value));
 
         if (!chartPie) {
             console.log("creating chart");
@@ -487,7 +491,10 @@ require([
                 options: {
                     responsive: true,
                     legend: {
-                        position: "bottom"
+                        position: "bottom",
+                        labels: {
+                            fontColor: "white"
+                        }
                     },
                     tooltips: {
                         callbacks: {
@@ -724,11 +731,15 @@ require([
                 options: {
                     responsive: false,
                     legend: {
-                        position: "bottom"
+                        position: "bottom",
+                        labels: {
+                            fontColor: "white"
+                        }
                     },
                     title: {
                         display: true,
-                        text: "Population pyramid"
+                        text: "Population pyramid",
+                        fontColor: "white"
                     },
                     scales: {
                         yAxes: [{
@@ -738,7 +749,10 @@ require([
                             scaleLabel: {
                                 display: true,
                                 labelString: "Age group"
-                            }
+                            },
+                            gridLines: {
+                                color: 'rgba(255, 255, 255, 0.2)'
+                              },
                         }],
                         xAxes: [{
                             ticks: {
@@ -750,7 +764,10 @@ require([
                             scaleLabel: {
                                 display: true,
                                 labelString: "Population"
-                            }
+                            },
+                            gridLines: {
+                                color: 'rgba(255, 255, 255, 0.2)'
+                              },
                         }]
                     },
                     tooltips: {
