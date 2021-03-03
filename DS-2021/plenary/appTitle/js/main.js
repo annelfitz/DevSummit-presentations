@@ -1,8 +1,9 @@
 require([
     "esri/views/MapView",
-    "esri/Map",
+    "esri/WebMap",
     "esri/layers/FeatureLayer",
     "esri/layers/GraphicsLayer",
+    "esri/layers/TileLayer",
     "esri/widgets/Slider",
     "esri/widgets/Legend",
     "esri/core/watchUtils",
@@ -11,11 +12,13 @@ require([
     "esri/geometry/Point",
     "esri/Graphic",
     "esri/geometry/geometryEngine",
+    "esri/layers/GroupLayer"
 ], function (
     MapView,
-    Map,
+    WebMap,
     FeatureLayer,
     GraphicsLayer,
+    TileLayer,
     Slider,
     Legend,
     watchUtils,
@@ -24,10 +27,12 @@ require([
     Point,
     Graphic,
     geometryEngine,
+    GroupLayer
 ) {
     // App 'globals'
     let sketchViewModel, featureLayerView, pausableWatchHandle, chartExpand;
-    let statDefinitions, labels = [];
+    let statDefinitions,
+        labels = [];
     let aboveAndBelow = false;
 
     // graphics
@@ -46,9 +51,10 @@ require([
         max: 84,
         values: [18, 22],
         precision: 0,
-        layout: "vertical-reversed",
+        layout: "horizontal",
         visibleElements: {
-            rangeLabels: true
+            rangeLabels: true,
+            labels: true
         }
     });
 
@@ -64,9 +70,13 @@ require([
         blendMode: "color-burn"
     });
     const featureLayer = new FeatureLayer({
+        blendMode: "source-in",
         portalItem: {
             // id: "0fda5b2428694ce5b17d3953a89fb4da" // SoCal
-            id: "e2d3120d9ff0483da88d23d9a67d83a0"
+            // id: "e2d3120d9ff0483da88d23d9a67d83a0" // Northeast US
+            // id: "ac514af2829b4ac4aaf7894a8b47f5cf" // California by block group
+            // id: "81c2ede27746418a86ed44cf7df82cf4" // LA
+            id: "43e16ed1f5b3481abfa8df4ee92dd45b" // California by block group with additional fields
         },
         outFields: ["*"],
         renderer: {
@@ -78,8 +88,14 @@ require([
             },
             visualVariables: [{
                 type: "color",
-                valueExpression: createAgeRange(ageSlider.values[0], ageSlider.values[1]),
-                valueExpressionTitle: "Percent of population aged " + ageSlider.values[0] + " - " + ageSlider.values[1],
+                valueExpression: createAgeRange(
+                    ageSlider.values[0],
+                    ageSlider.values[1]
+                ),
+                valueExpressionTitle: "Percent of population aged " +
+                    ageSlider.values[0] +
+                    " - " +
+                    ageSlider.values[1],
                 stops: [{
                         value: 0,
                         label: "0%",
@@ -95,19 +111,39 @@ require([
         }
     });
 
+    const buildingFootprints = new TileLayer({
+        portalItem: {
+            id: "7009e50f4c7b4eb7a77fb92cfac3835a"
+        },
+        renderer: {
+            type: "simple",
+            symbol: {
+                type: "simple-fill"
+            }
+        },
+        minScale: 0,
+        maxScale: 0
+    });
+
+    const groupLayer = new GroupLayer({
+        layers: [buildingFootprints, featureLayer]
+    });
+
     // create map with basemap
-    const map = new Map({
-        basemap: "gray-vector",
+    const map = new WebMap({
+        portalItem: {
+            id: "08696a2de81e44cb8110d1bbabb86441"
+        }
     });
 
     const view = new MapView({
         container: "viewDiv",
         map,
-        center: [-73.170, 41.313],
-        zoom: 9
+        center: [-118.25, 34.0656],
+        zoom: 12
     });
 
-    map.addMany([featureLayer, graphicsLayer, bufferLayer]);
+    map.addMany([groupLayer, graphicsLayer, bufferLayer]);
     generateStats();
     setUpAppUI();
     setUpSketch();
@@ -123,24 +159,36 @@ require([
 
     function updateSlider(event) {
         switch (event.detail) {
-            case "young":
-                ageSlider.values = [0, 3];
+            case "infant":
+                ageSlider.values = [0, 1];
                 ageSlider.disabled = true;
                 break;
-            case "hs":
-                ageSlider.values = [14, 18];
+            case "child":
+                ageSlider.values = [1, 11];
+                ageSlider.disabled = true;
+                break;
+            case "teen":
+                ageSlider.values = [12, 17];
                 ageSlider.disabled = true;
                 break;
             case "college":
                 ageSlider.values = [18, 22];
                 ageSlider.disabled = true;
                 break;
-            case "retired":
-                ageSlider.values = [65, 84];
+            case "millenials":
+                ageSlider.values = [24, 39];
+                ageSlider.disabled = true;
+                break;
+            case "genx":
+                ageSlider.values = [40, 55];
+                ageSlider.disabled = true;
+                break;
+            case "boomer":
+                ageSlider.values = [56, 74];
                 ageSlider.disabled = true;
                 break;
             case "none":
-                ageSlider.disabled = false
+                ageSlider.disabled = false;
                 break;
             default:
         }
@@ -151,12 +199,17 @@ require([
         let str = "var TOT = Sum(";
 
         for (let age = low; age <= high; age++) {
-            str += "Number($feature.MAGE" + age + "_CY), Number($feature.FAGE" + age + "_CY)";
+            str +=
+                "Number($feature.MAGE" +
+                age +
+                "_CY), Number($feature.FAGE" +
+                age +
+                "_CY)";
             if (age != high) {
-                str += ","
+                str += ",";
             }
         }
-        str += ")\n Round(((TOT/$feature.TOTPOP_CY)*100),2)"
+        str += ")\n Round(((TOT/$feature.TOTPOP_CY)*100),2)";
         return str;
     }
 
@@ -165,7 +218,7 @@ require([
         for (let age = low; age <= high; age++) {
             str += "MAGE" + age + "_CY + FAGE" + age + "_CY";
             if (age != high) {
-                str += "+"
+                str += "+";
             }
         }
         str += ")/TOTPOP_CY * 100";
@@ -174,57 +227,67 @@ require([
 
     function updateVisualization() {
         const avgStats = [{
-            onStatisticField: findSqlAvg(ageSlider.values[0], ageSlider.values[1]),
-            outStatisticFieldName: "pct_age_population_avg",
-            statisticType: "avg"
-        }, {
-            onStatisticField: findSqlAvg(ageSlider.values[0], ageSlider.values[1]),
-            outStatisticFieldName: "pct_age_population_stddev",
-            statisticType: "stddev"
-        }];
+                onStatisticField: findSqlAvg(ageSlider.values[0], ageSlider.values[1]),
+                outStatisticFieldName: "pct_age_population_avg",
+                statisticType: "avg"
+            },
+            {
+                onStatisticField: findSqlAvg(ageSlider.values[0], ageSlider.values[1]),
+                outStatisticFieldName: "pct_age_population_stddev",
+                statisticType: "stddev"
+            }
+        ];
         let query = featureLayerView.createQuery();
         query.outStatistics = avgStats;
 
-        featureLayerView.queryFeatures(query)
-            .then(function (response) {
-                let stats = {
-                    avg: response.features[0].attributes.pct_age_population_avg,
-                    stddev: response.features[0].attributes.pct_age_population_stddev
-                }
-                let maxValue = stats.avg + stats.stddev;
-                featureLayer.renderer = {
-                    type: "simple",
-                    symbol: {
-                        type: "simple-fill",
-                        color: "white",
-                        outline: null
-                    },
-                    visualVariables: [{
-                        type: "color",
-                        valueExpression: createAgeRange(ageSlider.values[0], ageSlider.values[1]),
-                        valueExpressionTitle: "Percent of population aged " + ageSlider.values[0] + " - " + ageSlider.values[1],
-                        stops: createStops(maxValue, stats)
-                    }]
-                }
-            })
+        featureLayerView.queryFeatures(query).then(function (response) {
+            let stats = {
+                avg: response.features[0].attributes.pct_age_population_avg,
+                stddev: response.features[0].attributes.pct_age_population_stddev
+            };
+            let maxValue = stats.avg + stats.stddev;
+            featureLayer.renderer = {
+                type: "simple",
+                symbol: {
+                    type: "simple-fill",
+                    color: "white",
+                    outline: null
+                },
+                visualVariables: [{
+                    type: "color",
+                    valueExpression: createAgeRange(
+                        ageSlider.values[0],
+                        ageSlider.values[1]
+                    ),
+                    valueExpressionTitle: "Percent of population aged " +
+                        ageSlider.values[0] +
+                        " - " +
+                        ageSlider.values[1],
+                    stops: createStops(maxValue, stats)
+                }]
+            };
+        });
     }
 
     function createStops(max, stats) {
         let stops = [];
         if (aboveAndBelow) {
             stops = [{
-                value: stats.avg - stats.stddev,
-                label: Math.round(stats.avg - stats.stddev) + "%",
-                color: "#b65151"
-            }, {
-                value: stats.avg,
-                label: Math.round(stats.avg) + "%",
-                color: "#ffffff"
-            }, {
-                value: max,
-                label: Math.round(max) + "%",
-                color: "#546b8c"
-            }]
+                    value: stats.avg - stats.stddev,
+                    label: Math.round(stats.avg - stats.stddev) + "%",
+                    color: "#b65151"
+                },
+                {
+                    value: stats.avg,
+                    label: Math.round(stats.avg) + "%",
+                    color: "#ffffff"
+                },
+                {
+                    value: max,
+                    label: Math.round(max) + "%",
+                    color: "#546b8c"
+                }
+            ];
         } else {
             stops = [{
                     value: stats.avg - stats.stddev,
@@ -236,14 +299,14 @@ require([
                     label: Math.round(max) + "%",
                     color: "#084594"
                 }
-            ]
+            ];
         }
 
         return stops;
     }
 
     function generateStats() {
-        console.log("generating stats")
+        console.log("generating stats");
         let arr = [];
         for (let i = 0; i <= 84; i++) {
             let maleStr = "MAGE" + i + "_CY";
@@ -252,20 +315,29 @@ require([
             if (i == 0) {
                 labels.unshift("<1");
             } else {
-                labels.unshift(i)
+                labels.unshift(i);
             }
         }
+        arr.push("MEDHINC_CY", "OWNER_CY", "RENTER_CY", "VACANT_CY", "MEDVAL_CY");
         statDefinitions = arr.map(function (fieldName) {
-            return {
-                onStatisticField: fieldName,
-                outStatisticFieldName: fieldName + "_TOTAL",
-                statisticType: "sum"
-            };
+            if (fieldName.includes("AGE")){
+                return {
+                    onStatisticField: fieldName,
+                    outStatisticFieldName: fieldName + "_TOTAL",
+                    statisticType: "sum"
+                };
+            } else {
+                return {
+                    onStatisticField: fieldName,
+                    outStatisticFieldName: fieldName + "_AVG",
+                    statisticType: "avg"
+                };
+            }
         });
     }
 
     function setUpAppUI() {
-        console.log("setting up app ui")
+        console.log("setting up app ui");
         view.whenLayerView(featureLayer).then(function (layerView) {
             featureLayerView = layerView;
 
@@ -278,10 +350,13 @@ require([
                     }
                 }
             );
-            view.ui.add(new Legend({
-                view: view
-            }), "bottom-left");
-        })
+            view.ui.add(
+                new Legend({
+                    view: view
+                }),
+                "bottom-left"
+            );
+        });
     }
 
     function setUpSketch() {
@@ -301,12 +376,9 @@ require([
     function onMove(event) {
         // If the edge graphic is moving, keep the center graphic
         // at its initial location. Only move edge graphic
-        if (
-            event.toolEventInfo &&
-            event.toolEventInfo.mover.attributes.edge
-        ) {
+        if (event.toolEventInfo && event.toolEventInfo.mover.attributes.edge) {
             const toolType = event.toolEventInfo.type;
-            console.log(toolType)
+            console.log(toolType);
             if (toolType === "move-start") {
                 centerGeometryAtStart = centerGraphic.geometry;
             }
@@ -359,6 +431,7 @@ require([
         queryLayerViewAgeStats(buffer).then(function (newData) {
             // Create a population pyramid chart from the returned result
             updateChart(newData);
+            updateStats(newData);
         });
 
         // Update label graphic to show the length of the polyline
@@ -376,16 +449,78 @@ require([
             }
         };
     }
+    let chartPie;
+
+    function updateStats(data){
+        let avgData = data[2];
+        let housingData = data[3];
+        console.log(avgData);
+        console.log(housingData);
+        let str = "";
+        for(var key in avgData){
+            str+= avgData[key].name + ": " + Math.round(avgData[key].value) + "<br/>";
+        }
+        document.getElementById("stats").innerHTML = str;
+
+        if (!chartPie) {
+            console.log("creating chart");
+            // Get the canvas element and render the chart in it
+            const canvasElement = document.getElementById("chartPie");
+
+            chartPie = new Chart(canvasElement.getContext("2d"), {
+                type: "pie",
+                data: {
+                    datasets: [{
+                            data: housingData,
+                            backgroundColor: [
+                                'rgb(255, 99, 132)',
+                                'rgb(255, 159, 64)',
+                                'rgb(255, 205, 86)',
+                            ],
+                    }],
+                    labels: [
+                        "Owner Occupied",
+                        "Renter Occupied",
+                        "Vacant"
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: "bottom"
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function (tooltipItem, data) {
+                                console.log(data)
+                                return (
+                                    data.labels[tooltipItem.index] +
+                                    ": " +
+                                    Math.round(data.datasets[0].data[tooltipItem.index])
+                                );
+                            }
+                        }
+                    }
+                }
+            });
+        } else {
+            chartPie.data.datasets[0].data = housingData;
+            chartPie.update();
+        }
+    }
+    
 
     /*********************************************************************
      * Spatial query the census tracts feature layer view for statistics
      * using the updated buffer polygon.
      *********************************************************************/
     function queryLayerViewAgeStats(buffer) {
-        console.log("query function")
+        console.log("query function");
         // Data storage for the chart
         let femaleAgeData = [],
-            maleAgeData = [];
+            maleAgeData = [],
+            avgData = [],
+            housingData = [];
 
         // Client-side spatial query:
         // Get a sum of age groups for census tracts that intersect the polygon buffer
@@ -401,16 +536,23 @@ require([
                 const attributes = results.features[0].attributes;
                 // Loop through attributes and save the values for use in the population pyramid.
                 for (var key in attributes) {
-                    if (key.includes("F")) {
+                    if (key.includes("FAGE")) {
                         femaleAgeData.push(attributes[key]);
-                    } else {
+                    } else if (key.includes("MAGE")) {
                         // Make 'all male age group population' total negative so that
                         // data will be displayed to the left of female age group
                         maleAgeData.push(-Math.abs(attributes[key]));
+                    } else if (key.includes("MED")){
+                        avgData.push({
+                            name: key,
+                            value: attributes[key]
+                        })
+                    } else {
+                        housingData.push(attributes[key])
                     }
                 }
                 // Return information, seperated by gender
-                return [femaleAgeData, maleAgeData];
+                return [femaleAgeData, maleAgeData, avgData, housingData];
             })
             .catch(function (error) {
                 console.log(error);
@@ -455,11 +597,7 @@ require([
 
             // get the length of the initial polyline and create buffer
             const length = geometryEngine.geodesicLength(polyline, unit);
-            const buffer = geometryEngine.geodesicBuffer(
-                centerPoint,
-                length,
-                unit
-            );
+            const buffer = geometryEngine.geodesicBuffer(centerPoint, length, unit);
 
             // Create the graphics representing the line and buffer
             const pointSymbol = {
@@ -507,7 +645,12 @@ require([
             labelGraphic = labelLength(edgePoint, length);
 
             // Add graphics to layer
-            graphicsLayer.addMany([centerGraphic, edgeGraphic, polylineGraphic, labelGraphic]);
+            graphicsLayer.addMany([
+                centerGraphic,
+                edgeGraphic,
+                polylineGraphic,
+                labelGraphic
+            ]);
             // once center and edge point graphics are added to the layer,
             // call sketch's update method pass in the graphics so that users
             // can just drag these graphics to adjust the buffer
@@ -517,9 +660,7 @@ require([
                 });
             }, 1000);
 
-            bufferLayer.addMany([
-                bufferGraphic
-            ]);
+            bufferLayer.addMany([bufferGraphic]);
         }
         // Move the center and edge graphics to the new location returned from search
         else {
@@ -553,12 +694,11 @@ require([
     let chart;
 
     function updateChart(newData) {
-
         const femaleAgeData = newData[0];
         const maleAgeData = newData[1];
 
         if (!chart) {
-            console.log("creating chart")
+            console.log("creating chart");
             // Get the canvas element and render the chart in it
             const canvasElement = document.getElementById("chart");
 
@@ -635,7 +775,7 @@ require([
                 }
                 ageSlider.values = [age, age];
                 updateVisualization();
-            })
+            });
         } else {
             chart.data.datasets[0].data = femaleAgeData;
             chart.data.datasets[1].data = maleAgeData;
