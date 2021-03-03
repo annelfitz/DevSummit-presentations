@@ -27,23 +27,13 @@ body {
 }
 #sliderDivWrapper {
     width: 900px;
-    padding: 10px;
 }
 #filterAge {
     width: 900px;
 }
 
-.cal-btn {
-    height: 50px;
-    margin: 5px;
-}
-
 #sliderDiv .esri-slider__segment-1 {
     background-color: #0079c1;
-}
-
-#buttonFilters {
-    padding: 10px;
 }
 
 #chartPanel {
@@ -51,11 +41,6 @@ body {
     line-height: 1.5em;
     margin: auto;
     padding: 10px;
-    width: 800px;
-}
-
-#chart {
-    height: 350px;
     width: 100%;
 }
 #chartPanelPie {
@@ -72,7 +57,7 @@ body {
     float: left;
     margin: auto;
     margin-top: 10px;
-    height: 350px;
+
 }
 #cardText {
     float: left;
@@ -80,6 +65,7 @@ body {
 }
 .tab {
     width: 100%;
+    height: 100%
 }
 #population {
     width: 54%;
@@ -87,4 +73,12 @@ body {
     margin: auto;
     margin-top: 10px;
     height: 350px;
+}
+#incomeRender {
+    float: right;
+    width: 40%;
+}
+#ageRender {
+    float: left;
+    width: 60%;
 }

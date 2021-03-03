@@ -274,29 +274,29 @@ require([
         if (aboveAndBelow) {
             stops = [{
                     value: stats.avg - stats.stddev,
-                    label: Math.round(stats.avg - stats.stddev) + "%",
+                    label: Number.parseFloat(stats.avg - stats.stddev).toFixed(2) + "%",
                     color: "#b65151"
                 },
                 {
                     value: stats.avg,
-                    label: Math.round(stats.avg) + "%",
+                    label: Number.parseFloat(stats.avg).toFixed(2) + "%",
                     color: "#ffffff"
                 },
                 {
                     value: max,
-                    label: Math.round(max) + "%",
+                    label:  Number.parseFloat(max).toFixed(2) + "%",
                     color: "#546b8c"
                 }
             ];
         } else {
             stops = [{
                     value: stats.avg - stats.stddev,
-                    label: Math.round(stats.avg - stats.stddev) + "%",
+                    label: Number.parseFloat(stats.avg - stats.stddev).toFixed(2) + "%",
                     color: "#f7fbff"
                 },
                 {
                     value: max,
-                    label: Math.round(max) + "%",
+                    label: Number.parseFloat(max).toFixed(2) + "%",
                     color: "#084594"
                 }
             ];
@@ -477,10 +477,11 @@ Chart.plugins.register({
                     datasets: [{
                             data: housingData,
                             backgroundColor: [
-                                'rgb(255, 99, 132)',
-                                'rgb(255, 159, 64)',
-                                'rgb(255, 205, 86)',
+                                "#5f915f",
+                                "#d2a60e",
+                                "#a06022",
                             ],
+                            borderColor: 'rgba(255, 255, 255, 0.2)'
                     }],
                     labels: [
                         "Owner Occupied",
@@ -662,7 +663,7 @@ Chart.plugins.register({
             // call sketch's update method pass in the graphics so that users
             // can just drag these graphics to adjust the buffer
             setTimeout(function () {
-                sketchViewModel.update([edgeGraphic, centerGraphic, polylineGraphic], {
+                sketchViewModel.update([edgeGraphic, centerGraphic], {
                     tool: "move"
                 });
             }, 1000);
@@ -716,13 +717,13 @@ Chart.plugins.register({
                     labels: labels,
                     datasets: [{
                             label: "Female",
-                            backgroundColor: "#B266FF",
+                            backgroundColor: "#826288",
                             borderWidth: 0,
                             data: femaleAgeData
                         },
                         {
                             label: "Male",
-                            backgroundColor: "#0080FF",
+                            backgroundColor: "#4c689b",
                             borderWidth: 0,
                             data: maleAgeData
                         }
