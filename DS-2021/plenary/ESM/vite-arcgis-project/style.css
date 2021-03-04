@@ -1,0 +1,52 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  font-family: Avenir Next;
+}
+
+#viewDiv {
+  padding: auto;
+  margin: auto;
+  height: 450px;
+  width: 100%;
+}
+
+.header-img {
+  background-image: url("./assets/img/pano.png");
+  color: white;
+  height: 350px;
+  filter: contrast(110%);
+}
+#dayCards {
+  padding: 20px
+}
+.tab {
+  padding: 15px;
+}
+
+.tab-img {
+  float: right;
+}
+.description {
+  float: left;
+  width: 48%;
+}
+#red {
+  color: #A03500;
+  font-weight: bold;
+}
+#yellow {
+  color: #D9B400;
+  font-weight: bold;
+}
+#blue {
+  color: #3264C8;
+  font-weight: bold;
+}
+#green {
+  color: #72B38E;
+  font-weight: bold;
+}

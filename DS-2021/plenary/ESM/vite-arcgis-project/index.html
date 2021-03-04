@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite App</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+  <script type="module" src="./node_modules/@esri/calcite-components/dist/calcite/calcite.esm.js"></script>
+  <script nomodule="" src="./node_modules/@esri/calcite-components/dist/calcite/calcite.js"></script>
+  <link rel="stylesheet" href="./node_modules/@esri/calcite-components/dist/calcite/calcite.css" />
+</head>
+
+<body>
+  <header class="site-header sticky-top py-1">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">DevSummit 2021</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+
+    <div class="position-relative overflow-hidden p-3 text-center header-img">
+      <div class="p-lg-5 mx-auto my-5">
+        <h1 class="display-4 fw-normal">Hiking the Trans Catalina Trail</h1>
+        <p class="lead fw-normal">4 days, 46.6 miles</p>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row align-items-start" id="dayCards">
+        <div class="col">
+          <calcite-tabs layout="inline" position="above">
+            <calcite-tab-nav slot="tab-nav">
+              <calcite-tab-title active="">Day 1</calcite-tab-title>
+              <calcite-tab-title>Day 2</calcite-tab-title>
+              <calcite-tab-title>Day 3</calcite-tab-title>
+              <calcite-tab-title>Tab 4</calcite-tab-title>
+            </calcite-tab-nav>
+
+            <calcite-tab class="tab" active="">
+              <h5>Day 1: Avalon to Blackjack Campground</h5>
+              <span >11 miles, 1500 ft</span><br/><br/>
+              <div class="content">
+                <span class="description">This section of the trail is shown in <span id="red">red</span> on the map. Day one starts with a short hike through the city of Avalon until you get to the trailhead.
+              Then, the switchbacks start. As you hike along the trail, you might get lucky and see some bison! They are all over Catalina island.<br/><br/>
+            Once we got to Blackjack Campground, we set up our tent and made a dehydrated meal for dinner. We hiked a little further up the trail to see the sun set over the western side of the island (image shown on the right).</span>
+              <img src="./assets/img/sunset.png" alt="" class="tab-img" width="50%">
+            </div>
+            </calcite-tab>
+            <calcite-tab class="tab">
+              <h5>Day 2: Blackjack to Two Harbors</h5>
+                <span>13 miles, 1300 ft</span><br/><br/>
+                <span>Shown in <span id="yellow">yellow</span> on the map.</span>
+                <div class="content">
+                  <span class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi laoreet pretium scelerisque. In tincidunt pellentesque leo, accumsan facilisis elit fringilla eu. Quisque in erat sed risus pellentesque posuere in in sapien. In turpis lorem, ultrices egestas aliquet sed, pharetra ac orci. Etiam consequat ultricies vulputate. Fusce in faucibus libero, et condimentum lacus. Maecenas pulvinar magna vel fermentum faucibus. Suspendisse commodo arcu at nisi maximus maximus. Nulla quis sagittis augue. Aenean euismod quis lorem at euismod. </span>
+                <img src="./assets/img/trail-to-little-harbor.png" class="tab-img" alt="" width="50%">
+              </div>
+            </calcite-tab>
+            <calcite-tab class="tab">
+              <h5>Day 3: Two Harbors to Parsons Landing (Optional hike to Starlight Beach)</h5>
+                <span >6.5 miles, 1700 ft. (Additional 8.6 miles round trip to Starlight Beach)</span><br/><br/>
+                <span>Shown in <span id="blue">blue</span> on the map.</span>
+                <div class="content">
+                  <span class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi laoreet pretium scelerisque. In tincidunt pellentesque leo, accumsan facilisis elit fringilla eu. Quisque in erat sed risus pellentesque posuere in in sapien. In turpis lorem, ultrices egestas aliquet sed, pharetra ac orci. Etiam consequat ultricies vulputate. Fusce in faucibus libero, et condimentum lacus. Maecenas pulvinar magna vel fermentum faucibus. Suspendisse commodo arcu at nisi maximus maximus. Nulla quis sagittis augue. Aenean euismod quis lorem at euismod. </span>
+              <img src="./assets/img/coast-view.JPG" class="tab-img" alt="" width="50%">
+            </div>
+            </calcite-tab>
+            <calcite-tab class="tab">
+              <h5>Day 4: Parsons Landing to Two Harbors</h5>
+                <span>7.5 miles, 200 ft</span><br/><br/>
+                <span>Shown in <span id="green">green</span> on the map.</span>
+                <div class="content">
+                  <span class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi laoreet pretium scelerisque. In tincidunt pellentesque leo, accumsan facilisis elit fringilla eu. Quisque in erat sed risus pellentesque posuere in in sapien. In turpis lorem, ultrices egestas aliquet sed, pharetra ac orci. Etiam consequat ultricies vulputate. Fusce in faucibus libero, et condimentum lacus. Maecenas pulvinar magna vel fermentum faucibus. Suspendisse commodo arcu at nisi maximus maximus. Nulla quis sagittis augue. Aenean euismod quis lorem at euismod. </span>
+                <img src="./assets/img/day4.png" class="tab-img" alt="" width="50%">
+              </div>
+            </calcite-tab>
+          </calcite-tabs>
+        </div>
+        <div class="col">
+          <div id="viewDiv"></div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </main>
+  <script type="module" src="/main.js"></script>
+</body>
+
+</html>
