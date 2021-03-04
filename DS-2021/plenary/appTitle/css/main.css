@@ -12,6 +12,7 @@ body {
     height: 44%;
     margin: auto;
     width: 98%;
+    overflow:scroll;
 }
 
 #viewDiv {
@@ -26,10 +27,10 @@ body {
     width: 100%;
 }
 #sliderDivWrapper {
-    width: 900px;
+    width: 800px;
 }
 #filterAge {
-    width: 900px;
+    width: 800px;
 }
 
 #sliderDiv .esri-slider__segment-1 {
@@ -43,18 +44,17 @@ body {
     padding: 10px;
     width: 100%;
 }
-#chartPanelPie {
+#chartPanelDonut {
     font: Avenir Next;
     line-height: 1.5em;
     overflow: auto;
     padding: 10px;
     width: 475px;
-    float: right;
-    margin-top: 10px;
+    margin: auto;
 }
 #stats {
     width: 45%;
-    float: left;
+    float: right;
     margin: auto;
     margin-top: 10px;
 
@@ -65,20 +65,18 @@ body {
 }
 .tab {
     width: 100%;
-    height: 100%
+    height: 100%;
 }
 #population {
-    width: 54%;
+    width: 50%;
     float: right;
     margin: auto;
-    margin-top: 10px;
     height: 350px;
-}
-#incomeRender {
-    float: right;
-    width: 40%;
 }
 #ageRender {
     float: left;
-    width: 60%;
+    width: 50%;
+}
+#chart {
+    margin: auto;
 }

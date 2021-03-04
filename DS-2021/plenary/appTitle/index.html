@@ -22,84 +22,114 @@
 <body>
     <div id="viewDiv"></div>
     <div id="sidePanel">
-        <calcite-tabs layout="inline" position="above" theme="dark">
+        <calcite-tabs id="navTabs" layout="inline" position="above" theme="dark">
             <calcite-tab-nav slot="tab-nav">
-                <calcite-tab-title active="">Visualize the data</calcite-tab-title>
-                <calcite-tab-title>Query for statistics</calcite-tab-title>
+                <calcite-tab-title active="">Age</calcite-tab-title>
+                <calcite-tab-title>Income</calcite-tab-title>
             </calcite-tab-nav>
 
             <calcite-tab active="" class="tab">
                 <div id="ageRender">
                     <h3>Render by age group</h3>
-                <div id="buttonFilters">
-                    <p>Choose from a predefined age range:</p>
-                    <calcite-radio-group id="filterAge" layout="horizontal" theme="dark" appearance="solid" scale="m"
-                        width="auto" role="radiogroup" calcite-hydrated="">
-                        <calcite-radio-group-item value="none" checked="" tabindex="0" appearance="solid"
-                            aria-checked="true" layout="horizontal" role="radio" scale="m" icon-position="start"
-                            calcite-hydrated="">
-                            No filter
-                        </calcite-radio-group-item>
-                        <calcite-radio-group-item value="infant" appearance="solid" aria-checked="false"
-                            layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
-                            Infants (<1) </calcite-radio-group-item> <calcite-radio-group-item value="child"
-                                appearance="solid" aria-checked="false" layout="horizontal" role="radio" scale="m"
-                                icon-position="start" calcite-hydrated="">
-                                Children (1-11)
-                        </calcite-radio-group-item>
-                        <calcite-radio-group-item value="teen" appearance="solid" aria-checked="false"
-                            layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
-                            Teens (12-17)
-                        </calcite-radio-group-item>
-                        <calcite-radio-group-item value="college" appearance="solid" aria-checked="false"
-                            layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
-                            College Age (18-22)
-                        </calcite-radio-group-item>
-                        <calcite-radio-group-item value="millenials" appearance="solid" aria-checked="false"
-                            layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
-                            Millenials (24-39)
-                        </calcite-radio-group-item>
-                        <calcite-radio-group-item value="genx" appearance="solid" aria-checked="false"
-                            layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
-                            Generation X (40-55)
-                        </calcite-radio-group-item>
-                        <calcite-radio-group-item value="boomer" appearance="solid" aria-checked="false"
-                            layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
-                            Baby Boomers (56-74)
-                        </calcite-radio-group-item>
-                        <input type="hidden" />
-                    </calcite-radio-group>
+                    <div id="buttonFilters">
+                        <p>Choose from a predefined age range:</p>
+                        <calcite-radio-group id="filterAge" layout="horizontal" theme="dark" appearance="solid"
+                            scale="m" width="auto" role="radiogroup" calcite-hydrated="">
+                            <calcite-radio-group-item value="none" checked="" tabindex="0" appearance="solid"
+                                aria-checked="true" layout="horizontal" role="radio" scale="m" icon-position="start"
+                                calcite-hydrated="">
+                                No filter
+                            </calcite-radio-group-item>
+                            <calcite-radio-group-item value="infant" appearance="solid" aria-checked="false"
+                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                Infants (<1) </calcite-radio-group-item> <calcite-radio-group-item value="child"
+                                    appearance="solid" aria-checked="false" layout="horizontal" role="radio" scale="m"
+                                    icon-position="start" calcite-hydrated="">
+                                    Children (1-11)
+                            </calcite-radio-group-item>
+                            <calcite-radio-group-item value="teen" appearance="solid" aria-checked="false"
+                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                Teens (12-17)
+                            </calcite-radio-group-item>
+                            <calcite-radio-group-item value="college" appearance="solid" aria-checked="false"
+                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                College Age (18-22)
+                            </calcite-radio-group-item>
+                            <calcite-radio-group-item value="millenials" appearance="solid" aria-checked="false"
+                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                Millenials (24-39)
+                            </calcite-radio-group-item>
+                            <calcite-radio-group-item value="genx" appearance="solid" aria-checked="false"
+                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                Generation X (40-55)
+                            </calcite-radio-group-item>
+                            <calcite-radio-group-item value="boomer" appearance="solid" aria-checked="false"
+                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                Baby Boomers (56-74)
+                            </calcite-radio-group-item>
+                            <input type="hidden" />
+                        </calcite-radio-group>
+                    </div>
+                    <div id="sliderDivWrapper">
+                        <p>Use the slider to select an age range to be visualized:</p>
+                        <div id="sliderDiv"></div>
+                    </div>
+                    <label>
+                        <calcite-switch id="switch" name="setting" value="enabled" scale="s">
+                            <input type="checkbox" name="setting" value="enabled" />
+                        </calcite-switch> Above and below color ramp
+                    </label>
                 </div>
-                <div id="sliderDivWrapper">
-                    <p>Use the slider to select an age range to be visualized:</p>
-                    <div id="sliderDiv"></div>
+                <div id="population">
+                    <calcite-card>
+                        <div id="chartPanel"><canvas id="chart" width=800></canvas></div>
+                    </calcite-card>
                 </div>
-                <label>
-                    <calcite-switch id="switch" name="setting" value="enabled" scale="s">
-                        <input type="checkbox" name="setting" value="enabled" />
-                    </calcite-switch> Above and below color ramp
-                </label>
-            </div>
-            <div id="incomeRender">
-                <h3>Render by income</h3>
-            </div>
             </calcite-tab>
             <calcite-tab class="tab">
-                <div id="stats">
-                        <calcite-card>
-                            <div id="cardText">
-                                <h3>Housing Statistics</h3>
-                                <span>
-                                    <b>Median Income:</b> $<span id="income"></span><br />
-                                    <b>Median Home Value:</b> $<span id="homeValue"></span>
-                                </span>
-                            </div>
-                            <div id="chartPanelPie"><canvas id="chartPie"></canvas></div>
-                        </calcite-card>
+                <div id="ageRender">
+                    <h3>Render by income predominance</h3>
+                    <div id="buttonFilters">
+                        <p>Choose an age range:</p>
+                        <calcite-radio-group id="ageForIncome" layout="horizontal" theme="dark" appearance="solid"
+                            scale="m" width="auto" role="radiogroup" calcite-hydrated="">
+                            <calcite-radio-group-item value="A15" checked="" tabindex="0" appearance="solid"
+                                aria-checked="true" layout="horizontal" role="radio" scale="m" icon-position="start"
+                                calcite-hydrated="">
+                                15-24
+                            </calcite-radio-group-item>
+                            <calcite-radio-group-item value="A25" appearance="solid" aria-checked="false"
+                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                25-34
+                            </calcite-radio-group-item>
+                            <calcite-radio-group-item value="A35" appearance="solid" aria-checked="false"
+                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                35-44
+                            </calcite-radio-group-item>
+                            <calcite-radio-group-item value="A45" appearance="solid" aria-checked="false"
+                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                45-54
+                            </calcite-radio-group-item>
+                            <calcite-radio-group-item value="A55" appearance="solid" aria-checked="false"
+                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                55-64
+                            </calcite-radio-group-item>
+                            <calcite-radio-group-item value="A65" appearance="solid" aria-checked="false"
+                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                65-74
+                            </calcite-radio-group-item>
+                            <calcite-radio-group-item value="A75" appearance="solid" aria-checked="false"
+                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                75+
+                            </calcite-radio-group-item>
+                            <input type="hidden" />
+                        </calcite-radio-group>
                     </div>
-                <div id="population"><calcite-card>
-                    <div id="chartPanel"><canvas id="chart" width=800></canvas></div>
-                </calcite-card>
+                </div>
+                <div id="stats">
+                    <calcite-card>
+                        <div id="chartPanelDonut"><canvas id="chartDonut"></canvas></div>
+                    </calcite-card>
                 </div>
             </calcite-tab>
         </calcite-tabs>
