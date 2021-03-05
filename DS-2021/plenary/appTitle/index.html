@@ -126,20 +126,31 @@
                         </calcite-radio-group>
                     </div>
                     <div id="filterIncome">
-                        <div id="incomeSliderDivWrapper">
-                            <p>Use the slider to filter the map by the median income</p>
-                            <div id="playButton" class="esri-widget esri-widget--button toggle-button">
-                                <div>
-                                    <span class="toggle-button-icon esri-icon-play" aria-label="play icon"></span>
-                                    Play
+                        <calcite-accordion id="filterAccordion" dir="ltr" scale="m" theme="dark" appearance="default"
+                            icon-position="end" icon-type="chevron" selection-mode="multi" calcite-hydrated="">
+                            <calcite-accordion-item item-title="Filter block group by median income" item-subtitle=" "
+                                aria-expanded="false" dir="ltr" icon-position="end" tabindex="0" calcite-hydrated="">
+                                <div id="incomeSliderDivWrapper">
+                                    <p>Use the slider to filter the map by the median income</p>
+                                    <span id="sliderValue"></span>
+                                    <div>
+                                        <div id="playButton" class="esri-widget esri-widget--button toggle-button">
+                                            <div>
+                                                <span class="toggle-button-icon esri-icon-play"
+                                                    aria-label="play icon"></span>
+                                                Play
+                                            </div>
+                                            <div>
+                                                <span class="toggle-button-icon esri-icon-pause"
+                                                    aria-label="pause icon"></span>
+                                                Pause
+                                            </div>
+                                        </div>
+                                        <div id="incomeSliderDiv"></div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <span class="toggle-button-icon esri-icon-pause" aria-label="pause icon"></span>
-                                    Pause
-                                </div>
-                            </div>
-                            <div id="incomeSliderDiv"></div>
-                        </div>
+                            </calcite-accordion-item>
+                        </calcite-accordion>
                     </div>
                 </div>
                 <div id="stats">

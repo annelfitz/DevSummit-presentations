@@ -38,6 +38,7 @@ require([
     let aboveAndBelow, legend;
     let chart, chartDonut;
     let animation = null;
+    let incomeAge = "A15";
 
     // graphics
     let centerGraphic,
@@ -72,15 +73,19 @@ require([
         min: 15000,
         max: 210000,
         values: [75000, 90000],
+        labelFormatFunction: function(value, type) {
+            let formattedVal = "$" + numberWithCommas(value)
+            return formattedVal;
+        },
         steps: 5000,
         layout: "horizontal",
         visibleElements: {
             rangeLabels: true,
-            labels: true
         }
     });
     incomeSlider.on(["thumb-drag", "segment-drag"], function (event) {
-        createEffect(incomeSlider.values[0],incomeSlider.values[1])
+        setGapValue(incomeSlider.values[0],incomeSlider.values[1])
+        // featureLayer.renderer.visualVariables = null;
     });
 
     // Create layers
@@ -169,6 +174,7 @@ require([
     setUpAppUI();
     setUpSketch();
 
+    // set up calcite components and events
     const radio = document.getElementById("filterAge");
     radio.addEventListener("calciteRadioGroupChange", updateSlider);
 
@@ -184,7 +190,7 @@ require([
             map.removeMany([bufferLayer, graphicsLayer]);
             sketchViewModel.view = null;
             view.ui.remove(legend);
-            generatePredominanceRenderer("A15");
+            generatePredominanceRenderer(incomeAge);
         } else {
             map.addMany([bufferLayer, graphicsLayer]);
             sketchViewModel.view = view;
@@ -195,17 +201,27 @@ require([
     })
     const radioAgeIncome = document.getElementById("ageForIncome");
     radioAgeIncome.addEventListener("calciteRadioGroupChange", function (event) {
-        console.log(event.detail);
-        generatePredominanceRenderer(event.detail)
+        incomeAge = event.detail;
+        generatePredominanceRenderer(incomeAge)
     });
+
+    const filterAccordion = document.getElementById("filterAccordion");
+    filterAccordion.addEventListener("calciteAccordionChange", function(event){
+        if(!event.detail.requestedAccordionItem.active){
+            setGapValue(incomeSlider.values[0],incomeSlider.values[1])
+            // featureLayer.renderer.visualVariables = null;
+        } else {
+            featureLayerView.effect = null;
+            generatePredominanceRenderer(incomeAge);
+        }
+    })
+    
 
     var playButton = document.getElementById("playButton");
     playButton.addEventListener("click", function () {
         if (playButton.classList.contains("toggled")) {
             stopAnimation();
-            featureLayerView.effect = null;
         } else {
-            featureLayer.renderer.visualVariables = null;
             startAnimation();
         }
     });
@@ -326,20 +342,20 @@ require([
         console.log(ageVal);
         featureLayer.renderer = {
             "type": "unique-value",
-            "visualVariables": [{
-                "type": "opacity",
-                "valueExpression": "\n  $feature[\"" + ageVal + "I0_CY\"];\n$feature[\"" + ageVal + "I15_CY\"];\n$feature[\"" + ageVal + "I200_CY\"];\n$feature[\"" + ageVal + "I25_CY\"];\n$feature[\"" + ageVal + "I35_CY\"];\n$feature[\"" + ageVal + "I50_CY\"];\n$feature[\"" + ageVal + "I75_CY\"];\n$feature[\"" + ageVal + "I100_CY\"];\n$feature[\"" + ageVal + "I150_CY\"];\n\n  \n  var fieldNames = [ \"" + ageVal + "I0_CY\", \"" + ageVal + "I15_CY\", \"" + ageVal + "I200_CY\", \"" + ageVal + "I25_CY\", \"" + ageVal + "I35_CY\", \"" + ageVal + "I50_CY\", \"" + ageVal + "I75_CY\", \"" + ageVal + "I100_CY\", \"" + ageVal + "I150_CY\" ];\n  var numFields = 9;\n  var maxValueField = null;\n  var maxValue = -Infinity;\n  var value, i, totalValue = null;\n\n  for(i = 0; i < numFields; i++) {\n    value = $feature[fieldNames[i]];\n\n    if(value > 0) {\n      if(value > maxValue) {\n        maxValue = value;\n        maxValueField = fieldNames[i];\n      }\n      else if (value == maxValue) {\n        maxValueField = null;\n      }\n    }\n    \n  if(value != null && value >= 0) {\n    if (totalValue == null) { totalValue = 0; }\n    totalValue = totalValue + value;\n  }\n  \n  }\n  \n\n  var strength = null;\n\n  if (maxValueField != null && totalValue > 0) {\n    strength = (maxValue / totalValue) * 100;\n  }\n\n  return strength;\n  ",
-                "valueExpressionTitle": "Strength of Predominance",
-                "stops": [{
-                        "opacity": 0.05,
-                        "value": 12
-                    },
-                    {
-                        "opacity": 1,
-                        "value": 50
-                    }
-                ]
-            }],
+            // "visualVariables": [{
+            //     "type": "opacity",
+            //     "valueExpression": "\n  $feature[\"" + ageVal + "I0_CY\"];\n$feature[\"" + ageVal + "I15_CY\"];\n$feature[\"" + ageVal + "I200_CY\"];\n$feature[\"" + ageVal + "I25_CY\"];\n$feature[\"" + ageVal + "I35_CY\"];\n$feature[\"" + ageVal + "I50_CY\"];\n$feature[\"" + ageVal + "I75_CY\"];\n$feature[\"" + ageVal + "I100_CY\"];\n$feature[\"" + ageVal + "I150_CY\"];\n\n  \n  var fieldNames = [ \"" + ageVal + "I0_CY\", \"" + ageVal + "I15_CY\", \"" + ageVal + "I200_CY\", \"" + ageVal + "I25_CY\", \"" + ageVal + "I35_CY\", \"" + ageVal + "I50_CY\", \"" + ageVal + "I75_CY\", \"" + ageVal + "I100_CY\", \"" + ageVal + "I150_CY\" ];\n  var numFields = 9;\n  var maxValueField = null;\n  var maxValue = -Infinity;\n  var value, i, totalValue = null;\n\n  for(i = 0; i < numFields; i++) {\n    value = $feature[fieldNames[i]];\n\n    if(value > 0) {\n      if(value > maxValue) {\n        maxValue = value;\n        maxValueField = fieldNames[i];\n      }\n      else if (value == maxValue) {\n        maxValueField = null;\n      }\n    }\n    \n  if(value != null && value >= 0) {\n    if (totalValue == null) { totalValue = 0; }\n    totalValue = totalValue + value;\n  }\n  \n  }\n  \n\n  var strength = null;\n\n  if (maxValueField != null && totalValue > 0) {\n    strength = (maxValue / totalValue) * 100;\n  }\n\n  return strength;\n  ",
+            //     "valueExpressionTitle": "Strength of Predominance",
+            //     "stops": [{
+            //             "opacity": 0.05,
+            //             "value": 12
+            //         },
+            //         {
+            //             "opacity": 1,
+            //             "value": 50
+            //         }
+            //     ]
+            // }],
             "valueExpression": "\n  $feature[\"" + ageVal + "I0_CY\"];\n$feature[\"" + ageVal + "I15_CY\"];\n$feature[\"" + ageVal + "I200_CY\"];\n$feature[\"" + ageVal + "I25_CY\"];\n$feature[\"" + ageVal + "I35_CY\"];\n$feature[\"" + ageVal + "I50_CY\"];\n$feature[\"" + ageVal + "I75_CY\"];\n$feature[\"" + ageVal + "I100_CY\"];\n$feature[\"" + ageVal + "I150_CY\"];\n\n  \n  var fieldNames = [ \"" + ageVal + "I0_CY\", \"" + ageVal + "I15_CY\", \"" + ageVal + "I200_CY\", \"" + ageVal + "I25_CY\", \"" + ageVal + "I35_CY\", \"" + ageVal + "I50_CY\", \"" + ageVal + "I75_CY\", \"" + ageVal + "I100_CY\", \"" + ageVal + "I150_CY\" ];\n  var numFields = 9;\n  var maxValueField = null;\n  var maxValue = -Infinity;\n  var value, i, totalValue = null;\n\n  for(i = 0; i < numFields; i++) {\n    value = $feature[fieldNames[i]];\n\n    if(value > 0) {\n      if(value > maxValue) {\n        maxValue = value;\n        maxValueField = fieldNames[i];\n      }\n      else if (value == maxValue) {\n        maxValueField = null;\n      }\n    }\n    \n  }\n  \n  return maxValueField;\n  ",
             "valueExpressionTitle": "Predominant category",
             "uniqueValueInfos": [{
@@ -1102,6 +1118,10 @@ require([
     }
 
     function setGapValue(min, max){
+        sliderValue.innerHTML =
+              "<span style='font-weight:bold; font-size:120%'>" +
+              "$" + numberWithCommas(min) + " - $" + numberWithCommas(max)
+              "</span>";
         incomeSlider.viewModel.setValue(0, min);
         incomeSlider.viewModel.setValue(1, max);
         createEffect(min, max)
