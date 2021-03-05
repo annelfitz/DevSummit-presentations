@@ -84,8 +84,8 @@ require([
         }
     });
     incomeSlider.on(["thumb-drag", "segment-drag"], function (event) {
-        setGapValue(incomeSlider.values[0],incomeSlider.values[1])
         // featureLayer.renderer.visualVariables = null;
+        setGapValue(incomeSlider.values[0],incomeSlider.values[1])
     });
 
     // Create layers
@@ -122,14 +122,14 @@ require([
                     " - " +
                     ageSlider.values[1],
                 stops: [{
-                        value: 0,
-                        label: "0%",
-                        color: "#f7fbff"
+                        value: 0.25,
+                        label: "0.25%",
+                        color: "#474333"
                     },
                     {
                         value: 10,
                         label: "10%",
-                        color: "#084594"
+                        color: "#23ccff"
                     }
                 ]
             }]
@@ -166,7 +166,7 @@ require([
         container: "viewDiv",
         map,
         center: [-118.25, 34.0656],
-        zoom: 12
+        zoom: 13
     });
 
     map.addMany([groupLayer, graphicsLayer, bufferLayer]);
@@ -174,16 +174,21 @@ require([
     setUpAppUI();
     setUpSketch();
 
-    // set up calcite components and events
+    // set up calcite components and event listeners
+    const filterAccordion = document.getElementById("filterAccordion");
+    const radioAgeIncome = document.getElementById("ageForIncome");
+    const tabs = document.getElementById("navTabs");
+    const rendererSwitch = document.getElementById("switch");
     const radio = document.getElementById("filterAge");
+    const playButton = document.getElementById("playButton");
+    
     radio.addEventListener("calciteRadioGroupChange", updateSlider);
 
-    const rendererSwitch = document.getElementById("switch");
     rendererSwitch.addEventListener("calciteSwitchChange", function (event) {
         aboveAndBelow = event.detail.switched;
         updateVisualization();
     });
-    const tabs = document.getElementById("navTabs");
+
     tabs.addEventListener("calciteTabChange", function (event) {
         console.log(event);
         if (event.detail.tab == 1) {
@@ -194,30 +199,30 @@ require([
         } else {
             map.addMany([bufferLayer, graphicsLayer]);
             sketchViewModel.view = view;
+            if (featureLayerView.effect) {
+                filterAccordion.click();
+            }
             // need to get sketch view model hooked up again here 
             updateVisualization();
             view.ui.add(legend, "bottom-left");
         }
-    })
-    const radioAgeIncome = document.getElementById("ageForIncome");
+    });
+
     radioAgeIncome.addEventListener("calciteRadioGroupChange", function (event) {
         incomeAge = event.detail;
         generatePredominanceRenderer(incomeAge)
     });
 
-    const filterAccordion = document.getElementById("filterAccordion");
     filterAccordion.addEventListener("calciteAccordionChange", function(event){
         if(!event.detail.requestedAccordionItem.active){
-            setGapValue(incomeSlider.values[0],incomeSlider.values[1])
             // featureLayer.renderer.visualVariables = null;
+            setGapValue(incomeSlider.values[0],incomeSlider.values[1])
         } else {
             featureLayerView.effect = null;
             generatePredominanceRenderer(incomeAge);
         }
     })
     
-
-    var playButton = document.getElementById("playButton");
     playButton.addEventListener("click", function () {
         if (playButton.classList.contains("toggled")) {
             stopAnimation();
@@ -607,29 +612,29 @@ require([
             stops = [{
                     value: stats.avg - stats.stddev,
                     label: Number.parseFloat(stats.avg - stats.stddev).toFixed(2) + "%",
-                    color: "#b65151"
+                    color: "#00ff32"
                 },
                 {
                     value: stats.avg,
                     label: Number.parseFloat(stats.avg).toFixed(2) + "%",
-                    color: "#ffffff"
+                    color: "#403a42"
                 },
                 {
                     value: max,
                     label: Number.parseFloat(max).toFixed(2) + "%",
-                    color: "#546b8c"
+                    color: "#bf00ff"
                 }
             ];
         } else {
             stops = [{
                     value: stats.avg - stats.stddev,
                     label: Number.parseFloat(stats.avg - stats.stddev).toFixed(2) + "%",
-                    color: "#f7fbff"
+                    color: "#474333"
                 },
                 {
                     value: max,
                     label: Number.parseFloat(max).toFixed(2) + "%",
-                    color: "#084594"
+                    color: "#23ccff"
                 }
             ];
         }
@@ -985,7 +990,7 @@ require([
                 options: {
                     responsive: false,
                     legend: {
-                        position: "bottom",
+                        position: "right",
                         labels: {
                             fontColor: "white"
                         }
