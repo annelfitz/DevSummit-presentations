@@ -90,7 +90,7 @@
                 <div id="ageRender">
                     <h3>Render by income predominance</h3>
                     <div id="buttonFilters">
-                        <p>Choose an age range:</p>
+                        Choose an age range:
                         <calcite-radio-group id="ageForIncome" layout="horizontal" theme="dark" appearance="solid"
                             scale="m" width="auto" role="radiogroup" calcite-hydrated="">
                             <calcite-radio-group-item value="A15" checked="" tabindex="0" appearance="solid"
@@ -124,6 +124,22 @@
                             </calcite-radio-group-item>
                             <input type="hidden" />
                         </calcite-radio-group>
+                    </div>
+                    <div id="filterIncome">
+                        <div id="incomeSliderDivWrapper">
+                            <p>Use the slider to filter the map by the median income</p>
+                            <div id="playButton" class="esri-widget esri-widget--button toggle-button">
+                                <div>
+                                    <span class="toggle-button-icon esri-icon-play" aria-label="play icon"></span>
+                                    Play
+                                </div>
+                                <div>
+                                    <span class="toggle-button-icon esri-icon-pause" aria-label="pause icon"></span>
+                                    Pause
+                                </div>
+                            </div>
+                            <div id="incomeSliderDiv"></div>
+                        </div>
                     </div>
                 </div>
                 <div id="stats">

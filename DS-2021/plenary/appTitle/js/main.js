@@ -35,8 +35,9 @@ require([
     let sketchViewModel, featureLayerView, pausableWatchHandle;
     let statDefinitions,
         labels = [];
-    let aboveAndBelow;
+    let aboveAndBelow, legend;
     let chart, chartDonut;
+    let animation = null;
 
     // graphics
     let centerGraphic,
@@ -66,10 +67,26 @@ require([
             updateVisualization();
         }
     });
+    const incomeSlider = new Slider({
+        container: "incomeSliderDiv",
+        min: 15000,
+        max: 210000,
+        values: [75000, 90000],
+        steps: 5000,
+        layout: "horizontal",
+        visibleElements: {
+            rangeLabels: true,
+            labels: true
+        }
+    });
+    incomeSlider.on(["thumb-drag", "segment-drag"], function (event) {
+        createEffect(incomeSlider.values[0],incomeSlider.values[1])
+    });
 
     // Create layers
     const graphicsLayer = new GraphicsLayer();
     const bufferLayer = new GraphicsLayer({
+        legendEnabled: false,
         blendMode: "color-burn"
     });
     const featureLayer = new FeatureLayer({
@@ -118,6 +135,7 @@ require([
         portalItem: {
             id: "7009e50f4c7b4eb7a77fb92cfac3835a"
         },
+        legendEnabled: false,
         renderer: {
             type: "simple",
             symbol: {
@@ -129,7 +147,7 @@ require([
     });
 
     const groupLayer = new GroupLayer({
-        layers: [buildingFootprints, featureLayer]
+        layers: [buildingFootprints, featureLayer],
     });
 
     // create map with basemap
@@ -165,18 +183,31 @@ require([
         if (event.detail.tab == 1) {
             map.removeMany([bufferLayer, graphicsLayer]);
             sketchViewModel.view = null;
+            view.ui.remove(legend);
             generatePredominanceRenderer("A15");
         } else {
             map.addMany([bufferLayer, graphicsLayer]);
             sketchViewModel.view = view;
             // need to get sketch view model hooked up again here 
             updateVisualization();
+            view.ui.add(legend, "bottom-left");
         }
     })
     const radioAgeIncome = document.getElementById("ageForIncome");
     radioAgeIncome.addEventListener("calciteRadioGroupChange", function (event) {
         console.log(event.detail);
         generatePredominanceRenderer(event.detail)
+    });
+
+    var playButton = document.getElementById("playButton");
+    playButton.addEventListener("click", function () {
+        if (playButton.classList.contains("toggled")) {
+            stopAnimation();
+            featureLayerView.effect = null;
+        } else {
+            featureLayer.renderer.visualVariables = null;
+            startAnimation();
+        }
     });
 
     function updateSlider(event) {
@@ -626,12 +657,10 @@ require([
                     }
                 }
             );
-            view.ui.add(
-                new Legend({
-                    view: view
-                }),
-                "bottom-left"
-            );
+            legend = new Legend({
+                view: view
+            });
+            view.ui.add(legend, "bottom-left");
         });
     }
 
@@ -1011,4 +1040,81 @@ require([
         value = value || 0;
         return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
+
+    /**
+     * Starts the animation that cycle
+     * through the gap between the two candidates.
+     */
+    function startAnimation() {
+        stopAnimation();
+        animation = animate(incomeSlider.values[0], incomeSlider.values[1]);
+        playButton.classList.add("toggled");
+    }
+
+    /**
+     * Stops the animations
+     */
+    function stopAnimation() {
+        if (!animation) {
+            return;
+        }
+
+        animation.remove();
+        animation = null;
+        playButton.classList.remove("toggled");
+    }
+
+    /**
+     * Animates the visualized gap continously.
+     */
+    function animate(startValue, endValue) {
+        console.log("in animate function")
+        var animating = true;
+        // var value = startValue;
+        var direction = 400;
+
+        var frame = function () {
+            if (!animating) {
+                return;
+            }
+
+            startValue += direction;
+            endValue += direction;
+            if (endValue > 210000) {
+                endValue = 210000;
+                direction = -direction;
+            } else if (startValue < 15000) {
+                startValue = 15000;
+                direction = -direction;
+            }
+
+            setGapValue(startValue, endValue);
+            requestAnimationFrame(frame);
+        };
+
+        requestAnimationFrame(frame);
+
+        return {
+            remove: function () {
+                animating = false;
+            }
+        };
+    }
+
+    function setGapValue(min, max){
+        incomeSlider.viewModel.setValue(0, min);
+        incomeSlider.viewModel.setValue(1, max);
+        createEffect(min, max)
+    }
+
+    function createEffect(min,max){
+        featureLayerView.effect = {
+            filter: {
+                where: "MEDHINC_CY > " + min + " AND MEDHINC_CY < " + max
+            },
+            includedEffect: "bloom(200%, 1px, 0.2)",
+            excludedEffect: "blur(1px) brightness(65%)"
+        }
+    }
+
 });

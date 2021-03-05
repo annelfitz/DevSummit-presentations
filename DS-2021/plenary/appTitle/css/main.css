@@ -29,6 +29,15 @@ body {
 #sliderDivWrapper {
     width: 800px;
 }
+#incomeSliderDiv {
+    height: 100px;
+    width: 90%;
+    order: 2;
+    float: right;
+}
+#incomeSliderDivWrapper {
+    width: 800px;
+}
 #filterAge {
     width: 800px;
 }
@@ -80,3 +89,33 @@ body {
 #chart {
     margin: auto;
 }
+#playButton {
+    flex: 0 0 100px;
+    order: 1;
+    float: left;
+    margin: auto;
+  }
+
+  .toggle-button {
+    display: flex;
+  }
+
+  .toggle-button.toggled .toggle-button-icon {
+    color: #cc1b1b;
+  }
+
+  .toggle-button .toggle-button-icon {
+    color: #1bcc1b;
+  }
+
+  .toggle-button > :nth-child(2) {
+    display: none;
+  }
+
+  .toggle-button.toggled > :nth-child(1) {
+    display: none;
+  }
+
+  .toggle-button.toggled > :nth-child(2) {
+    display: block;
+  }
