@@ -31,7 +31,7 @@ body {
 }
 #incomeSliderDiv {
     height: 50px;
-    width: 90%;
+    width: 88%;
     float: right;
     background-color:#2b2b2b;
 }
@@ -59,11 +59,10 @@ body {
     margin: auto;
 }
 #stats {
-    width: 45%;
-    float: right;
+    float: left;
     margin: auto;
     margin-top: 10px;
-
+    width: 100%;
 }
 #cardText {
     float: left;
@@ -129,7 +128,29 @@ body {
   }
   #filterIncome {
       margin-top: 10px;
+      float: right;
+      width: 50%;
   }
   #incomeSliderDiv .esri-slider__max, #incomeSliderDiv .esri-slider__min { 
     width: 80px;
+  }
+  #btnLabel {
+      float: left;
+      margin: 10px;
+  }
+  #filterSwitchDiv{
+      float: right;
+  }
+  #filterTitle {
+      width: 80%;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #ffffff;
+  }
+  #filterHeader {
+      margin-top: 10px;
+  }
+  .disabled {
+    opacity: 50%;
+    pointer-events: none;
   }

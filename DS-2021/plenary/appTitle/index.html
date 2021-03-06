@@ -24,8 +24,8 @@
     <div id="sidePanel">
         <calcite-tabs id="navTabs" layout="inline" position="above" theme="dark">
             <calcite-tab-nav slot="tab-nav">
-                <calcite-tab-title active="">Age</calcite-tab-title>
-                <calcite-tab-title>Income</calcite-tab-title>
+                <calcite-tab-title active="" icon-start="group">Age</calcite-tab-title>
+                <calcite-tab-title icon-start="calculator">Income</calcite-tab-title>
             </calcite-tab-nav>
 
             <calcite-tab active="" class="tab">
@@ -34,37 +34,37 @@
                     <div id="buttonFilters">
                         <p>Choose from a predefined age range:</p>
                         <calcite-radio-group id="filterAge" layout="horizontal" theme="dark" appearance="solid"
-                            scale="m" width="auto" role="radiogroup" calcite-hydrated="">
+                            scale="s" width="auto" role="radiogroup" calcite-hydrated="">
                             <calcite-radio-group-item value="none" checked="" tabindex="0" appearance="solid"
-                                aria-checked="true" layout="horizontal" role="radio" scale="m" icon-position="start"
+                                aria-checked="true" layout="horizontal" role="radio" icon-position="start"
                                 calcite-hydrated="">
                                 No filter
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="infant" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
                                 Infants (<1) </calcite-radio-group-item> <calcite-radio-group-item value="child"
-                                    appearance="solid" aria-checked="false" layout="horizontal" role="radio" scale="m"
+                                    appearance="solid" aria-checked="false" layout="horizontal" role="radio"
                                     icon-position="start" calcite-hydrated="">
                                     Children (1-11)
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="teen" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
                                 Teens (12-17)
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="college" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
                                 College Age (18-22)
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="millenials" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
                                 Millenials (24-39)
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="genx" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
                                 Generation X (40-55)
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="boomer" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
                                 Baby Boomers (56-74)
                             </calcite-radio-group-item>
                             <input type="hidden" />
@@ -89,8 +89,8 @@
             <calcite-tab class="tab">
                 <div id="ageRender">
                     <h3>Render by income predominance</h3>
+                    <div id="btnLabel">Choose an age range:</div>
                     <div id="buttonFilters">
-                        Choose an age range:
                         <calcite-radio-group id="ageForIncome" layout="horizontal" theme="dark" appearance="solid"
                             scale="m" width="auto" role="radiogroup" calcite-hydrated="">
                             <calcite-radio-group-item value="A15" checked="" tabindex="0" appearance="solid"
@@ -125,37 +125,39 @@
                             <input type="hidden" />
                         </calcite-radio-group>
                     </div>
-                    <div id="filterIncome">
-                        <calcite-accordion id="filterAccordion" dir="ltr" scale="m" theme="dark" appearance="default"
-                            icon-position="end" icon-type="chevron" selection-mode="multi" calcite-hydrated="">
-                            <calcite-accordion-item item-title="Filter block group by median income" item-subtitle=" "
-                                aria-expanded="false" dir="ltr" icon-position="end" tabindex="0" calcite-hydrated="">
-                                <div id="incomeSliderDivWrapper">
-                                    <p>Use the slider to filter the map by the median income</p>
-                                    <span id="sliderValue"></span>
-                                    <div>
-                                        <div id="playButton" class="esri-widget esri-widget--button toggle-button">
-                                            <div>
-                                                <span class="toggle-button-icon esri-icon-play"
-                                                    aria-label="play icon"></span>
-                                                Play
-                                            </div>
-                                            <div>
-                                                <span class="toggle-button-icon esri-icon-pause"
-                                                    aria-label="pause icon"></span>
-                                                Pause
-                                            </div>
-                                        </div>
-                                        <div id="incomeSliderDiv"></div>
-                                    </div>
-                                </div>
-                            </calcite-accordion-item>
-                        </calcite-accordion>
+                    <div id="stats">
+                            <div id="chartPanelDonut"><canvas id="chartDonut"></canvas></div>
                     </div>
                 </div>
-                <div id="stats">
+                <div id="filterIncome">
                     <calcite-card>
-                        <div id="chartPanelDonut"><canvas id="chartDonut"></canvas></div>
+                        <div id="filterHeader">
+                            <span id="filterTitle">Filter by median income</span>
+                            <div id="filterSwitchDiv">
+                                <calcite-switch id="filterSwitch" name="setting" value="enabled" scale="s">
+                                    <input id="filterCbx" type="checkbox" name="setting" value="enabled" />
+                                </calcite-switch>
+                            </div>
+                        </div>
+                        <div id="incomeSliderDivWrapper" class="disabled">
+                            <p>Use the slider to filter the map by the median income, or press Play to animate through.</p>
+                            <span id="sliderValue"></span>
+                            <div>
+                                <div id="playButton" class="esri-widget esri-widget--button toggle-button">
+                                    <div>
+                                        <span class="toggle-button-icon esri-icon-play"
+                                            aria-label="play icon"></span>
+                                        Play
+                                    </div>
+                                    <div>
+                                        <span class="toggle-button-icon esri-icon-pause"
+                                            aria-label="pause icon"></span>
+                                        Pause
+                                    </div>
+                                </div>
+                                <div id="incomeSliderDiv"></div>
+                            </div>
+                        </div>
                     </calcite-card>
                 </div>
             </calcite-tab>

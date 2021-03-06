@@ -39,6 +39,8 @@ require([
     let chart, chartDonut;
     let animation = null;
     let incomeAge = "A15";
+    let activeTab = "age";
+    let effect = false;
 
     // graphics
     let centerGraphic,
@@ -73,7 +75,7 @@ require([
         min: 15000,
         max: 210000,
         values: [75000, 90000],
-        labelFormatFunction: function(value, type) {
+        labelFormatFunction: function (value, type) {
             let formattedVal = "$" + numberWithCommas(value)
             return formattedVal;
         },
@@ -81,11 +83,17 @@ require([
         layout: "horizontal",
         visibleElements: {
             rangeLabels: true,
-        }
+        },
+        disabled: true
     });
+
+    sliderValue.innerHTML =
+        "<span style='font-weight:bold; font-size:120%'>" +
+        "$" + numberWithCommas(incomeSlider.values[0]) + " - $" + incomeSlider.values[1]
+    "</span>";
     incomeSlider.on(["thumb-drag", "segment-drag"], function (event) {
         // featureLayer.renderer.visualVariables = null;
-        setGapValue(incomeSlider.values[0],incomeSlider.values[1])
+        setGapValue(incomeSlider.values[0], incomeSlider.values[1])
     });
 
     // Create layers
@@ -175,13 +183,14 @@ require([
     setUpSketch();
 
     // set up calcite components and event listeners
-    const filterAccordion = document.getElementById("filterAccordion");
+    const filterSwitch = document.getElementById("filterSwitch");
     const radioAgeIncome = document.getElementById("ageForIncome");
     const tabs = document.getElementById("navTabs");
     const rendererSwitch = document.getElementById("switch");
     const radio = document.getElementById("filterAge");
     const playButton = document.getElementById("playButton");
-    
+    const incomeSliderDiv = document.getElementById("incomeSliderDivWrapper");
+
     radio.addEventListener("calciteRadioGroupChange", updateSlider);
 
     rendererSwitch.addEventListener("calciteSwitchChange", function (event) {
@@ -192,15 +201,18 @@ require([
     tabs.addEventListener("calciteTabChange", function (event) {
         console.log(event);
         if (event.detail.tab == 1) {
+            activeTab = "income";
             map.removeMany([bufferLayer, graphicsLayer]);
             sketchViewModel.view = null;
             view.ui.remove(legend);
             generatePredominanceRenderer(incomeAge);
         } else {
+            activeTab = "age";
             map.addMany([bufferLayer, graphicsLayer]);
             sketchViewModel.view = view;
-            if (featureLayerView.effect) {
-                filterAccordion.click();
+            if (effect) {
+                switchFunction(false)
+                filterSwitch.switched = false;
             }
             // need to get sketch view model hooked up again here 
             updateVisualization();
@@ -213,16 +225,10 @@ require([
         generatePredominanceRenderer(incomeAge)
     });
 
-    filterAccordion.addEventListener("calciteAccordionChange", function(event){
-        if(!event.detail.requestedAccordionItem.active){
-            // featureLayer.renderer.visualVariables = null;
-            setGapValue(incomeSlider.values[0],incomeSlider.values[1])
-        } else {
-            featureLayerView.effect = null;
-            generatePredominanceRenderer(incomeAge);
-        }
+    filterSwitch.addEventListener("calciteSwitchChange", function (event) {
+        switchFunction(event.detail.switched)
     })
-    
+
     playButton.addEventListener("click", function () {
         if (playButton.classList.contains("toggled")) {
             stopAnimation();
@@ -230,6 +236,28 @@ require([
             startAnimation();
         }
     });
+
+    function switchFunction(switched){
+        if (switched) {
+            effect = true;
+            // featureLayer.renderer.visualVariables = null;
+            incomeSlider.disabled = false;
+            incomeSliderDiv.classList.remove("disabled");
+            setGapValue(incomeSlider.values[0], incomeSlider.values[1])
+        } else {
+            effect = false;
+            incomeSlider.disabled = true;
+            incomeSliderDiv.classList.add("disabled");
+            featureLayerView.effect = {
+                filter: {
+                    where: "MEDHINC_CY > " + incomeSlider.values[0] + " AND MEDHINC_CY < " + incomeSlider.values[1]
+                  },
+                includedEffect: "bloom(0, 1px, 0.2)",
+                excludedEffect: "blur(0px) brightness(100%)"
+            };
+            generatePredominanceRenderer(incomeAge);
+        }
+    }
 
     function updateSlider(event) {
         switch (event.detail) {
@@ -1122,17 +1150,17 @@ require([
         };
     }
 
-    function setGapValue(min, max){
+    function setGapValue(min, max) {
         sliderValue.innerHTML =
-              "<span style='font-weight:bold; font-size:120%'>" +
-              "$" + numberWithCommas(min) + " - $" + numberWithCommas(max)
-              "</span>";
+            "<span style='font-weight:bold; font-size:120%'>" +
+            "$" + numberWithCommas(min) + " - $" + numberWithCommas(max)
+        "</span>";
         incomeSlider.viewModel.setValue(0, min);
         incomeSlider.viewModel.setValue(1, max);
         createEffect(min, max)
     }
 
-    function createEffect(min,max){
+    function createEffect(min, max) {
         featureLayerView.effect = {
             filter: {
                 where: "MEDHINC_CY > " + min + " AND MEDHINC_CY < " + max
