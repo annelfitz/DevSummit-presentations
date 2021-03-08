@@ -27,7 +27,7 @@ body {
     width: 100%;
 }
 #sliderDivWrapper {
-    width: 800px;
+    width: 90%;
 }
 #incomeSliderDiv {
     height: 50px;
@@ -36,7 +36,7 @@ body {
     background-color:#2b2b2b;
 }
 #filterAge {
-    width: 800px;
+    width: 90%;
 }
 
 .esri-slider__segment-1 {

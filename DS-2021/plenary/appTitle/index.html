@@ -35,43 +35,45 @@
                         <p>Choose from a predefined age range:</p>
                         <calcite-radio-group id="filterAge" layout="horizontal" theme="dark" appearance="solid"
                             scale="s" width="auto" role="radiogroup" calcite-hydrated="">
-                            <calcite-radio-group-item value="none" checked="" tabindex="0" appearance="solid"
-                                aria-checked="true" layout="horizontal" role="radio" icon-position="start"
+                            <calcite-radio-group-item value="none" tabindex="0" appearance="solid"
+                                aria-checked="false" layout="horizontal" role="radio"
                                 calcite-hydrated="">
-                                No filter
+                                Custom
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="infant" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
-                                Infants (<1) </calcite-radio-group-item> <calcite-radio-group-item value="child"
+                                layout="horizontal" role="radio"  calcite-hydrated="">
+                                Infants (<1)
+                            </calcite-radio-group-item> 
+                                <calcite-radio-group-item value="child"
                                     appearance="solid" aria-checked="false" layout="horizontal" role="radio"
-                                    icon-position="start" calcite-hydrated="">
+                                     calcite-hydrated="">
                                     Children (1-11)
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="teen" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
+                                layout="horizontal" role="radio" calcite-hydrated="">
                                 Teens (12-17)
                             </calcite-radio-group-item>
-                            <calcite-radio-group-item value="college" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
+                            <calcite-radio-group-item value="college" checked="" appearance="solid" aria-checked="true"
+                                layout="horizontal" role="radio" calcite-hydrated="">
                                 College Age (18-22)
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="millenials" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
+                                layout="horizontal" role="radio" calcite-hydrated="">
                                 Millenials (24-39)
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="genx" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
+                                layout="horizontal" role="radio" calcite-hydrated="">
                                 Generation X (40-55)
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="boomer" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
+                                layout="horizontal" role="radio" calcite-hydrated="">
                                 Baby Boomers (56-74)
                             </calcite-radio-group-item>
                             <input type="hidden" />
                         </calcite-radio-group>
                     </div>
                     <div id="sliderDivWrapper">
-                        <p>Use the slider to select an age range to be visualized:</p>
+                        <p>Or use the slider to select an age range to be visualized:</p>
                         <div id="sliderDiv"></div>
                     </div>
                     <label>

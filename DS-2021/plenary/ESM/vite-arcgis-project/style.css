@@ -10,8 +10,9 @@ body {
 #viewDiv {
   padding: auto;
   margin: auto;
-  height: 450px;
+  height: 480px;
   width: 100%;
+  background-color: rgb(231, 231, 231);
 }
 
 .header-img {

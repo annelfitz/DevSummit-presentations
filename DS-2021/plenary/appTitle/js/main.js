@@ -9,11 +9,9 @@ require([
     "esri/core/watchUtils",
     "esri/widgets/Sketch/SketchViewModel",
     "esri/geometry/Polyline",
-    "esri/geometry/Point",
     "esri/Graphic",
     "esri/geometry/geometryEngine",
     "esri/layers/GroupLayer",
-    "esri/widgets/Histogram",
 ], function (
     MapView,
     WebMap,
@@ -25,11 +23,9 @@ require([
     watchUtils,
     SketchViewModel,
     Polyline,
-    Point,
     Graphic,
     geometryEngine,
     GroupLayer,
-    Histogram
 ) {
     // App 'globals'
     let sketchViewModel, featureLayerView, pausableWatchHandle;
@@ -59,6 +55,7 @@ require([
         values: [18, 22],
         precision: 0,
         layout: "horizontal",
+        disabled: true,
         visibleElements: {
             rangeLabels: true,
             labels: true
@@ -177,7 +174,7 @@ require([
         zoom: 13
     });
 
-    map.addMany([groupLayer, graphicsLayer, bufferLayer]);
+    map.addMany([groupLayer, bufferLayer, graphicsLayer]);
     generateStats();
     setUpAppUI();
     setUpSketch();
@@ -209,7 +206,8 @@ require([
         } else {
             activeTab = "age";
             map.addMany([bufferLayer, graphicsLayer]);
-            sketchViewModel.view = view;
+            pausableWatchHandle.resume();
+            setUpSketch();
             if (effect) {
                 switchFunction(false)
                 filterSwitch.switched = false;
@@ -707,9 +705,21 @@ require([
                 }
             );
             legend = new Legend({
-                view: view
+                view: view,
+                layerInfos: [{
+                    title: "Los Angeles County Population Data",
+                    layer: featureLayer
+                }]
             });
             view.ui.add(legend, "bottom-left");
+
+            featureLayerView.watch("updating", function(value){
+                if (!value){
+                    if (activeTab == "income"){
+                        createPieChart(incomeAge);
+                    }
+                }
+            })
         });
     }
 
@@ -806,8 +816,13 @@ require([
     // A plugin to draw the background color
     Chart.plugins.register({
         beforeDraw: function (chartInstance) {
+            console.log(chartInstance.canvas.id)
             var ctx = chartInstance.chart.ctx;
-            ctx.fillStyle = '#2b2b2b';
+            if (chartInstance.canvas.id == "chartDonut"){
+                ctx.fillStyle = '#242424';
+            } else {
+                ctx.fillStyle = '#2b2b2b';
+            }
             ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
         }
     })
@@ -900,7 +915,7 @@ require([
                 type: "simple-marker",
                 style: "circle",
                 size: 10,
-                color: [0, 255, 255, 0.5]
+                color: "#009AF2"
             };
             centerGraphic = new Graphic({
                 geometry: centerPoint,
@@ -1003,13 +1018,13 @@ require([
                     labels: labels,
                     datasets: [{
                             label: "Female",
-                            backgroundColor: "#826288",
+                            backgroundColor: "#ff4900",
                             borderWidth: 0,
                             data: femaleAgeData
                         },
                         {
                             label: "Male",
-                            backgroundColor: "#4c689b",
+                            backgroundColor: "#ffc800",
                             borderWidth: 0,
                             data: maleAgeData
                         }
@@ -1114,7 +1129,7 @@ require([
     }
 
     /**
-     * Animates the visualized gap continously.
+     * Animates the visualized gap continuously.
      */
     function animate(startValue, endValue) {
         console.log("in animate function")
