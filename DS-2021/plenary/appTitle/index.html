@@ -73,7 +73,7 @@
                         </calcite-radio-group>
                     </div>
                     <div id="sliderDivWrapper">
-                        <p>Or use the slider to select an age range to be visualized:</p>
+                        <p>Or use the slider to select a custom age range to be visualized:</p>
                         <div id="sliderDiv"></div>
                     </div>
                     <label>
@@ -94,34 +94,39 @@
                     <div id="btnLabel">Choose an age range:</div>
                     <div id="buttonFilters">
                         <calcite-radio-group id="ageForIncome" layout="horizontal" theme="dark" appearance="solid"
-                            scale="m" width="auto" role="radiogroup" calcite-hydrated="">
-                            <calcite-radio-group-item value="A15" checked="" tabindex="0" appearance="solid"
-                                aria-checked="true" layout="horizontal" role="radio" scale="m" icon-position="start"
+                            scale="s" width="auto" role="radiogroup" calcite-hydrated="">
+                            <calcite-radio-group-item value="HINC" checked="" tabindex="0" appearance="solid"
+                                aria-checked="true" layout="horizontal" role="radio" icon-position="start"
+                                calcite-hydrated="">
+                                All ages
+                            </calcite-radio-group-item>
+                            <calcite-radio-group-item value="A15" appearance="solid"
+                                layout="horizontal" role="radio" icon-position="start"
                                 calcite-hydrated="">
                                 15-24
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="A25" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
                                 25-34
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="A35" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
                                 35-44
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="A45" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
                                 45-54
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="A55" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
                                 55-64
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="A65" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
                                 65-74
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="A75" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" scale="m" icon-position="start" calcite-hydrated="">
+                                layout="horizontal" role="radio" icon-position="start" calcite-hydrated="">
                                 75+
                             </calcite-radio-group-item>
                             <input type="hidden" />

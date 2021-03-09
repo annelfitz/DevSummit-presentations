@@ -12,6 +12,7 @@ require([
     "esri/Graphic",
     "esri/geometry/geometryEngine",
     "esri/layers/GroupLayer",
+    "esri/widgets/Search"
 ], function (
     MapView,
     WebMap,
@@ -26,6 +27,7 @@ require([
     Graphic,
     geometryEngine,
     GroupLayer,
+    Search
 ) {
     // App 'globals'
     let sketchViewModel, featureLayerView, pausableWatchHandle;
@@ -34,7 +36,7 @@ require([
     let aboveAndBelow, legend;
     let chart, chartDonut;
     let animation = null;
-    let incomeAge = "A15";
+    let incomeAge = "HINC";
     let activeTab = "age";
     let effect = false;
 
@@ -97,7 +99,7 @@ require([
     const graphicsLayer = new GraphicsLayer();
     const bufferLayer = new GraphicsLayer({
         legendEnabled: false,
-        blendMode: "color-burn"
+        blendMode: "color-dodge"
     });
     const featureLayer = new FeatureLayer({
         blendMode: "source-in",
@@ -106,8 +108,10 @@ require([
             // id: "e2d3120d9ff0483da88d23d9a67d83a0" // Northeast US
             // id: "ac514af2829b4ac4aaf7894a8b47f5cf" // California by block group
             // id: "81c2ede27746418a86ed44cf7df82cf4" // LA
-            id: "43e16ed1f5b3481abfa8df4ee92dd45b" // California by block group with additional fields
+            // id: "43e16ed1f5b3481abfa8df4ee92dd45b" // California by block group with additional fields
+            id: "86e2f7a5de0f4a86b2ff09c8abc4ab87" // CA block group with income
         },
+        definitionExpression: "COUNTY = 'Los Angeles'",
         outFields: ["*"],
         renderer: {
             type: "simple",
@@ -171,7 +175,11 @@ require([
         container: "viewDiv",
         map,
         center: [-118.25, 34.0656],
-        zoom: 13
+        zoom: 13,
+        constraints: {
+            maxZoom: 15,
+            minZoom: 11
+        }
     });
 
     map.addMany([groupLayer, bufferLayer, graphicsLayer]);
@@ -566,9 +574,14 @@ require([
 
         const stats = features[0].attributes;
         let incomeStats = [];
-
-        let startAge = ageVal.substr(1);
+        let chartTitle = "";
+        if (ageVal != "HINC"){
+            let startAge = ageVal.substr(1);
         let endAge = parseInt(startAge) + 9;
+        chartTitle = "Income Brackets for Ages " + startAge + "-" + endAge;
+        } else {
+            chartTitle = "Los Angeles County Income Brackets"
+        }
 
         for (var key in stats) {
             incomeStats.push(stats[key]);
@@ -619,14 +632,14 @@ require([
                     },
                     title: {
                         display: true,
-                        text: "Income for Ages " + startAge + "-" + endAge,
+                        text: chartTitle,
                         fontColor: "white"
                     }
                 }
             });
         } else {
             chartDonut.data.datasets[0].data = incomeStats;
-            chartDonut.options.title.text = "Income for Ages " + startAge + "-" + endAge
+            chartDonut.options.title.text = chartTitle;
             chartDonut.update();
         }
 
@@ -696,7 +709,7 @@ require([
             featureLayerView = layerView;
 
             pausableWatchHandle = watchUtils.pausable(
-                layerView,
+                featureLayerView,
                 "updating",
                 function (val) {
                     if (!val) {
@@ -704,6 +717,22 @@ require([
                     }
                 }
             );
+            const search = new Search({
+                view: view,
+                resultGraphicEnabled: false,
+                popupEnabled: false,
+                goToOverride: function(view, goToParams){
+                    goToParams.target.zoom = 15;
+                    view.goTo(goToParams.target, goToParams.options)
+                }
+              });
+  
+              // Resume drawBufferPolygon() function; user searched for a new location
+              // Must update the buffer polygon and re-run the stats query
+              search.on("search-complete", function() {
+                pausableWatchHandle.resume();
+              });
+
             legend = new Legend({
                 view: view,
                 layerInfos: [{
@@ -712,6 +741,7 @@ require([
                 }]
             });
             view.ui.add(legend, "bottom-left");
+            view.ui.add(search, "top-right");
 
             featureLayerView.watch("updating", function(value){
                 if (!value){

@@ -11,15 +11,16 @@ body {
 #sidePanel {
     height: 44%;
     margin: auto;
+    padding: 5px;
     width: 98%;
-    overflow:scroll;
+    /* overflow:scroll; */
 }
 
 #viewDiv {
     width: 100%;
     padding: 0;
     margin: 0;
-    height: 55%;
+    height: 54%;
 }
 
 #sliderDiv {
