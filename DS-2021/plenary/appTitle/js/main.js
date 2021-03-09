@@ -104,11 +104,6 @@ require([
     const featureLayer = new FeatureLayer({
         blendMode: "source-in",
         portalItem: {
-            // id: "0fda5b2428694ce5b17d3953a89fb4da" // SoCal
-            // id: "e2d3120d9ff0483da88d23d9a67d83a0" // Northeast US
-            // id: "ac514af2829b4ac4aaf7894a8b47f5cf" // California by block group
-            // id: "81c2ede27746418a86ed44cf7df82cf4" // LA
-            // id: "43e16ed1f5b3481abfa8df4ee92dd45b" // California by block group with additional fields
             id: "86e2f7a5de0f4a86b2ff09c8abc4ab87" // CA block group with income
         },
         definitionExpression: "COUNTY = 'Los Angeles'",
@@ -204,7 +199,6 @@ require([
     });
 
     tabs.addEventListener("calciteTabChange", function (event) {
-        console.log(event);
         if (event.detail.tab == 1) {
             activeTab = "income";
             map.removeMany([bufferLayer, graphicsLayer]);
@@ -243,7 +237,7 @@ require([
         }
     });
 
-    function switchFunction(switched){
+    function switchFunction(switched) {
         if (switched) {
             effect = true;
             // featureLayer.renderer.visualVariables = null;
@@ -257,7 +251,7 @@ require([
             featureLayerView.effect = {
                 filter: {
                     where: "MEDHINC_CY > " + incomeSlider.values[0] + " AND MEDHINC_CY < " + incomeSlider.values[1]
-                  },
+                },
                 includedEffect: "bloom(0, 1px, 0.2)",
                 excludedEffect: "blur(0px) brightness(100%)"
             };
@@ -378,142 +372,127 @@ require([
     }
 
     function generatePredominanceRenderer(ageVal) {
-        console.log(ageVal);
         featureLayer.renderer = {
-            "type": "unique-value",
-            // "visualVariables": [{
-            //     "type": "opacity",
-            //     "valueExpression": "\n  $feature[\"" + ageVal + "I0_CY\"];\n$feature[\"" + ageVal + "I15_CY\"];\n$feature[\"" + ageVal + "I200_CY\"];\n$feature[\"" + ageVal + "I25_CY\"];\n$feature[\"" + ageVal + "I35_CY\"];\n$feature[\"" + ageVal + "I50_CY\"];\n$feature[\"" + ageVal + "I75_CY\"];\n$feature[\"" + ageVal + "I100_CY\"];\n$feature[\"" + ageVal + "I150_CY\"];\n\n  \n  var fieldNames = [ \"" + ageVal + "I0_CY\", \"" + ageVal + "I15_CY\", \"" + ageVal + "I200_CY\", \"" + ageVal + "I25_CY\", \"" + ageVal + "I35_CY\", \"" + ageVal + "I50_CY\", \"" + ageVal + "I75_CY\", \"" + ageVal + "I100_CY\", \"" + ageVal + "I150_CY\" ];\n  var numFields = 9;\n  var maxValueField = null;\n  var maxValue = -Infinity;\n  var value, i, totalValue = null;\n\n  for(i = 0; i < numFields; i++) {\n    value = $feature[fieldNames[i]];\n\n    if(value > 0) {\n      if(value > maxValue) {\n        maxValue = value;\n        maxValueField = fieldNames[i];\n      }\n      else if (value == maxValue) {\n        maxValueField = null;\n      }\n    }\n    \n  if(value != null && value >= 0) {\n    if (totalValue == null) { totalValue = 0; }\n    totalValue = totalValue + value;\n  }\n  \n  }\n  \n\n  var strength = null;\n\n  if (maxValueField != null && totalValue > 0) {\n    strength = (maxValue / totalValue) * 100;\n  }\n\n  return strength;\n  ",
-            //     "valueExpressionTitle": "Strength of Predominance",
-            //     "stops": [{
-            //             "opacity": 0.05,
-            //             "value": 12
-            //         },
-            //         {
-            //             "opacity": 1,
-            //             "value": 50
-            //         }
-            //     ]
-            // }],
-            "valueExpression": "\n  $feature[\"" + ageVal + "I0_CY\"];\n$feature[\"" + ageVal + "I15_CY\"];\n$feature[\"" + ageVal + "I200_CY\"];\n$feature[\"" + ageVal + "I25_CY\"];\n$feature[\"" + ageVal + "I35_CY\"];\n$feature[\"" + ageVal + "I50_CY\"];\n$feature[\"" + ageVal + "I75_CY\"];\n$feature[\"" + ageVal + "I100_CY\"];\n$feature[\"" + ageVal + "I150_CY\"];\n\n  \n  var fieldNames = [ \"" + ageVal + "I0_CY\", \"" + ageVal + "I15_CY\", \"" + ageVal + "I200_CY\", \"" + ageVal + "I25_CY\", \"" + ageVal + "I35_CY\", \"" + ageVal + "I50_CY\", \"" + ageVal + "I75_CY\", \"" + ageVal + "I100_CY\", \"" + ageVal + "I150_CY\" ];\n  var numFields = 9;\n  var maxValueField = null;\n  var maxValue = -Infinity;\n  var value, i, totalValue = null;\n\n  for(i = 0; i < numFields; i++) {\n    value = $feature[fieldNames[i]];\n\n    if(value > 0) {\n      if(value > maxValue) {\n        maxValue = value;\n        maxValueField = fieldNames[i];\n      }\n      else if (value == maxValue) {\n        maxValueField = null;\n      }\n    }\n    \n  }\n  \n  return maxValueField;\n  ",
-            "valueExpressionTitle": "Predominant category",
-            "uniqueValueInfos": [{
-                "label": "< $15,000",
-                "symbol": {
-                    "type": "simple-fill",
-                    "color": [
+            type: "unique-value",
+            valueExpression: "\n  $feature[\"" + ageVal + "I0_CY\"];\n$feature[\"" + ageVal + "I15_CY\"];\n$feature[\"" + ageVal + "I200_CY\"];\n$feature[\"" + ageVal + "I25_CY\"];\n$feature[\"" + ageVal + "I35_CY\"];\n$feature[\"" + ageVal + "I50_CY\"];\n$feature[\"" + ageVal + "I75_CY\"];\n$feature[\"" + ageVal + "I100_CY\"];\n$feature[\"" + ageVal + "I150_CY\"];\n\n  \n  var fieldNames = [ \"" + ageVal + "I0_CY\", \"" + ageVal + "I15_CY\", \"" + ageVal + "I200_CY\", \"" + ageVal + "I25_CY\", \"" + ageVal + "I35_CY\", \"" + ageVal + "I50_CY\", \"" + ageVal + "I75_CY\", \"" + ageVal + "I100_CY\", \"" + ageVal + "I150_CY\" ];\n  var numFields = 9;\n  var maxValueField = null;\n  var maxValue = -Infinity;\n  var value, i, totalValue = null;\n\n  for(i = 0; i < numFields; i++) {\n    value = $feature[fieldNames[i]];\n\n    if(value > 0) {\n      if(value > maxValue) {\n        maxValue = value;\n        maxValueField = fieldNames[i];\n      }\n      else if (value == maxValue) {\n        maxValueField = null;\n      }\n    }\n    \n  }\n  \n  return maxValueField;\n  ",
+            valueExpressionTitle: "Predominant category",
+            uniqueValueInfos: [{
+                label: "< $15,000",
+                symbol: {
+                    type: "simple-fill",
+                    color: [
                         179,
                         0,
                         0,
                         255
                     ],
-                    "outline": null
+                    outline: null
                 },
-                "value": ageVal + "I0_CY"
+                value: ageVal + "I0_CY"
             }, {
-                "label": "$15,000 - $24,999",
-                "symbol": {
-                    "type": "simple-fill",
-                    "color": [
+                label: "$15,000 - $24,999",
+                symbol: {
+                    type: "simple-fill",
+                    color: [
                         124,
                         17,
                         88,
                         255
                     ],
-                    "outline": null
+                    outline: null
                 },
-                "value": ageVal + "I15_CY"
+                value: ageVal + "I15_CY"
             }, {
-                "label": "$25,000 - $34,999",
-                "symbol": {
-                    "type": "simple-fill",
-                    "color": [
+                label: "$25,000 - $34,999",
+                symbol: {
+                    type: "simple-fill",
+                    color: [
                         68,
                         33,
                         175,
                         255
                     ],
-                    "outline": null
+                    outline: null
                 },
-                "value": ageVal + "I25_CY"
+                value: ageVal + "I25_CY"
             }, {
-                "label": "$35,000 - $49,999",
-                "symbol": {
-                    "type": "simple-fill",
-                    "color": [
+                label: "$35,000 - $49,999",
+                symbol: {
+                    type: "simple-fill",
+                    color: [
                         26,
                         83,
                         255,
                         255
                     ],
-                    "outline": null
+                    outline: null
                 },
-                "value": ageVal + "I35_CY"
+                value: ageVal + "I35_CY"
             }, {
-                "label": "$50,000 - $74,999",
-                "symbol": {
-                    "type": "simple-fill",
-                    "color": [
+                label: "$50,000 - $74,999",
+                symbol: {
+                    type: "simple-fill",
+                    color: [
                         13,
                         136,
                         230,
                         255
                     ],
-                    "outline": null
+                    outline: null
                 },
-                "value": ageVal + "I50_CY"
+                value: ageVal + "I50_CY"
             }, {
-                "label": "$75,000 - $99,999",
-                "symbol": {
-                    "type": "simple-fill",
-                    "color": [
+                label: "$75,000 - $99,999",
+                symbol: {
+                    type: "simple-fill",
+                    color: [
                         0,
                         183,
                         199,
                         255
                     ],
-                    "outline": null
+                    outline: null
                 },
-                "value": ageVal + "I75_CY"
+                value: ageVal + "I75_CY"
             }, {
-                "label": "$100,000 - $149,999",
-                "symbol": {
-                    "type": "simple-fill",
-                    "color": [
+                label: "$100,000 - $149,999",
+                symbol: {
+                    type: "simple-fill",
+                    color: [
                         90,
                         212,
                         90,
                         255
                     ],
-                    "outline": null
+                    outline: null
                 },
-                "value": ageVal + "I100_CY"
+                value: ageVal + "I100_CY"
             }, {
-                "label": "$150,000 - $199,999",
-                "symbol": {
-                    "type": "simple-fill",
-                    "color": [
+                label: "$150,000 - $199,999",
+                symbol: {
+                    type: "simple-fill",
+                    color: [
                         139,
                         224,
                         78,
                         255
                     ],
-                    "outline": null
+                    outline: null
                 },
-                "value": ageVal + "I150_CY"
+                value: ageVal + "I150_CY"
             }, {
-                "label": "$200,000+",
-                "symbol": {
-                    "type": "simple-fill",
-                    "color": [
+                label: "$200,000+",
+                symbol: {
+                    type: "simple-fill",
+                    color: [
                         235,
                         220,
                         120,
                         255
                     ],
-                    "outline": null
+                    outline: null
                 },
-                "value": ageVal + "I200_CY"
+                value: ageVal + "I200_CY"
             }]
         }
         createPieChart(ageVal);
@@ -575,10 +554,10 @@ require([
         const stats = features[0].attributes;
         let incomeStats = [];
         let chartTitle = "";
-        if (ageVal != "HINC"){
+        if (ageVal != "HINC") {
             let startAge = ageVal.substr(1);
-        let endAge = parseInt(startAge) + 9;
-        chartTitle = "Income Brackets for Ages " + startAge + "-" + endAge;
+            let endAge = parseInt(startAge) + 9;
+            chartTitle = "Income Brackets for Ages " + startAge + "-" + endAge;
         } else {
             chartTitle = "Los Angeles County Income Brackets"
         }
@@ -588,7 +567,6 @@ require([
         }
 
         if (!chartDonut) {
-            console.log("creating chart");
             // Get the canvas element and render the chart in it
             const canvasElement = document.getElementById("chartDonut");
 
@@ -682,7 +660,6 @@ require([
     }
 
     function generateStats() {
-        console.log("generating stats");
         let arr = [];
         for (let i = 0; i <= 84; i++) {
             let maleStr = "MAGE" + i + "_CY";
@@ -704,7 +681,6 @@ require([
     }
 
     function setUpAppUI() {
-        console.log("setting up app ui");
         view.whenLayerView(featureLayer).then(function (layerView) {
             featureLayerView = layerView;
 
@@ -721,17 +697,17 @@ require([
                 view: view,
                 resultGraphicEnabled: false,
                 popupEnabled: false,
-                goToOverride: function(view, goToParams){
+                goToOverride: function (view, goToParams) {
                     goToParams.target.zoom = 15;
                     view.goTo(goToParams.target, goToParams.options)
                 }
-              });
-  
-              // Resume drawBufferPolygon() function; user searched for a new location
-              // Must update the buffer polygon and re-run the stats query
-              search.on("search-complete", function() {
+            });
+
+            // Resume drawBufferPolygon() function; user searched for a new location
+            // Must update the buffer polygon and re-run the stats query
+            search.on("search-complete", function () {
                 pausableWatchHandle.resume();
-              });
+            });
 
             legend = new Legend({
                 view: view,
@@ -743,9 +719,9 @@ require([
             view.ui.add(legend, "bottom-left");
             view.ui.add(search, "top-right");
 
-            featureLayerView.watch("updating", function(value){
-                if (!value){
-                    if (activeTab == "income"){
+            featureLayerView.watch("updating", function (value) {
+                if (!value) {
+                    if (activeTab == "income") {
                         createPieChart(incomeAge);
                     }
                 }
@@ -772,7 +748,6 @@ require([
         // at its initial location. Only move edge graphic
         if (event.toolEventInfo && event.toolEventInfo.mover.attributes.edge) {
             const toolType = event.toolEventInfo.type;
-            console.log(toolType);
             if (toolType === "move-start") {
                 centerGeometryAtStart = centerGraphic.geometry;
             }
@@ -846,9 +821,8 @@ require([
     // A plugin to draw the background color
     Chart.plugins.register({
         beforeDraw: function (chartInstance) {
-            console.log(chartInstance.canvas.id)
             var ctx = chartInstance.chart.ctx;
-            if (chartInstance.canvas.id == "chartDonut"){
+            if (chartInstance.canvas.id == "chartDonut") {
                 ctx.fillStyle = '#242424';
             } else {
                 ctx.fillStyle = '#2b2b2b';
@@ -865,7 +839,6 @@ require([
      * using the updated buffer polygon.
      *********************************************************************/
     function queryLayerViewAgeStats(buffer) {
-        console.log("query function");
         // Data storage for the chart
         let femaleAgeData = [],
             maleAgeData = [];
@@ -905,7 +878,6 @@ require([
      * when user searches for a new location
      **************************************************/
     function drawBufferPolygon() {
-        console.log("drawing buffer polygon");
         // When pause() is called on the watch handle, the callback represented by the
         // watch is no longer invoked, but is still available for later use
         // this watch handle will be resumed when user searches for a new location
@@ -1037,7 +1009,6 @@ require([
         const maleAgeData = newData[1];
 
         if (!chart) {
-            console.log("creating chart");
             // Get the canvas element and render the chart in it
             const canvasElement = document.getElementById("chart");
 
@@ -1162,7 +1133,6 @@ require([
      * Animates the visualized gap continuously.
      */
     function animate(startValue, endValue) {
-        console.log("in animate function")
         var animating = true;
         // var value = startValue;
         var direction = 400;
