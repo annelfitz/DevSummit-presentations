@@ -34,19 +34,16 @@
                     <div id="buttonFilters">
                         <p>Choose from a predefined age range:</p>
                         <calcite-radio-group id="filterAge" layout="horizontal" theme="dark" appearance="solid"
-                            scale="s" width="auto" role="radiogroup" calcite-hydrated="">
-                            <calcite-radio-group-item value="none" tabindex="0" appearance="solid"
-                                aria-checked="false" layout="horizontal" role="radio"
-                                calcite-hydrated="">
+                            scale="m" width="auto" role="radiogroup" calcite-hydrated="">
+                            <calcite-radio-group-item value="none" tabindex="0" appearance="solid" aria-checked="false"
+                                layout="horizontal" role="radio" calcite-hydrated="">
                                 Custom
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="infant" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio"  calcite-hydrated="">
-                                Infants (<1)
-                            </calcite-radio-group-item> 
-                                <calcite-radio-group-item value="child"
+                                layout="horizontal" role="radio" calcite-hydrated="">
+                                Infants (<1) </calcite-radio-group-item> <calcite-radio-group-item value="child"
                                     appearance="solid" aria-checked="false" layout="horizontal" role="radio"
-                                     calcite-hydrated="">
+                                    calcite-hydrated="">
                                     Children (1-11)
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="teen" appearance="solid" aria-checked="false"
@@ -94,15 +91,14 @@
                     <div id="btnLabel">Choose an age range:</div>
                     <div id="buttonFilters">
                         <calcite-radio-group id="ageForIncome" layout="horizontal" theme="dark" appearance="solid"
-                            scale="s" width="auto" role="radiogroup" calcite-hydrated="">
+                            scale="m" width="auto" role="radiogroup" calcite-hydrated="">
                             <calcite-radio-group-item value="HINC" checked="" tabindex="0" appearance="solid"
                                 aria-checked="true" layout="horizontal" role="radio" icon-position="start"
                                 calcite-hydrated="">
                                 All ages
                             </calcite-radio-group-item>
-                            <calcite-radio-group-item value="A15" appearance="solid"
-                                layout="horizontal" role="radio" icon-position="start"
-                                calcite-hydrated="">
+                            <calcite-radio-group-item value="A15" appearance="solid" layout="horizontal" role="radio"
+                                icon-position="start" calcite-hydrated="">
                                 15-24
                             </calcite-radio-group-item>
                             <calcite-radio-group-item value="A25" appearance="solid" aria-checked="false"
@@ -133,7 +129,7 @@
                         </calcite-radio-group>
                     </div>
                     <div id="stats">
-                            <div id="chartPanelDonut"><canvas id="chartDonut"></canvas></div>
+                        <div id="chartPanelDonut"><canvas id="chartDonut"></canvas></div>
                     </div>
                 </div>
                 <div id="filterIncome">
@@ -147,18 +143,17 @@
                             </div>
                         </div>
                         <div id="incomeSliderDivWrapper" class="disabled">
-                            <p>Use the slider to filter the map by the median income, or press Play to animate through.</p>
+                            <p>Use the slider to filter the map by the median income, or press Play to animate through.
+                            </p>
                             <span id="sliderValue"></span>
                             <div>
                                 <div id="playButton" class="esri-widget esri-widget--button toggle-button">
                                     <div>
-                                        <span class="toggle-button-icon esri-icon-play"
-                                            aria-label="play icon"></span>
+                                        <span class="toggle-button-icon esri-icon-play" aria-label="play icon"></span>
                                         Play
                                     </div>
                                     <div>
-                                        <span class="toggle-button-icon esri-icon-pause"
-                                            aria-label="pause icon"></span>
+                                        <span class="toggle-button-icon esri-icon-pause" aria-label="pause icon"></span>
                                         Pause
                                     </div>
                                 </div>

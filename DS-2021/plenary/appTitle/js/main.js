@@ -1019,15 +1019,17 @@ require([
                     labels: labels,
                     datasets: [{
                             label: "Female",
-                            backgroundColor: "#ff4900",
+                            backgroundColor: "#9f9f9f",
                             borderWidth: 0,
-                            data: femaleAgeData
+                            data: femaleAgeData,
+                            barThickness: 2
                         },
                         {
                             label: "Male",
-                            backgroundColor: "#ffc800",
+                            backgroundColor: "#ffffff",
                             borderWidth: 0,
-                            data: maleAgeData
+                            data: maleAgeData,
+                            barThickness: 2
                         }
                     ]
                 },
@@ -1045,7 +1047,6 @@ require([
                     scales: {
                         yAxes: [{
                             categorySpacing: 0,
-                            barThickness: 3,
                             stacked: true,
                             scaleLabel: {
                                 display: true,
@@ -1180,7 +1181,7 @@ require([
             filter: {
                 where: "MEDHINC_CY > " + min + " AND MEDHINC_CY < " + max
             },
-            includedEffect: "bloom(200%, 1px, 0.2)",
+            includedEffect: "bloom(150%, 1px, 0.2) saturate(200%)",
             excludedEffect: "blur(1px) brightness(65%)"
         }
     }
