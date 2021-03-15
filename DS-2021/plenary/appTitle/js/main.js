@@ -4,6 +4,7 @@ require([
     "esri/layers/FeatureLayer",
     "esri/layers/GraphicsLayer",
     "esri/layers/TileLayer",
+    "esri/layers/VectorTileLayer",
     "esri/widgets/Slider",
     "esri/widgets/Legend",
     "esri/core/watchUtils",
@@ -12,13 +13,15 @@ require([
     "esri/Graphic",
     "esri/geometry/geometryEngine",
     "esri/layers/GroupLayer",
-    "esri/widgets/Search"
+    "esri/widgets/Bookmarks",
+    "esri/widgets/Expand"
 ], function (
     MapView,
     WebMap,
     FeatureLayer,
     GraphicsLayer,
     TileLayer,
+    VectorTileLayer,
     Slider,
     Legend,
     watchUtils,
@@ -27,7 +30,8 @@ require([
     Graphic,
     geometryEngine,
     GroupLayer,
-    Search
+    Bookmarks,
+    Expand
 ) {
     // App 'globals'
     let sketchViewModel, featureLayerView, pausableWatchHandle;
@@ -106,7 +110,7 @@ require([
         portalItem: {
             id: "86e2f7a5de0f4a86b2ff09c8abc4ab87" // CA block group with income
         },
-        definitionExpression: "COUNTY = 'Los Angeles'",
+        // definitionExpression: "COUNTY = 'Los Angeles'",
         outFields: ["*"],
         renderer: {
             type: "simple",
@@ -151,8 +155,16 @@ require([
                 type: "simple-fill"
             }
         },
-        minScale: 0,
+        minScale: 207219,
         maxScale: 0
+    });
+
+    const zeroBlocks = new VectorTileLayer({
+        url: "https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/US_Census_Zero_Blocks/VectorTileServer",
+        legendEnabled: false,
+        minScale: 0,
+        maxScale: 207219,
+        opacity: 0.5
     });
 
     const groupLayer = new GroupLayer({
@@ -170,14 +182,21 @@ require([
         container: "viewDiv",
         map,
         center: [-118.25, 34.0656],
-        zoom: 13,
-        constraints: {
-            maxZoom: 15,
-            minZoom: 11
-        }
+        zoom: 13
     });
 
-    map.addMany([groupLayer, bufferLayer, graphicsLayer]);
+    view.watch("scale", function(newValue, oldValue, propertyName, target){
+        console.log(propertyName + " changed from " + oldValue + " to " + newValue);
+        if (newValue > 207219){
+            featureLayer.blendMode = "normal";
+        } else {
+            if (featureLayer.blendMode == "normal"){
+                featureLayer.blendMode = "source-in";
+            }
+        }
+    })
+
+    map.addMany([zeroBlocks, groupLayer, bufferLayer, graphicsLayer]);
     generateStats();
     setUpAppUI();
     setUpSketch();
@@ -374,7 +393,7 @@ require([
     function generatePredominanceRenderer(ageVal) {
         featureLayer.renderer = {
             type: "unique-value",
-            valueExpression: "\n  $feature[\"" + ageVal + "I0_CY\"];\n$feature[\"" + ageVal + "I15_CY\"];\n$feature[\"" + ageVal + "I200_CY\"];\n$feature[\"" + ageVal + "I25_CY\"];\n$feature[\"" + ageVal + "I35_CY\"];\n$feature[\"" + ageVal + "I50_CY\"];\n$feature[\"" + ageVal + "I75_CY\"];\n$feature[\"" + ageVal + "I100_CY\"];\n$feature[\"" + ageVal + "I150_CY\"];\n\n  \n  var fieldNames = [ \"" + ageVal + "I0_CY\", \"" + ageVal + "I15_CY\", \"" + ageVal + "I200_CY\", \"" + ageVal + "I25_CY\", \"" + ageVal + "I35_CY\", \"" + ageVal + "I50_CY\", \"" + ageVal + "I75_CY\", \"" + ageVal + "I100_CY\", \"" + ageVal + "I150_CY\" ];\n  var numFields = 9;\n  var maxValueField = null;\n  var maxValue = -Infinity;\n  var value, i, totalValue = null;\n\n  for(i = 0; i < numFields; i++) {\n    value = $feature[fieldNames[i]];\n\n    if(value > 0) {\n      if(value > maxValue) {\n        maxValue = value;\n        maxValueField = fieldNames[i];\n      }\n      else if (value == maxValue) {\n        maxValueField = null;\n      }\n    }\n    \n  }\n  \n  return maxValueField;\n  ",
+            valueExpression: "\n  $feature[\"" + ageVal + "I0_CY\"];\n$feature[\"" + ageVal + "I15_CY\"];\n$feature[\"" + ageVal + "I200_CY\"];\n$feature[\"" + ageVal + "I25_CY\"];\n$feature[\"" + ageVal + "I35_CY\"];\n$feature[\"" + ageVal + "I50_CY\"];\n$feature[\"" + ageVal + "I75_CY\"];\n$feature[\"" + ageVal + "I100_CY\"];\n$feature[\"" + ageVal + "I150_CY\"];\n\n  \n  var fieldNames = [ \"" + ageVal + "I0_CY\", \"" + ageVal + "I15_CY\", \"" + ageVal + "I200_CY\", \"" + ageVal + "I25_CY\", \"" + ageVal + "I35_CY\", \"" + ageVal + "I50_CY\", \"" + ageVal + "I75_CY\", \"" + ageVal + "I100_CY\", \"" + ageVal + "I150_CY\" ];\n  var numFields = 9;\n  var maxValueField = null;\n  var maxValue = -Infinity;\n  var value, i, totalValue = null;\n\n  for(i = 0; i < numFields; i++) {\n    value = $feature[fieldNames[i]];\n\n    if(value > 0) {\n      if(value > maxValue) {\n        maxValue = value;\n        maxValueField = fieldNames[i];\n      }\n      else if (value == maxValue) {\n        maxValue = value;\n        maxValueField = fieldNames[i];\n     }\n    }\n    \n  }\n  \n  return maxValueField;\n  ",
             valueExpressionTitle: "Predominant category",
             uniqueValueInfos: [{
                 label: "< $15,000",
@@ -684,6 +703,10 @@ require([
         view.whenLayerView(featureLayer).then(function (layerView) {
             featureLayerView = layerView;
 
+            const styleLayer = zeroBlocks.getStyleLayer("ZeroBlocks_2010");
+    styleLayer.paint["fill-color"] = "#474333";
+    zeroBlocks.setStyleLayer(styleLayer);
+
             pausableWatchHandle = watchUtils.pausable(
                 featureLayerView,
                 "updating",
@@ -693,19 +716,13 @@ require([
                     }
                 }
             );
-            const search = new Search({
-                view: view,
-                resultGraphicEnabled: false,
-                popupEnabled: false,
-                goToOverride: function (view, goToParams) {
-                    goToParams.target.zoom = 15;
-                    view.goTo(goToParams.target, goToParams.options)
-                }
+            const bookmarks = new Bookmarks({
+                view: view
             });
 
             // Resume drawBufferPolygon() function; user searched for a new location
             // Must update the buffer polygon and re-run the stats query
-            search.on("search-complete", function () {
+            bookmarks.on("bookmark-select", function () {
                 pausableWatchHandle.resume();
             });
 
@@ -717,7 +734,7 @@ require([
                 }]
             });
             view.ui.add(legend, "bottom-left");
-            view.ui.add(search, "top-right");
+            view.ui.add(new Expand({view: view, content: bookmarks}), "top-right");
 
             featureLayerView.watch("updating", function (value) {
                 if (!value) {
@@ -887,12 +904,12 @@ require([
         const viewCenter = view.center.clone();
         const centerScreenPoint = view.toScreen(viewCenter);
         const centerPoint = view.toMap({
-            x: centerScreenPoint.x + 120,
-            y: centerScreenPoint.y - 120
+            x: centerScreenPoint.x,
+            y: centerScreenPoint.y
         });
         const edgePoint = view.toMap({
-            x: centerScreenPoint.x + 120,
-            y: centerScreenPoint.y - 60
+            x: centerScreenPoint.x + 15,
+            y: centerScreenPoint.y - 49
         });
 
         // Store updated vertices
@@ -1136,7 +1153,7 @@ require([
     function animate(startValue, endValue) {
         var animating = true;
         // var value = startValue;
-        var direction = 400;
+        var direction = 200;
 
         var frame = function () {
             if (!animating) {
