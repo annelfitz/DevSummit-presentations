@@ -30,11 +30,10 @@ body {
 
 .tab-img {
   float: right;
+  width: 50%;
+  padding: 5px;
 }
-.description {
-  float: left;
-  width: 48%;
-}
+
 #red {
   color: #A03500;
   font-weight: bold;

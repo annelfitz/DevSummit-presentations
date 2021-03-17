@@ -155,7 +155,7 @@ require([
                 type: "simple-fill"
             }
         },
-        minScale: 207219,
+        minScale: 245270,
         maxScale: 0
     });
 
@@ -163,7 +163,7 @@ require([
         url: "https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/US_Census_Zero_Blocks/VectorTileServer",
         legendEnabled: false,
         minScale: 0,
-        maxScale: 207219,
+        maxScale: 245270,
         opacity: 0.5
     });
 
@@ -185,18 +185,17 @@ require([
         zoom: 13
     });
 
-    view.watch("scale", function(newValue, oldValue, propertyName, target){
-        console.log(propertyName + " changed from " + oldValue + " to " + newValue);
-        if (newValue > 207219){
+    view.watch("scale", function (newValue, oldValue, propertyName, target) {
+        if (newValue > 245270) {
             featureLayer.blendMode = "normal";
         } else {
-            if (featureLayer.blendMode == "normal"){
+            if (featureLayer.blendMode == "normal") {
                 featureLayer.blendMode = "source-in";
             }
         }
     })
 
-    map.addMany([zeroBlocks, groupLayer, bufferLayer, graphicsLayer]);
+    map.addMany([groupLayer, bufferLayer, graphicsLayer]);
     generateStats();
     setUpAppUI();
     setUpSketch();
@@ -703,9 +702,9 @@ require([
         view.whenLayerView(featureLayer).then(function (layerView) {
             featureLayerView = layerView;
 
-            const styleLayer = zeroBlocks.getStyleLayer("ZeroBlocks_2010");
-    styleLayer.paint["fill-color"] = "#474333";
-    zeroBlocks.setStyleLayer(styleLayer);
+            // const styleLayer = zeroBlocks.getStyleLayer("ZeroBlocks_2010");
+            // styleLayer.paint["fill-color"] = "#474333";
+            // zeroBlocks.setStyleLayer(styleLayer);
 
             pausableWatchHandle = watchUtils.pausable(
                 featureLayerView,
@@ -734,7 +733,10 @@ require([
                 }]
             });
             view.ui.add(legend, "bottom-left");
-            view.ui.add(new Expand({view: view, content: bookmarks}), "top-right");
+            view.ui.add(new Expand({
+                view: view,
+                content: bookmarks
+            }), "top-right");
 
             featureLayerView.watch("updating", function (value) {
                 if (!value) {
@@ -975,12 +977,7 @@ require([
             labelGraphic = labelLength(edgePoint, length);
 
             // Add graphics to layer
-            graphicsLayer.addMany([
-                centerGraphic,
-                edgeGraphic,
-                polylineGraphic,
-                labelGraphic
-            ]);
+            graphicsLayer.addMany([centerGraphic, edgeGraphic, polylineGraphic, labelGraphic]);
             // once center and edge point graphics are added to the layer,
             // call sketch's update method pass in the graphics so that users
             // can just drag these graphics to adjust the buffer
