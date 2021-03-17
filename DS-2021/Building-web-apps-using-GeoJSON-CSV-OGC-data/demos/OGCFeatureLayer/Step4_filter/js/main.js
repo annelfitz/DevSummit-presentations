@@ -24,7 +24,6 @@ require([
             width: "32px"
             }
         },
-        outFields: ["FUNCTIE"],
         popupTemplate: {
             title: "{NAAM}",
             content: [
