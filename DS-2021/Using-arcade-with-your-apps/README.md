@@ -14,7 +14,7 @@ This session will demonstrate how you can transform your data from one or more f
 
 ## Slides
 
-[Click here to download slides](https://github.com/ekenes/conferences/raw/master/ds-2021/arcade/slides.pptx)
+[Click here to download slides](https://raw.githubusercontent.com/annelfitz/DevSummit-presentations/main/DS-2021/Using-arcade-with-your-apps/slides.pptx)
 
 ## Demos
 

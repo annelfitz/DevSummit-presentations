@@ -9,11 +9,11 @@ Here you can access presentations and demos from the Esri Developer Summit.
   - [Demos](https://annelfitz.github.io/DevSummit-presentations/DS-2021/Building-web-apps-using-GeoJSON-CSV-OGC-data/demos/)
   
 - ArcGIS API for JavaScript: Dynamic Vector Symbology
-  - [Presentation]
+  - [Presentation](https://raw.githubusercontent.com/annelfitz/DevSummit-presentations/main/DS-2021/Dynamic-vector-symbology/slides.pptx)
   - [Demos](https://annelfitz.github.io/DevSummit-presentations/DS-2021/Dynamic-vector-symbology/demos/)
 
 - ArcGIS API for JavaScript: Using Arcade with Your Apps
-  - [Presentation]
+  - [Presentation](https://raw.githubusercontent.com/annelfitz/DevSummit-presentations/main/DS-2021/Using-arcade-with-your-apps/slides.pptx)
   - [Demos](https://annelfitz.github.io/DevSummit-presentations/DS-2021/Using-arcade-with-your-apps/demos/)
 
 - ArcGIS API for JavaScript: Working with Your Data Using the Feature Layer
