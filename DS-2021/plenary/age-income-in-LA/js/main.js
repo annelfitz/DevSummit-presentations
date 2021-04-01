@@ -34,11 +34,8 @@ require([
     Expand
 ) {
     // App 'globals'
-    let sketchViewModel, featureLayerView, pausableWatchHandle;
-    let statDefinitions,
-        labels = [];
-    let aboveAndBelow, legend;
-    let chart, chartDonut;
+    let sketchViewModel, featureLayerView, pausableWatchHandle, aboveAndBelow, legend, chart, chartDonut;
+    let statDefinitions, labels = [];
     let animation = null;
     let incomeAge = "HINC";
     let activeTab = "age";
@@ -54,11 +51,12 @@ require([
 
     let unit = "miles";
 
+    // slider for age range
     const ageSlider = new Slider({
         container: "sliderDiv",
         min: 0,
         max: 84,
-        values: [18, 22],
+        values: [18, 22], // start at college age range
         precision: 0,
         layout: "horizontal",
         disabled: true,
@@ -67,12 +65,14 @@ require([
             labels: true
         }
     });
-
+    // when slider is finished updating, update the visualization
     ageSlider.on(["thumb-drag", "segment-drag"], function (event) {
         if (event.state == "stop") {
             updateVisualization();
         }
     });
+
+    // slider for income range, for layer effects
     const incomeSlider = new Slider({
         container: "incomeSliderDiv",
         min: 15000,
@@ -87,30 +87,29 @@ require([
         visibleElements: {
             rangeLabels: true,
         },
-        disabled: true
+        disabled: true // initially disabled until filter is enabled
     });
 
-    sliderValue.innerHTML =
-        "<span style='font-weight:bold; font-size:120%'>" +
-        "$" + numberWithCommas(incomeSlider.values[0]) + " - $" + incomeSlider.values[1]
-    "</span>";
+    sliderValue.innerHTML = "<span style='font-weight:bold; font-size:120%'>" +
+        "$" + numberWithCommas(incomeSlider.values[0]) + " - $" + numberWithCommas(incomeSlider.values[1]) + "</span>";
+
+    // when the slider is moved, update the gap value for the filter/effect
     incomeSlider.on(["thumb-drag", "segment-drag"], function (event) {
-        // featureLayer.renderer.visualVariables = null;
         setGapValue(incomeSlider.values[0], incomeSlider.values[1])
     });
 
-    // Create layers
+    // layers for the buffer graphic
     const graphicsLayer = new GraphicsLayer();
     const bufferLayer = new GraphicsLayer({
         legendEnabled: false,
         blendMode: "color-dodge"
     });
+    // CA block group layer
     const featureLayer = new FeatureLayer({
-        blendMode: "source-in",
+        blendMode: "source-in", // will be blended with the buildingFootprints layer
         portalItem: {
             id: "86e2f7a5de0f4a86b2ff09c8abc4ab87" // CA block group with income
         },
-        // definitionExpression: "COUNTY = 'Los Angeles'",
         outFields: ["*"],
         renderer: {
             type: "simple",
@@ -144,6 +143,7 @@ require([
         }
     });
 
+    // LA building footprints
     const buildingFootprints = new TileLayer({
         portalItem: {
             id: "7009e50f4c7b4eb7a77fb92cfac3835a"
@@ -159,14 +159,7 @@ require([
         maxScale: 0
     });
 
-    const zeroBlocks = new VectorTileLayer({
-        url: "https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/US_Census_Zero_Blocks/VectorTileServer",
-        legendEnabled: false,
-        minScale: 0,
-        maxScale: 245270,
-        opacity: 0.5
-    });
-
+    // group layer for blending block groups with building footprints
     const groupLayer = new GroupLayer({
         layers: [buildingFootprints, featureLayer],
     });
@@ -177,15 +170,15 @@ require([
             id: "08696a2de81e44cb8110d1bbabb86441"
         }
     });
-
+    // create view centered on LA
     const view = new MapView({
         container: "viewDiv",
         map,
         center: [-118.25, 34.0656],
         zoom: 13
     });
-
-    view.watch("scale", function (newValue, oldValue, propertyName, target) {
+    // update layer blending at different scales
+    view.watch("scale", function (newValue) {
         if (newValue > 245270) {
             featureLayer.blendMode = "normal";
         } else {
@@ -195,12 +188,14 @@ require([
         }
     })
 
-    map.addMany([groupLayer, bufferLayer, graphicsLayer]);
-    generateStats();
+    map.addMany([groupLayer, bufferLayer, graphicsLayer]); // add layers to the map
+    generateStats(); // prepare statistics for querying/chart
     setUpAppUI();
     setUpSketch();
 
-    // set up calcite components and event listeners
+    /*********************************************************
+     * set up calcite components and event listeners
+     *********************************************************/
     const filterSwitch = document.getElementById("filterSwitch");
     const radioAgeIncome = document.getElementById("ageForIncome");
     const tabs = document.getElementById("navTabs");
@@ -219,10 +214,10 @@ require([
     tabs.addEventListener("calciteTabChange", function (event) {
         if (event.detail.tab == 1) {
             activeTab = "income";
-            map.removeMany([bufferLayer, graphicsLayer]);
+            map.removeMany([bufferLayer, graphicsLayer]); // remove sketch/buffer graphics when switching to income tab
             sketchViewModel.view = null;
             view.ui.remove(legend);
-            generatePredominanceRenderer(incomeAge);
+            generatePredominanceRenderer(incomeAge); // update renderer
         } else {
             activeTab = "age";
             map.addMany([bufferLayer, graphicsLayer]);
@@ -232,7 +227,6 @@ require([
                 switchFunction(false)
                 filterSwitch.switched = false;
             }
-            // need to get sketch view model hooked up again here 
             updateVisualization();
             view.ui.add(legend, "bottom-left");
         }
@@ -246,7 +240,7 @@ require([
     filterSwitch.addEventListener("calciteSwitchChange", function (event) {
         switchFunction(event.detail.switched)
     })
-
+    // start/stop animation for median income when play button is clicked
     playButton.addEventListener("click", function () {
         if (playButton.classList.contains("toggled")) {
             stopAnimation();
@@ -258,13 +252,12 @@ require([
     function switchFunction(switched) {
         if (switched) {
             effect = true;
-            // featureLayer.renderer.visualVariables = null;
-            incomeSlider.disabled = false;
+            incomeSlider.disabled = false; // enable slider
             incomeSliderDiv.classList.remove("disabled");
-            setGapValue(incomeSlider.values[0], incomeSlider.values[1])
+            setGapValue(incomeSlider.values[0], incomeSlider.values[1]) // apply effect
         } else {
             effect = false;
-            incomeSlider.disabled = true;
+            incomeSlider.disabled = true; // disable slider
             incomeSliderDiv.classList.add("disabled");
             featureLayerView.effect = {
                 filter: {
@@ -314,7 +307,7 @@ require([
         }
         updateVisualization();
     }
-
+    // arcade expression for calculating percentage of age range
     function createAgeRange(low, high) {
         let str = "var TOT = Sum(";
 
@@ -332,7 +325,7 @@ require([
         str += ")\n Round(((TOT/$feature.TOTPOP_CY)*100),2)";
         return str;
     }
-
+    // get avg of age range for statistics
     function findSqlAvg(low, high) {
         str = "(";
         for (let age = low; age <= high; age++) {
@@ -344,8 +337,11 @@ require([
         str += ")/TOTPOP_CY * 100";
         return str;
     }
-
+    /*******************************************************
+     * Update renderer for age tab based on given age range
+     *******************************************************/
     function updateVisualization() {
+        // calculate stats for the given age range
         const avgStats = [{
                 onStatisticField: findSqlAvg(ageSlider.values[0], ageSlider.values[1]),
                 outStatisticFieldName: "pct_age_population_avg",
@@ -359,7 +355,7 @@ require([
         ];
         let query = featureLayerView.createQuery();
         query.outStatistics = avgStats;
-
+        // execute query for the statistics
         featureLayerView.queryFeatures(query).then(function (response) {
             let stats = {
                 avg: response.features[0].attributes.pct_age_population_avg,
@@ -388,7 +384,45 @@ require([
             };
         });
     }
+    // create the stops for the visual variables based on given stats
+    function createStops(max, stats) {
+        let stops = [];
+        if (aboveAndBelow) {
+            stops = [{
+                    value: stats.avg - stats.stddev,
+                    label: Number.parseFloat(stats.avg - stats.stddev).toFixed(2) + "%",
+                    color: "#00ff32"
+                },
+                {
+                    value: stats.avg,
+                    label: Number.parseFloat(stats.avg).toFixed(2) + "%",
+                    color: "#403a42"
+                },
+                {
+                    value: max,
+                    label: Number.parseFloat(max).toFixed(2) + "%",
+                    color: "#bf00ff"
+                }
+            ];
+        } else {
+            stops = [{
+                    value: stats.avg - stats.stddev,
+                    label: Number.parseFloat(stats.avg - stats.stddev).toFixed(2) + "%",
+                    color: "#474333"
+                },
+                {
+                    value: max,
+                    label: Number.parseFloat(max).toFixed(2) + "%",
+                    color: "#23ccff"
+                }
+            ];
+        }
 
+        return stops;
+    }
+    /******************************************************************** 
+     * generate predominance renderer for income tab based on age value
+     ********************************************************************/
     function generatePredominanceRenderer(ageVal) {
         featureLayer.renderer = {
             type: "unique-value",
@@ -398,12 +432,7 @@ require([
                 label: "< $15,000",
                 symbol: {
                     type: "simple-fill",
-                    color: [
-                        179,
-                        0,
-                        0,
-                        255
-                    ],
+                    color: [179, 0, 0, 255],
                     outline: null
                 },
                 value: ageVal + "I0_CY"
@@ -411,12 +440,7 @@ require([
                 label: "$15,000 - $24,999",
                 symbol: {
                     type: "simple-fill",
-                    color: [
-                        124,
-                        17,
-                        88,
-                        255
-                    ],
+                    color: [124, 17, 88, 255],
                     outline: null
                 },
                 value: ageVal + "I15_CY"
@@ -424,12 +448,7 @@ require([
                 label: "$25,000 - $34,999",
                 symbol: {
                     type: "simple-fill",
-                    color: [
-                        68,
-                        33,
-                        175,
-                        255
-                    ],
+                    color: [68, 33, 175, 255],
                     outline: null
                 },
                 value: ageVal + "I25_CY"
@@ -437,12 +456,7 @@ require([
                 label: "$35,000 - $49,999",
                 symbol: {
                     type: "simple-fill",
-                    color: [
-                        26,
-                        83,
-                        255,
-                        255
-                    ],
+                    color: [26, 83, 255, 255],
                     outline: null
                 },
                 value: ageVal + "I35_CY"
@@ -450,12 +464,7 @@ require([
                 label: "$50,000 - $74,999",
                 symbol: {
                     type: "simple-fill",
-                    color: [
-                        13,
-                        136,
-                        230,
-                        255
-                    ],
+                    color: [13, 136, 230, 255],
                     outline: null
                 },
                 value: ageVal + "I50_CY"
@@ -463,12 +472,7 @@ require([
                 label: "$75,000 - $99,999",
                 symbol: {
                     type: "simple-fill",
-                    color: [
-                        0,
-                        183,
-                        199,
-                        255
-                    ],
+                    color: [0, 183, 199, 255],
                     outline: null
                 },
                 value: ageVal + "I75_CY"
@@ -476,12 +480,7 @@ require([
                 label: "$100,000 - $149,999",
                 symbol: {
                     type: "simple-fill",
-                    color: [
-                        90,
-                        212,
-                        90,
-                        255
-                    ],
+                    color: [90, 212, 90, 255],
                     outline: null
                 },
                 value: ageVal + "I100_CY"
@@ -489,12 +488,7 @@ require([
                 label: "$150,000 - $199,999",
                 symbol: {
                     type: "simple-fill",
-                    color: [
-                        139,
-                        224,
-                        78,
-                        255
-                    ],
+                    color: [139, 224, 78, 255],
                     outline: null
                 },
                 value: ageVal + "I150_CY"
@@ -502,21 +496,18 @@ require([
                 label: "$200,000+",
                 symbol: {
                     type: "simple-fill",
-                    color: [
-                        235,
-                        220,
-                        120,
-                        255
-                    ],
+                    color: [235, 220, 120, 255],
                     outline: null
                 },
                 value: ageVal + "I200_CY"
             }]
         }
-        createPieChart(ageVal);
+        createDonutChart(ageVal);
     }
-
-    async function createPieChart(ageVal) {
+    /****************************************************
+     * Create donut chart for income based on age value
+     ****************************************************/
+    async function createDonutChart(ageVal) {
         const query = featureLayerView.createQuery();
         query.outStatistics = [{
                 statisticType: "sum",
@@ -638,43 +629,6 @@ require([
             chartDonut.options.title.text = chartTitle;
             chartDonut.update();
         }
-
-    }
-
-    function createStops(max, stats) {
-        let stops = [];
-        if (aboveAndBelow) {
-            stops = [{
-                    value: stats.avg - stats.stddev,
-                    label: Number.parseFloat(stats.avg - stats.stddev).toFixed(2) + "%",
-                    color: "#00ff32"
-                },
-                {
-                    value: stats.avg,
-                    label: Number.parseFloat(stats.avg).toFixed(2) + "%",
-                    color: "#403a42"
-                },
-                {
-                    value: max,
-                    label: Number.parseFloat(max).toFixed(2) + "%",
-                    color: "#bf00ff"
-                }
-            ];
-        } else {
-            stops = [{
-                    value: stats.avg - stats.stddev,
-                    label: Number.parseFloat(stats.avg - stats.stddev).toFixed(2) + "%",
-                    color: "#474333"
-                },
-                {
-                    value: max,
-                    label: Number.parseFloat(max).toFixed(2) + "%",
-                    color: "#23ccff"
-                }
-            ];
-        }
-
-        return stops;
     }
 
     function generateStats() {
@@ -701,10 +655,6 @@ require([
     function setUpAppUI() {
         view.whenLayerView(featureLayer).then(function (layerView) {
             featureLayerView = layerView;
-
-            // const styleLayer = zeroBlocks.getStyleLayer("ZeroBlocks_2010");
-            // styleLayer.paint["fill-color"] = "#474333";
-            // zeroBlocks.setStyleLayer(styleLayer);
 
             pausableWatchHandle = watchUtils.pausable(
                 featureLayerView,
@@ -738,10 +688,11 @@ require([
                 content: bookmarks
             }), "top-right");
 
+            // when the view is updated, update the donut chart when on the income tab
             featureLayerView.watch("updating", function (value) {
                 if (!value) {
                     if (activeTab == "income") {
-                        createPieChart(incomeAge);
+                        createDonutChart(incomeAge);
                     }
                 }
             })
@@ -814,7 +765,7 @@ require([
         // Update the buffer polygon
         bufferGraphic.geometry = buffer;
 
-        // Query female and male age groups of the census tracts that intersect
+        // Query female and male age groups of the block groups that intersect
         // the buffer polygon on the client
         queryLayerViewAgeStats(buffer).then(function (newData) {
             // Create a population pyramid chart from the returned result
@@ -830,28 +781,11 @@ require([
             xoffset: 50,
             yoffset: 10,
             font: {
-                // autocast as Font
                 size: 14,
                 family: "sans-serif"
             }
         };
     }
-
-    // A plugin to draw the background color
-    Chart.plugins.register({
-        beforeDraw: function (chartInstance) {
-            var ctx = chartInstance.chart.ctx;
-            if (chartInstance.canvas.id == "chartDonut") {
-                ctx.fillStyle = '#242424';
-            } else {
-                ctx.fillStyle = '#2b2b2b';
-            }
-            ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
-        }
-    })
-
-
-
 
     /*********************************************************************
      * Spatial query the census tracts feature layer view for statistics
@@ -894,7 +828,7 @@ require([
 
     /***************************************************
      * Draw the buffer polygon when application loads or
-     * when user searches for a new location
+     * when user clicks a bookmark
      **************************************************/
     function drawBufferPolygon() {
         // When pause() is called on the watch handle, the callback represented by the
@@ -1017,7 +951,9 @@ require([
             }
         });
     }
-
+    /*************************************
+     * Create population pyramid chart
+     ************************************/
     function updateChart(newData) {
         const femaleAgeData = newData[0];
         const maleAgeData = newData[1];
@@ -1099,54 +1035,51 @@ require([
                     }
                 }
             });
-            canvasElement.addEventListener("click", function (event) {
-                let bars = chart.getElementsAtEvent(event);
-                let index = bars[0]._index;
-                let age = chart.data.labels[index];
-                if (age == "<1") {
-                    age = 0;
-                }
-                ageSlider.values = [age, age];
-                updateVisualization();
-            });
         } else {
             chart.data.datasets[0].data = femaleAgeData;
             chart.data.datasets[1].data = maleAgeData;
             chart.update();
         }
     }
+
+    // A plugin to draw the background color
+    Chart.plugins.register({
+        beforeDraw: function (chartInstance) {
+            var ctx = chartInstance.chart.ctx;
+            if (chartInstance.canvas.id == "chartDonut") {
+                ctx.fillStyle = '#242424';
+            } else {
+                ctx.fillStyle = '#2b2b2b';
+            }
+            ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
+        }
+    })
+
     // Helper function for formatting number labels with commas
     function numberWithCommas(value) {
         value = value || 0;
         return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    /**
-     * Starts the animation that cycle
-     * through the gap between the two candidates.
-     */
+    /**********************************************
+     * Functions for animating the filter effects
+     *********************************************/
+    // Starts the animation that cycle through the gap between the two income values.
     function startAnimation() {
         stopAnimation();
         animation = animate(incomeSlider.values[0], incomeSlider.values[1]);
         playButton.classList.add("toggled");
     }
-
-    /**
-     * Stops the animations
-     */
+    // Stops the animation
     function stopAnimation() {
         if (!animation) {
             return;
         }
-
         animation.remove();
         animation = null;
         playButton.classList.remove("toggled");
     }
-
-    /**
-     * Animates the visualized gap continuously.
-     */
+    // Animates the visualized gap continuously.
     function animate(startValue, endValue) {
         var animating = true;
         // var value = startValue;
@@ -1156,13 +1089,12 @@ require([
             if (!animating) {
                 return;
             }
-
             startValue += direction;
             endValue += direction;
-            if (endValue > 210000) {
+            if (endValue > 210000) { // when we reach the end, reverse direction
                 endValue = 210000;
                 direction = -direction;
-            } else if (startValue < 15000) {
+            } else if (startValue < 15000) { // when we reach the beginning, reverse direction
                 startValue = 15000;
                 direction = -direction;
             }
@@ -1179,7 +1111,7 @@ require([
             }
         };
     }
-
+    // updates the values displayed and values on the slider
     function setGapValue(min, max) {
         sliderValue.innerHTML =
             "<span style='font-weight:bold; font-size:120%'>" +
@@ -1189,7 +1121,7 @@ require([
         incomeSlider.viewModel.setValue(1, max);
         createEffect(min, max)
     }
-
+    // creates the filter for the effect based on the values from the slider
     function createEffect(min, max) {
         featureLayerView.effect = {
             filter: {
@@ -1199,5 +1131,4 @@ require([
             excludedEffect: "blur(1px) brightness(65%)"
         }
     }
-
 });
