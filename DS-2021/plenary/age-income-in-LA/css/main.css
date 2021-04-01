@@ -13,7 +13,6 @@ body {
     margin: auto;
     padding: 5px;
     width: 98%;
-    /* overflow:scroll; */
 }
 
 #viewDiv {
@@ -22,6 +21,12 @@ body {
     margin: 0;
     height: 54%;
 }
+.mobile-message {
+    position: absolute;
+    z-index: 99;
+    top: 10px;
+    left: 10px;
+  }
 
 #sliderDiv {
     height: 100px;
@@ -37,7 +42,10 @@ body {
     background-color:#2b2b2b;
 }
 #filterAge {
-    width: 90%;
+    width: 100%;
+}
+#buttonFilters {
+    width: 98%;
 }
 
 .esri-slider__segment-1 {
