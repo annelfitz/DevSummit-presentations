@@ -43,7 +43,7 @@ require([
         document.body.innerHTML = null;
         const mobileMessage = document.createElement("div");
         mobileMessage.classList.add("mobile-message");
-        mobileMessage.innerHTML = `This app loads too much data for mobile devices. 🤷‍♂️ Please try again on a desktop browser.`;
+        mobileMessage.innerHTML = `This app loads too much data for mobile devices. 🤷‍♀️ Please try again on a desktop browser.`;
         document.body.appendChild(mobileMessage);
       }
 
