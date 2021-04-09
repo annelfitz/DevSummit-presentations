@@ -1163,7 +1163,37 @@ Here's the links to the different symbols in case you want to skip ahead 😊
 ![solid stroke](img/solidStroke.png)
 
 ```json
-
+{
+    "type": "CIMLineSymbol",
+    "symbolLayers": [
+      {
+        "type": "CIMSolidStroke",
+        "enable": true,
+        "capStyle": "Butt",
+        "joinStyle": "Round",
+        "width": 3,
+        "color": [
+          255,
+          0,
+          0,
+          255
+        ]
+      },
+      {
+        "type": "CIMSolidStroke",
+        "enable": true,
+        "capStyle": "Butt",
+        "joinStyle": "Round",
+        "width": 8,
+        "color":[
+          255,
+          192,
+          203,
+          255
+        ]
+      }
+    ]
+  }
 ```
 
 ### CIM Picture Line
