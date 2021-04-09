@@ -1331,13 +1331,13 @@ Here's the links to the different symbols in case you want to skip ahead 😊
 
 ```json
 {
-    type: "CIMLineSymbol",
+    ": "CIMLineSymbol",
     "symbolLayers": [
       {
         "type": "CIMSolidStroke",
         "effects": [{
           "type": "CIMGeometricEffectBuffer",
-          size: 10
+          "size": 10
         }],
         "enable": true,
         "capStyle": "Butt",
@@ -1656,7 +1656,7 @@ Here's the links to the different symbols in case you want to skip ahead 😊
 
 ```json
 {
-    type: "CIMLineSymbol",
+    "type": "CIMLineSymbol",
     "symbolLayers": [{
         "type": "CIMVectorMarker",
         "enable": true,
@@ -2215,7 +2215,7 @@ Here's the links to the different symbols in case you want to skip ahead 😊
 
 ### Marker placement in polygon
 
-![marker placement fill](img/markerPlacementFill.html)
+![marker placement fill](img/markerPlacementFill.png)
 
 ```json
 {
