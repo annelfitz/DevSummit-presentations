@@ -25,7 +25,9 @@ In this session, we'll demonstrate how you can leverage clustering to effectivel
 
 - [Clustering - suggested defaults](https://annelfitz.github.io/DevSummit-presentations/DS-2021/Clustering/demos/3-suggested-defaults/)
 
-- [Query clusters](https://annelfitz.github.io/DevSummit-presentations/DS-2021/Clustering/demos/4-query/)
+- [Query clusters - charts](https://annelfitz.github.io/DevSummit-presentations/DS-2021/Clustering/demos/4-query/charts.html)
+
+- [Query clusters - popup summary](https://annelfitz.github.io/DevSummit-presentations/DS-2021/Clustering/demos/4-query/popup-summary.html) 
 
 ## Resources
 
