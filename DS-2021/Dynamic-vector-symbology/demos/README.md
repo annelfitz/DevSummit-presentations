@@ -1361,7 +1361,7 @@ Here's the links to the different symbols in case you want to skip ahead 😊
 
 ```json
 {
-    ": "CIMLineSymbol",
+    "type": "CIMLineSymbol",
     "symbolLayers": [
       {
         "type": "CIMSolidStroke",
