@@ -18,6 +18,7 @@ Learn the basics of working with scalable vector symbols (CIM symbols), from cre
 ## Demos
 
 - [Introduction to CIMSymbols](https://annelfitz.github.io/DevSummit-presentations/DS-2021/Dynamic-vector-symbology/demos/intro-cim.html)
+- [Example CIM symbols and their symbol JSON](https://github.com/annelfitz/DevSummit-presentations/blob/main/DS-2021/Dynamic-vector-symbology/demos/README.md)
 
 ## Resources
 
