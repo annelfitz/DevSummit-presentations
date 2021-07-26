@@ -1371,7 +1371,7 @@ Here's the links to the different symbols in case you want to skip ahead 😊
         }],
         "enable": true,
         "capStyle": "Butt",
-        "joinStyle": "Butt",
+        "joinStyle": "Bevel",
         "miterLimit": 10,
         "width": 3,
         "color": [
