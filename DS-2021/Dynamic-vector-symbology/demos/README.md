@@ -1402,7 +1402,7 @@ Here's the links to the different symbols in case you want to skip ahead 😊
         }],
         "enable": true,
         "capStyle": "Butt",
-        "joinStyle": "Butt",
+        "joinStyle": "Round",
         "miterLimit": 10,
         "width": 3,
         "color": [135,206,235,255]
