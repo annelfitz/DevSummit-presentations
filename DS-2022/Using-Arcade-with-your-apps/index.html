@@ -1,28 +1,48 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
 
-		<title>Esri Dev Summit 2022</title>
+    <title>Esri Dev Summit 2022</title>
 
-		<link rel="stylesheet" href="../reveal.js/dist/reset.css">
-		<link rel="stylesheet" href="../reveal.js/dist/reveal.css">
-		<link rel="stylesheet" href="../reveal.js/dist/theme/black.css">
+    <link rel="stylesheet" href="../../DS-2021/reveal.js/dist/reset.css" />
+    <link rel="stylesheet" href="../../DS-2021/reveal.js/dist/reveal.css" />
+    <link
+      rel="stylesheet"
+      href="../../DS-2021/reveal.js/dist/theme/black.css"
+    />
 
     <!-- Override the Reveal theme varables: -->
     <!-- https://github.com/hakimel/reveal.js/blob/master/css/theme/template/exposer.scss -->
     <style type="text/css">
+      .reveal {
+        font-family: Avenir Next, Helvetica Neue, Helvetica, sans-serif;
+        font-weight: light;
+      }
+
+      .reveal h1,
+      .reveal h2,
+      .reveal h3 {
+        text-transform: none;
+        font-weight: 900;
+        font-family: Avenir Next Condensed, Helvetica Neue, Helvetica,
+          sans-serif;
+      }
+
       :root {
         /* Color from slides */
-        --r-background-color: #01114f; 
+        --r-background-color: #01114f;
 
         /* Main text color */
         --r-main-color: #fff;
 
         /* Arial font is recommended */
-        --r-heading-font: Arial,Helvetica Neue,Helvetica,sans-serif;
-        --r-main-font: Arial,Helvetica Neue,Helvetica,sans-serif;
+        --r-heading-font: Arial, Helvetica Neue, Helvetica, sans-serif;
+        --r-main-font: Arial, Helvetica Neue, Helvetica, sans-serif;
 
         /* For consistency with the template: */
         --r-heading-font-weight: normal;
@@ -30,88 +50,216 @@
         --r-heading-text-shadow: none;
 
         /* Section subheader color per theme */
-        --r-section-subhead-color: #00EC86;
+        --r-section-subhead-color: #00ec86;
+      }
+
+      .sink {
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        padding-bottom: 0;
+        color: white;
+      }
+
+      .reveal .subtitle {
+        font-size: 80%;
+        margin-top: -30px;
       }
     </style>
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="../reveal.js/plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section data-background="../reveal.js/img/2022/dev-summit/bg-1.png" data-background-size="cover">
-					<h1 style="text-align: left; font-size: 60px;">ArcGIS API for JavaScript:<br> Using Arcade with your apps</h1>
-					<p style="text-align: left; font-size: 30px; color: var(--r-section-subhead-color);">Anne Fitz & Yannik Messerli</p>
-					<p style="text-align: left; font-size: 30px;">Slides: <a href="http://bit.ly/abc123"><code>http://bit.ly/abc123</code></a></p>
+    <!-- Theme used for syntax highlighted code -->
+    <link
+      rel="stylesheet"
+      href="../../DS-2021/reveal.js/plugin/highlight/monokai.css"
+    />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section
+          data-background="../../DS-2021/reveal.js/img/2021/dev-summit/bg-1.png"
+          data-background-size="cover"
+        >
+          <h1 style="text-align: left; font-size: 60px">
+            ArcGIS API for JavaScript:<br />
+            Using Arcade with your apps
+          </h1>
+          <p
+            style="
+              text-align: left;
+              font-size: 30px;
+              color: var(--r-section-subhead-color);
+            "
+          >
+            Anne Fitz & Yannik Messerli
+          </p>
+          <p style="text-align: left; font-size: 30px">
+            Slides:
+            <a href="http://bit.ly/abc123"><code>http://bit.ly/abc123</code></a>
+          </p>
         </section>
 
-        <section data-markdown data-background="../reveal.js/img/2022/dev-summit/bg-2.png">
-					<textarea data-template>
-						## Headline Here 2
+        <section
+          data-markdown
+          data-background="../../DS-2021/reveal.js/img/2021/dev-summit/bg-2.png"
+        >
+          <textarea data-template>
+						## Session Goals
 
-						* Bullet [points here](http://hakim.se).
-					</textarea>
+						* Overview of Arcade
+						* Using Arcade in the ArcGIS JS API
+						* Generate Arcade expressions using JavaScript
+
+					</textarea
+          >
         </section>
-        
-        <section data-auto-animate data-background="../reveal.js/img/2022/dev-summit/bg-3.png">
-					<h2 data-id="code-title">Code Example</h2>
-					<pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers>
-						import React, { useState } from 'react';
 
-						function Example() {
-						  const [count, setCount] = useState(0);
+				<section
+          data-markdown
+          data-background="../../DS-2021/reveal.js/img/2021/dev-summit/bg-2.png"
+        >
+          <textarea data-template>
+						## What is Arcade?
 
-						  return (
-						    ...
-						  );
-						}
+						* A __lightweight__ and __secure__ expression language
+							<small>Equivalent to a spreadsheet cell calculation</small>
+						* Portable accross the entire platform
+							<small>ArcGIS Pro, ArcGIS JS API, ArcGIS Runtime, ...</small>
+
+						<div class="sink" style="font-style: italic;">
+							<small>It is NOT intended to be a full programming / scripting language</small>
+						</div>
+
+					</textarea
+          >
+        </section>
+
+				<section
+          data-markdown
+          data-background="../../DS-2021/reveal.js/img/2021/dev-summit/bg-2.png"
+        >
+          <textarea data-template>
+						* Portable <br>
+						<small>Write an expression in Pro, have it run in a browser, or on a device</small>
+						* Secure<br>
+						<small>Ensure that expressions or scripting do not compromise security</small>
+						* Lightweight<br>
+						<small>Most requirements for scripts and expressions are lightweight. The language should be small, and fast</small>
+						* Geospatial<br>
+						<small>Scripts should treat geospatial as first class Members</small>
+					</textarea
+          >
+        </section>
+
+        <section
+          data-auto-animate
+          data-background="../../DS-2021/reveal.js/img/2021/dev-summit/bg-3.png"
+        >
+          <h2 data-id="code-title">First example</h2>
+          <div class="subtitle">Formatting labels</div>
+          <iframe src="./demos/example1.html" style="width: 100%; height: 500px"></iframe>
 					</code></pre>
-				</section>
-
-				<section data-background="../reveal.js/img/2022/dev-summit/bg-4.png">
-					<h1 style="text-align: left; font-size: 48px;">Section Header</h1>
-					<p style="text-align: left; font-size: 24px; color: var(--r-section-subhead-color);">Section Subhead</p>
         </section>
 
-        <section data-background="../reveal.js/img/2022/dev-summit/bg-5.png">
-					<h1 style="text-align: left; font-size: 48px;">Section Header</h1>
-					<p style="text-align: left; font-size: 24px; color: var(--r-section-subhead-color);">Section Subhead</p>
+        <section
+          data-auto-animate
+          data-background="../../DS-2021/reveal.js/img/2021/dev-summit/bg-3.png"
+        >
+          <h2 data-id="code-title">First example</h2>
+          <div class="subtitle">Formatting labels</div>
+          <pre
+            data-id="code-animation"
+          ><code class="hljs" data-trim data-line-numbers>
+labelingInfo: [
+  new LabelClass({
+    ...
+    labelExpressionInfo: { 
+			expression: "$feature.name + TextFormatting.NewLine + $feature.category"
+		},
+    symbol: ...,
+  })
+]
+					</code></pre>
         </section>
 
-        <section data-background="../reveal.js/img/2022/dev-summit/bg-6.png">
-					<h1 style="text-align: right; font-size: 48px;">Section Header</h1>
-					<p style="text-align: right; font-size: 24px; color: var(--r-section-subhead-color);">Section Subhead</p>
+        <section
+          data-background="../../DS-2021/reveal.js/img/2021/dev-summit/bg-4.png"
+        >
+          <h1 style="text-align: left; font-size: 48px">Section Header</h1>
+          <p
+            style="
+              text-align: left;
+              font-size: 24px;
+              color: var(--r-section-subhead-color);
+            "
+          >
+            Section Subhead
+          </p>
+        </section>
+
+        <section
+          data-background="../../DS-2021/reveal.js/img/2021/dev-summit/bg-5.png"
+        >
+          <h1 style="text-align: left; font-size: 48px">Section Header</h1>
+          <p
+            style="
+              text-align: left;
+              font-size: 24px;
+              color: var(--r-section-subhead-color);
+            "
+          >
+            Section Subhead
+          </p>
+        </section>
+
+        <section
+          data-background="../../DS-2021/reveal.js/img/2021/dev-summit/bg-6.png"
+        >
+          <h1 style="text-align: right; font-size: 48px">Section Header</h1>
+          <p
+            style="
+              text-align: right;
+              font-size: 24px;
+              color: var(--r-section-subhead-color);
+            "
+          >
+            Section Subhead
+          </p>
         </section>
 
         <!-- FEEDBACK SLIDE: -->
-        <section  data-markdown data-background="../reveal.js/img/2022/dev-summit/bg-7.png">
-					<textarea data-template>
+        <section
+          data-markdown
+          data-background="../../DS-2021/reveal.js/img/2021/dev-summit/bg-7.png"
+        >
+          <textarea data-template>
             Please provide your feedback for this session by clicking on the session survey link directly below the video.
           </textarea>
-				</section>
+        </section>
 
         <!-- ESRI LOGO SLIDE: -->
-        <section data-background="../reveal.js/img/2022/dev-summit/bg-8.png">
+        <section
+          data-background="../../DS-2021/reveal.js/img/2021/dev-summit/bg-8.png"
+        >
           <!-- <img src="img/esri-science-logo-white.png" /> -->
-				</section>
-			</div>
-		</div>
+        </section>
+      </div>
+    </div>
 
-		<script src="../reveal.js/dist/reveal.js"></script>
-		<script src="../reveal.js/plugin/notes/notes.js"></script>
-		<script src="../reveal.js/plugin/markdown/markdown.js"></script>
-		<script src="../reveal.js/plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+    <script src="../../DS-2021/reveal.js/dist/reveal.js"></script>
+    <script src="../../DS-2021/reveal.js/plugin/notes/notes.js"></script>
+    <script src="../../DS-2021/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../../DS-2021/reveal.js/plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
 </html>
