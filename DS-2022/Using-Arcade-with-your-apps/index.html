@@ -233,7 +233,7 @@ labelingInfo: [
 		<section
 		data-background="../../reveal.js/img/2022/dev-summit/bg-4.png"
 	  >
-		<h1 style="text-align: left; font-size: 62px">New features</h1>
+		<h1 style="text-align: left; font-size: 62px">Profiles</h1>
 		<p
 		  style="
 			text-align: left;
@@ -250,11 +250,92 @@ labelingInfo: [
           data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
         >
           <textarea data-template>
-						## talk about arcade updates
+						## Visualization
 					</textarea
           >
         </section>
 
+		<section
+          data-markdown
+          data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
+        >
+          <textarea data-template>
+						## Popups
+						<iframe src="https://next.sites.afd.arcgis.com/javascript/latest/sample-code/popuptemplate-arcade-groupby/live/" style="width: 100%; height: 500px"></iframe>
+					</textarea
+          >
+        </section>
+
+		<section
+          data-markdown
+          data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
+        >
+          <textarea data-template>
+						## Cluster Popups
+						<iframe src="https://next.sites.afd.arcgis.com/javascript/latest/sample-code/featurereduction-cluster-popup-filter/live/" style="width: 100%; height: 500px"></iframe>
+					</textarea
+          >
+        </section>
+
+		<section
+          data-auto-animate
+          data-background="../../reveal.js/img/2022/dev-summit/bg-3.png"
+        >
+          <h2 data-id="code-title">Cluster Popups</h2>
+          <div class="subtitle">Using $aggregatedFeatures</div>
+          <pre
+            data-id="code-animation"
+          ><code class="hljs" data-trim data-line-numbers>
+			Expects($aggregatedFeatures, "capacity_mw")
+			var mWtotal = Sum($aggregatedFeatures, "capacity_mw");
+			var mWCoal = Sum(Filter($aggregatedFeatures, "fuel1 = 'Coal'"), "capacity_mw");
+			if(mWCoal < 1){
+			  return "none";
+			}
+			var mWratio = Round(mWCoal / mWtotal, 4);
+			return `${Text(mWratio, "#.#%")} (${Text(mWCoal, "#,### mW")})`
+					</code></pre>
+        </section>
+
+		<section
+          data-markdown
+          data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
+        >
+          <textarea data-template>
+						## Labeling
+					</textarea
+          >
+        </section>
+
+		<section
+          data-markdown
+          data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
+        >
+          <textarea data-template>
+						## Forms
+					</textarea
+          >
+        </section>
+
+		<section
+          data-markdown
+          data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
+        >
+          <textarea data-template>
+						## Feature sorting
+					</textarea
+          >
+        </section>
+
+		<section
+          data-markdown
+          data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
+        >
+          <textarea data-template>
+						## Z values
+					</textarea
+          >
+        </section>
 
         <section
           data-background="../../reveal.js/img/2022/dev-summit/bg-4.png"
