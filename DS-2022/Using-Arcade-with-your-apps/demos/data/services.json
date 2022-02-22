@@ -6,10 +6,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53976618360091,
-          47.37786080656781
-        ]
+        "coordinates": [8.53976618360091, 47.37786080656781]
       },
       "properties": {
         "service_id": 12056,
@@ -21,6 +18,8 @@
         "name_affix": "Plaza",
         "area_id": 58446,
         "floor": "Untergeschoss",
+        "openhours_from": "06:00:00",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -66,10 +65,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538525029567435,
-          47.377459786380214
-        ]
+        "coordinates": [8.538525029567435, 47.377459786380214]
       },
       "properties": {
         "service_id": 11876,
@@ -81,6 +77,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58761,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "06:30:00",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -126,10 +124,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539660762163399,
-          47.37789137030134
-        ]
+        "coordinates": [8.539660762163399, 47.37789137030134]
       },
       "properties": {
         "service_id": 23840,
@@ -141,6 +136,8 @@
         "name_affix": "Plaza",
         "area_id": 58440,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -180,10 +177,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538393901265481,
-          47.37801584120581
-        ]
+        "coordinates": [8.538393901265481, 47.37801584120581]
       },
       "properties": {
         "service_id": 23883,
@@ -195,6 +189,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58489,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -234,10 +230,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540317108058876,
-          47.37801483708418
-        ]
+        "coordinates": [8.540317108058876, 47.37801483708418]
       },
       "properties": {
         "service_id": 12006,
@@ -249,6 +242,8 @@
         "name_affix": "Plaza",
         "area_id": 58432,
         "floor": "Untergeschoss",
+        "openhours_from": "06:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -294,10 +289,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539421864667736,
-          47.3773772679143
-        ]
+        "coordinates": [8.539421864667736, 47.3773772679143]
       },
       "properties": {
         "service_id": 13415,
@@ -309,6 +301,8 @@
         "name_affix": "Bahnhof SZU",
         "area_id": 58248,
         "floor": "Bahnhof SZU",
+        "openhours_from": "06:00:00",
+        "openhours_to": "17:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -348,10 +342,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539070750747785,
-          47.37753851077364
-        ]
+        "coordinates": [8.539070750747785, 47.37753851077364]
       },
       "properties": {
         "service_id": 11542,
@@ -363,6 +354,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58742,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "06:00:00",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -408,10 +401,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540705758877893,
-          47.37799850055734
-        ]
+        "coordinates": [8.540705758877893, 47.37799850055734]
       },
       "properties": {
         "service_id": 10810,
@@ -423,6 +413,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58967,
         "floor": "Erdgeschoss",
+        "openhours_from": "06:30:00",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -462,10 +454,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538584780830801,
-          47.377745647860785
-        ]
+        "coordinates": [8.538584780830801, 47.377745647860785]
       },
       "properties": {
         "service_id": 23999,
@@ -477,6 +466,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58418,
         "floor": "Untergeschoss",
+        "openhours_from": "07:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -516,10 +507,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541290614641651,
-          47.378293027493584
-        ]
+        "coordinates": [8.541290614641651, 47.378293027493584]
       },
       "properties": {
         "service_id": 23855,
@@ -531,6 +519,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58709,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -570,10 +560,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539702133668479,
-          47.37787445530777
-        ]
+        "coordinates": [8.539702133668479, 47.37787445530777]
       },
       "properties": {
         "service_id": 21096,
@@ -585,6 +572,8 @@
         "name_affix": "Plaza",
         "area_id": 58440,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -624,10 +613,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541092559919646,
-          47.376930051586854
-        ]
+        "coordinates": [8.541092559919646, 47.376930051586854]
       },
       "properties": {
         "service_id": 11734,
@@ -639,6 +625,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58753,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "08:00:00",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -678,10 +666,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539692843928737,
-          47.37778817847602
-        ]
+        "coordinates": [8.539692843928737, 47.37778817847602]
       },
       "properties": {
         "service_id": 10851,
@@ -693,6 +678,8 @@
         "name_affix": "Südtrakt",
         "area_id": 58957,
         "floor": "Erdgeschoss",
+        "openhours_from": "07:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -738,10 +725,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540972471273063,
-          47.37717593667305
-        ]
+        "coordinates": [8.540972471273063, 47.37717593667305]
       },
       "properties": {
         "service_id": 23957,
@@ -753,6 +737,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58707,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -792,10 +778,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536438710027832,
-          47.379298004106374
-        ]
+        "coordinates": [8.536438710027832, 47.379298004106374]
       },
       "properties": {
         "service_id": 12026,
@@ -807,6 +790,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58604,
         "floor": "Untergeschoss",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -840,10 +824,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541160197985876,
-          47.37711895945862
-        ]
+        "coordinates": [8.541160197985876, 47.37711895945862]
       },
       "properties": {
         "service_id": 11716,
@@ -855,6 +836,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58752,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -894,10 +877,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541510107068257,
-          47.3782801603517
-        ]
+        "coordinates": [8.541510107068257, 47.3782801603517]
       },
       "properties": {
         "service_id": 23650,
@@ -909,6 +889,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58710,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -948,10 +930,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539787960485098,
-          47.377144640184184
-        ]
+        "coordinates": [8.539787960485098, 47.377144640184184]
       },
       "properties": {
         "service_id": 11654,
@@ -963,6 +942,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58758,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "08:30:00",
+        "openhours_to": "18:30:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1002,10 +983,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540865678378037,
-          47.37871551413375
-        ]
+        "coordinates": [8.540865678378037, 47.37871551413375]
       },
       "properties": {
         "service_id": 11438,
@@ -1017,6 +995,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58711,
         "floor": "Shopville/Aufgänge",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1050,10 +1029,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538335684742885,
-          47.37769013474279
-        ]
+        "coordinates": [8.538335684742885, 47.37769013474279]
       },
       "properties": {
         "service_id": 11600,
@@ -1065,6 +1041,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58743,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "06:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1104,10 +1082,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536281604890751,
-          47.378374918998
-        ]
+        "coordinates": [8.536281604890751, 47.378374918998]
       },
       "properties": {
         "service_id": 23652,
@@ -1119,6 +1094,8 @@
         "name_affix": "Passage Sihlquai",
         "area_id": null,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1158,10 +1135,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53855561613451,
-          47.377456440211255
-        ]
+        "coordinates": [8.53855561613451, 47.377456440211255]
       },
       "properties": {
         "service_id": 20790,
@@ -1173,6 +1147,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58761,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1212,10 +1188,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540066097103852,
-          47.37755463198868
-        ]
+        "coordinates": [8.540066097103852, 47.37755463198868]
       },
       "properties": {
         "service_id": 10841,
@@ -1227,6 +1200,7 @@
         "name_affix": "Südtrakt",
         "area_id": 58969,
         "floor": "Erdgeschoss",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1260,10 +1234,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.537795850671257,
-          47.377767109413675
-        ]
+        "coordinates": [8.537795850671257, 47.377767109413675]
       },
       "properties": {
         "service_id": 11572,
@@ -1275,6 +1246,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58738,
         "floor": "Shopville/Aufgänge",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1308,10 +1280,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539108564260944,
-          47.37715858702425
-        ]
+        "coordinates": [8.539108564260944, 47.37715858702425]
       },
       "properties": {
         "service_id": 11844,
@@ -1323,6 +1292,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58718,
         "floor": "Shopville/Aufgänge",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1362,10 +1332,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536923125536823,
-          47.379679541205924
-        ]
+        "coordinates": [8.536923125536823, 47.379679541205924]
       },
       "properties": {
         "service_id": 11985,
@@ -1377,6 +1344,7 @@
         "name_affix": "Halle Sihlquai",
         "area_id": 58599,
         "floor": "Untergeschoss",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1428,10 +1396,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538261510252745,
-          47.37752436156485
-        ]
+        "coordinates": [8.538261510252745, 47.37752436156485]
       },
       "properties": {
         "service_id": 11880,
@@ -1443,6 +1408,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58731,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1488,10 +1455,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539877848241884,
-          47.37804633476565
-        ]
+        "coordinates": [8.539877848241884, 47.37804633476565]
       },
       "properties": {
         "service_id": 24019,
@@ -1503,6 +1467,7 @@
         "name_affix": "Haupthalle",
         "area_id": null,
         "floor": "Erdgeschoss",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1536,10 +1501,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540900969486234,
-          47.37692263942128
-        ]
+        "coordinates": [8.540900969486234, 47.37692263942128]
       },
       "properties": {
         "service_id": 11743,
@@ -1551,6 +1513,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58733,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1590,10 +1554,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540448128497346,
-          47.37705029730862
-        ]
+        "coordinates": [8.540448128497346, 47.37705029730862]
       },
       "properties": {
         "service_id": 11782,
@@ -1605,6 +1566,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58712,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1650,10 +1613,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.537868273963568,
-          47.37790416758524
-        ]
+        "coordinates": [8.537868273963568, 47.37790416758524]
       },
       "properties": {
         "service_id": 11581,
@@ -1665,6 +1625,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58745,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1704,10 +1666,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539830818412504,
-          47.377848496770795
-        ]
+        "coordinates": [8.539830818412504, 47.377848496770795]
       },
       "properties": {
         "service_id": 12064,
@@ -1719,6 +1678,7 @@
         "name_affix": "Plaza",
         "area_id": 58446,
         "floor": "Untergeschoss",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1752,10 +1712,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540157070722604,
-          47.376973693105455
-        ]
+        "coordinates": [8.540157070722604, 47.376973693105455]
       },
       "properties": {
         "service_id": 10823,
@@ -1767,6 +1724,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58717,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1806,10 +1765,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539351820683798,
-          47.377093267250515
-        ]
+        "coordinates": [8.539351820683798, 47.377093267250515]
       },
       "properties": {
         "service_id": 11840,
@@ -1821,6 +1777,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58718,
         "floor": "Shopville/Aufgänge",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1860,10 +1817,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539381157757234,
-          47.377400308261066
-        ]
+        "coordinates": [8.539381157757234, 47.377400308261066]
       },
       "properties": {
         "service_id": 11621,
@@ -1875,6 +1829,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58727,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1914,10 +1870,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539860643459466,
-          47.37748219941343
-        ]
+        "coordinates": [8.539860643459466, 47.37748219941343]
       },
       "properties": {
         "service_id": 10853,
@@ -1929,6 +1882,7 @@
         "name_affix": "Südtrakt",
         "area_id": 59015,
         "floor": "Erdgeschoss",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1962,10 +1916,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539238922042218,
-          47.37765385171818
-        ]
+        "coordinates": [8.539238922042218, 47.37765385171818]
       },
       "properties": {
         "service_id": 23960,
@@ -1977,6 +1928,7 @@
         "name_affix": "Querhalle 1. Obergeschoss",
         "area_id": 59029,
         "floor": "Erdgeschoss",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2028,10 +1980,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540564826850426,
-          47.37713358761142
-        ]
+        "coordinates": [8.540564826850426, 47.37713358761142]
       },
       "properties": {
         "service_id": 11673,
@@ -2043,6 +1992,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58720,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2082,10 +2033,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540146557917478,
-          47.377892898855755
-        ]
+        "coordinates": [8.540146557917478, 47.377892898855755]
       },
       "properties": {
         "service_id": 13355,
@@ -2097,6 +2045,8 @@
         "name_affix": "Plaza",
         "area_id": 58501,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2136,10 +2086,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536370765461978,
-          47.37915674455895
-        ]
+        "coordinates": [8.536370765461978, 47.37915674455895]
       },
       "properties": {
         "service_id": 23012,
@@ -2151,6 +2098,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58604,
         "floor": "Untergeschoss",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2202,10 +2150,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540165261840748,
-          47.37775080254216
-        ]
+        "coordinates": [8.540165261840748, 47.37775080254216]
       },
       "properties": {
         "service_id": 12072,
@@ -2217,6 +2162,8 @@
         "name_affix": "Plaza",
         "area_id": 58427,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2256,10 +2203,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540786180755912,
-          47.37708646686338
-        ]
+        "coordinates": [8.540786180755912, 47.37708646686338]
       },
       "properties": {
         "service_id": 11677,
@@ -2271,6 +2215,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58728,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "07:30:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2310,10 +2256,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540721003693001,
-          47.3769901253834
-        ]
+        "coordinates": [8.540721003693001, 47.3769901253834]
       },
       "properties": {
         "service_id": 11758,
@@ -2325,6 +2268,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58723,
         "floor": "Shopville/Aufgänge",
+        "openhours_to": "21:30:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2358,10 +2302,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536527855744799,
-          47.3788134785146
-        ]
+        "coordinates": [8.536527855744799, 47.3788134785146]
       },
       "properties": {
         "service_id": 12035,
@@ -2373,6 +2314,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58589,
         "floor": "Untergeschoss",
+        "openhours_to": "23:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2406,10 +2348,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539039042061368,
-          47.378039166992714
-        ]
+        "coordinates": [8.539039042061368, 47.378039166992714]
       },
       "properties": {
         "service_id": 11523,
@@ -2421,6 +2360,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58454,
         "floor": "Untergeschoss",
+        "openhours_from": "06:00:00",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2460,10 +2401,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539284768757991,
-          47.377696902479755
-        ]
+        "coordinates": [8.539284768757991, 47.377696902479755]
       },
       "properties": {
         "service_id": 10792,
@@ -2475,6 +2413,7 @@
         "name_affix": "Querhalle",
         "area_id": 58953,
         "floor": "Erdgeschoss",
+        "openhours_to": "23:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2526,10 +2465,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540476546417615,
-          47.37780939992188
-        ]
+        "coordinates": [8.540476546417615, 47.37780939992188]
       },
       "properties": {
         "service_id": 23676,
@@ -2541,6 +2477,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58527,
         "floor": "Untergeschoss",
+        "openhours_from": "06:30:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2586,10 +2524,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538643582191742,
-          47.37912277803132
-        ]
+        "coordinates": [8.538643582191742, 47.37912277803132]
       },
       "properties": {
         "service_id": 11363,
@@ -2601,6 +2536,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58445,
         "floor": "Untergeschoss",
+        "openhours_from": "07:30:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2640,10 +2577,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536069470455033,
-          47.37822754695661
-        ]
+        "coordinates": [8.536069470455033, 47.37822754695661]
       },
       "properties": {
         "service_id": 23659,
@@ -2655,6 +2589,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": null,
         "floor": "Shopville/Aufgänge",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2688,10 +2623,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538148690804062,
-          47.37772158654887
-        ]
+        "coordinates": [8.538148690804062, 47.37772158654887]
       },
       "properties": {
         "service_id": 11590,
@@ -2703,6 +2635,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58735,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2742,10 +2676,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53643524218405,
-          47.37860541886431
-        ]
+        "coordinates": [8.53643524218405, 47.37860541886431]
       },
       "properties": {
         "service_id": 12040,
@@ -2757,6 +2688,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58609,
         "floor": "Untergeschoss",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2796,10 +2728,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539131358243653,
-          47.377574498448574
-        ]
+        "coordinates": [8.539131358243653, 47.377574498448574]
       },
       "properties": {
         "service_id": 23828,
@@ -2811,6 +2740,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": null,
         "floor": "Untergeschoss",
+        "openhours_from": "06:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2850,10 +2781,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540018637607924,
-          47.378502075799375
-        ]
+        "coordinates": [8.540018637607924, 47.378502075799375]
       },
       "properties": {
         "service_id": 13296,
@@ -2865,6 +2793,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58481,
         "floor": "Untergeschoss",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2904,10 +2833,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540180390369201,
-          47.37806282378903
-        ]
+        "coordinates": [8.540180390369201, 47.37806282378903]
       },
       "properties": {
         "service_id": 11295,
@@ -2919,6 +2845,8 @@
         "name_affix": "Zwischengeschoss",
         "area_id": 58796,
         "floor": "Zwischengeschoss",
+        "openhours_from": "07:00:00",
+        "openhours_to": "16:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2958,10 +2886,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540464367833806,
-          47.37715885636258
-        ]
+        "coordinates": [8.540464367833806, 47.37715885636258]
       },
       "properties": {
         "service_id": 23898,
@@ -2973,6 +2898,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58729,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3012,10 +2939,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536392696164144,
-          47.37918232104547
-        ]
+        "coordinates": [8.536392696164144, 47.37918232104547]
       },
       "properties": {
         "service_id": 22994,
@@ -3027,6 +2951,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58604,
         "floor": "Untergeschoss",
+        "openhours_to": "21:30:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3072,10 +2997,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538434758714864,
-          47.37889677309955
-        ]
+        "coordinates": [8.538434758714864, 47.37889677309955]
       },
       "properties": {
         "service_id": 23637,
@@ -3087,6 +3009,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58450,
         "floor": "Untergeschoss",
+        "openhours_from": "06:00:00",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3126,10 +3050,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53598568014398,
-          47.37822618595803
-        ]
+        "coordinates": [8.53598568014398, 47.37822618595803]
       },
       "properties": {
         "service_id": 23658,
@@ -3141,6 +3062,8 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58614,
         "floor": "Untergeschoss",
+        "openhours_from": "06:00:00",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3180,10 +3103,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536036172735063,
-          47.378948951200464
-        ]
+        "coordinates": [8.536036172735063, 47.378948951200464]
       },
       "properties": {
         "service_id": 22869,
@@ -3195,6 +3115,8 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58605,
         "floor": "Untergeschoss",
+        "openhours_from": "06:00:00",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3240,10 +3162,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.54037669906036,
-          47.37819713500611
-        ]
+        "coordinates": [8.54037669906036, 47.37819713500611]
       },
       "properties": {
         "service_id": 23587,
@@ -3255,6 +3174,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58986,
         "floor": "Erdgeschoss",
+        "openhours_from": "06:30:00",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3300,10 +3221,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538760456395611,
-          47.37811785569624
-        ]
+        "coordinates": [8.538760456395611, 47.37811785569624]
       },
       "properties": {
         "service_id": 23251,
@@ -3315,6 +3233,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58467,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3354,10 +3274,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540691153997336,
-          47.37720863672227
-        ]
+        "coordinates": [8.540691153997336, 47.37720863672227]
       },
       "properties": {
         "service_id": 10825,
@@ -3369,6 +3286,7 @@
         "name_affix": "Südtrakt",
         "area_id": 58978,
         "floor": "Erdgeschoss",
+        "openhours_to": "23:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3408,10 +3326,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539886862182023,
-          47.37879160123503
-        ]
+        "coordinates": [8.539886862182023, 47.37879160123503]
       },
       "properties": {
         "service_id": 11404,
@@ -3423,6 +3338,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58428,
         "floor": "Untergeschoss",
+        "openhours_to": "23:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3474,10 +3390,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539709675759218,
-          47.37730379859946
-        ]
+        "coordinates": [8.539709675759218, 47.37730379859946]
       },
       "properties": {
         "service_id": 11645,
@@ -3489,6 +3402,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58715,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "07:30:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3528,10 +3443,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539530099419903,
-          47.37814016053497
-        ]
+        "coordinates": [8.539530099419903, 47.37814016053497]
       },
       "properties": {
         "service_id": 11113,
@@ -3543,6 +3455,7 @@
         "name_affix": "Zwischengeschoss",
         "area_id": 58795,
         "floor": "Zwischengeschoss",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3588,10 +3501,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539388139131622,
-          47.378365114036725
-        ]
+        "coordinates": [8.539388139131622, 47.378365114036725]
       },
       "properties": {
         "service_id": 11911,
@@ -3603,6 +3513,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58508,
         "floor": "Untergeschoss",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3648,10 +3560,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.5400480481814,
-          47.37739168145737
-        ]
+        "coordinates": [8.5400480481814, 47.37739168145737]
       },
       "properties": {
         "service_id": 23938,
@@ -3663,6 +3572,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 59150,
         "floor": "Untergeschoss",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3702,10 +3613,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540531522609532,
-          47.377255772283014
-        ]
+        "coordinates": [8.540531522609532, 47.377255772283014]
       },
       "properties": {
         "service_id": 10827,
@@ -3717,6 +3625,7 @@
         "name_affix": "Südtrakt",
         "area_id": 58979,
         "floor": "Erdgeschoss",
+        "openhours_to": "23:30:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3750,10 +3659,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540539764318208,
-          47.377913970515515
-        ]
+        "coordinates": [8.540539764318208, 47.377913970515515]
       },
       "properties": {
         "service_id": 23791,
@@ -3765,6 +3671,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58523,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3804,10 +3712,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536907597640036,
-          47.37801985490152
-        ]
+        "coordinates": [8.536907597640036, 47.37801985490152]
       },
       "properties": {
         "service_id": 11224,
@@ -3845,10 +3750,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540224754766516,
-          47.37843439362443
-        ]
+        "coordinates": [8.540224754766516, 47.37843439362443]
       },
       "properties": {
         "service_id": 13300,
@@ -3860,6 +3762,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58436,
         "floor": "Untergeschoss",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3893,10 +3796,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541495973171944,
-          47.37901390823181
-        ]
+        "coordinates": [8.541495973171944, 47.37901390823181]
       },
       "properties": {
         "service_id": 13258,
@@ -3934,10 +3834,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.537134077588542,
-          47.379618629235125
-        ]
+        "coordinates": [8.537134077588542, 47.379618629235125]
       },
       "properties": {
         "service_id": 11959,
@@ -3949,6 +3846,7 @@
         "name_affix": "Halle Sihlquai",
         "area_id": 58591,
         "floor": "Untergeschoss",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3994,10 +3892,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53680289521098,
-          47.37962896223966
-        ]
+        "coordinates": [8.53680289521098, 47.37962896223966]
       },
       "properties": {
         "service_id": 11993,
@@ -4009,6 +3904,8 @@
         "name_affix": "Halle Sihlquai",
         "area_id": 58616,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4048,10 +3945,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539459068591368,
-          47.37846518360045
-        ]
+        "coordinates": [8.539459068591368, 47.37846518360045]
       },
       "properties": {
         "service_id": 11906,
@@ -4063,6 +3957,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58505,
         "floor": "Untergeschoss",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4102,10 +3998,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540999877729416,
-          47.37836625883092
-        ]
+        "coordinates": [8.540999877729416, 47.37836625883092]
       },
       "properties": {
         "service_id": 11932,
@@ -4117,6 +4010,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58500,
         "floor": "Untergeschoss",
+        "openhours_from": "07:30:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4162,10 +4057,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538319754098215,
-          47.37863754046301
-        ]
+        "coordinates": [8.538319754098215, 47.37863754046301]
       },
       "properties": {
         "service_id": 11321,
@@ -4177,6 +4069,8 @@
         "name_affix": "Passage Gessnerallee",
         "area_id": 58448,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4216,10 +4110,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539812663552654,
-          47.377764109296706
-        ]
+        "coordinates": [8.539812663552654, 47.377764109296706]
       },
       "properties": {
         "service_id": 10849,
@@ -4231,6 +4122,7 @@
         "name_affix": "Südtrakt",
         "area_id": 58962,
         "floor": "Erdgeschoss",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4264,10 +4156,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538902457339526,
-          47.378768728680534
-        ]
+        "coordinates": [8.538902457339526, 47.378768728680534]
       },
       "properties": {
         "service_id": 11480,
@@ -4279,6 +4168,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58458,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4318,10 +4209,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539540659348468,
-          47.3782375340537
-        ]
+        "coordinates": [8.539540659348468, 47.3782375340537]
       },
       "properties": {
         "service_id": 11955,
@@ -4333,6 +4221,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58434,
         "floor": "Untergeschoss",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4372,10 +4262,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538233178642948,
-          47.37847630305371
-        ]
+        "coordinates": [8.538233178642948, 47.37847630305371]
       },
       "properties": {
         "service_id": 22744,
@@ -4387,6 +4274,8 @@
         "name_affix": "Passage Gessnerallee",
         "area_id": 58465,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4426,10 +4315,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540416973110181,
-          47.37823336586819
-        ]
+        "coordinates": [8.540416973110181, 47.37823336586819]
       },
       "properties": {
         "service_id": 12010,
@@ -4441,6 +4327,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58475,
         "floor": "Untergeschoss",
+        "openhours_from": "06:30:00",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4480,10 +4368,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540368228800062,
-          47.37865289701858
-        ]
+        "coordinates": [8.540368228800062, 47.37865289701858]
       },
       "properties": {
         "service_id": 11425,
@@ -4495,6 +4380,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58470,
         "floor": "Untergeschoss",
+        "openhours_from": "07:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4540,10 +4427,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539377546993498,
-          47.37892232203357
-        ]
+        "coordinates": [8.539377546993498, 47.37892232203357]
       },
       "properties": {
         "service_id": 11382,
@@ -4555,6 +4439,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58429,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4594,10 +4480,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53555726106567,
-          47.37848914452153
-        ]
+        "coordinates": [8.53555726106567, 47.37848914452153]
       },
       "properties": {
         "service_id": 23653,
@@ -4609,6 +4492,8 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58611,
         "floor": "Untergeschoss",
+        "openhours_from": "06:30:00",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4648,10 +4533,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536885158943928,
-          47.379315686412816
-        ]
+        "coordinates": [8.536885158943928, 47.379315686412816]
       },
       "properties": {
         "service_id": 15851,
@@ -4663,6 +4545,8 @@
         "name_affix": "Halle Sihlquai",
         "area_id": 58597,
         "floor": "Untergeschoss",
+        "openhours_from": "10:00:00",
+        "openhours_to": "19:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4708,10 +4592,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538510989794544,
-          47.37818362040508
-        ]
+        "coordinates": [8.538510989794544, 47.37818362040508]
       },
       "properties": {
         "service_id": 11507,
@@ -4723,6 +4604,7 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58460,
         "floor": "Untergeschoss",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4756,10 +4638,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536958922856288,
-          47.37974285556661
-        ]
+        "coordinates": [8.536958922856288, 47.37974285556661]
       },
       "properties": {
         "service_id": 11976,
@@ -4771,6 +4650,8 @@
         "name_affix": "Halle Sihlquai",
         "area_id": 58598,
         "floor": "Untergeschoss",
+        "openhours_from": "10:00:00",
+        "openhours_to": "17:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4816,10 +4697,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539569509200781,
-          47.377919309476425
-        ]
+        "coordinates": [8.539569509200781, 47.377919309476425]
       },
       "properties": {
         "service_id": 24006,
@@ -4831,6 +4709,8 @@
         "name_affix": "Plaza",
         "area_id": 58426,
         "floor": "Untergeschoss",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4870,10 +4750,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53909447701913,
-          47.37873995897723
-        ]
+        "coordinates": [8.53909447701913, 47.37873995897723]
       },
       "properties": {
         "service_id": 22996,
@@ -4885,6 +4762,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58457,
         "floor": "Untergeschoss",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4924,10 +4802,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541115038335956,
-          47.37806532042025
-        ]
+        "coordinates": [8.541115038335956, 47.37806532042025]
       },
       "properties": {
         "service_id": 23634,
@@ -4939,6 +4814,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58971,
         "floor": "Erdgeschoss",
+        "openhours_from": "07:30:00",
+        "openhours_to": "16:30:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4984,10 +4861,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53858964665212,
-          47.3785681821037
-        ]
+        "coordinates": [8.53858964665212, 47.3785681821037]
       },
       "properties": {
         "service_id": 11494,
@@ -4999,6 +4873,8 @@
         "name_affix": "Passage Gessnerallee",
         "area_id": 58461,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5038,10 +4914,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539776968785166,
-          47.3785610947809
-        ]
+        "coordinates": [8.539776968785166, 47.3785610947809]
       },
       "properties": {
         "service_id": 23955,
@@ -5053,6 +4926,7 @@
         "name_affix": "Querhalle",
         "area_id": 59004,
         "floor": "Erdgeschoss",
+        "openhours_to": "23:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5104,10 +4978,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539469512574243,
-          47.377382375553076
-        ]
+        "coordinates": [8.539469512574243, 47.377382375553076]
       },
       "properties": {
         "service_id": 11625,
@@ -5119,6 +4990,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58714,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5158,10 +5031,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53959531130484,
-          47.378405454638205
-        ]
+        "coordinates": [8.53959531130484, 47.378405454638205]
       },
       "properties": {
         "service_id": 11150,
@@ -5173,6 +5043,8 @@
         "name_affix": "Querhalle",
         "area_id": 58999,
         "floor": "Erdgeschoss",
+        "openhours_from": "06:30:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5212,10 +5084,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538848808228328,
-          47.3772992882784
-        ]
+        "coordinates": [8.538848808228328, 47.3772992882784]
       },
       "properties": {
         "service_id": 11854,
@@ -5227,6 +5096,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58736,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "07:00:00",
+        "openhours_to": "18:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5272,10 +5143,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538745918707399,
-          47.37881969272589
-        ]
+        "coordinates": [8.538745918707399, 47.37881969272589]
       },
       "properties": {
         "service_id": 11484,
@@ -5287,6 +5155,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58452,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5326,10 +5196,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538890264130607,
-          47.37808106220978
-        ]
+        "coordinates": [8.538890264130607, 47.37808106220978]
       },
       "properties": {
         "service_id": 11519,
@@ -5341,6 +5208,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58453,
         "floor": "Untergeschoss",
+        "openhours_from": "07:00:00",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5380,10 +5249,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540971906581063,
-          47.377945857173124
-        ]
+        "coordinates": [8.540971906581063, 47.377945857173124]
       },
       "properties": {
         "service_id": 10815,
@@ -5395,6 +5261,7 @@
         "name_affix": "Nordtrakt",
         "area_id": 58970,
         "floor": "Erdgeschoss",
+        "openhours_to": "18:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5434,10 +5301,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540836872657936,
-          47.37844367406539
-        ]
+        "coordinates": [8.540836872657936, 47.37844367406539]
       },
       "properties": {
         "service_id": 13283,
@@ -5449,6 +5313,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58515,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5488,10 +5354,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53951848821041,
-          47.37861708480265
-        ]
+        "coordinates": [8.53951848821041, 47.37861708480265]
       },
       "properties": {
         "service_id": 11470,
@@ -5503,6 +5366,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58455,
         "floor": "Untergeschoss",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5554,10 +5418,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540439858944731,
-          47.37773819535118
-        ]
+        "coordinates": [8.540439858944731, 47.37773819535118]
       },
       "properties": {
         "service_id": 23794,
@@ -5569,6 +5430,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58526,
         "floor": "Untergeschoss",
+        "openhours_from": "04:30:00",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5608,10 +5471,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538834469458108,
-          47.3777200420738
-        ]
+        "coordinates": [8.538834469458108, 47.3777200420738]
       },
       "properties": {
         "service_id": 11550,
@@ -5623,6 +5483,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58419,
         "floor": "Untergeschoss",
+        "openhours_from": "05:30:00",
+        "openhours_to": "22:30:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5662,10 +5524,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536374407099386,
-          47.37846732162852
-        ]
+        "coordinates": [8.536374407099386, 47.37846732162852]
       },
       "properties": {
         "service_id": 11796,
@@ -5703,10 +5562,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536891342171732,
-          47.379373588752124
-        ]
+        "coordinates": [8.536891342171732, 47.379373588752124]
       },
       "properties": {
         "service_id": 11777,
@@ -5744,10 +5600,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.535593497744015,
-          47.37831662959727
-        ]
+        "coordinates": [8.535593497744015, 47.37831662959727]
       },
       "properties": {
         "service_id": 23654,
@@ -5759,6 +5612,8 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58612,
         "floor": "Untergeschoss",
+        "openhours_from": "06:30:00",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5798,10 +5653,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540021390834841,
-          47.3778940923082
-        ]
+        "coordinates": [8.540021390834841, 47.3778940923082]
       },
       "properties": {
         "service_id": 24003,
@@ -5813,6 +5665,8 @@
         "name_affix": "Haupthalle",
         "area_id": 59025,
         "floor": "Erdgeschoss",
+        "openhours_from": "06:45:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5858,10 +5712,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53583263781061,
-          47.37822979663066
-        ]
+        "coordinates": [8.53583263781061, 47.37822979663066]
       },
       "properties": {
         "service_id": 23655,
@@ -5873,6 +5724,8 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58614,
         "floor": "Untergeschoss",
+        "openhours_from": "06:00:00",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5912,10 +5765,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.5403559406919,
-          47.37731307889208
-        ]
+        "coordinates": [8.5403559406919, 47.37731307889208]
       },
       "properties": {
         "service_id": 23459,
@@ -5927,6 +5777,7 @@
         "name_affix": "Südtrakt",
         "area_id": 58974,
         "floor": "Erdgeschoss",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5960,10 +5811,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539757276302103,
-          47.37817457438981
-        ]
+        "coordinates": [8.539757276302103, 47.37817457438981]
       },
       "properties": {
         "service_id": 11290,
@@ -5975,6 +5823,7 @@
         "name_affix": "Zwischengeschoss",
         "area_id": 58800,
         "floor": "Zwischengeschoss",
+        "openhours_to": "20:30:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6014,10 +5863,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539239676023456,
-          47.37780550540177
-        ]
+        "coordinates": [8.539239676023456, 47.37780550540177]
       },
       "properties": {
         "service_id": 22998,
@@ -6029,6 +5875,7 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58520,
         "floor": "Untergeschoss",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6068,10 +5915,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.54070933745514,
-          47.37823271275807
-        ]
+        "coordinates": [8.54070933745514, 47.37823271275807]
       },
       "properties": {
         "service_id": 22997,
@@ -6083,6 +5927,7 @@
         "name_affix": "Nordtrakt 3. Obergeschoss",
         "area_id": 58827,
         "floor": "Erdgeschoss",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6116,10 +5961,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536614058876937,
-          47.379608301656056
-        ]
+        "coordinates": [8.536614058876937, 47.379608301656056]
       },
       "properties": {
         "service_id": 11229,
@@ -6157,10 +5999,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53788482971757,
-          47.379264944699756
-        ]
+        "coordinates": [8.53788482971757, 47.379264944699756]
       },
       "properties": {
         "service_id": 11234,
@@ -6198,10 +6037,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53955854164025,
-          47.37817956180731
-        ]
+        "coordinates": [8.53955854164025, 47.37817956180731]
       },
       "properties": {
         "service_id": 10786,
@@ -6213,6 +6049,7 @@
         "name_affix": "Querhalle",
         "area_id": 58981,
         "floor": "Erdgeschoss",
+        "openhours_to": "00:15:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6258,10 +6095,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539743007856142,
-          47.37850414449385
-        ]
+        "coordinates": [8.539743007856142, 47.37850414449385]
       },
       "properties": {
         "service_id": 23996,
@@ -6273,6 +6107,7 @@
         "name_affix": "Querhalle",
         "area_id": 59027,
         "floor": "Erdgeschoss",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6318,10 +6153,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540119750444568,
-          47.377637749498845
-        ]
+        "coordinates": [8.540119750444568, 47.377637749498845]
       },
       "properties": {
         "service_id": 10843,
@@ -6333,6 +6165,7 @@
         "name_affix": "Südtrakt",
         "area_id": 58958,
         "floor": "Erdgeschoss",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6378,10 +6211,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539963387741548,
-          47.377855394490695
-        ]
+        "coordinates": [8.539963387741548, 47.377855394490695]
       },
       "properties": {
         "service_id": 24005,
@@ -6393,6 +6223,7 @@
         "name_affix": "Haupthalle",
         "area_id": 59031,
         "floor": "Erdgeschoss",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6426,10 +6257,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538300176860142,
-          47.37855554926003
-        ]
+        "coordinates": [8.538300176860142, 47.37855554926003]
       },
       "properties": {
         "service_id": 10903,
@@ -6467,10 +6295,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.5386862849865,
-          47.37738089275253
-        ]
+        "coordinates": [8.5386862849865, 47.37738089275253]
       },
       "properties": {
         "service_id": 11872,
@@ -6482,6 +6307,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58713,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "07:30:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6527,10 +6354,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538711858248252,
-          47.37774849525676
-        ]
+        "coordinates": [8.538711858248252, 47.37774849525676]
       },
       "properties": {
         "service_id": 11555,
@@ -6542,6 +6366,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58416,
         "floor": "Untergeschoss",
+        "openhours_from": "07:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6581,10 +6407,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541926744924368,
-          47.378204786450496
-        ]
+        "coordinates": [8.541926744924368, 47.378204786450496]
       },
       "properties": {
         "service_id": 15836,
@@ -6622,10 +6445,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.54016355227712,
-          47.3779176376455
-        ]
+        "coordinates": [8.54016355227712, 47.3779176376455]
       },
       "properties": {
         "service_id": 15936,
@@ -6663,10 +6483,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536130831220957,
-          47.37817519224697
-        ]
+        "coordinates": [8.536130831220957, 47.37817519224697]
       },
       "properties": {
         "service_id": 15954,
@@ -6704,10 +6521,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539637150669066,
-          47.37793492242688
-        ]
+        "coordinates": [8.539637150669066, 47.37793492242688]
       },
       "properties": {
         "service_id": 11218,
@@ -6745,10 +6559,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536634050858437,
-          47.37884822533429
-        ]
+        "coordinates": [8.536634050858437, 47.37884822533429]
       },
       "properties": {
         "service_id": 10884,
@@ -6786,10 +6597,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538489380935413,
-          47.37801111565607
-        ]
+        "coordinates": [8.538489380935413, 47.37801111565607]
       },
       "properties": {
         "service_id": 15948,
@@ -6827,10 +6635,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539958069180624,
-          47.37812340894812
-        ]
+        "coordinates": [8.539958069180624, 47.37812340894812]
       },
       "properties": {
         "service_id": 11285,
@@ -6842,6 +6647,7 @@
         "name_affix": "Zwischengeschoss",
         "area_id": 58793,
         "floor": "Zwischengeschoss",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6875,10 +6681,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.535915240319374,
-          47.37779956638372
-        ]
+        "coordinates": [8.535915240319374, 47.37779956638372]
       },
       "properties": {
         "service_id": 10861,
@@ -6916,10 +6719,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539126467961788,
-          47.37780079387579
-        ]
+        "coordinates": [8.539126467961788, 47.37780079387579]
       },
       "properties": {
         "service_id": 15946,
@@ -6957,10 +6757,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541115551765484,
-          47.37809014146669
-        ]
+        "coordinates": [8.541115551765484, 47.37809014146669]
       },
       "properties": {
         "service_id": 11202,
@@ -6972,6 +6769,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58971,
         "floor": "Erdgeschoss",
+        "openhours_from": "07:30:00",
+        "openhours_to": "19:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -7011,10 +6810,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53576054655333,
-          47.37862395587571
-        ]
+        "coordinates": [8.53576054655333, 47.37862395587571]
       },
       "properties": {
         "service_id": 11681,
@@ -7052,10 +6848,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538089154421302,
-          47.37849933097769
-        ]
+        "coordinates": [8.538089154421302, 47.37849933097769]
       },
       "properties": {
         "service_id": 13241,
@@ -7093,10 +6886,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541158924386163,
-          47.37808972751991
-        ]
+        "coordinates": [8.541158924386163, 47.37808972751991]
       },
       "properties": {
         "service_id": 11213,
@@ -7108,6 +6898,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58971,
         "floor": "Erdgeschoss",
+        "openhours_from": "07:30:00",
+        "openhours_to": "19:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -7147,10 +6939,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540121344852105,
-          47.37758803229656
-        ]
+        "coordinates": [8.540121344852105, 47.37758803229656]
       },
       "properties": {
         "service_id": 23247,
@@ -7162,6 +6951,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58413,
         "floor": "Untergeschoss",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -7201,10 +6992,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539647699305858,
-          47.3788505585758
-        ]
+        "coordinates": [8.539647699305858, 47.3788505585758]
       },
       "properties": {
         "service_id": 13440,
@@ -7216,6 +7004,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58424,
         "floor": "Untergeschoss",
+        "openhours_from": "05:00:00",
+        "openhours_to": "23:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -7255,10 +7045,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536420791528435,
-          47.3788711445832
-        ]
+        "coordinates": [8.536420791528435, 47.3788711445832]
       },
       "properties": {
         "service_id": 16053,
@@ -7296,10 +7083,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540218144443978,
-          47.37707101415782
-        ]
+        "coordinates": [8.540218144443978, 47.37707101415782]
       },
       "properties": {
         "service_id": 10784,
@@ -7311,6 +7095,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58717,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -7350,10 +7136,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538372699964343,
-          47.3787126227061
-        ]
+        "coordinates": [8.538372699964343, 47.3787126227061]
       },
       "properties": {
         "service_id": 10905,
@@ -7391,10 +7174,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536110349312079,
-          47.37832451061777
-        ]
+        "coordinates": [8.536110349312079, 47.37832451061777]
       },
       "properties": {
         "service_id": 10909,
@@ -7432,10 +7212,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53588368970953,
-          47.378816181437735
-        ]
+        "coordinates": [8.53588368970953, 47.378816181437735]
       },
       "properties": {
         "service_id": 11695,
@@ -7473,10 +7250,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539600958556102,
-          47.37758509828391
-        ]
+        "coordinates": [8.539600958556102, 47.37758509828391]
       },
       "properties": {
         "service_id": 11738,
@@ -7514,10 +7288,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538122209514944,
-          47.3782738967214
-        ]
+        "coordinates": [8.538122209514944, 47.3782738967214]
       },
       "properties": {
         "service_id": 10899,
@@ -7555,10 +7326,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539253275862515,
-          47.377639551492926
-        ]
+        "coordinates": [8.539253275862515, 47.377639551492926]
       },
       "properties": {
         "service_id": 11195,
@@ -7596,10 +7364,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538870170263134,
-          47.37779441800298
-        ]
+        "coordinates": [8.538870170263134, 47.37779441800298]
       },
       "properties": {
         "service_id": 11752,
@@ -7637,10 +7402,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540298460050336,
-          47.37857181061044
-        ]
+        "coordinates": [8.540298460050336, 47.37857181061044]
       },
       "properties": {
         "service_id": 13399,
@@ -7678,10 +7440,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53750396178548,
-          47.37918787303361
-        ]
+        "coordinates": [8.53750396178548, 47.37918787303361]
       },
       "properties": {
         "service_id": 11705,
@@ -7719,10 +7478,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541353036759983,
-          47.37794999867242
-        ]
+        "coordinates": [8.541353036759983, 47.37794999867242]
       },
       "properties": {
         "service_id": 11244,
@@ -7760,10 +7516,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539768188331427,
-          47.37834593443244
-        ]
+        "coordinates": [8.539768188331427, 47.37834593443244]
       },
       "properties": {
         "service_id": 11160,
@@ -7775,6 +7528,7 @@
         "name_affix": "Nordtrakt",
         "area_id": 58964,
         "floor": "Erdgeschoss",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -7808,10 +7562,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541008963677713,
-          47.378281604996396
-        ]
+        "coordinates": [8.541008963677713, 47.378281604996396]
       },
       "properties": {
         "service_id": 15866,
@@ -7849,10 +7600,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538613761886957,
-          47.37815835499742
-        ]
+        "coordinates": [8.538613761886957, 47.37815835499742]
       },
       "properties": {
         "service_id": 11511,
@@ -7864,6 +7612,7 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58460,
         "floor": "Untergeschoss",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -7897,10 +7646,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540177797943002,
-          47.37830155119231
-        ]
+        "coordinates": [8.540177797943002, 47.37830155119231]
       },
       "properties": {
         "service_id": 15814,
@@ -7938,10 +7684,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540521822595485,
-          47.37841083849723
-        ]
+        "coordinates": [8.540521822595485, 47.37841083849723]
       },
       "properties": {
         "service_id": 15952,
@@ -7979,10 +7722,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.537769496998678,
-          47.37929705796707
-        ]
+        "coordinates": [8.537769496998678, 47.37929705796707]
       },
       "properties": {
         "service_id": 11123,
@@ -8020,10 +7760,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540759222058556,
-          47.376982159352295
-        ]
+        "coordinates": [8.540759222058556, 47.376982159352295]
       },
       "properties": {
         "service_id": 11762,
@@ -8061,10 +7798,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53842008377025,
-          47.37728219405787
-        ]
+        "coordinates": [8.53842008377025, 47.37728219405787]
       },
       "properties": {
         "service_id": 23261,
@@ -8102,10 +7836,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539722184801825,
-          47.377860063862876
-        ]
+        "coordinates": [8.539722184801825, 47.377860063862876]
       },
       "properties": {
         "service_id": 11352,
@@ -8143,10 +7874,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540115720271965,
-          47.37809078275839
-        ]
+        "coordinates": [8.540115720271965, 47.37809078275839]
       },
       "properties": {
         "service_id": 15916,
@@ -8184,10 +7912,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.537873234350968,
-          47.37786608960843
-        ]
+        "coordinates": [8.537873234350968, 47.37786608960843]
       },
       "properties": {
         "service_id": 10892,
@@ -8225,10 +7950,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536184889784803,
-          47.37847332868135
-        ]
+        "coordinates": [8.536184889784803, 47.37847332868135]
       },
       "properties": {
         "service_id": 10919,
@@ -8266,10 +7988,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540066008594946,
-          47.37826113167658
-        ]
+        "coordinates": [8.540066008594946, 47.37826113167658]
       },
       "properties": {
         "service_id": 23584,
@@ -8281,6 +8000,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58984,
         "floor": "Erdgeschoss",
+        "openhours_from": "08:00:00",
+        "openhours_to": "19:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -8320,10 +8041,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538468565603305,
-          47.37911571499329
-        ]
+        "coordinates": [8.538468565603305, 47.37911571499329]
       },
       "properties": {
         "service_id": 11772,
@@ -8361,10 +8079,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539508837820655,
-          47.37809372186384
-        ]
+        "coordinates": [8.539508837820655, 47.37809372186384]
       },
       "properties": {
         "service_id": 11342,
@@ -8402,10 +8117,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536270983844647,
-          47.378952884568676
-        ]
+        "coordinates": [8.536270983844647, 47.378952884568676]
       },
       "properties": {
         "service_id": 13237,
@@ -8443,10 +8155,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53816732543467,
-          47.3779941916686
-        ]
+        "coordinates": [8.53816732543467, 47.3779941916686]
       },
       "properties": {
         "service_id": 11767,
@@ -8484,10 +8193,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540335694278877,
-          47.377109365819884
-        ]
+        "coordinates": [8.540335694278877, 47.377109365819884]
       },
       "properties": {
         "service_id": 15881,
@@ -8525,10 +8231,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53860916691079,
-          47.3789940564002
-        ]
+        "coordinates": [8.53860916691079, 47.3789940564002]
       },
       "properties": {
         "service_id": 15942,
@@ -8566,10 +8269,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53868946397501,
-          47.37829357140978
-        ]
+        "coordinates": [8.53868946397501, 47.37829357140978]
       },
       "properties": {
         "service_id": 10878,
@@ -8607,10 +8307,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536349607245798,
-          47.37875511000502
-        ]
+        "coordinates": [8.536349607245798, 47.37875511000502]
       },
       "properties": {
         "service_id": 10929,
@@ -8648,10 +8345,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53652711207671,
-          47.3790367695573
-        ]
+        "coordinates": [8.53652711207671, 47.3790367695573]
       },
       "properties": {
         "service_id": 10939,
@@ -8689,10 +8383,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.537562487152094,
-          47.37859652858492
-        ]
+        "coordinates": [8.537562487152094, 47.37859652858492]
       },
       "properties": {
         "service_id": 10881,
@@ -8730,10 +8421,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539218782998448,
-          47.37757241663787
-        ]
+        "coordinates": [8.539218782998448, 47.37757241663787]
       },
       "properties": {
         "service_id": 15938,
@@ -8771,10 +8459,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539697511934008,
-          47.377991737844894
-        ]
+        "coordinates": [8.539697511934008, 47.377991737844894]
       },
       "properties": {
         "service_id": 13430,
@@ -8786,6 +8471,8 @@
         "name_affix": "Plaza",
         "area_id": 58493,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -8825,10 +8512,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541401978257122,
-          47.378664525632026
-        ]
+        "coordinates": [8.541401978257122, 47.378664525632026]
       },
       "properties": {
         "service_id": 10870,
@@ -8866,10 +8550,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536267109387616,
-          47.37860747435228
-        ]
+        "coordinates": [8.536267109387616, 47.37860747435228]
       },
       "properties": {
         "service_id": 10924,
@@ -8907,10 +8588,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.537512348810186,
-          47.379911193225745
-        ]
+        "coordinates": [8.537512348810186, 47.379911193225745]
       },
       "properties": {
         "service_id": 13194,
@@ -8948,10 +8626,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540027093330423,
-          47.378087716845755
-        ]
+        "coordinates": [8.540027093330423, 47.378087716845755]
       },
       "properties": {
         "service_id": 11989,
@@ -8963,6 +8638,8 @@
         "name_affix": "Plaza",
         "area_id": 58435,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -9002,10 +8679,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541199656729884,
-          47.37808933875697
-        ]
+        "coordinates": [8.541199656729884, 47.37808933875697]
       },
       "properties": {
         "service_id": 10812,
@@ -9017,6 +8691,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58971,
         "floor": "Erdgeschoss",
+        "openhours_from": "07:30:00",
+        "openhours_to": "19:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -9056,10 +8732,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540032926520222,
-          47.37813296730121
-        ]
+        "coordinates": [8.540032926520222, 47.37813296730121]
       },
       "properties": {
         "service_id": 15932,
@@ -9097,10 +8770,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538026652851913,
-          47.37813538168423
-        ]
+        "coordinates": [8.538026652851913, 47.37813538168423]
       },
       "properties": {
         "service_id": 10897,
@@ -9138,10 +8808,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.543930242077487,
-          47.37647454082396
-        ]
+        "coordinates": [8.543930242077487, 47.37647454082396]
       },
       "properties": {
         "service_id": 13209,
@@ -9179,10 +8846,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53668530551199,
-          47.37932310995125
-        ]
+        "coordinates": [8.53668530551199, 47.37932310995125]
       },
       "properties": {
         "service_id": 10949,
@@ -9220,10 +8884,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539766810760918,
-          47.377273502938955
-        ]
+        "coordinates": [8.539766810760918, 47.377273502938955]
       },
       "properties": {
         "service_id": 13231,
@@ -9261,10 +8922,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539691173880032,
-          47.378661643867936
-        ]
+        "coordinates": [8.539691173880032, 47.378661643867936]
       },
       "properties": {
         "service_id": 15944,
@@ -9302,10 +8960,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540440088712241,
-          47.378443562220234
-        ]
+        "coordinates": [8.540440088712241, 47.378443562220234]
       },
       "properties": {
         "service_id": 11168,
@@ -9343,10 +8998,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540310907295728,
-          47.37817434999105
-        ]
+        "coordinates": [8.540310907295728, 47.37817434999105]
       },
       "properties": {
         "service_id": 11180,
@@ -9358,6 +9010,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58986,
         "floor": "Erdgeschoss",
+        "openhours_from": "06:30:00",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -9403,10 +9057,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541064217959816,
-          47.378261827761285
-        ]
+        "coordinates": [8.541064217959816, 47.378261827761285]
       },
       "properties": {
         "service_id": 11185,
@@ -9444,10 +9095,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539890626407113,
-          47.37867416667325
-        ]
+        "coordinates": [8.539890626407113, 47.37867416667325]
       },
       "properties": {
         "service_id": 15950,
@@ -9485,10 +9133,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539946551493857,
-          47.37797921154063
-        ]
+        "coordinates": [8.539946551493857, 47.37797921154063]
       },
       "properties": {
         "service_id": 13270,
@@ -9526,10 +9171,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.54048639536727,
-          47.37843285107424
-        ]
+        "coordinates": [8.54048639536727, 47.37843285107424]
       },
       "properties": {
         "service_id": 11173,
@@ -9567,10 +9209,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541196192827858,
-          47.37887646023831
-        ]
+        "coordinates": [8.541196192827858, 47.37887646023831]
       },
       "properties": {
         "service_id": 23259,
@@ -9608,10 +9247,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53624691831842,
-          47.37757968000826
-        ]
+        "coordinates": [8.53624691831842, 47.37757968000826]
       },
       "properties": {
         "service_id": 23260,
@@ -9649,10 +9285,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.54036024530714,
-          47.37844139193704
-        ]
+        "coordinates": [8.54036024530714, 47.37844139193704]
       },
       "properties": {
         "service_id": 11747,
@@ -9690,10 +9323,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53769075076929,
-          47.37698780406502
-        ]
+        "coordinates": [8.53769075076929, 47.37698780406502]
       },
       "properties": {
         "service_id": 23262,
@@ -9731,10 +9361,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.54038826153218,
-          47.37769421175955
-        ]
+        "coordinates": [8.54038826153218, 47.37769421175955]
       },
       "properties": {
         "service_id": 12083,
@@ -9746,6 +9373,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58525,
         "floor": "Untergeschoss",
+        "openhours_from": "04:30:00",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -9785,10 +9414,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536987438072607,
-          47.37939903631374
-        ]
+        "coordinates": [8.536987438072607, 47.37939903631374]
       },
       "properties": {
         "service_id": 16423,
@@ -9800,6 +9426,8 @@
         "name_affix": "Halle Sihlquai",
         "area_id": 58590,
         "floor": "Untergeschoss",
+        "openhours_from": "04:30:00",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -9839,10 +9467,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540221142450344,
-          47.377216069218065
-        ]
+        "coordinates": [8.540221142450344, 47.377216069218065]
       },
       "properties": {
         "service_id": 11658,
@@ -9854,6 +9479,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58732,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -9893,10 +9520,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536715866541238,
-          47.37938514142149
-        ]
+        "coordinates": [8.536715866541238, 47.37938514142149]
       },
       "properties": {
         "service_id": 15940,
@@ -9934,10 +9558,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.535739415879174,
-          47.378050975541214
-        ]
+        "coordinates": [8.535739415879174, 47.378050975541214]
       },
       "properties": {
         "service_id": 10865,
@@ -9975,10 +9596,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539475700335707,
-          47.37809223862832
-        ]
+        "coordinates": [8.539475700335707, 47.37809223862832]
       },
       "properties": {
         "service_id": 11337,
@@ -10016,10 +9634,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          42.64978501145582,
-          86.21249809148249
-        ]
+        "coordinates": [42.64978501145582, 86.21249809148249]
       },
       "properties": {
         "service_id": 22030,
@@ -10031,6 +9646,7 @@
         "name_affix": "shopvill test",
         "area_id": null,
         "floor": "Shopville/Aufgänge",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10076,10 +9692,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539017676257862,
-          47.37912137248023
-        ]
+        "coordinates": [8.539017676257862, 47.37912137248023]
       },
       "properties": {
         "service_id": 11133,
@@ -10091,6 +9704,7 @@
         "name_affix": "Landesmuseum",
         "area_id": null,
         "floor": "Erdgeschoss",
+        "openhours_to": "21:30:00",
         "openhours": [
           {
             "day_from": 4,
@@ -10124,10 +9738,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.54115841093643,
-          47.37806490647365
-        ]
+        "coordinates": [8.54115841093643, 47.37806490647365]
       },
       "properties": {
         "service_id": 23586,
@@ -10139,6 +9750,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58971,
         "floor": "Erdgeschoss",
+        "openhours_from": "07:30:00",
+        "openhours_to": "19:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10178,10 +9791,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.535692365395535,
-          47.37910004033676
-        ]
+        "coordinates": [8.535692365395535, 47.37910004033676]
       },
       "properties": {
         "service_id": 10886,
@@ -10219,10 +9829,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539911616345815,
-          47.378117061491146
-        ]
+        "coordinates": [8.539911616345815, 47.378117061491146]
       },
       "properties": {
         "service_id": 11980,
@@ -10234,6 +9841,8 @@
         "name_affix": "Plaza",
         "area_id": 58476,
         "floor": "Untergeschoss",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10279,10 +9888,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53953631109786,
-          47.37809346004423
-        ]
+        "coordinates": [8.53953631109786, 47.37809346004423]
       },
       "properties": {
         "service_id": 11347,
@@ -10320,10 +9926,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539501469330512,
-          47.37853044398831
-        ]
+        "coordinates": [8.539501469330512, 47.37853044398831]
       },
       "properties": {
         "service_id": 11928,
@@ -10335,6 +9938,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58466,
         "floor": "Untergeschoss",
+        "openhours_from": "05:30:00",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10380,10 +9985,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538412095136119,
-          47.3787805834291
-        ]
+        "coordinates": [8.538412095136119, 47.3787805834291]
       },
       "properties": {
         "service_id": 11325,
@@ -10395,6 +9997,8 @@
         "name_affix": "Passage Gessnerallee",
         "area_id": 58447,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10434,10 +10038,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539169919258324,
-          47.37765450912818
-        ]
+        "coordinates": [8.539169919258324, 47.37765450912818]
       },
       "properties": {
         "service_id": 10794,
@@ -10449,6 +10050,7 @@
         "name_affix": "Querhalle 1. Obergeschoss",
         "area_id": 58840,
         "floor": "Erdgeschoss",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10500,10 +10102,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539962401457437,
-          47.37780766377311
-        ]
+        "coordinates": [8.539962401457437, 47.37780766377311]
       },
       "properties": {
         "service_id": 12068,
@@ -10515,6 +10114,8 @@
         "name_affix": "Plaza",
         "area_id": 58423,
         "floor": "Untergeschoss",
+        "openhours_from": "07:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10560,10 +10161,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539227926411055,
-          47.37808052370108
-        ]
+        "coordinates": [8.539227926411055, 47.37808052370108]
       },
       "properties": {
         "service_id": 11528,
@@ -10575,6 +10173,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58451,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10614,10 +10214,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539736261422126,
-          47.37728719842561
-        ]
+        "coordinates": [8.539736261422126, 47.37728719842561]
       },
       "properties": {
         "service_id": 22741,
@@ -10655,10 +10252,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.535902631353926,
-          47.37822913181237
-        ]
+        "coordinates": [8.535902631353926, 47.37822913181237]
       },
       "properties": {
         "service_id": 23667,
@@ -10670,6 +10264,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58614,
         "floor": "Untergeschoss",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10703,10 +10298,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540339900382953,
-          47.37865462036264
-        ]
+        "coordinates": [8.540339900382953, 47.37865462036264]
       },
       "properties": {
         "service_id": 13408,
@@ -10744,10 +10336,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539691800213287,
-          47.37809484162469
-        ]
+        "coordinates": [8.539691800213287, 47.37809484162469]
       },
       "properties": {
         "service_id": 15928,
@@ -10785,10 +10374,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538161329100506,
-          47.37835740746073
-        ]
+        "coordinates": [8.538161329100506, 47.37835740746073]
       },
       "properties": {
         "service_id": 11312,
@@ -10800,6 +10386,8 @@
         "name_affix": "Passage Gessnerallee",
         "area_id": 58459,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10839,10 +10427,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539618748939592,
-          47.377317973541686
-        ]
+        "coordinates": [8.539618748939592, 47.377317973541686]
       },
       "properties": {
         "service_id": 12078,
@@ -10854,6 +10439,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58725,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10893,10 +10480,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.5389715783111,
-          47.37903779867106
-        ]
+        "coordinates": [8.5389715783111, 47.37903779867106]
       },
       "properties": {
         "service_id": 11369,
@@ -10908,6 +10492,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58411,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10947,10 +10533,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53985707663962,
-          47.377825493970775
-        ]
+        "coordinates": [8.53985707663962, 47.377825493970775]
       },
       "properties": {
         "service_id": 10876,
@@ -10962,6 +10545,7 @@
         "name_affix": "Zwischengeschoss",
         "area_id": 58794,
         "floor": "Zwischengeschoss",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10995,10 +10579,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540271337992857,
-          47.37745854564826
-        ]
+        "coordinates": [8.540271337992857, 47.37745854564826]
       },
       "properties": {
         "service_id": 10835,
@@ -11010,6 +10591,8 @@
         "name_affix": "Südtrakt 1. Obergeschoss",
         "area_id": 58811,
         "floor": "Erdgeschoss",
+        "openhours_from": "11:30:00",
+        "openhours_to": "23:30:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11049,10 +10632,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540249065393144,
-          47.37869012292666
-        ]
+        "coordinates": [8.540249065393144, 47.37869012292666]
       },
       "properties": {
         "service_id": 11420,
@@ -11064,6 +10644,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58471,
         "floor": "Untergeschoss",
+        "openhours_from": "07:00:00",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11103,10 +10685,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.537823369432326,
-          47.377817220290076
-        ]
+        "coordinates": [8.537823369432326, 47.377817220290076]
       },
       "properties": {
         "service_id": 11576,
@@ -11118,6 +10697,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58739,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "07:30:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11163,10 +10744,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539441913873485,
-          47.37798278036427
-        ]
+        "coordinates": [8.539441913873485, 47.37798278036427]
       },
       "properties": {
         "service_id": 10788,
@@ -11178,6 +10756,7 @@
         "name_affix": "Querhalle",
         "area_id": 58965,
         "floor": "Erdgeschoss",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11223,10 +10802,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539582166178384,
-          47.37781531923068
-        ]
+        "coordinates": [8.539582166178384, 47.37781531923068]
       },
       "properties": {
         "service_id": 10800,
@@ -11238,6 +10814,7 @@
         "name_affix": "Südtrakt",
         "area_id": 58954,
         "floor": "Erdgeschoss",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11283,10 +10860,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539340948243595,
-          47.37779184357897
-        ]
+        "coordinates": [8.539340948243595, 47.37779184357897]
       },
       "properties": {
         "service_id": 10798,
@@ -11298,6 +10872,7 @@
         "name_affix": "Querhalle",
         "area_id": 58809,
         "floor": "Erdgeschoss",
+        "openhours_to": "00:30:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11343,10 +10918,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53967074324854,
-          47.376551552910875
-        ]
+        "coordinates": [8.53967074324854, 47.376551552910875]
       },
       "properties": {
         "service_id": 13206,
@@ -11384,10 +10956,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539492796560674,
-          47.37718802619873
-        ]
+        "coordinates": [8.539492796560674, 47.37718802619873]
       },
       "properties": {
         "service_id": 22743,
@@ -11425,10 +10994,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539266410688432,
-          47.377577442141146
-        ]
+        "coordinates": [8.539266410688432, 47.377577442141146]
       },
       "properties": {
         "service_id": 10796,
@@ -11440,6 +11006,7 @@
         "name_affix": "Südtrakt",
         "area_id": 59013,
         "floor": "Erdgeschoss",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11485,10 +11052,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538807647070652,
-          47.377358148658644
-        ]
+        "coordinates": [8.538807647070652, 47.377358148658644]
       },
       "properties": {
         "service_id": 11868,
@@ -11500,6 +11064,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58721,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "07:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11545,10 +11111,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538814473570135,
-          47.37723601173033
-        ]
+        "coordinates": [8.538814473570135, 47.37723601173033]
       },
       "properties": {
         "service_id": 11848,
@@ -11560,6 +11123,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58716,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11599,10 +11164,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538489346048728,
-          47.37905869689399
-        ]
+        "coordinates": [8.538489346048728, 47.37905869689399]
       },
       "properties": {
         "service_id": 11357,
@@ -11614,6 +11176,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58468,
         "floor": "Untergeschoss",
+        "openhours_from": "05:30:00",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11659,10 +11223,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.537206189694947,
-          47.37945132058876
-        ]
+        "coordinates": [8.537206189694947, 47.37945132058876]
       },
       "properties": {
         "service_id": 10859,
@@ -11674,6 +11235,8 @@
         "name_affix": "Sihlquai",
         "area_id": 58866,
         "floor": "Erdgeschoss",
+        "openhours_from": "10:30:00",
+        "openhours_to": "19:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11707,10 +11270,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.54016014358568,
-          47.378229382134826
-        ]
+        "coordinates": [8.54016014358568, 47.378229382134826]
       },
       "properties": {
         "service_id": 23585,
@@ -11722,6 +11282,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58984,
         "floor": "Erdgeschoss",
+        "openhours_from": "10:00:00",
+        "openhours_to": "16:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11761,10 +11323,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.535849250353872,
-          47.378887080197714
-        ]
+        "coordinates": [8.535849250353872, 47.378887080197714]
       },
       "properties": {
         "service_id": 11863,
@@ -11776,6 +11335,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58603,
         "floor": "Untergeschoss",
+        "openhours_to": "23:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11809,10 +11369,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541711168009815,
-          47.37750758743325
-        ]
+        "coordinates": [8.541711168009815, 47.37750758743325]
       },
       "properties": {
         "service_id": 23005,
@@ -11850,10 +11407,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540074412826002,
-          47.37780477449949
-        ]
+        "coordinates": [8.540074412826002, 47.37780477449949]
       },
       "properties": {
         "service_id": 11270,
@@ -11891,10 +11445,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536761092747241,
-          47.37946631152285
-        ]
+        "coordinates": [8.536761092747241, 47.37946631152285]
       },
       "properties": {
         "service_id": 10954,
@@ -11932,10 +11483,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540571197710921,
-          47.37858226000672
-        ]
+        "coordinates": [8.540571197710921, 47.37858226000672]
       },
       "properties": {
         "service_id": 11429,
@@ -11947,6 +11495,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58414,
         "floor": "Untergeschoss",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11980,10 +11529,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.537346227309731,
-          47.37845596817806
-        ]
+        "coordinates": [8.537346227309731, 47.37845596817806]
       },
       "properties": {
         "service_id": 11700,
@@ -12021,10 +11567,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540693532427445,
-          47.37854241392895
-        ]
+        "coordinates": [8.540693532427445, 47.37854241392895]
       },
       "properties": {
         "service_id": 11433,
@@ -12036,6 +11579,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58412,
         "floor": "Untergeschoss",
+        "openhours_from": "05:45:00",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -12081,10 +11626,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.537997436051203,
-          47.378096809826204
-        ]
+        "coordinates": [8.537997436051203, 47.378096809826204]
       },
       "properties": {
         "service_id": 11301,
@@ -12096,6 +11638,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58417,
         "floor": "Untergeschoss",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -12135,10 +11679,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539653987477026,
-          47.37827655173702
-        ]
+        "coordinates": [8.539653987477026, 47.37827655173702]
       },
       "properties": {
         "service_id": 11155,
@@ -12176,10 +11717,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53707966018156,
-          47.379479044801045
-        ]
+        "coordinates": [8.53707966018156, 47.379479044801045]
       },
       "properties": {
         "service_id": 14135,
@@ -12191,6 +11729,8 @@
         "name_affix": "Sihlquai",
         "area_id": 58866,
         "floor": "Erdgeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -12230,10 +11770,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53821123933739,
-          47.37841697136854
-        ]
+        "coordinates": [8.53821123933739, 47.37841697136854]
       },
       "properties": {
         "service_id": 10901,
@@ -12271,10 +11808,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.534572988980567,
-          47.37639953482067
-        ]
+        "coordinates": [8.534572988980567, 47.37639953482067]
       },
       "properties": {
         "service_id": 13196,
@@ -12312,10 +11846,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539635491633984,
-          47.37859274729636
-        ]
+        "coordinates": [8.539635491633984, 47.37859274729636]
       },
       "properties": {
         "service_id": 11810,
@@ -12353,10 +11884,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538441592333184,
-          47.37884239618326
-        ]
+        "coordinates": [8.538441592333184, 47.37884239618326]
       },
       "properties": {
         "service_id": 10907,
@@ -12394,10 +11922,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539664569021548,
-          47.377875253653244
-        ]
+        "coordinates": [8.539664569021548, 47.377875253653244]
       },
       "properties": {
         "service_id": 11265,
@@ -12435,10 +11960,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536526192672163,
-          47.37946735785716
-        ]
+        "coordinates": [8.536526192672163, 47.37946735785716]
       },
       "properties": {
         "service_id": 11710,
@@ -12476,10 +11998,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538718638502433,
-          47.378949106511605
-        ]
+        "coordinates": [8.538718638502433, 47.378949106511605]
       },
       "properties": {
         "service_id": 23254,
@@ -12517,10 +12036,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541278292812011,
-          47.377475819981626
-        ]
+        "coordinates": [8.541278292812011, 47.377475819981626]
       },
       "properties": {
         "service_id": 23255,
@@ -12558,10 +12074,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536438725732456,
-          47.37890268268015
-        ]
+        "coordinates": [8.536438725732456, 47.37890268268015]
       },
       "properties": {
         "service_id": 10934,
@@ -12599,10 +12112,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536602991114913,
-          47.37918446792654
-        ]
+        "coordinates": [8.536602991114913, 47.37918446792654]
       },
       "properties": {
         "service_id": 10944,
@@ -12640,10 +12150,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53963323277777,
-          47.378016242687174
-        ]
+        "coordinates": [8.53963323277777, 47.378016242687174]
       },
       "properties": {
         "service_id": 15930,
@@ -12681,10 +12188,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53793819854758,
-          47.37799026208872
-        ]
+        "coordinates": [8.53793819854758, 47.37799026208872]
       },
       "properties": {
         "service_id": 10895,
@@ -12722,10 +12226,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.537583988778367,
-          47.37931337797648
-        ]
+        "coordinates": [8.537583988778367, 47.37931337797648]
       },
       "properties": {
         "service_id": 11720,
@@ -12763,10 +12264,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536603504430223,
-          47.37961054503516
-        ]
+        "coordinates": [8.536603504430223, 47.37961054503516]
       },
       "properties": {
         "service_id": 11725,
@@ -12804,10 +12302,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536688890635592,
-          47.3795666025965
-        ]
+        "coordinates": [8.536688890635592, 47.3795666025965]
       },
       "properties": {
         "service_id": 11858,
@@ -12845,10 +12340,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538532462163994,
-          47.3789682203896
-        ]
+        "coordinates": [8.538532462163994, 47.3789682203896]
       },
       "properties": {
         "service_id": 10915,
@@ -12886,10 +12378,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.5396971780503,
-          47.37700712749233
-        ]
+        "coordinates": [8.5396971780503, 47.37700712749233]
       },
       "properties": {
         "service_id": 11830,
@@ -12901,6 +12390,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58718,
         "floor": "Shopville/Aufgänge",
+        "openhours_to": "23:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -12934,10 +12424,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.54032686983044,
-          47.376820140323005
-        ]
+        "coordinates": [8.54032686983044, 47.376820140323005]
       },
       "properties": {
         "service_id": 22742,
@@ -12975,10 +12462,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538620945640032,
-          47.37765233776454
-        ]
+        "coordinates": [8.538620945640032, 47.37765233776454]
       },
       "properties": {
         "service_id": 11604,
@@ -12990,6 +12474,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58741,
         "floor": "Shopville/Aufgänge",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13023,10 +12508,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53674069724474,
-          47.379511979254545
-        ]
+        "coordinates": [8.53674069724474, 47.379511979254545]
       },
       "properties": {
         "service_id": 22870,
@@ -13038,6 +12520,8 @@
         "name_affix": "Halle Sihlquai",
         "area_id": 58604,
         "floor": "Untergeschoss",
+        "openhours_from": "04:30:00",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13077,10 +12561,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.54118566278116,
-          47.37787635368828
-        ]
+        "coordinates": [8.54118566278116, 47.37787635368828]
       },
       "properties": {
         "service_id": 10817,
@@ -13092,6 +12573,7 @@
         "name_affix": "Nordtrakt",
         "area_id": 58961,
         "floor": "Erdgeschoss",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13125,10 +12607,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.535976774720448,
-          47.37978830347723
-        ]
+        "coordinates": [8.535976774720448, 47.37978830347723]
       },
       "properties": {
         "service_id": 23003,
@@ -13166,10 +12645,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.54005394375276,
-          47.37689002490682
-        ]
+        "coordinates": [8.54005394375276, 47.37689002490682]
       },
       "properties": {
         "service_id": 11821,
@@ -13181,6 +12657,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58722,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13226,10 +12704,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539949812036102,
-          47.3772898573999
-        ]
+        "coordinates": [8.539949812036102, 47.3772898573999]
       },
       "properties": {
         "service_id": 11649,
@@ -13241,6 +12716,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58750,
         "floor": "Shopville/Aufgänge",
+        "openhours_to": "22:30:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13292,10 +12768,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539268380689913,
-          47.3781449749242
-        ]
+        "coordinates": [8.539268380689913, 47.3781449749242]
       },
       "properties": {
         "service_id": 20774,
@@ -13307,6 +12780,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58504,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13346,10 +12821,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539253130148218,
-          47.37892684449373
-        ]
+        "coordinates": [8.539253130148218, 47.37892684449373]
       },
       "properties": {
         "service_id": 11378,
@@ -13361,6 +12833,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58441,
         "floor": "Untergeschoss",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13400,10 +12874,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539364599467703,
-          47.37793596666199
-        ]
+        "coordinates": [8.539364599467703, 47.37793596666199]
       },
       "properties": {
         "service_id": 11533,
@@ -13415,6 +12886,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58443,
         "floor": "Untergeschoss",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13454,10 +12927,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.537077452723988,
-          47.37955791321984
-        ]
+        "coordinates": [8.537077452723988, 47.37955791321984]
       },
       "properties": {
         "service_id": 11968,
@@ -13469,6 +12939,8 @@
         "name_affix": "Halle Sihlquai",
         "area_id": 58591,
         "floor": "Untergeschoss",
+        "openhours_from": "06:30:00",
+        "openhours_to": "18:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13508,10 +12980,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539576308666815,
-          47.3773286707584
-        ]
+        "coordinates": [8.539576308666815, 47.3773286707584]
       },
       "properties": {
         "service_id": 23342,
@@ -13523,6 +12992,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58725,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13562,10 +13033,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539729172407618,
-          47.37877410654088
-        ]
+        "coordinates": [8.539729172407618, 47.37877410654088]
       },
       "properties": {
         "service_id": 11395,
@@ -13577,6 +13045,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58518,
         "floor": "Untergeschoss",
+        "openhours_from": "07:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13622,10 +13092,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538090260250712,
-          47.37775316075551
-        ]
+        "coordinates": [8.538090260250712, 47.37775316075551]
       },
       "properties": {
         "service_id": 13309,
@@ -13637,6 +13104,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58734,
         "floor": "Shopville/Aufgänge",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13670,10 +13138,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536313888530096,
-          47.37901899882417
-        ]
+        "coordinates": [8.536313888530096, 47.37901899882417]
       },
       "properties": {
         "service_id": 12018,
@@ -13685,6 +13150,8 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58604,
         "floor": "Untergeschoss",
+        "openhours_from": "05:00:00",
+        "openhours_to": "23:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13724,10 +13191,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53726289294183,
-          47.37826786308727
-        ]
+        "coordinates": [8.53726289294183, 47.37826786308727]
       },
       "properties": {
         "service_id": 11686,
@@ -13765,10 +13229,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538188611460464,
-          47.378384336119474
-        ]
+        "coordinates": [8.538188611460464, 47.378384336119474]
       },
       "properties": {
         "service_id": 16055,
@@ -13806,10 +13267,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540096203030759,
-          47.37873345592211
-        ]
+        "coordinates": [8.540096203030759, 47.37873345592211]
       },
       "properties": {
         "service_id": 11413,
@@ -13821,6 +13279,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58486,
         "floor": "Untergeschoss",
+        "openhours_to": "23:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13854,10 +13313,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538677484127701,
-          47.378717564337656
-        ]
+        "coordinates": [8.538677484127701, 47.378717564337656]
       },
       "properties": {
         "service_id": 11489,
@@ -13869,6 +13325,8 @@
         "name_affix": "Passage Gessnerallee",
         "area_id": 58464,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13908,10 +13366,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540398337764195,
-          47.37723341984986
-        ]
+        "coordinates": [8.540398337764195, 47.37723341984986]
       },
       "properties": {
         "service_id": 10829,
@@ -13923,6 +13378,7 @@
         "name_affix": "Südtrakt 1. Obergeschoss",
         "area_id": null,
         "floor": "Erdgeschoss",
+        "openhours_to": "23:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13956,10 +13412,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539214682011748,
-          47.378701245588296
-        ]
+        "coordinates": [8.539214682011748, 47.378701245588296]
       },
       "properties": {
         "service_id": 15861,
@@ -13971,6 +13424,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58456,
         "floor": "Untergeschoss",
+        "openhours_from": "06:30:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14016,10 +13471,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539661391351276,
-          47.37818421164307
-        ]
+        "coordinates": [8.539661391351276, 47.37818421164307]
       },
       "properties": {
         "service_id": 11964,
@@ -14031,6 +13483,8 @@
         "name_affix": "Plaza",
         "area_id": 58430,
         "floor": "Untergeschoss",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14076,10 +13530,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540637900123988,
-          47.378077470578724
-        ]
+        "coordinates": [8.540637900123988, 47.378077470578724]
       },
       "properties": {
         "service_id": 12096,
@@ -14091,6 +13542,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58425,
         "floor": "Untergeschoss",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14136,10 +13589,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53931247640851,
-          47.37822820949436
-        ]
+        "coordinates": [8.53931247640851, 47.37822820949436]
       },
       "properties": {
         "service_id": 20777,
@@ -14151,6 +13601,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58506,
         "floor": "Untergeschoss",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14190,10 +13642,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539785179912712,
-          47.37815064925593
-        ]
+        "coordinates": [8.539785179912712, 47.37815064925593]
       },
       "properties": {
         "service_id": 11972,
@@ -14205,6 +13654,8 @@
         "name_affix": "Plaza",
         "area_id": 58438,
         "floor": "Untergeschoss",
+        "openhours_from": "07:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14244,10 +13695,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539287618325561,
-          47.377423687379704
-        ]
+        "coordinates": [8.539287618325561, 47.377423687379704]
       },
       "properties": {
         "service_id": 11615,
@@ -14259,6 +13707,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58749,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "07:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14298,10 +13748,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538435327684509,
-          47.37783641753061
-        ]
+        "coordinates": [8.538435327684509, 47.37783641753061]
       },
       "properties": {
         "service_id": 11564,
@@ -14313,6 +13760,7 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58415,
         "floor": "Untergeschoss",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14352,10 +13800,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.541308561591746,
-          47.37817060979423
-        ]
+        "coordinates": [8.541308561591746, 47.37817060979423]
       },
       "properties": {
         "service_id": 11466,
@@ -14367,6 +13812,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58762,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "07:45:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14406,10 +13853,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538505183654076,
-          47.37842661648927
-        ]
+        "coordinates": [8.538505183654076, 47.37842661648927]
       },
       "properties": {
         "service_id": 11499,
@@ -14421,6 +13865,8 @@
         "name_affix": "Passage Gessnerallee",
         "area_id": 58479,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14460,10 +13906,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538503747691012,
-          47.378982718335195
-        ]
+        "coordinates": [8.538503747691012, 47.378982718335195]
       },
       "properties": {
         "service_id": 23344,
@@ -14475,6 +13918,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58469,
         "floor": "Untergeschoss",
+        "openhours_from": "06:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14514,10 +13959,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539591474320767,
-          47.37790249540677
-        ]
+        "coordinates": [8.539591474320767, 47.37790249540677]
       },
       "properties": {
         "service_id": 21099,
@@ -14529,6 +13971,8 @@
         "name_affix": "Plaza",
         "area_id": 58426,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14568,10 +14012,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540663772199728,
-          47.377485498343844
-        ]
+        "coordinates": [8.540663772199728, 47.377485498343844]
       },
       "properties": {
         "service_id": 10821,
@@ -14583,6 +14024,7 @@
         "name_affix": "Südtrakt",
         "area_id": 58977,
         "floor": "Erdgeschoss",
+        "openhours_to": "23:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14628,10 +14070,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53823590968485,
-          47.377709370919774
-        ]
+        "coordinates": [8.53823590968485, 47.377709370919774]
       },
       "properties": {
         "service_id": 16217,
@@ -14643,6 +14082,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58744,
         "floor": "Shopville/Aufgänge",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14676,10 +14116,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539945997101471,
-          47.378424684802525
-        ]
+        "coordinates": [8.539945997101471, 47.378424684802525]
       },
       "properties": {
         "service_id": 10802,
@@ -14691,6 +14128,7 @@
         "name_affix": "Nordtrakt",
         "area_id": 58985,
         "floor": "Erdgeschoss",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14724,10 +14162,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.54027526336653,
-          47.37745853490561
-        ]
+        "coordinates": [8.54027526336653, 47.37745853490561]
       },
       "properties": {
         "service_id": 10839,
@@ -14739,6 +14174,8 @@
         "name_affix": "Südtrakt 1. Obergeschoss",
         "area_id": 58811,
         "floor": "Erdgeschoss",
+        "openhours_from": "07:30:00",
+        "openhours_to": "22:30:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14772,10 +14209,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538429597344043,
-          47.37829330871537
-        ]
+        "coordinates": [8.538429597344043, 47.37829330871537]
       },
       "properties": {
         "service_id": 11503,
@@ -14787,6 +14221,8 @@
         "name_affix": "Passage Gessnerallee",
         "area_id": 58462,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14826,10 +14262,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539533867285904,
-          47.37734486273658
-        ]
+        "coordinates": [8.539533867285904, 47.37734486273658]
       },
       "properties": {
         "service_id": 11635,
@@ -14841,6 +14274,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58730,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14880,10 +14315,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.53962869708803,
-          47.37840689770537
-        ]
+        "coordinates": [8.53962869708803, 47.37840689770537]
       },
       "properties": {
         "service_id": 11924,
@@ -14895,6 +14327,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58437,
         "floor": "Untergeschoss",
+        "openhours_from": "07:30:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14940,10 +14374,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540276732412112,
-          47.37751052570489
-        ]
+        "coordinates": [8.540276732412112, 47.37751052570489]
       },
       "properties": {
         "service_id": 13305,
@@ -14955,6 +14386,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58422,
         "floor": "Untergeschoss",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14994,10 +14427,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540765407739297,
-          47.37830184234532
-        ]
+        "coordinates": [8.540765407739297, 47.37830184234532]
       },
       "properties": {
         "service_id": 11461,
@@ -15009,6 +14439,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58439,
         "floor": "Untergeschoss",
+        "openhours_from": "07:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15054,10 +14486,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540024213369714,
-          47.3776926312248
-        ]
+        "coordinates": [8.540024213369714, 47.3776926312248]
       },
       "properties": {
         "service_id": 10845,
@@ -15069,6 +14498,7 @@
         "name_affix": "Südtrakt",
         "area_id": 58997,
         "floor": "Erdgeschoss",
+        "openhours_to": "22:30:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15102,10 +14532,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539674075386955,
-          47.37750134155041
-        ]
+        "coordinates": [8.539674075386955, 47.37750134155041]
       },
       "properties": {
         "service_id": 10855,
@@ -15117,6 +14544,7 @@
         "name_affix": "Südtrakt 1. Obergeschoss",
         "area_id": 59016,
         "floor": "Erdgeschoss",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15150,10 +14578,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536402382453716,
-          47.378532089302766
-        ]
+        "coordinates": [8.536402382453716, 47.378532089302766]
       },
       "properties": {
         "service_id": 12048,
@@ -15165,6 +14590,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58606,
         "floor": "Untergeschoss",
+        "openhours_to": "22:15:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15210,10 +14636,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539583654476724,
-          47.37833157316782
-        ]
+        "coordinates": [8.539583654476724, 47.37833157316782]
       },
       "properties": {
         "service_id": 11946,
@@ -15225,6 +14648,7 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58433,
         "floor": "Untergeschoss",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15258,10 +14682,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538049473838823,
-          47.378179969277994
-        ]
+        "coordinates": [8.538049473838823, 47.378179969277994]
       },
       "properties": {
         "service_id": 11307,
@@ -15273,6 +14694,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58449,
         "floor": "Untergeschoss",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15312,10 +14735,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540175217268576,
-          47.37871201370825
-        ]
+        "coordinates": [8.540175217268576, 47.37871201370825]
       },
       "properties": {
         "service_id": 11414,
@@ -15327,6 +14747,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58473,
         "floor": "Untergeschoss",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15372,10 +14793,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539937693565237,
-          47.37871653307472
-        ]
+        "coordinates": [8.539937693565237, 47.37871653307472]
       },
       "properties": {
         "service_id": 20800,
@@ -15387,6 +14805,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58513,
         "floor": "Untergeschoss",
+        "openhours_to": "22:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15420,10 +14839,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539422298381314,
-          47.378416060777084
-        ]
+        "coordinates": [8.539422298381314, 47.378416060777084]
       },
       "properties": {
         "service_id": 20781,
@@ -15435,6 +14851,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58509,
         "floor": "Untergeschoss",
+        "openhours_from": "09:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15474,10 +14892,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539892705298698,
-          47.376920709357314
-        ]
+        "coordinates": [8.539892705298698, 47.376920709357314]
       },
       "properties": {
         "service_id": 11826,
@@ -15489,6 +14904,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58719,
         "floor": "Shopville/Aufgänge",
+        "openhours_to": "21:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15522,10 +14938,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.536026896864133,
-          47.37889072317331
-        ]
+        "coordinates": [8.536026896864133, 47.37889072317331]
       },
       "properties": {
         "service_id": 12060,
@@ -15537,6 +14950,8 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58601,
         "floor": "Untergeschoss",
+        "openhours_from": "07:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15576,10 +14991,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540026503200483,
-          47.37875608845858
-        ]
+        "coordinates": [8.540026503200483, 47.37875608845858]
       },
       "properties": {
         "service_id": 11409,
@@ -15591,6 +15003,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58472,
         "floor": "Untergeschoss",
+        "openhours_from": "07:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15630,10 +15044,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.538821076050604,
-          47.37755998143906
-        ]
+        "coordinates": [8.538821076050604, 47.37755998143906]
       },
       "properties": {
         "service_id": 11610,
@@ -15645,6 +15056,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58740,
         "floor": "Shopville/Aufgänge",
+        "openhours_from": "04:30:00",
+        "openhours_to": "00:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15684,10 +15097,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.539350960444027,
-          47.37829620579655
-        ]
+        "coordinates": [8.539350960444027, 47.37829620579655]
       },
       "properties": {
         "service_id": 11894,
@@ -15699,6 +15109,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58507,
         "floor": "Untergeschoss",
+        "openhours_from": "08:00:00",
+        "openhours_to": "20:00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15744,10 +15156,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [
-          8.540568538550682,
-          47.37792521498386
-        ]
+        "coordinates": [8.540568538550682, 47.37792521498386]
       },
       "properties": {
         "service_id": 12092,
@@ -15759,6 +15168,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58523,
         "floor": "Untergeschoss",
+        "openhours_from": "06:00:00",
+        "openhours_to": "21:30:00",
         "openhours": [
           {
             "day_from": 1,

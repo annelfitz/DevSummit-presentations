@@ -165,7 +165,7 @@
             new LabelClass({
               labelExpressionInfo: {
                 expression:
-                  "$feature.name + TextFormatting.NewLine + $feature.category",
+                  "$feature.name + TextFormatting.NewLine + Number($feature.openhours_from, '##:##:##') + ' - ' +  Number($feature.openhours_to, '##:##:##')",
               },
               symbol: {
                 type: "label-3d",

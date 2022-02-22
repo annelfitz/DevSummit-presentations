@@ -233,15 +233,103 @@ labelingInfo: [
 		<section
 		data-background="../../reveal.js/img/2022/dev-summit/bg-4.png"
 	  >
-		<h1 style="text-align: left; font-size: 62px">Profiles</h1>
+		<h1 style="text-align: center; font-size: 62px">Profiles</h1>
 		<p
 		  style="
 			text-align: left;
-			font-size: 24px;
+			font-size: 10px;
 			color: var(--r-section-subhead-color);
 		  "
 		>
-		  Section Subhead
+    <div style=" background: rgba(0, 0, 0, 0.8); border-radius: 30px; padding: 50px;">
+		  <table style="font-size: 24px;">
+<thead>
+<tr>
+<th></th>
+<th>Visualization</th>
+<th>Popup</th>
+<th>Labeling</th>
+<th>Feature-Z</th>
+<th>Constraint</th>
+<th>Field Calculate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="font-size: 17px;">Context</td>
+<td>ClassBreaksRenderer<br/>
+UniqueValueRenderer<br/>
+Visual Variables
+</td>
+<td>Popup<br/>
+Template
+</td>
+<td>LabelClass</td>
+<td>ElevationInfo
+In 3D Scenes
+</td>
+<td>FeatureForm widget<br/>
+FieldConfig
+</td>
+<td>3.x only!
+</td>
+</tr>
+<tr>
+<td style="font-size: 17px;">Globals</td>
+<td>$feature<br/>
+$view.scale
+</td>
+<td>$feature<br/>
+$layer<br/>
+$map<br/>
+$datastore
+</td>
+<td>$feature
+</td>
+<td>$feature
+</td>
+<td>$feature
+</td>
+<td>$feature<br/>
+$datastore
+</td>
+</tr>
+<tr>
+<td style="font-size: 17px;">Return type</td>
+<td>Text<br/>
+Number
+</td>
+<td>Text<br/>
+Number
+</td>
+<td>Text</td>
+<td>Number</td>
+<td>Boolean</td>
+<td>Text<br/>
+  Number<br/>
+  Date
+</td>
+</tr>
+<tr>
+<td style="font-size: 17px;">Banned functions</td>
+<td>FeatureSet
+functions
+</td>
+<td>N/A</td>
+<td>FeatureSet
+functions
+</td>
+<td>FeatureSet
+functions
+</td>
+<td>FeatureSet
+functions
+</td>
+<td>N/A</td>
+</tr>
+</tbody>
+</table></div>
+
 		</p>
 	  </section>
 
@@ -251,6 +339,8 @@ labelingInfo: [
         >
           <textarea data-template>
 						## Visualization
+            - Yannik for the UniqueValueRenderer / ClassBreak 
+            - Anne for the $view.scale
 					</textarea
           >
         </section>
@@ -303,6 +393,7 @@ labelingInfo: [
         >
           <textarea data-template>
 						## Labeling
+            Anne
 					</textarea
           >
         </section>
@@ -313,6 +404,7 @@ labelingInfo: [
         >
           <textarea data-template>
 						## Forms
+            Anne
 					</textarea
           >
         </section>
@@ -323,6 +415,7 @@ labelingInfo: [
         >
           <textarea data-template>
 						## Feature sorting
+            Anne
 					</textarea
           >
         </section>
@@ -333,9 +426,54 @@ labelingInfo: [
         >
           <textarea data-template>
 						## Z values
+            Yannik - elevation info for the HB's floor 
 					</textarea
           >
         </section>
+
+        		<section
+          data-markdown
+          data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
+        >
+          <textarea data-template>
+						## Generate Arcade Expression from user's input
+            Yannik - display one floor
+					</textarea
+          >
+        </section>
+
+        <section
+          data-markdown
+          data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
+        >
+          <textarea data-template>
+						## A glimpse in the future...
+            Anne
+					</textarea
+          >
+        </section>
+
+
+        <section
+          data-markdown
+          data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
+        >
+          <textarea data-template>
+				  ## Resources
+          - For Arcade Documentation 
+            https://developers.arcgis.com/arcade
+          - Playground
+            https://developers.arcgis.com/arcade/playground/
+          - Using Arcade with JS API
+            https://developers.arcgis.com/javascript/latest/guide/arcade/index.html
+          - Blogs
+            https://www.esri.com/arcgis-blog/?s=#&tag=arcade-expressions
+          - Arcade Expression sharing repo
+            https://github.com/Esri/arcade-expressions/
+					</textarea
+          >
+        </section>
+
 
         <section
           data-background="../../reveal.js/img/2022/dev-summit/bg-4.png"
