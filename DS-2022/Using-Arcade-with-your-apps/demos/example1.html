@@ -164,8 +164,7 @@
           labelingInfo: [
             new LabelClass({
               labelExpressionInfo: {
-                expression:
-                  "$feature.name + TextFormatting.NewLine + Number($feature.openhours_from, '##:##:##') + ' - ' +  Number($feature.openhours_to, '##:##:##')",
+                expression: "$feature.name",
               },
               symbol: {
                 type: "label-3d",
@@ -187,6 +186,8 @@
                   },
                 ],
               },
+              where:
+                "Category NOT IN ('Öffentlicher Verkehr', 'Piktogramm (Übrige)')",
             }),
           ],
           renderer: {
@@ -367,7 +368,34 @@
         //   };
         // });
 
+        ("+ TextFormatting.NewLine + $feature.openhours_from + ' - ' +  $feature.openhours_to");
+
         window.view = view;
+
+        const doc = parent.document;
+
+        if (doc) {
+          doc.getElementById("example-1-1").onclick = function () {
+            var label = servicesLayer.labelingInfo[0].clone();
+            label.labelExpressionInfo.expression =
+              "$feature.name + TextFormatting.NewLine + $feature.category";
+            servicesLayer.labelingInfo = [label];
+          };
+          doc.getElementById("example-1-2").onclick = function () {
+            var label = servicesLayer.labelingInfo[0].clone();
+            label.labelExpressionInfo.expression = `
+               var hourFrom = $feature.openhours_from;
+               var hourTo = $feature.openhours_to;
+
+               if (IsEmpty(hourFrom) || IsEmpty(hourTo)) {
+                 return $feature.name;
+               }
+
+               return $feature.name + TextFormatting.NewLine + hourFrom + " - " + hourTo;
+               `;
+            servicesLayer.labelingInfo = [label];
+          };
+        }
       });
     </script>
   </head>
