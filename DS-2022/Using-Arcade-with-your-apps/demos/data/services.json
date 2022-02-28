@@ -5366,6 +5366,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58455,
         "floor": "Untergeschoss",
+        "openhours_from": "05:45",
         "openhours_to": "00:00",
         "openhours": [
           {

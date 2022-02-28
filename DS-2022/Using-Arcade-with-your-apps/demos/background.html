@@ -44,8 +44,14 @@
       };
       servicesLayer.elevationInfo = simpleElevation;
       servicesLayer.labelingInfo = [];
+      const verticalOffset =
+        servicesLayer.renderer.symbol.verticalOffset.clone();
+      servicesLayer.renderer.symbol.verticalOffset = null;
+      const callout = servicesLayer.renderer.symbol.callout.clone();
+      servicesLayer.renderer.symbol.callout = null;
       areasLayer.elevationInfo = simpleElevation;
       areasLayer.renderer = simplAreasRenderer;
+      commonSceneConfig.map.layers.remove(servicesLayer);
 
       // Only display first floor
       areasLayer.definitionExpression = `floor IN (${floorNames(1)})`;
@@ -54,33 +60,16 @@
       window.view = view;
       const doc = parent.document;
 
-      if (doc && doc.getElementById("example-1-1")) {
-        doc.getElementById("example-1-1").onclick = function () {
-          servicesLayer.labelingInfo = createLabels(
-            (label) => (label.labelExpressionInfo.expression = "$feature.name")
-          );
+      if (doc && doc.getElementById("background-1-1")) {
+        doc.getElementById("background-1-1").onclick = function () {
+          view.map.layers.add(servicesLayer);
         };
-        doc.getElementById("example-1-2").onclick = function () {
-          servicesLayer.labelingInfo = createLabels(
-            (label) =>
-              (label.labelExpressionInfo.expression =
-                "$feature.name + TextFormatting.NewLine + $feature.category")
-          );
-        };
-        doc.getElementById("example-1-3").onclick = function () {
-          servicesLayer.labelingInfo = createLabels(
-            (label) =>
-              (label.labelExpressionInfo.expression = `
-               var hourFrom = $feature.openhours_from;
-               var hourTo = $feature.openhours_to;
 
-               if (IsEmpty(hourFrom) || IsEmpty(hourTo)) {
-                 return $feature.name;
-               }
-
-               return $feature.name + TextFormatting.NewLine + hourFrom + " - " + hourTo;
-               `)
-          );
+        doc.getElementById("background-1-2").onclick = function () {
+          const renderer = servicesLayer.renderer.clone();
+          renderer.symbol.callout = callout;
+          renderer.symbol.verticalOffset = verticalOffset;
+          servicesLayer.renderer = renderer;
         };
       }
     </script>
