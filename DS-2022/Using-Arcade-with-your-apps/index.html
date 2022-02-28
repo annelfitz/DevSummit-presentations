@@ -252,8 +252,9 @@
           data-background="../../reveal.js/img/2022/dev-summit/bg-3.png"
         >
           <h2 data-id="code-title">First example</h2>
-          <div class="subtitle">Formatting labels</div>
-          <iframe src="./demos/example1.html" style="width: 100%; height: 500px; margin-top: 40px;"></iframe>
+          <div class="subtitle">Background...</div>
+          <iframe src="./demos/fullexample.html" style="width: 100%; height: 500px; margin-top: 40px;"></iframe>
+          <!-- I am from Switzerland, Zurich. In this country, we are proud of our train, so let me take an example the Zurich main station. It looks like this. Throughout this presentation, I'll show you how you can build this application with Arcade expression. -->
 					</code></pre>
         </section>
 
@@ -470,6 +471,84 @@ return $feature.name + TextFormatting.NewLine + hourFrom + " - " + hourTo;
           >
         </section>
 
+        <section data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png">
+          <h2 data-id="code-title">Z Values</h2>
+          <div class="two-columns" style="margin-top: 40px;">
+            <div class="left-column">
+              <div data-fragment-id="z-value" class="code-snippet">
+                <button class="play" id="example-2-1"></button>
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
+elevationInfo = {
+  mode: "relative-to-ground",
+  featureExpressionInfo: {
+    expression: "
+        if(Includes(['Löwenstrasse', 'Bahnhof SZU'], $feature.floor)) {
+          return 0;
+        }
+
+        if (Includes(['Shopville', 'Aufgänge', 'Untergeschoss'], $feature.floor)) {
+          return 50;
+        }
+
+        if ($feature.floor == 'Erdgeschoss') {
+          return 150;
+        }
+
+        return 100;",
+  },
+}
+					        </code>
+                </pre>
+              </div>
+            </div>
+            <div class="right-column">
+              <div class="iframe-wrapper">
+                <iframe data-src="./demos/example2.html"></iframe>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png">
+          <h2 data-id="code-title">UniqueValueRenderer</h2>
+          <div class="two-columns" style="margin-top: 40px;">
+            <div class="left-column">
+              <div data-fragment-id="z-value" class="code-snippet">
+                <button class="play" id="example-2-1"></button>
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
+elevationInfo = {
+  mode: "relative-to-ground",
+  featureExpressionInfo: {
+    expression: "
+        if($feature.floor == 'Bahnhöfe Löwenstrasse / Museumsstrasse' || $feature.floor == 'Bahnhof SZU') {
+          return 0;
+        }
+
+        if ($feature.floor == 'Shopville' || $feature.floor == 'Shopville/Aufgänge' || $feature.floor == 'Untergeschoss') {
+          return 50;
+        }
+
+        if ($feature.floor == 'Erdgeschoss') {
+          return 150;
+        }
+
+        return 100;",
+  },
+}
+					        </code>
+                </pre>
+              </div>
+            </div>
+            <div class="right-column">
+              <div class="iframe-wrapper">
+                <iframe data-src="./demos/example2.html"></iframe>
+              </div>
+            </div>
+          </div>
+        </section>
+
 		<section
           data-markdown
           data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
@@ -541,17 +620,6 @@ return $feature.name + TextFormatting.NewLine + hourFrom + " - " + hourTo;
           <textarea data-template>
 						## Feature sorting
             Anne
-					</textarea
-          >
-        </section>
-
-		<section
-          data-markdown
-          data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
-        >
-          <textarea data-template>
-						## Z values
-            Yannik - elevation info for the HB's floor 
 					</textarea
           >
         </section>
