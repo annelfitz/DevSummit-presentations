@@ -19,20 +19,6 @@
     <!-- Override the Reveal theme varables: -->
     <!-- https://github.com/hakimel/reveal.js/blob/master/css/theme/template/exposer.scss -->
     <style type="text/css">
-      .reveal {
-        font-family: Avenir Next, Helvetica Neue, Helvetica, sans-serif;
-        font-weight: light;
-      }
-
-      .reveal h1,
-      .reveal h2,
-      .reveal h3 {
-        text-transform: none;
-        font-weight: 900;
-        font-family: Avenir Next Condensed, Helvetica Neue, Helvetica,
-          sans-serif;
-      }
-
       :root {
         /* Color from slides */
         --r-background-color: #01114f;
@@ -41,8 +27,8 @@
         --r-main-color: #fff;
 
         /* Arial font is recommended */
-        --r-heading-font: Arial, Helvetica Neue, Helvetica, sans-serif;
-        --r-main-font: Arial, Helvetica Neue, Helvetica, sans-serif;
+        --r-heading-font: Avenir Next Condensed, Helvetica Neue, Helvetica, sans-serif;
+        --r-main-font: Avenir Next, Helvetica Neue, Helvetica, sans-serif;
 
         /* For consistency with the template: */
         --r-heading-font-weight: normal;
@@ -51,6 +37,34 @@
 
         /* Section subheader color per theme */
         --r-section-subhead-color: #00ec86;
+
+        --iframe-scale: 0.7;
+      }
+
+      .reveal {
+        font-family: var(--r-main-font);
+        font-weight: light;
+      }
+
+      .reveal h1,
+      .reveal h2,
+      .reveal h3 {
+        text-transform: none;
+        font-family: var(--r-heading-font);
+        font-weight: 900;
+      }
+
+      .reveal h2 {
+        font-size: 50px;
+      }
+
+      .reveal pre {
+        font-size: 0.25em;
+      }
+
+      .reveal .subtitle {
+        font-size: 80%;
+        margin-top: -30px;
       }
 
       .sink {
@@ -61,9 +75,91 @@
         color: white;
       }
 
-      .reveal .subtitle {
-        font-size: 80%;
-        margin-top: -30px;
+      .subhead {
+        font-size: 24px;
+        color: var(--r-section-subhead-color);
+      }
+
+      .align-left .subhead,
+      .align-left h1,
+      .align-left h2,
+      .align-left h3 {
+        text-align: left;
+      }
+
+      .align-right .subhead,
+      .align-right h1,
+      .align-right h2,
+      .align-right h3 {
+        text-align: right;
+      }
+
+      .two-columns {
+        display: flex;
+        flex-direction: row;
+        gap: var(--r-block-margin);
+      }
+
+      .two-columns iframe {
+        top: 0;
+        left: 0;
+        width: calc(100% / var(--iframe-scale));
+        max-width: unset;
+        max-height: unset;
+        aspect-ratio: 4 / 3;
+        transform: translate(-50%, -50%) scale(var(--iframe-scale)) translate(50%, 50%);
+        background: #fff;
+      }
+
+      .two-columns .iframe-wrapper {
+        overflow: hidden;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+      }
+
+      .two-columns pre {
+        margin: 0;
+        width: 100%;
+      }
+
+      .two-columns .left-column {
+        position: relative;
+        width: 60%;
+      }
+
+      .two-columns .right-column {
+        position: relative;
+        flex-grow: 1;
+        padding: 0;
+      }
+
+      .two-columns .code-snippet.fragment.visible {
+        margin-top: var(--r-block-margin);
+      }
+
+      button.play {
+        width: 32px;
+        height: 32px;
+
+        border: none;
+        outline: none;
+        position: absolute;
+        margin-right: 10px;
+        margin-top: -12px;
+        right: 0;
+
+        cursor: pointer;
+
+        background-color: rgba(0, 0, 0, 0);
+        background-image: url("./images/play_64_50.png");
+        background-size: 32px;
+        background-repeat: no-repeat;
+
+        z-index: 10;
+      }
+
+      button.play:hover {
+        background-image: url("./images/play_64.png");
       }
     </style>
 
@@ -156,9 +252,9 @@
           data-background="../../reveal.js/img/2022/dev-summit/bg-3.png"
         >
           <h2 data-id="code-title">First example</h2>
-          <div class="subtitle">Formatting labels</div>
-          <iframe src="./demos/example1.html" style="width: 100%; height: 500px"></iframe>
-					</code></pre>
+          <div class="subtitle">Background...</div>
+          <img src="./images/swisstrain.jpg" style="width: auto; height: 500px; margin-top: 40px;"/>
+          <!-- I am from Switzerland, Zurich. In this country, we are proud of our train, so let me take an example the Zurich main station. It looks like this. Throughout this presentation, I'll show you how you can build this application with Arcade expression. -->
         </section>
 
         <section
@@ -166,21 +262,144 @@
           data-background="../../reveal.js/img/2022/dev-summit/bg-3.png"
         >
           <h2 data-id="code-title">First example</h2>
+          <div class="subtitle">Background...</div>
+          <iframe src="./demos/fullexample.html" style="width: 100%; height: 500px; margin-top: 40px;"></iframe>
+        </section>
+
+        <section
+          data-auto-animate
+          data-background="../../reveal.js/img/2022/dev-summit/bg-3.png"
+        >
+          <h2 data-id="code-title">First example</h2>
+          <div class="subtitle">Background...</div>
+          
+					<div class="two-columns" style="margin-top: 40px;">
+            <div class="left-column">
+              <small style="font-size: 50%;">Data source © SBB/CFF/FFS | trafimage.ch</small>
+              <div data-fragment-id="add-widget" class="code-snippet">
+                <pre
+            data-id="code-animation"
+          ><code class="hljs" data-trim data-line-numbers>
+...
+{
+  ...
+  "geometry": { "coordinates": [8.53951848821041, 47.37861708480265] },
+  "properties": {
+    "name": "Press & Books",
+    "category": "Shopping",
+    "floor": "Untergeschoss",
+    ...
+    "openhours_from": "05:45",
+    "openhours_to": "00:00",
+    ...
+  }
+}
+					        </code>
+                </pre>
+              </div>
+
+              <div data-fragment-id="category" class="code-snippet fragment" style="margin-top: 20px">
+                <button class="play" id="background-1-1"></button>
+                <pre
+            data-id="code-animation"
+          ><code class="hljs" data-trim data-line-numbers>
+const servicesLayer =  = new GeoJSONLayer({
+  url: "./data/services.json",
+  elevationInfo: ...
+  renderer: {
+    type: "simple",
+    symbol: ...
+  }
+}
+
+const view = new SceneView({
+  container: "viewDiv",
+  map: new Map({
+    layers: []
+  })
+});
+					        </code>
+                </pre>
+              </div>
+              <div data-fragment-id="category" class="code-snippet fragment" style="margin-top: 20px">
+                <button class="play" id="background-1-2"></button>
+                <pre
+            data-id="code-animation"
+          ><code class="hljs" data-trim data-line-numbers>
+servicesLayer.renderer.symbol.callout = { ... };
+servicesLayer.renderer.symbol.verticalOffset = { ... };
+					        </code>
+                </pre>
+              </div>
+            </div>
+            <div class="right-column">
+              <div class="iframe-wrapper">
+                <iframe data-src="./demos/background.html"></iframe>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <section
+          data-auto-animate
+          data-background="../../reveal.js/img/2022/dev-summit/bg-3.png"
+        >
+          <h2 data-id="code-title">First example</h2>
           <div class="subtitle">Formatting labels</div>
-          <pre
+          <div class="two-columns" style="margin-top: 40px;">
+            <div class="left-column">
+              <div data-fragment-id="add-widget" class="code-snippet">
+                <button class="play" id="example-1-1"></button>
+                <pre
             data-id="code-animation"
           ><code class="hljs" data-trim data-line-numbers>
 labelingInfo: [
   new LabelClass({
     ...
     labelExpressionInfo: { 
-			expression: "$feature.name + TextFormatting.NewLine + $feature.category"
+			expression: "$feature.name"
 		},
     symbol: ...,
   })
 ]
-					</code></pre>
-        </section>
+					        </code>
+                </pre>
+              </div>
+
+              <div data-fragment-id="category" class="code-snippet fragment" style="margin-top: 20px">
+                <button class="play" id="example-1-2"></button>
+                <pre
+            data-id="code-animation"
+          ><code class="hljs" data-trim data-line-numbers>
+	  expression: "$feature.name + TextFormatting.NewLine + $feature.Category"
+					        </code>
+                </pre>
+              </div>
+              <div data-fragment-id="opening-hours" class="code-snippet fragment" style="margin-top: 20px">
+                <button class="play" id="example-1-3"></button>
+                <pre
+            data-id="code-animation"
+          ><code class="hljs" data-trim data-line-numbers>
+var hourFrom = $feature.openhours_from;
+var hourTo = $feature.openhours_to;
+
+if (IsEmpty(hourFrom) || IsEmpty(hourTo)) {
+  return $feature.name;
+}
+
+return $feature.name + TextFormatting.NewLine + hourFrom + " - " + hourTo;
+					        </code>
+                </pre>
+              </div>
+            </div>
+            <div class="right-column">
+              <div class="iframe-wrapper">
+                <iframe data-src="./demos/example1.html"></iframe>
+              </div>
+            </div>
+          </div>
+          </section>
 
 		<section
 		data-background="../../reveal.js/img/2022/dev-summit/bg-4.png"
@@ -241,97 +460,178 @@ labelingInfo: [
 			color: var(--r-section-subhead-color);
 		  "
 		>
-    <div style=" background: rgba(0, 0, 0, 0.8); border-radius: 30px; padding: 50px;">
+    <div style=" background: rgba(0, 0, 0, 0.8); border-radius: 30px; padding: 50px; width: fit-content;">
 		  <table style="font-size: 24px;">
-<thead>
-<tr>
-<th></th>
-<th>Visualization</th>
-<th>Popup</th>
-<th>Labeling</th>
-<th>Feature-Z</th>
-<th>Constraint</th>
-<th>Field Calculate</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="font-size: 17px;">Context</td>
-<td>ClassBreaksRenderer<br/>
-UniqueValueRenderer<br/>
-Visual Variables
-</td>
-<td>Popup<br/>
-Template
-</td>
-<td>LabelClass</td>
-<td>ElevationInfo
-In 3D Scenes
-</td>
-<td>FeatureForm widget<br/>
-FieldConfig
-</td>
-<td>3.x only!
-</td>
-</tr>
-<tr>
-<td style="font-size: 17px;">Globals</td>
-<td>$feature<br/>
-$view.scale
-</td>
-<td>$feature<br/>
-$layer<br/>
-$map<br/>
-$datastore
-</td>
-<td>$feature
-</td>
-<td>$feature
-</td>
-<td>$feature
-</td>
-<td>$feature<br/>
-$datastore
-</td>
-</tr>
-<tr>
-<td style="font-size: 17px;">Return type</td>
-<td>Text<br/>
-Number
-</td>
-<td>Text<br/>
-Number
-</td>
-<td>Text</td>
-<td>Number</td>
-<td>Boolean</td>
-<td>Text<br/>
-  Number<br/>
-  Date
-</td>
-</tr>
-<tr>
-<td style="font-size: 17px;">Banned functions</td>
-<td>FeatureSet
-functions
-</td>
-<td>N/A</td>
-<td>FeatureSet
-functions
-</td>
-<td>FeatureSet
-functions
-</td>
-<td>FeatureSet
-functions
-</td>
-<td>N/A</td>
-</tr>
-</tbody>
-</table></div>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Visualization</th>
+            <th>Popup</th>
+            <th>Labeling</th>
+            <th>Feature-Z</th>
+            <th>Constraint</th>
+            <th>Field Calculate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-size: 17px;">Context</td>
+            <td>Renderers<br/>Visual Variables</td>
+            <td>Popup<br/> Template </td>
+            <td>LabelClass</td>
+            <td>ElevationInfo In 3D Scenes</td>
+            <td>FeatureForm widget<br/>FieldConfig</td>
+            <td>3.x only!</td>
+          </tr>
+          <tr>
+            <td style="font-size: 17px;">Globals</td>
+            <td>$feature<br/>
+            $view.scale
+            </td>
+            <td>$feature<br/>
+            $layer<br/>
+            $map<br/>
+            $datastore
+            </td>
+            <td>$feature
+            </td>
+            <td>$feature
+            </td>
+            <td>$feature
+            </td>
+            <td>$feature<br/>
+            $datastore
+            </td>
+          </tr>
+          <tr>
+            <td style="font-size: 17px;">Return type</td>
+            <td>Text<br/>
+            Number
+            </td>
+            <td>Text<br/>
+            Number
+            </td>
+            <td>Text</td>
+            <td>Number</td>
+            <td>Boolean</td>
+            <td>Text<br/>
+              Number<br/>
+              Date
+            </td>
+          </tr>
+          <tr>
+          <td style="font-size: 17px;">Banned functions</td>
+            <td>FeatureSet
+            functions
+            </td>
+            <td>N/A</td>
+            <td>FeatureSet
+            functions
+            </td>
+            <td>FeatureSet
+            functions
+            </td>
+            <td>FeatureSet
+            functions
+            </td>
+            <td>N/A</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
 		</p>
 	  </section>
+     <section data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png">
+          <h2 data-id="code-title">Z Values</h2>
+          <div class="two-columns" style="margin-top: 40px;">
+            <div class="left-column">
+                            <div data-fragment-id="add-widget" class="code-snippet">
+                <pre
+            data-id="code-animation"
+          ><code class="hljs" data-trim data-line-numbers>
+...
+{
+    "name": "Press & Books",
+    "category": "Shopping",
+    ...
+    "floor": "Untergeschoss",
+    ...
+    "openhours_from": "05:45",
+    "openhours_to": "00:00",
+},
+...
+				        </code>
+              </pre>
+            </div>
+          </div>
+          <div class="right-column">
+            <div class="iframe-wrapper">
+              <iframe data-src="./demos/example2.html"></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png">
+          <h2 data-id="code-title">Z Values</h2>
+          <div class="two-columns" style="margin-top: 40px;">
+            <div class="left-column">
+              <div data-fragment-id="z-value" class="code-snippet">
+                <button class="play" id="example-2-1"></button>
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
+elevationInfo = {
+  mode: "relative-to-ground",
+  featureExpressionInfo: {
+    expression: "
+        if(Includes(['Löwenstrasse', 'Bahnhof SZU'], $feature.floor)) {
+          return 0;
+        }
+
+        if (Includes(['Shopville', 'Aufgänge', 'Untergeschoss'], $feature.floor)) {
+          return 50;
+        }
+
+        if ($feature.floor == 'Erdgeschoss') {
+          return 150;
+        }
+
+        return 100;",
+  },
+}
+					        </code>
+                </pre>
+              </div>
+              <br>
+              <div data-fragment-id="z-value" class="code-snippet fragment">
+                <button class="play" id="example-2-2"></button>
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
+
+symbol: {
+  type: "line-3d",
+  symbolLayers: [
+    {
+      type: "path",
+      material: { color: "#FFBBAA" },
+      width: 0.5,
+      height: 2
+      ...
+    },
+  ],
+}
+					        </code>
+                </pre>
+              </div>
+            </div>
+            <div class="right-column">
+              <div class="iframe-wrapper">
+                <iframe data-src="./demos/example2.html"></iframe>
+              </div>
+            </div>
+          </div>
+        </section>
 
 	  <section
           data-markdown
@@ -339,10 +639,98 @@ functions
         >
           <textarea data-template>
 						## Visualization
-            - Yannik for the UniqueValueRenderer / ClassBreak 
             - Anne for the $view.scale
 					</textarea
           >
+        </section>
+
+
+
+        <section data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png">
+          <h2 data-id="code-title">Visualization: UniqueValueRenderer</h2>
+          <div class="two-columns" style="margin-top: 40px;">
+            <div class="left-column">
+              <div data-fragment-id="z-value" class="code-snippet">
+                <button class="play" id="example-3-1"></button>
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
+renderer: {
+  type: "unique-value",
+  // field: "type"
+  valueExpression: `
+    if (Includes(['shops', 'restaurants'], $feature.type)) {
+      return 'shops';
+    }
+    ...
+    return 'other'
+  `;
+  uniqueValueInfos: [
+    {
+      value: "shops",
+      symbol: ...
+    },
+    {
+      value: "infrastructure",
+      symbol: ...
+    },
+    ...
+  ]
+}
+    
+					        </code>
+                </pre>
+              </div>
+            </div>
+            <div class="right-column">
+              <div class="iframe-wrapper">
+                <iframe data-src="./demos/example3.html"></iframe>
+              </div>
+            </div>
+          </div>
+        </section>
+    
+        <section data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png">
+          <h2 data-id="code-title">Visual Variables</h2>
+          <div class="two-columns" style="margin-top: 40px;">
+            <div class="left-column">
+              <div data-fragment-id="z-value" class="code-snippet">
+                <button class="play" id="example-4-1"></button>
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
+opacityVariable = {
+  type: "opacity",
+  stops: [
+    { value: 0.1, opacity: 0.1 },
+    { value: 1, opacity: 1 },
+  ],
+  valueExpression: 
+    "IIf(Includes(['Löwenstrasse', 'Bahnhof SZU'], $feature.floor), 1, 0.1)",
+}
+servicesLayer.renderer.visualVariables = [opacityVariable];
+					        </code>
+                </pre>
+              </div>
+              <br>
+              <div data-fragment-id="z-value" class="code-snippet fragment">
+                <button class="play" id="example-4-2"></button>
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
+new GraphicsLayer({
+  elevationInfo: {
+    mode: "relative-to-ground",
+    offset: currentFloor.elevation,
+  },
+});
+					        </code>
+                </pre>
+              </div>
+            </div>
+            <div class="right-column">
+              <div class="iframe-wrapper">
+                <iframe data-src="./demos/example4.html"></iframe>
+              </div>
+            </div>
+          </div>
         </section>
 
 		<section
@@ -420,26 +808,55 @@ functions
           >
         </section>
 
-		<section
-          data-markdown
-          data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
-        >
-          <textarea data-template>
-						## Z values
-            Yannik - elevation info for the HB's floor 
-					</textarea
-          >
+        <section data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png">
+          <h2 data-id="code-title">Generate Arcade Expression</h2>
+          <div class="subtitle">From user's input</div>
+          <div class="two-columns" style="margin-top: 40px;">
+            <div class="left-column">
+              <div data-fragment-id="z-value" class="code-snippet">
+                <button class="play" id="example-5-1"></button>
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
+const slider = new Slider({
+  min: 1, // ground floor
+  max: 4, // bottom floor
+  values: [1]
+});
+
+const floorNames = [[["Shopville", "Untergeschoss", "Shopville/Aufgänge"], [...], ...];
+
+slider.on("thumb-drag", function (event) {
+  const newExpression = `IIf(Includes([${floorNames(
+    event.value - 1 // 1, 2, 3, or 4
+  )}], $feature.floor), 1, 0.1)`;
+  areasLayer.visualVariables[0].valueExpression = newExpression;
+});
+    
+					        </code>
+                </pre>
+              </div>
+            </div>
+            <div class="right-column">
+              <div class="iframe-wrapper">
+                <iframe data-src="./demos/example5.html"></iframe>
+              </div>
+            </div>
+          </div>
         </section>
 
-        		<section
-          data-markdown
-          data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
-        >
-          <textarea data-template>
-						## Generate Arcade Expression from user's input
-            Yannik - display one floor
-					</textarea
-          >
+        <section data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png">
+          <h2 data-id="code-title">Generate Arcade Expression</h2>
+          <div class="subtitle">From user's input</div>
+          <iframe src="./demos/fullexample.html" style="width: 100%; height: 500px; margin-top: 40px;"></iframe>
+        </section>
+
+        <section data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png">
+          <h2 data-id="code-title">Generate Arcade Expression</h2>
+          <div class="subtitle">From user's input</div>
+          <ul>
+						<li>Learn more about animation at:</li>
+            <li>Learn more about 3D visualisation at:</li>
+					</ul>
         </section>
 
         <section

@@ -18,8 +18,8 @@
         "name_affix": "Plaza",
         "area_id": 58446,
         "floor": "Untergeschoss",
-        "openhours_from": "06:00:00",
-        "openhours_to": "21:00:00",
+        "openhours_from": "06:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -77,8 +77,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58761,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "06:30:00",
-        "openhours_to": "21:00:00",
+        "openhours_from": "06:30",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -136,8 +136,8 @@
         "name_affix": "Plaza",
         "area_id": 58440,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -189,8 +189,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58489,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -242,8 +242,8 @@
         "name_affix": "Plaza",
         "area_id": 58432,
         "floor": "Untergeschoss",
-        "openhours_from": "06:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "06:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -301,8 +301,8 @@
         "name_affix": "Bahnhof SZU",
         "area_id": 58248,
         "floor": "Bahnhof SZU",
-        "openhours_from": "06:00:00",
-        "openhours_to": "17:00:00",
+        "openhours_from": "06:00",
+        "openhours_to": "17:00",
         "openhours": [
           {
             "day_from": 1,
@@ -354,8 +354,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58742,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "06:00:00",
-        "openhours_to": "21:00:00",
+        "openhours_from": "06:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -413,8 +413,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58967,
         "floor": "Erdgeschoss",
-        "openhours_from": "06:30:00",
-        "openhours_to": "00:00:00",
+        "openhours_from": "06:30",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -466,8 +466,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58418,
         "floor": "Untergeschoss",
-        "openhours_from": "07:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -519,8 +519,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58709,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -572,8 +572,8 @@
         "name_affix": "Plaza",
         "area_id": 58440,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -625,8 +625,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58753,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "08:00:00",
-        "openhours_to": "00:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -678,8 +678,8 @@
         "name_affix": "Südtrakt",
         "area_id": 58957,
         "floor": "Erdgeschoss",
-        "openhours_from": "07:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -737,8 +737,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58707,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -790,7 +790,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58604,
         "floor": "Untergeschoss",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -836,8 +836,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58752,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -889,8 +889,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58710,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -942,8 +942,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58758,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "08:30:00",
-        "openhours_to": "18:30:00",
+        "openhours_from": "08:30",
+        "openhours_to": "18:30",
         "openhours": [
           {
             "day_from": 1,
@@ -995,7 +995,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58711,
         "floor": "Shopville/Aufgänge",
-        "openhours_to": "20:00:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1041,8 +1041,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58743,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "06:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "06:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1094,8 +1094,8 @@
         "name_affix": "Passage Sihlquai",
         "area_id": null,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1147,8 +1147,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58761,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1200,7 +1200,7 @@
         "name_affix": "Südtrakt",
         "area_id": 58969,
         "floor": "Erdgeschoss",
-        "openhours_to": "21:00:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1246,7 +1246,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58738,
         "floor": "Shopville/Aufgänge",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1292,7 +1292,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58718,
         "floor": "Shopville/Aufgänge",
-        "openhours_to": "21:00:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1344,7 +1344,7 @@
         "name_affix": "Halle Sihlquai",
         "area_id": 58599,
         "floor": "Untergeschoss",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1408,8 +1408,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58731,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1467,7 +1467,7 @@
         "name_affix": "Haupthalle",
         "area_id": null,
         "floor": "Erdgeschoss",
-        "openhours_to": "00:00:00",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1513,8 +1513,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58733,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1566,8 +1566,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58712,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1625,8 +1625,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58745,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1678,7 +1678,7 @@
         "name_affix": "Plaza",
         "area_id": 58446,
         "floor": "Untergeschoss",
-        "openhours_to": "21:00:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1724,8 +1724,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58717,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1777,7 +1777,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58718,
         "floor": "Shopville/Aufgänge",
-        "openhours_to": "21:00:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1829,8 +1829,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58727,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1882,7 +1882,7 @@
         "name_affix": "Südtrakt",
         "area_id": 59015,
         "floor": "Erdgeschoss",
-        "openhours_to": "00:00:00",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1928,7 +1928,7 @@
         "name_affix": "Querhalle 1. Obergeschoss",
         "area_id": 59029,
         "floor": "Erdgeschoss",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -1992,8 +1992,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58720,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2045,8 +2045,8 @@
         "name_affix": "Plaza",
         "area_id": 58501,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2098,7 +2098,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58604,
         "floor": "Untergeschoss",
-        "openhours_to": "21:00:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2162,8 +2162,8 @@
         "name_affix": "Plaza",
         "area_id": 58427,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2215,8 +2215,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58728,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "07:30:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:30",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2268,7 +2268,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58723,
         "floor": "Shopville/Aufgänge",
-        "openhours_to": "21:30:00",
+        "openhours_to": "21:30",
         "openhours": [
           {
             "day_from": 1,
@@ -2314,7 +2314,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58589,
         "floor": "Untergeschoss",
-        "openhours_to": "23:00:00",
+        "openhours_to": "23:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2360,8 +2360,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58454,
         "floor": "Untergeschoss",
-        "openhours_from": "06:00:00",
-        "openhours_to": "21:00:00",
+        "openhours_from": "06:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2413,7 +2413,7 @@
         "name_affix": "Querhalle",
         "area_id": 58953,
         "floor": "Erdgeschoss",
-        "openhours_to": "23:00:00",
+        "openhours_to": "23:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2477,8 +2477,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58527,
         "floor": "Untergeschoss",
-        "openhours_from": "06:30:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "06:30",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2536,8 +2536,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58445,
         "floor": "Untergeschoss",
-        "openhours_from": "07:30:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:30",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2589,7 +2589,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": null,
         "floor": "Shopville/Aufgänge",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2635,8 +2635,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58735,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2688,7 +2688,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58609,
         "floor": "Untergeschoss",
-        "openhours_to": "20:00:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2740,8 +2740,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": null,
         "floor": "Untergeschoss",
-        "openhours_from": "06:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "06:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2793,7 +2793,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58481,
         "floor": "Untergeschoss",
-        "openhours_to": "00:00:00",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2845,8 +2845,8 @@
         "name_affix": "Zwischengeschoss",
         "area_id": 58796,
         "floor": "Zwischengeschoss",
-        "openhours_from": "07:00:00",
-        "openhours_to": "16:00:00",
+        "openhours_from": "07:00",
+        "openhours_to": "16:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2898,8 +2898,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58729,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -2951,7 +2951,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58604,
         "floor": "Untergeschoss",
-        "openhours_to": "21:30:00",
+        "openhours_to": "21:30",
         "openhours": [
           {
             "day_from": 1,
@@ -3009,8 +3009,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58450,
         "floor": "Untergeschoss",
-        "openhours_from": "06:00:00",
-        "openhours_to": "21:00:00",
+        "openhours_from": "06:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3062,8 +3062,8 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58614,
         "floor": "Untergeschoss",
-        "openhours_from": "06:00:00",
-        "openhours_to": "22:00:00",
+        "openhours_from": "06:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3115,8 +3115,8 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58605,
         "floor": "Untergeschoss",
-        "openhours_from": "06:00:00",
-        "openhours_to": "21:00:00",
+        "openhours_from": "06:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3174,8 +3174,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58986,
         "floor": "Erdgeschoss",
-        "openhours_from": "06:30:00",
-        "openhours_to": "21:00:00",
+        "openhours_from": "06:30",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3233,8 +3233,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58467,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3286,7 +3286,7 @@
         "name_affix": "Südtrakt",
         "area_id": 58978,
         "floor": "Erdgeschoss",
-        "openhours_to": "23:00:00",
+        "openhours_to": "23:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3338,7 +3338,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58428,
         "floor": "Untergeschoss",
-        "openhours_to": "23:00:00",
+        "openhours_to": "23:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3402,8 +3402,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58715,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "07:30:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:30",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3455,7 +3455,7 @@
         "name_affix": "Zwischengeschoss",
         "area_id": 58795,
         "floor": "Zwischengeschoss",
-        "openhours_to": "00:00:00",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3513,8 +3513,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58508,
         "floor": "Untergeschoss",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3572,8 +3572,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 59150,
         "floor": "Untergeschoss",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3625,7 +3625,7 @@
         "name_affix": "Südtrakt",
         "area_id": 58979,
         "floor": "Erdgeschoss",
-        "openhours_to": "23:30:00",
+        "openhours_to": "23:30",
         "openhours": [
           {
             "day_from": 1,
@@ -3671,8 +3671,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58523,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3762,7 +3762,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58436,
         "floor": "Untergeschoss",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3846,7 +3846,7 @@
         "name_affix": "Halle Sihlquai",
         "area_id": 58591,
         "floor": "Untergeschoss",
-        "openhours_to": "21:00:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3904,8 +3904,8 @@
         "name_affix": "Halle Sihlquai",
         "area_id": 58616,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -3957,8 +3957,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58505,
         "floor": "Untergeschoss",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4010,8 +4010,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58500,
         "floor": "Untergeschoss",
-        "openhours_from": "07:30:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:30",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4069,8 +4069,8 @@
         "name_affix": "Passage Gessnerallee",
         "area_id": 58448,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4122,7 +4122,7 @@
         "name_affix": "Südtrakt",
         "area_id": 58962,
         "floor": "Erdgeschoss",
-        "openhours_to": "00:00:00",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4168,8 +4168,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58458,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4221,8 +4221,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58434,
         "floor": "Untergeschoss",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4274,8 +4274,8 @@
         "name_affix": "Passage Gessnerallee",
         "area_id": 58465,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4327,8 +4327,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58475,
         "floor": "Untergeschoss",
-        "openhours_from": "06:30:00",
-        "openhours_to": "22:00:00",
+        "openhours_from": "06:30",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4380,8 +4380,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58470,
         "floor": "Untergeschoss",
-        "openhours_from": "07:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4439,8 +4439,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58429,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4492,8 +4492,8 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58611,
         "floor": "Untergeschoss",
-        "openhours_from": "06:30:00",
-        "openhours_to": "22:00:00",
+        "openhours_from": "06:30",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4545,8 +4545,8 @@
         "name_affix": "Halle Sihlquai",
         "area_id": 58597,
         "floor": "Untergeschoss",
-        "openhours_from": "10:00:00",
-        "openhours_to": "19:00:00",
+        "openhours_from": "10:00",
+        "openhours_to": "19:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4604,7 +4604,7 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58460,
         "floor": "Untergeschoss",
-        "openhours_to": "21:00:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4650,8 +4650,8 @@
         "name_affix": "Halle Sihlquai",
         "area_id": 58598,
         "floor": "Untergeschoss",
-        "openhours_from": "10:00:00",
-        "openhours_to": "17:00:00",
+        "openhours_from": "10:00",
+        "openhours_to": "17:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4709,8 +4709,8 @@
         "name_affix": "Plaza",
         "area_id": 58426,
         "floor": "Untergeschoss",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4762,7 +4762,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58457,
         "floor": "Untergeschoss",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4814,8 +4814,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58971,
         "floor": "Erdgeschoss",
-        "openhours_from": "07:30:00",
-        "openhours_to": "16:30:00",
+        "openhours_from": "07:30",
+        "openhours_to": "16:30",
         "openhours": [
           {
             "day_from": 1,
@@ -4873,8 +4873,8 @@
         "name_affix": "Passage Gessnerallee",
         "area_id": 58461,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4926,7 +4926,7 @@
         "name_affix": "Querhalle",
         "area_id": 59004,
         "floor": "Erdgeschoss",
-        "openhours_to": "23:00:00",
+        "openhours_to": "23:00",
         "openhours": [
           {
             "day_from": 1,
@@ -4990,8 +4990,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58714,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5043,8 +5043,8 @@
         "name_affix": "Querhalle",
         "area_id": 58999,
         "floor": "Erdgeschoss",
-        "openhours_from": "06:30:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "06:30",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5096,8 +5096,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58736,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "07:00:00",
-        "openhours_to": "18:00:00",
+        "openhours_from": "07:00",
+        "openhours_to": "18:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5155,8 +5155,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58452,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5208,8 +5208,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58453,
         "floor": "Untergeschoss",
-        "openhours_from": "07:00:00",
-        "openhours_to": "21:00:00",
+        "openhours_from": "07:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5261,7 +5261,7 @@
         "name_affix": "Nordtrakt",
         "area_id": 58970,
         "floor": "Erdgeschoss",
-        "openhours_to": "18:00:00",
+        "openhours_to": "18:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5313,8 +5313,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58515,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5366,7 +5366,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58455,
         "floor": "Untergeschoss",
-        "openhours_to": "00:00:00",
+        "openhours_from": "05:45",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5430,8 +5431,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58526,
         "floor": "Untergeschoss",
-        "openhours_from": "04:30:00",
-        "openhours_to": "00:00:00",
+        "openhours_from": "04:30",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5483,8 +5484,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58419,
         "floor": "Untergeschoss",
-        "openhours_from": "05:30:00",
-        "openhours_to": "22:30:00",
+        "openhours_from": "05:30",
+        "openhours_to": "22:30",
         "openhours": [
           {
             "day_from": 1,
@@ -5612,8 +5613,8 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58612,
         "floor": "Untergeschoss",
-        "openhours_from": "06:30:00",
-        "openhours_to": "22:00:00",
+        "openhours_from": "06:30",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5665,8 +5666,8 @@
         "name_affix": "Haupthalle",
         "area_id": 59025,
         "floor": "Erdgeschoss",
-        "openhours_from": "06:45:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "06:45",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5724,8 +5725,8 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58614,
         "floor": "Untergeschoss",
-        "openhours_from": "06:00:00",
-        "openhours_to": "22:00:00",
+        "openhours_from": "06:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5777,7 +5778,7 @@
         "name_affix": "Südtrakt",
         "area_id": 58974,
         "floor": "Erdgeschoss",
-        "openhours_to": "21:00:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5823,7 +5824,7 @@
         "name_affix": "Zwischengeschoss",
         "area_id": 58800,
         "floor": "Zwischengeschoss",
-        "openhours_to": "20:30:00",
+        "openhours_to": "20:30",
         "openhours": [
           {
             "day_from": 1,
@@ -5875,7 +5876,7 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58520,
         "floor": "Untergeschoss",
-        "openhours_to": "20:00:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -5927,7 +5928,7 @@
         "name_affix": "Nordtrakt 3. Obergeschoss",
         "area_id": 58827,
         "floor": "Erdgeschoss",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6049,7 +6050,7 @@
         "name_affix": "Querhalle",
         "area_id": 58981,
         "floor": "Erdgeschoss",
-        "openhours_to": "00:15:00",
+        "openhours_to": "00:15",
         "openhours": [
           {
             "day_from": 1,
@@ -6107,7 +6108,7 @@
         "name_affix": "Querhalle",
         "area_id": 59027,
         "floor": "Erdgeschoss",
-        "openhours_to": "00:00:00",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6165,7 +6166,8 @@
         "name_affix": "Südtrakt",
         "area_id": 58958,
         "floor": "Erdgeschoss",
-        "openhours_to": "00:00:00",
+        "openhours_from": "05:30",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6223,7 +6225,8 @@
         "name_affix": "Haupthalle",
         "area_id": 59031,
         "floor": "Erdgeschoss",
-        "openhours_to": "21:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6307,8 +6310,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58713,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "07:30:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:30",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6366,8 +6369,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58416,
         "floor": "Untergeschoss",
-        "openhours_from": "07:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6647,7 +6650,7 @@
         "name_affix": "Zwischengeschoss",
         "area_id": 58793,
         "floor": "Zwischengeschoss",
-        "openhours_to": "00:00:00",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6769,8 +6772,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58971,
         "floor": "Erdgeschoss",
-        "openhours_from": "07:30:00",
-        "openhours_to": "19:00:00",
+        "openhours_from": "07:30",
+        "openhours_to": "19:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6898,8 +6901,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58971,
         "floor": "Erdgeschoss",
-        "openhours_from": "07:30:00",
-        "openhours_to": "19:00:00",
+        "openhours_from": "07:30",
+        "openhours_to": "19:00",
         "openhours": [
           {
             "day_from": 1,
@@ -6951,8 +6954,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58413,
         "floor": "Untergeschoss",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -7004,8 +7007,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58424,
         "floor": "Untergeschoss",
-        "openhours_from": "05:00:00",
-        "openhours_to": "23:00:00",
+        "openhours_from": "05:00",
+        "openhours_to": "23:00",
         "openhours": [
           {
             "day_from": 1,
@@ -7095,8 +7098,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58717,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -7528,7 +7531,7 @@
         "name_affix": "Nordtrakt",
         "area_id": 58964,
         "floor": "Erdgeschoss",
-        "openhours_to": "21:00:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -7612,7 +7615,7 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58460,
         "floor": "Untergeschoss",
-        "openhours_to": "21:00:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -8000,8 +8003,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58984,
         "floor": "Erdgeschoss",
-        "openhours_from": "08:00:00",
-        "openhours_to": "19:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "19:00",
         "openhours": [
           {
             "day_from": 1,
@@ -8471,8 +8474,8 @@
         "name_affix": "Plaza",
         "area_id": 58493,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -8638,8 +8641,8 @@
         "name_affix": "Plaza",
         "area_id": 58435,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -8691,8 +8694,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58971,
         "floor": "Erdgeschoss",
-        "openhours_from": "07:30:00",
-        "openhours_to": "19:00:00",
+        "openhours_from": "07:30",
+        "openhours_to": "19:00",
         "openhours": [
           {
             "day_from": 1,
@@ -9010,8 +9013,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58986,
         "floor": "Erdgeschoss",
-        "openhours_from": "06:30:00",
-        "openhours_to": "21:00:00",
+        "openhours_from": "06:30",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -9373,8 +9376,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58525,
         "floor": "Untergeschoss",
-        "openhours_from": "04:30:00",
-        "openhours_to": "00:00:00",
+        "openhours_from": "04:30",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -9426,8 +9429,8 @@
         "name_affix": "Halle Sihlquai",
         "area_id": 58590,
         "floor": "Untergeschoss",
-        "openhours_from": "04:30:00",
-        "openhours_to": "00:00:00",
+        "openhours_from": "04:30",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -9479,8 +9482,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58732,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -9646,7 +9649,7 @@
         "name_affix": "shopvill test",
         "area_id": null,
         "floor": "Shopville/Aufgänge",
-        "openhours_to": "00:00:00",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -9704,7 +9707,7 @@
         "name_affix": "Landesmuseum",
         "area_id": null,
         "floor": "Erdgeschoss",
-        "openhours_to": "21:30:00",
+        "openhours_to": "21:30",
         "openhours": [
           {
             "day_from": 4,
@@ -9750,8 +9753,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58971,
         "floor": "Erdgeschoss",
-        "openhours_from": "07:30:00",
-        "openhours_to": "19:00:00",
+        "openhours_from": "07:30",
+        "openhours_to": "19:00",
         "openhours": [
           {
             "day_from": 1,
@@ -9841,8 +9844,8 @@
         "name_affix": "Plaza",
         "area_id": 58476,
         "floor": "Untergeschoss",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -9938,8 +9941,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58466,
         "floor": "Untergeschoss",
-        "openhours_from": "05:30:00",
-        "openhours_to": "21:00:00",
+        "openhours_from": "05:30",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -9997,8 +10000,8 @@
         "name_affix": "Passage Gessnerallee",
         "area_id": 58447,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10050,7 +10053,7 @@
         "name_affix": "Querhalle 1. Obergeschoss",
         "area_id": 58840,
         "floor": "Erdgeschoss",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10114,8 +10117,8 @@
         "name_affix": "Plaza",
         "area_id": 58423,
         "floor": "Untergeschoss",
-        "openhours_from": "07:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10173,8 +10176,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58451,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10264,7 +10267,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58614,
         "floor": "Untergeschoss",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10386,8 +10389,8 @@
         "name_affix": "Passage Gessnerallee",
         "area_id": 58459,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10439,8 +10442,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58725,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10492,8 +10495,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58411,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10545,7 +10548,7 @@
         "name_affix": "Zwischengeschoss",
         "area_id": 58794,
         "floor": "Zwischengeschoss",
-        "openhours_to": "21:00:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10591,8 +10594,8 @@
         "name_affix": "Südtrakt 1. Obergeschoss",
         "area_id": 58811,
         "floor": "Erdgeschoss",
-        "openhours_from": "11:30:00",
-        "openhours_to": "23:30:00",
+        "openhours_from": "11:30",
+        "openhours_to": "23:30",
         "openhours": [
           {
             "day_from": 1,
@@ -10644,8 +10647,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58471,
         "floor": "Untergeschoss",
-        "openhours_from": "07:00:00",
-        "openhours_to": "22:00:00",
+        "openhours_from": "07:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10697,8 +10700,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58739,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "07:30:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:30",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10756,7 +10759,7 @@
         "name_affix": "Querhalle",
         "area_id": 58965,
         "floor": "Erdgeschoss",
-        "openhours_to": "00:00:00",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10814,7 +10817,7 @@
         "name_affix": "Südtrakt",
         "area_id": 58954,
         "floor": "Erdgeschoss",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -10872,7 +10875,7 @@
         "name_affix": "Querhalle",
         "area_id": 58809,
         "floor": "Erdgeschoss",
-        "openhours_to": "00:30:00",
+        "openhours_to": "00:30",
         "openhours": [
           {
             "day_from": 1,
@@ -11006,7 +11009,7 @@
         "name_affix": "Südtrakt",
         "area_id": 59013,
         "floor": "Erdgeschoss",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11064,8 +11067,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58721,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "07:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11123,8 +11126,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58716,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11176,8 +11179,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58468,
         "floor": "Untergeschoss",
-        "openhours_from": "05:30:00",
-        "openhours_to": "21:00:00",
+        "openhours_from": "05:30",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11235,8 +11238,8 @@
         "name_affix": "Sihlquai",
         "area_id": 58866,
         "floor": "Erdgeschoss",
-        "openhours_from": "10:30:00",
-        "openhours_to": "19:00:00",
+        "openhours_from": "10:30",
+        "openhours_to": "19:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11282,8 +11285,8 @@
         "name_affix": "Nordtrakt",
         "area_id": 58984,
         "floor": "Erdgeschoss",
-        "openhours_from": "10:00:00",
-        "openhours_to": "16:00:00",
+        "openhours_from": "10:00",
+        "openhours_to": "16:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11335,7 +11338,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58603,
         "floor": "Untergeschoss",
-        "openhours_to": "23:00:00",
+        "openhours_to": "23:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11495,7 +11498,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58414,
         "floor": "Untergeschoss",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11579,8 +11582,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58412,
         "floor": "Untergeschoss",
-        "openhours_from": "05:45:00",
-        "openhours_to": "21:00:00",
+        "openhours_from": "05:45",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11638,8 +11641,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58417,
         "floor": "Untergeschoss",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -11729,8 +11732,8 @@
         "name_affix": "Sihlquai",
         "area_id": 58866,
         "floor": "Erdgeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -12390,7 +12393,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58718,
         "floor": "Shopville/Aufgänge",
-        "openhours_to": "23:00:00",
+        "openhours_to": "23:00",
         "openhours": [
           {
             "day_from": 1,
@@ -12474,7 +12477,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58741,
         "floor": "Shopville/Aufgänge",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -12520,8 +12523,8 @@
         "name_affix": "Halle Sihlquai",
         "area_id": 58604,
         "floor": "Untergeschoss",
-        "openhours_from": "04:30:00",
-        "openhours_to": "00:00:00",
+        "openhours_from": "04:30",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -12573,7 +12576,7 @@
         "name_affix": "Nordtrakt",
         "area_id": 58961,
         "floor": "Erdgeschoss",
-        "openhours_to": "00:00:00",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -12657,8 +12660,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58722,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -12716,7 +12719,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58750,
         "floor": "Shopville/Aufgänge",
-        "openhours_to": "22:30:00",
+        "openhours_to": "22:30",
         "openhours": [
           {
             "day_from": 1,
@@ -12780,8 +12783,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58504,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -12833,8 +12836,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58441,
         "floor": "Untergeschoss",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -12886,8 +12889,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58443,
         "floor": "Untergeschoss",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -12939,8 +12942,8 @@
         "name_affix": "Halle Sihlquai",
         "area_id": 58591,
         "floor": "Untergeschoss",
-        "openhours_from": "06:30:00",
-        "openhours_to": "18:00:00",
+        "openhours_from": "06:30",
+        "openhours_to": "18:00",
         "openhours": [
           {
             "day_from": 1,
@@ -12992,8 +12995,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58725,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13045,8 +13048,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58518,
         "floor": "Untergeschoss",
-        "openhours_from": "07:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13104,7 +13107,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58734,
         "floor": "Shopville/Aufgänge",
-        "openhours_to": "21:00:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13150,8 +13153,8 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58604,
         "floor": "Untergeschoss",
-        "openhours_from": "05:00:00",
-        "openhours_to": "23:00:00",
+        "openhours_from": "05:00",
+        "openhours_to": "23:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13279,7 +13282,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58486,
         "floor": "Untergeschoss",
-        "openhours_to": "23:00:00",
+        "openhours_to": "23:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13325,8 +13328,8 @@
         "name_affix": "Passage Gessnerallee",
         "area_id": 58464,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13378,7 +13381,7 @@
         "name_affix": "Südtrakt 1. Obergeschoss",
         "area_id": null,
         "floor": "Erdgeschoss",
-        "openhours_to": "23:00:00",
+        "openhours_to": "23:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13424,8 +13427,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58456,
         "floor": "Untergeschoss",
-        "openhours_from": "06:30:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "06:30",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13483,8 +13486,8 @@
         "name_affix": "Plaza",
         "area_id": 58430,
         "floor": "Untergeschoss",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13542,8 +13545,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58425,
         "floor": "Untergeschoss",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13601,8 +13604,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58506,
         "floor": "Untergeschoss",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13654,8 +13657,8 @@
         "name_affix": "Plaza",
         "area_id": 58438,
         "floor": "Untergeschoss",
-        "openhours_from": "07:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13707,8 +13710,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58749,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "07:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13760,7 +13763,7 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58415,
         "floor": "Untergeschoss",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13812,8 +13815,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58762,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "07:45:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:45",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13865,8 +13868,8 @@
         "name_affix": "Passage Gessnerallee",
         "area_id": 58479,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13918,8 +13921,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58469,
         "floor": "Untergeschoss",
-        "openhours_from": "06:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "06:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -13971,8 +13974,8 @@
         "name_affix": "Plaza",
         "area_id": 58426,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14024,7 +14027,7 @@
         "name_affix": "Südtrakt",
         "area_id": 58977,
         "floor": "Erdgeschoss",
-        "openhours_to": "23:00:00",
+        "openhours_to": "23:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14082,7 +14085,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58744,
         "floor": "Shopville/Aufgänge",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14128,7 +14131,7 @@
         "name_affix": "Nordtrakt",
         "area_id": 58985,
         "floor": "Erdgeschoss",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14174,8 +14177,8 @@
         "name_affix": "Südtrakt 1. Obergeschoss",
         "area_id": 58811,
         "floor": "Erdgeschoss",
-        "openhours_from": "07:30:00",
-        "openhours_to": "22:30:00",
+        "openhours_from": "07:30",
+        "openhours_to": "22:30",
         "openhours": [
           {
             "day_from": 1,
@@ -14221,8 +14224,8 @@
         "name_affix": "Passage Gessnerallee",
         "area_id": 58462,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14274,8 +14277,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58730,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14327,8 +14330,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58437,
         "floor": "Untergeschoss",
-        "openhours_from": "07:30:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:30",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14386,8 +14389,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58422,
         "floor": "Untergeschoss",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14439,8 +14442,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58439,
         "floor": "Untergeschoss",
-        "openhours_from": "07:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14498,7 +14501,7 @@
         "name_affix": "Südtrakt",
         "area_id": 58997,
         "floor": "Erdgeschoss",
-        "openhours_to": "22:30:00",
+        "openhours_to": "22:30",
         "openhours": [
           {
             "day_from": 1,
@@ -14544,7 +14547,7 @@
         "name_affix": "Südtrakt 1. Obergeschoss",
         "area_id": 59016,
         "floor": "Erdgeschoss",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14590,7 +14593,7 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58606,
         "floor": "Untergeschoss",
-        "openhours_to": "22:15:00",
+        "openhours_to": "22:15",
         "openhours": [
           {
             "day_from": 1,
@@ -14648,7 +14651,7 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58433,
         "floor": "Untergeschoss",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14694,8 +14697,8 @@
         "name_affix": "Halle Löwenstrasse",
         "area_id": 58449,
         "floor": "Untergeschoss",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14747,7 +14750,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58473,
         "floor": "Untergeschoss",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14805,7 +14808,7 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58513,
         "floor": "Untergeschoss",
-        "openhours_to": "22:00:00",
+        "openhours_to": "22:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14851,8 +14854,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58509,
         "floor": "Untergeschoss",
-        "openhours_from": "09:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "09:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14904,7 +14907,7 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58719,
         "floor": "Shopville/Aufgänge",
-        "openhours_to": "21:00:00",
+        "openhours_to": "21:00",
         "openhours": [
           {
             "day_from": 1,
@@ -14950,8 +14953,8 @@
         "name_affix": "Passage Sihlquai",
         "area_id": 58601,
         "floor": "Untergeschoss",
-        "openhours_from": "07:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15003,8 +15006,8 @@
         "name_affix": "Halle Landesmuseum",
         "area_id": 58472,
         "floor": "Untergeschoss",
-        "openhours_from": "07:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "07:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15056,8 +15059,8 @@
         "name_affix": "Halle Bahnhofplatz",
         "area_id": 58740,
         "floor": "Shopville/Aufgänge",
-        "openhours_from": "04:30:00",
-        "openhours_to": "00:00:00",
+        "openhours_from": "04:30",
+        "openhours_to": "00:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15109,8 +15112,8 @@
         "name_affix": "Passage Löwenstrasse",
         "area_id": 58507,
         "floor": "Untergeschoss",
-        "openhours_from": "08:00:00",
-        "openhours_to": "20:00:00",
+        "openhours_from": "08:00",
+        "openhours_to": "20:00",
         "openhours": [
           {
             "day_from": 1,
@@ -15168,8 +15171,8 @@
         "name_affix": "Passage Bahnhofstrasse",
         "area_id": 58523,
         "floor": "Untergeschoss",
-        "openhours_from": "06:00:00",
-        "openhours_to": "21:30:00",
+        "openhours_from": "06:00",
+        "openhours_to": "21:30",
         "openhours": [
           {
             "day_from": 1,

@@ -1,0 +1,82 @@
+<!-- https://plans.trafimage.ch/zuerich-hb -->
+<!-- https://stations.sbb.cartaro-enterprise.com/de/api/models/swagger/ -->
+<!-- UID Zurich HB: 8503000-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Example 5: Generate Arcade expression from user's input</title>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.23/@arcgis/core/assets/esri/themes/light/main.css"
+    />
+    <link rel="stylesheet" href="./data/zurich-hb.css" />
+    <script type="module">
+      import {
+        commonSceneConfig,
+        fadeFloor,
+        wallsLayer,
+        planeLayer,
+        floorMapping,
+      } from "./data/zurich-hb.js";
+      import SceneView from "https://jsdev.arcgis.com/4.23/@arcgis/core/views/SceneView.js";
+      import Slider from "https://jsdev.arcgis.com/4.23/@arcgis/core/widgets/Slider.js";
+
+      commonSceneConfig.camera = {
+        position: {
+          spatialReference: { latestWkid: 3857, wkid: 102100 },
+          x: 951241.0068592154,
+          y: 6002904.390406648,
+          z: 797.9509591711685,
+        },
+        heading: 327.9980631465813,
+        tilt: 68.33007090069397,
+      };
+      commonSceneConfig.map.layers.add(wallsLayer);
+      commonSceneConfig.map.layers.add(planeLayer);
+      fadeFloor(1);
+      const view = new SceneView(commonSceneConfig);
+      window.view = view;
+      const doc = parent.document;
+
+      const slider = new Slider({
+        min: 1,
+        max: 4,
+        values: [1],
+        steps: 1,
+        layout: "vertical-reversed",
+
+        tickConfigs: [
+          {
+            labelFormatFunction: function (value) {
+              return floorMapping[value].name;
+            },
+            labelsVisible: true,
+            mode: "count",
+            values: 4,
+          },
+        ],
+      });
+
+      slider.on("thumb-drag", function (event) {
+        if (event.state === "stop") {
+          fadeFloor(event.value);
+        }
+      });
+
+      if (doc && doc.getElementById("example-5-1")) {
+        // Fade floor:
+        doc.getElementById("example-5-1").onclick = function () {
+          view.ui.add(slider, "top-right");
+        };
+      }
+    </script>
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

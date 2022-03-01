@@ -9,7 +9,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>Example 1: Labels</title>
+    <title>Example 2: Z-Values</title>
     <link
       rel="stylesheet"
       href="https://js.arcgis.com/4.23/@arcgis/core/assets/esri/themes/light/main.css"
@@ -23,8 +23,7 @@
         areasLayer,
         simplAreasRenderer,
         elevationInfo,
-        floorNames,
-        createLabels,
+        simpleWallsRenderer,
       } from "./data/zurich-hb.js";
       import SceneView from "https://jsdev.arcgis.com/4.23/@arcgis/core/views/SceneView.js";
 
@@ -43,44 +42,21 @@
         offset: 0,
       };
       servicesLayer.elevationInfo = simpleElevation;
-      servicesLayer.labelingInfo = [];
       areasLayer.elevationInfo = simpleElevation;
       areasLayer.renderer = simplAreasRenderer;
-
-      // Only display first floor
-      areasLayer.definitionExpression = `floor IN (${floorNames(1)})`;
+      wallsLayer.renderer = simpleWallsRenderer;
 
       const view = new SceneView(commonSceneConfig);
       window.view = view;
       const doc = parent.document;
 
-      if (doc && doc.getElementById("example-1-1")) {
-        doc.getElementById("example-1-1").onclick = function () {
-          servicesLayer.labelingInfo = createLabels(
-            (label) => (label.labelExpressionInfo.expression = "$feature.name")
-          );
+      if (doc && doc.getElementById("example-2-1")) {
+        doc.getElementById("example-2-1").onclick = function () {
+          servicesLayer.elevationInfo = elevationInfo;
+          areasLayer.elevationInfo = elevationInfo;
         };
-        doc.getElementById("example-1-2").onclick = function () {
-          servicesLayer.labelingInfo = createLabels(
-            (label) =>
-              (label.labelExpressionInfo.expression =
-                "$feature.name + TextFormatting.NewLine + $feature.category")
-          );
-        };
-        doc.getElementById("example-1-3").onclick = function () {
-          servicesLayer.labelingInfo = createLabels(
-            (label) =>
-              (label.labelExpressionInfo.expression = `
-               var hourFrom = $feature.openhours_from;
-               var hourTo = $feature.openhours_to;
-
-               if (IsEmpty(hourFrom) || IsEmpty(hourTo)) {
-                 return $feature.name;
-               }
-
-               return $feature.name + TextFormatting.NewLine + hourFrom + " - " + hourTo;
-               `)
-          );
+        doc.getElementById("example-2-2").onclick = function () {
+          view.map.layers.add(wallsLayer);
         };
       }
     </script>
