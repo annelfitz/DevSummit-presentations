@@ -633,19 +633,6 @@ symbol: {
           </div>
         </section>
 
-	  <section
-          data-markdown
-          data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
-        >
-          <textarea data-template>
-						## Visualization
-            - Anne for the $view.scale
-					</textarea
-          >
-        </section>
-
-
-
         <section data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png">
           <h2 data-id="code-title">Visualization: UniqueValueRenderer</h2>
           <div class="two-columns" style="margin-top: 40px;">
@@ -733,6 +720,57 @@ new GraphicsLayer({
           </div>
         </section>
 
+        <section
+          data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
+        >
+        <h2 data-id="code-title">Visualization: $view.scale</h2>
+        <div class="two-columns" style="margin-top: 40px;">
+            <div class="left-column">
+              <div data-fragment-id="view-scale" class="code-snippet">
+                <button class="play" id="example-view-scale"></button>
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
+cimSymbol.data.primitiveOverrides = [
+  {
+    type: "CIMPrimitiveOverride",
+    primitiveName: "outerSizeOverride",
+    propertyName: "Size",
+    valueExpressionInfo: {
+      type: "CIMExpressionInfo",
+      title: "Size in pixels of outer ring at maxScale",
+      expression: "42 * 2311161 / $view.scale", // 42 represents the pixel size of the circles at the view's largest scale (1:2,311,161)
+      returnType: "Default"
+    }
+  },
+  {
+    type: "CIMPrimitiveOverride",
+    primitiveName: "innerSizeOverride",
+    propertyName: "Size",
+    valueExpressionInfo: {
+      type: "CIMExpressionInfo",
+      title: "Size in pixels of inner ring at maxScale",
+      expression: `
+        var forestRatio = $feature.NLCDfrstPt / 100;
+        var outerSize = 42 * 2311161 / $view.scale; // outerSize is the pixel size at the largest scale
+        var innerSize = outerSize * forestRatio; // The innerSize is determined by multiplying the outerSize by the forest ratio
+        return IIF( innerSize < 3, 3, innerSize );
+      `,
+      returnType: "Default"
+    }
+  }
+]
+					        </code>
+                </pre>
+              </div>
+            </div>
+            <div class="right-column">
+              <div class="iframe-wrapper">
+                <iframe data-src="./demos/view-scale.html"></iframe>
+              </div>
+            </div>
+					</div>
+        </section>
+
 		<section
           data-markdown
           data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
@@ -786,26 +824,56 @@ new GraphicsLayer({
           >
         </section>
 
-		<section
-          data-markdown
-          data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
+        <section
+        data-markdown
+        data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
+      >
+        <textarea data-template>
+          ## Forms
+          <iframe src="https://developers.arcgis.com/javascript/latest/sample-code/editing-featureform-fieldvisibility/live/" style="width: 100%; height: 500px"></iframe>
+        </textarea
         >
-          <textarea data-template>
-						## Forms
-            Anne
-					</textarea
-          >
+      </section>
+
         </section>
 
-		<section
-          data-markdown
-          data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
-        >
-          <textarea data-template>
-						## Feature sorting
-            Anne
-					</textarea
-          >
+        <section data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png">
+          <h2 data-id="code-title">Feature sorting</h2>
+          <div class="two-columns" style="margin-top: 40px;">
+            <div class="left-column">
+              <div data-fragment-id="feature-sorting" class="code-snippet">
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
+const valueExpression = `
+  Decode($feature.MaxCrashInjSeverity,
+    "Fatal", 4,
+    "Severe", 3,
+    "Minor", 2,
+    "None", 1,
+    0
+  )
+`;
+					        </code>
+                </pre>
+              </div>
+              <br>
+              <div data-fragment-id="feature-sorting" class="code-snippet">
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
+layer.orderBy = [{
+  valueExpression,
+  order: "descending"
+}];        
+					        </code>
+                </pre>
+              </div>
+            </div>
+            <div class="right-column">
+              <div class="iframe-wrapper">
+                <iframe data-src="./demos/feature-sorting.html"></iframe>
+              </div>
+            </div>
+          </div>
         </section>
 
         <section data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png">
@@ -855,7 +923,7 @@ slider.on("thumb-drag", function (event) {
           <div class="subtitle">From user's input</div>
           <ul>
 						<li>Learn more about animation at:</li>
-            <li>Learn more about 3D visualisation at:</li>
+            <li>Learn more about 3D visualization at:</li>
 					</ul>
         </section>
 
@@ -865,7 +933,7 @@ slider.on("thumb-drag", function (event) {
         >
           <textarea data-template>
 						## A glimpse in the future...
-            Anne
+            Kristian
 					</textarea
           >
         </section>
@@ -891,59 +959,15 @@ slider.on("thumb-drag", function (event) {
           >
         </section>
 
-
-        <section
-          data-background="../../reveal.js/img/2022/dev-summit/bg-4.png"
-        >
-          <h1 style="text-align: left; font-size: 48px">Section Header</h1>
-          <p
-            style="
-              text-align: left;
-              font-size: 24px;
-              color: var(--r-section-subhead-color);
-            "
-          >
-            Section Subhead
-          </p>
-        </section>
-
-        <section
-          data-background="../../reveal.js/img/2022/dev-summit/bg-5.png"
-        >
-          <h1 style="text-align: left; font-size: 48px">Section Header</h1>
-          <p
-            style="
-              text-align: left;
-              font-size: 24px;
-              color: var(--r-section-subhead-color);
-            "
-          >
-            Section Subhead
-          </p>
-        </section>
-
-        <section
-          data-background="../../reveal.js/img/2022/dev-summit/bg-6.png"
-        >
-          <h1 style="text-align: right; font-size: 48px">Section Header</h1>
-          <p
-            style="
-              text-align: right;
-              font-size: 24px;
-              color: var(--r-section-subhead-color);
-            "
-          >
-            Section Subhead
-          </p>
-        </section>
-
         <!-- FEEDBACK SLIDE: -->
         <section
           data-markdown
           data-background="../../reveal.js/img/2022/dev-summit/bg-7.png"
         >
           <textarea data-template>
-            Please provide your feedback for this session by clicking on the session survey link directly below the video.
+            ### Please share your feedback in the app
+
+            ![feedback](./images/feedback.png)
           </textarea>
         </section>
 
