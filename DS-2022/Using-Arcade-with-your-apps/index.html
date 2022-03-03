@@ -470,7 +470,6 @@ return $feature.name + TextFormatting.NewLine + hourFrom + " - " + hourTo;
             <th>Labeling</th>
             <th>Feature-Z</th>
             <th>Constraint</th>
-            <th>Field Calculate</th>
           </tr>
         </thead>
         <tbody>
@@ -481,7 +480,6 @@ return $feature.name + TextFormatting.NewLine + hourFrom + " - " + hourTo;
             <td>LabelClass</td>
             <td>ElevationInfo In 3D Scenes</td>
             <td>FeatureForm widget<br/>FieldConfig</td>
-            <td>3.x only!</td>
           </tr>
           <tr>
             <td style="font-size: 17px;">Globals</td>
@@ -491,16 +489,14 @@ return $feature.name + TextFormatting.NewLine + hourFrom + " - " + hourTo;
             <td>$feature<br/>
             $layer<br/>
             $map<br/>
-            $datastore
+            $datastore<br/>
+            $aggregatedFeatures
             </td>
             <td>$feature
             </td>
             <td>$feature
             </td>
             <td>$feature
-            </td>
-            <td>$feature<br/>
-            $datastore
             </td>
           </tr>
           <tr>
@@ -509,15 +505,12 @@ return $feature.name + TextFormatting.NewLine + hourFrom + " - " + hourTo;
             Number
             </td>
             <td>Text<br/>
-            Number
+            Number<br/>
+            Dictionary
             </td>
             <td>Text</td>
             <td>Number</td>
             <td>Boolean</td>
-            <td>Text<br/>
-              Number<br/>
-              Date
-            </td>
           </tr>
           <tr>
           <td style="font-size: 17px;">Banned functions</td>
@@ -534,7 +527,6 @@ return $feature.name + TextFormatting.NewLine + hourFrom + " - " + hourTo;
             <td>FeatureSet
             functions
             </td>
-            <td>N/A</td>
           </tr>
         </tbody>
       </table>
@@ -820,16 +812,14 @@ cimSymbol.data.primitiveOverrides = [
         <h2 data-id="code-title">Use Arcade to create popup content elements</h2>
         <div class="two-columns" style="margin-top: 40px;">
           <div class="left-column">
-            <img src="./images/popup-element-chart.png">
+            <img src="./images/popup-element-chart.png" width="375">
             </div>
             <div class="right-column">
         <pre
           data-id="code-animation"
         ><code class="hljs" data-trim data-line-numbers>
-          Expects($aggregatedFeatures, "fuel1", "capacity_mw")
           var attributes = {};
-          var countFieldNames = [];
-          var capacityFieldNames = [];
+          var countFieldNames = Array(0);
           
           var types = Distinct($aggregatedFeatures, "fuel1");
           
@@ -840,27 +830,17 @@ cimSymbol.data.primitiveOverrides = [
             var countFieldName = type + " count";
             attributes[countFieldName] = Count(filtered);
             Push(countFieldNames, countFieldName);
-          
-            var capacityFieldName = type + " capacity (mW)";
-            attributes[capacityFieldName] = DefaultValue(Sum(filtered, "capacity_mw"), 0);
-            Push(capacityFieldNames, capacityFieldName);
           }
           
           return {
             type: "media",
             attributes: attributes,
             title: "Count vs. capacity comparison",
+            title: "Total count",
             mediaInfos: [{
               type: "piechart",
-              title: "Total count",
               value: {
                 fields: countFieldNames
-              }
-            }, {
-              type: "piechart",
-              title: "Total capacity (mW)",
-              value: {
-                fields: capacityFieldNames
               }
             }]
           }
@@ -972,15 +952,11 @@ slider.on("thumb-drag", function (event) {
         </section>
 
         <section
-          data-markdown
           data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
         >
-          <textarea data-template>
-					## A glimpse in the future...
-          - A new and improved Arcade Editor
-          - Developer APIs
-					</textarea
-          >
+        <h2 data-id="code-title">A glimpse into the future...</h2>
+        <img src="./images/new-editor.png" width="800">
+        <small>Coming soon: A new and improved Arcade editor!</small>
         </section>
 
         <section
