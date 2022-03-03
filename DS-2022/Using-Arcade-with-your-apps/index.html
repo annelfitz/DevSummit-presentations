@@ -813,16 +813,60 @@ cimSymbol.data.primitiveOverrides = [
 					</code></pre>
         </section>
 
-		<section
-          data-markdown
-          data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
-        >
-          <textarea data-template>
-						## Labeling
-            Anne
-					</textarea
-          >
-        </section>
+        <section
+        data-auto-animate
+        data-background="../../reveal.js/img/2022/dev-summit/bg-3.png"
+      >
+        <h2 data-id="code-title">Use Arcade to create popup content elements</h2>
+        <div class="two-columns" style="margin-top: 40px;">
+          <div class="left-column">
+            <img src="./images/popup-element-chart.png">
+            </div>
+            <div class="right-column">
+        <pre
+          data-id="code-animation"
+        ><code class="hljs" data-trim data-line-numbers>
+          Expects($aggregatedFeatures, "fuel1", "capacity_mw")
+          var attributes = {};
+          var countFieldNames = [];
+          var capacityFieldNames = [];
+          
+          var types = Distinct($aggregatedFeatures, "fuel1");
+          
+          for(var t in types){
+            var type = t.fuel1;
+            var filtered = Filter($aggregatedFeatures, "fuel1 = @type");
+          
+            var countFieldName = type + " count";
+            attributes[countFieldName] = Count(filtered);
+            Push(countFieldNames, countFieldName);
+          
+            var capacityFieldName = type + " capacity (mW)";
+            attributes[capacityFieldName] = DefaultValue(Sum(filtered, "capacity_mw"), 0);
+            Push(capacityFieldNames, capacityFieldName);
+          }
+          
+          return {
+            type: "media",
+            attributes: attributes,
+            title: "Count vs. capacity comparison",
+            mediaInfos: [{
+              type: "piechart",
+              title: "Total count",
+              value: {
+                fields: countFieldNames
+              }
+            }, {
+              type: "piechart",
+              title: "Total capacity (mW)",
+              value: {
+                fields: capacityFieldNames
+              }
+            }]
+          }
+        </code></pre></div>
+        </div>
+      </section>
 
         <section
         data-markdown
@@ -932,12 +976,12 @@ slider.on("thumb-drag", function (event) {
           data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png"
         >
           <textarea data-template>
-						## A glimpse in the future...
-            Kristian
+					## A glimpse in the future...
+          - A new and improved Arcade Editor
+          - Developer APIs
 					</textarea
           >
         </section>
-
 
         <section
           data-markdown
