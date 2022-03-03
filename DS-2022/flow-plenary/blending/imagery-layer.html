@@ -1,0 +1,436 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>DS2022 - Ocean currents (blended)</title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.23/esri/themes/dark/main.css"
+    />
+    <script src="https://js.arcgis.com/4.23/"></script>
+
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.css"
+    />
+
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      .slider2 {
+        width: 120px;
+        height: 300px;
+      }
+
+      /* hide the minor ticks on the timeslider */
+      #timeSlider .esri-slider__tick.minorTick {
+        display: none;
+      }
+      .info {
+        padding: 10px;
+      }
+    </style>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/ImageryLayer",
+        "esri/layers/GroupLayer",
+        "esri/widgets/Legend",
+        "esri/widgets/TimeSlider",
+        "esri/widgets/Slider",
+        "esri/widgets/BasemapGallery",
+        "esri/Basemap",
+        "esri/layers/TileLayer",
+        "esri/layers/support/RasterFunction",
+        "esri/layers/support/DimensionalDefinition",
+        "esri/layers/support/MosaicRule",
+        "esri/config",
+      ], (
+        Map,
+        MapView,
+        ImageryLayer,
+        GroupLayer,
+        Legend,
+        TimeSlider,
+        Slider,
+        BasemapGallery,
+        Basemap,
+        TileLayer,
+        RasterFunction,
+        DimensionalDefinition,
+        MosaicRule,
+        esriConfig
+      ) => {
+        // define API key to access HYCOM layer
+        esriConfig.apiKey =
+          "AAPK9635124828b94b438e9b17d6fe436f3b6o14wdek-SEbsWOPzDjszSeCFb0qzaAgsMMBw37zmFk2eQX5MoSiJvZXaMxcLmW4";
+
+        let depthDef = new DimensionalDefinition({
+          dimensionName: "StdZ", // Water depth
+          values: [0], // Sea surface or 0ft
+          isSlice: true,
+        });
+
+        const mr = new MosaicRule({
+          multidimensionalDefinition: [depthDef],
+        });
+
+        const hycom = new ImageryLayer({
+          url: "https://oceans4.arcgis.com/arcgis/rest/services/HYCOM/ImageServer",
+          title: "Sea water temperature ˚C",
+          mosaicRule: mr,
+          renderingRule: new RasterFunction({
+            functionName: "Sea Water Temperature Celsius",
+            variableName: "Raster",
+          }),
+        });
+
+        const currents = new ImageryLayer({
+          url: "https://oceans4.arcgis.com/arcgis/rest/services/HYCOM_UV/ImageServer",
+          mosaicRule: mr,
+          renderer: {
+            type: "flow",
+            trailWidth: 1.5,
+            density: 1,
+            maxPathLength: 50,
+            trailLength: 100,
+            flowRepresentation: "flow-from",
+          },
+          blendMode: "destination-in",
+          legendEnabled: false,
+        });
+        const groupLayer = new GroupLayer({
+          layers: [hycom, currents],
+        });
+
+        const map = new Map({
+          basemap: "dark-gray-vector",
+          layers: [groupLayer],
+        });
+
+        const view = new MapView({
+          map: map,
+          container: "viewDiv",
+          zoom: 2,
+        });
+
+        view.when(() => {
+          groupLayer.effect = "bloom(2, 0.5px, 0.0)";
+          initializeWidgets();
+          view.watch("timeExtent.start", (newVal, oldVal) => {
+            document.getElementById("curDate").innerHTML = newVal;
+          });
+        });
+
+        view.whenLayerView(currents).then((lv) => {
+          // create time slider widget
+          const timeSlider = new TimeSlider({
+            container: "timeSlider",
+            mode: "instant",
+            view: view,
+            timeVisible: true,
+          });
+          const fullTimeExtent = currents.timeInfo.fullTimeExtent;
+
+          // set up time slider properties
+          timeSlider.fullTimeExtent = fullTimeExtent;
+          timeSlider.stops = {
+            interval: currents.timeInfo.interval,
+          };
+        });
+
+        // create depth slider
+        const depthSlider = new Slider({
+          container: "depthSlider",
+          min: -5000,
+          max: 0,
+          steps: [
+            -5000, -4000, -3000, -2500, -2000, -1500, -1250, -1000, -900, -800,
+            -700, -600, -500, -400, -350, -300, -250, -200, -150, -125, -100,
+            -90, -80, -70, -60, -50, -45, -40, -35, -30, -25, -20, -15, -12,
+            -10, -8, -6, -4, -2, 0,
+          ],
+          values: [0],
+          visibleElements: {
+            labels: true,
+            rangeLabels: true,
+          },
+          layout: "vertical",
+        });
+        depthSlider.on(["thumb-drag", "thumb-change"], updateMosaicRule);
+
+        document
+          .getElementById("blendOptions")
+          .addEventListener("calciteRadioGroupChange", updateRenderingRule);
+
+        let activeWidget;
+        view.ui.add(["layers", "depth", "time", "basemap"], "top-left");
+        view.ui.add("info", "top-right");
+        const handleActionBarClick = ({ target }) => {
+          if (target.tagName !== "CALCITE-ACTION") {
+            return;
+          }
+          if (activeWidget) {
+            document.querySelector(
+              `[data-action-id=${activeWidget}]`
+            ).active = false;
+            document.querySelector(
+              `[data-panel-id=${activeWidget}]`
+            ).hidden = true;
+          }
+          const nextWidget = target.dataset.actionId;
+          if (nextWidget !== activeWidget) {
+            document.querySelector(
+              `[data-action-id=${nextWidget}]`
+            ).active = true;
+            document.querySelector(
+              `[data-panel-id=${nextWidget}]`
+            ).hidden = false;
+            activeWidget = nextWidget;
+          } else {
+            activeWidget = null;
+          }
+        };
+
+        document
+          .querySelector("calcite-action-bar")
+          .addEventListener("click", handleActionBarClick);
+
+        function initializeWidgets() {
+          // move default placement of zoom widget
+          view.ui.move("zoom", "bottom-right");
+
+          // create legend widget
+          const legend = new Legend({
+            view: view,
+            container: "legend-container",
+          });
+
+          // create BM gallery widget
+          const basemapGallery = new BasemapGallery({
+            container: "basemapGallery",
+            view: view,
+            source: [
+              Basemap.fromId("dark-gray-vector"),
+              new Basemap({
+                portalItem: {
+                  id:"0edb5ec64db046a0bcf2df8281a6dabf"
+                },
+                thumbnailUrl: "./img/spilhaus.png",
+                title: "Spilhaus Basemap",
+              }),
+            ],
+          });
+        }
+        map.watch("basemap", (newVal, oldVal)=>{
+          console.log(newVal)
+          if (newVal.title == "Spilhaus Basemap (Dark)") {
+            document.getElementById("viewDiv").style.backgroundColor = "#777777";
+            view.goTo([-59298.825, -3072266.938])
+          } else {
+            document.getElementById("viewDiv").style.backgroundColor = "#2b2b2b";
+            view.goTo([0,0])
+          }
+        })
+
+        function updateRenderingRule(event) {
+          let funcName = event.detail;
+
+          let rf = new RasterFunction({
+            functionName: funcName,
+          });
+
+          hycom.renderingRule = rf;
+          hycom.title = funcName;
+        }
+
+        function updateMosaicRule() {
+          let newDepth = depthSlider.values[0];
+          document.getElementById("curDepth").innerHTML = newDepth + "m";
+
+          let mosaic = hycom.mosaicRule.clone();
+          mosaic.multidimensionalDefinition[0].values = newDepth;
+
+          currents.mosaicRule = mosaic;
+          hycom.mosaicRule = mosaic;
+        }
+        
+        document.getElementById("rrBtn").onclick = () => {
+          document.getElementById("rrModal").active = true;
+        }
+        document.getElementById("mrBtn").onclick = () => {
+          document.getElementById("mrModal").active = true;
+        }
+      });
+    </script>
+  </head>
+
+  <body class="calcite-theme-dark">
+    <calcite-shell>
+      <calcite-shell-panel
+        slot="primary-panel"
+        width-scale="s"
+        detached
+        collapsed
+      >
+        <calcite-action-bar slot="action-bar">
+          <calcite-action
+            data-action-id="layers"
+            icon="layers"
+            text="Layers"
+          ></calcite-action>
+          <calcite-action
+            data-action-id="depth"
+            icon="altitude"
+            text="Depth"
+          ></calcite-action>
+          <calcite-action
+            data-action-id="time"
+            icon="clock"
+            text="Time"
+          ></calcite-action>
+          <calcite-action
+            data-action-id="basemap"
+            icon="basemap"
+            text="Basemap"
+          ></calcite-action>
+        </calcite-action-bar>
+      </calcite-shell-panel>
+
+      <div id="viewDiv"></div>
+    </calcite-shell>
+
+    <calcite-panel
+      id="layers"
+      heading="Layers"
+      height-scale="l"
+      data-panel-id="layers"
+      hidden
+      ><calcite-action
+        id="rrBtn"
+        icon="code"
+        text="Show code"
+        slot="header-actions-end"
+      ></calcite-action>
+      <calcite-radio-group id="blendOptions" width="full">
+        <calcite-radio-group-item value="Sea Water Salinity"
+          >Salinity</calcite-radio-group-item
+        >
+        <calcite-radio-group-item value="Sea Water Temperature Celsius" checked
+          >Temperature</calcite-radio-group-item
+        >
+        <calcite-radio-group-item value="Sea Surface Elevation Meters"
+          >Elevation</calcite-radio-group-item
+        >
+      </calcite-radio-group>
+    </calcite-panel>
+    <calcite-panel
+      id="depth"
+      heading="Depth"
+      height-scale="l"
+      data-panel-id="depth"
+      hidden
+      ><calcite-action
+        id="mrBtn"
+        icon="code"
+        text="Show code"
+        slot="header-actions-end"
+      ></calcite-action>
+      <div id="depthSlider" class="slider2"></div>
+    </calcite-panel>
+    <calcite-panel
+      id="time"
+      heading="Time"
+      height-scale="l"
+      data-panel-id="time"
+      hidden
+    >
+      <div id="timeSlider"></div>
+    </calcite-panel>
+    <calcite-panel
+      id="basemap"
+      heading="Basemap"
+      height-scale="l"
+      data-panel-id="basemap"
+      hidden
+    >
+      <div id="basemapGallery"></div>
+    </calcite-panel>
+
+    <div id="info" class="esri-widget info" style="width: 340">
+      <h1>HYCOM Ocean Currents</h1>
+      <div>
+        <b>Date:</b> <span id="curDate"></span><br />
+        <b>Depth:</b> <span id="curDepth">0 m</span>
+      </div>
+      <div id="legend-container"></div>
+    </div>
+
+    <calcite-modal id="rrModal" aria-labelledby="modal-title" scale="l"
+    width="m">
+        <div slot="header" id="modal-title">Update Rendering Rule</div>
+        <span slot="content" id="snippet1">
+          <pre><code>
+function updateRenderingRule(event) {
+  let funcName = event.detail;
+    
+  let rf = new RasterFunction({
+    functionName: funcName, // Sea Water Salinity
+  });
+    
+  hycom.renderingRule = rf;
+  hycom.title = funcName;
+}
+          </code>
+            </pre>
+        
+    </calcite-modal>
+    <calcite-modal id="mrModal" aria-labelledby="modal-title" scale="l"
+    width="m">
+        <div slot="header" id="modal-title">Update Mosaic Rule</div>
+        <span slot="content" id="snippet1">
+          <pre><code>
+function updateMosaicRule() {
+  let newDepth = depthSlider.values[0];
+  document.getElementById("curDepth").innerHTML = newDepth + "m";
+    
+  let mosaic = hycom.mosaicRule.clone();
+  mosaic.multidimensionalDefinition[0].values = newDepth;
+    
+  currents.mosaicRule = mosaic;
+  hycom.mosaicRule = mosaic;
+}
+            </code>
+            </pre>
+        
+    </calcite-modal>
+  </body>
+</html>

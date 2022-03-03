@@ -1,0 +1,164 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>DS2022 - Ocean currents (unblended)</title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.23/esri/themes/dark/main.css"
+    />
+    <script src="https://js.arcgis.com/4.23/"></script>
+
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.css"
+    />
+
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      .slider2 {
+        width: 120px;
+        height: 300px;
+      }
+
+      /* hide the minor ticks on the timeslider */
+      #timeSlider .esri-slider__tick.minorTick {
+        display: none;
+      }
+    </style>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/ImageryLayer",
+        "esri/layers/ImageryTileLayer",
+        "esri/layers/GroupLayer",
+        "esri/widgets/Legend",
+        "esri/widgets/Expand",
+        "esri/widgets/Swipe",
+        "esri/widgets/Slider",
+        "esri/layers/support/RasterFunction",
+        "esri/layers/support/DimensionalDefinition",
+        "esri/layers/support/MosaicRule",
+        "esri/config",
+      ], (
+        Map,
+        MapView,
+        ImageryLayer,
+        ImageryTileLayer,
+        GroupLayer,
+        Legend,
+        Expand,
+        Swipe,
+        Slider,
+        RasterFunction,
+        DimensionalDefinition,
+        MosaicRule,
+        esriConfig
+      ) => {
+        // define API key to access HYCOM layer
+        esriConfig.apiKey =
+          "AAPK9635124828b94b438e9b17d6fe436f3b6o14wdek-SEbsWOPzDjszSeCFb0qzaAgsMMBw37zmFk2eQX5MoSiJvZXaMxcLmW4";
+
+        let depthDef = new DimensionalDefinition({
+          dimensionName: "StdZ", // Water depth
+          values: [0], // Sea surface or 0ft
+          isSlice: true,
+        });
+
+        const mr = new MosaicRule({
+          multidimensionalDefinition: [depthDef],
+        });
+
+        const hycom = new ImageryLayer({
+          url: "https://oceans4.arcgis.com/arcgis/rest/services/HYCOM/ImageServer",
+          title: "Sea water temperature ˚C",
+          mosaicRule: mr,
+          renderingRule: new RasterFunction({
+            functionName: "Sea Water Temperature Celsius",
+            variableName: "Raster",
+          }),
+        });
+
+        const currents = new ImageryTileLayer({
+          url: "https://tiledimageservices.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/HYCOM_Currents__UV_/ImageServer",
+          // mosaicRule: mr,
+          renderer: {
+            type: "flow",
+            trailWidth: 1.5,
+            density: 1,
+            maxPathLength: 50,
+            trailLength: 100,
+            flowRepresentation: "flow-from",
+          }
+        });
+        currents.load().then(()=>{
+          let md = currents.multidimensionalDefinition;
+          md[1].values = [0];
+          currents.multidimensionalDefinition = md;
+        });
+
+        const map = new Map({
+          basemap: "dark-gray-vector",
+          layers: [hycom, currents],
+        });
+
+        const view = new MapView({
+          map: map,
+          container: "viewDiv",
+          //   center: [-100, 38],
+          zoom: 2,
+        });
+
+        const swipe = new Swipe({
+            leadingLayers: [hycom],
+            trailingLayers: [currents],
+            position: 50,
+            view: view,
+          });
+          view.ui.add(swipe)
+
+        const legend = new Legend({
+          view: view,
+        });
+        view.ui.legend("bottom-left")
+
+
+      });
+    </script>
+  </head>
+
+  <body>
+
+      <div id="viewDiv"></div>
+
+  </body>
+</html>

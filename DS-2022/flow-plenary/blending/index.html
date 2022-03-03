@@ -1,0 +1,540 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>DS2022 - Ocean currents (blended)</title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.23/esri/themes/dark/main.css"
+    />
+    <script src="https://js.arcgis.com/4.23/"></script>
+
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.css"
+    />
+
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      .slider2 {
+        width: 150px;
+        height: 300px;
+      }
+
+      /* hide the minor ticks on the timeslider */
+      #timeSlider .esri-slider__tick.minorTick {
+        display: none;
+      }
+      .info {
+        padding: 10px;
+      }
+    </style>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/ImageryTileLayer",
+        "esri/layers/GroupLayer",
+        "esri/widgets/Legend",
+        "esri/widgets/TimeSlider",
+        "esri/widgets/Slider",
+        "esri/widgets/Bookmarks",
+        "esri/webmap/Bookmark",
+        "esri/widgets/BasemapGallery",
+        "esri/Basemap",
+        "esri/geometry/Extent",
+        "esri/core/promiseUtils",
+        "esri/config",
+      ], (
+        Map,
+        MapView,
+        ImageryTileLayer,
+        GroupLayer,
+        Legend,
+        TimeSlider,
+        Slider,
+        Bookmarks,
+        Bookmark,
+        BasemapGallery,
+        Basemap,
+        Extent,
+        promiseUtils,
+        esriConfig
+      ) => {
+        let layermultidimensionalDefinition;
+
+        const hycom = new ImageryTileLayer({
+          url: "https://tiledimageservices.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/HYCOM/ImageServer",
+          copyright: "HYCOM, Esri",
+          multidimensionalDefinition: [
+            {
+              variableName: "Water Temperature (Celsius)",
+              dimensionName: "StdTime",
+              values: [1645401600000],
+              isSlice: true
+            },
+            {
+              variableName: "Water Temperature (Celsius)",
+              dimensionName:"StdZ",
+              values:[0],
+              isSlice: true
+            }
+          ],
+          title: "Water Temperature (Celsius)"
+        });
+
+        const currents = new ImageryTileLayer({
+          url: "https://tiledimageservices.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/HYCOM_Currents__UV_/ImageServer",
+          renderer: {
+            type: "flow",
+            trailWidth: 1.5,
+            density: 1,
+            maxPathLength: 50,
+            trailLength: 100,
+            flowRepresentation: "flow-from",
+          },
+          blendMode: "destination-in",
+          legendEnabled: false,
+          multidimensionalDefinition: [{
+              dimensionName: "StdTime",
+              variableName: "Ocean Current Velocity (UV)",
+              values: [1645401600000],
+              isSlice: true
+            },
+            {
+              dimensionName:"StdZ",
+              variableName: "Ocean Current Velocity (UV)",
+              values:[0],
+              isSlice: true
+            }]
+        });
+
+        const groupLayer = new GroupLayer({
+          layers: [hycom, currents],
+        });
+
+        const map = new Map({
+          basemap: "dark-gray-vector",
+          layers: [groupLayer],
+        });
+
+        const view = new MapView({
+          map: map,
+          container: "viewDiv",
+          zoom: 2,
+        });
+
+        view.when(() => {
+          groupLayer.effect = "bloom(2, 0.5px, 0.0)";
+          initializeWidgets();
+          view.watch("timeExtent.start", (newVal, oldVal) => {
+            document.getElementById("curDate").innerHTML = newVal;
+          });
+        });
+
+        view.whenLayerView(hycom).then(() => {
+          layermultidimensionalDefinition = hycom.rasterInfo.multidimensionalInfo;
+          console.log(
+            "layer.multidimensionalDefinition",
+            hycom.multidimensionalDefinition
+          );
+          console.log(
+            "layer.rasterInfo.multidimensionalInfo",
+            hycom.rasterInfo.multidimensionalInfo
+          );
+        });
+
+        view.whenLayerView(currents).then((lv) => {
+          // create time slider widget
+          const timeSlider = new TimeSlider({
+            container: "timeSlider",
+            mode: "instant",
+            view: view,
+            timeVisible: true,
+          });
+          const fullTimeExtent = currents.timeInfo.fullTimeExtent;
+
+          // set up time slider properties
+          timeSlider.fullTimeExtent = fullTimeExtent;
+          timeSlider.stops = {
+            interval: currents.timeInfo.interval,
+          };
+        });
+
+        const updateRenderer = promiseUtils.debounce(
+          (dimensionName, sliderData) => {
+            if (!sliderData || !hycom.loaded) {
+              return;
+            }
+            // set the depth or StdZ dimension of the layer corresponding to the slider's thumb location
+            const hycomMultidimensionalDefinition = hycom.multidimensionalDefinition;
+            const currentsMultidimensionalDefinition = currents.multidimensionalDefinition;
+            const hycomDepthDef = hycomMultidimensionalDefinition.find(
+              (def)=>{ 
+                  if (def.dimensionName === dimensionName){
+                    return def;
+                  }
+              }
+            );
+            const currentsDepthDef = currentsMultidimensionalDefinition.find(
+              (def)=>{ 
+                  if (def.dimensionName === dimensionName){
+                    return def;
+                  }
+              }
+            );
+            
+              if (hycomDepthDef.values[0] === sliderData.value) {
+                return;
+              }
+              hycomDepthDef.values[0] = sliderData.value;
+              currentsDepthDef.values[0] = sliderData.value;
+              document.getElementById("curDepth").innerHTML = sliderData.value + " m";
+            hycom.multidimensionalDefinition = hycomMultidimensionalDefinition;
+            currents.multidimensionalDefinition = currentsMultidimensionalDefinition;
+          }
+        );
+        // create depth slider
+        const depthSlider = new Slider({
+          container: "depthSlider",
+          min: -5000,
+          max: 0,
+          steps: [
+          0, -100, -200, -300, -400, -500, -1000, -2000, -3000, -4000, -5000
+          ],
+          values: [0],
+          visibleElements: {
+            labels: true,
+            rangeLabels: true,
+          },
+          layout: "vertical",
+        });
+
+        depthSlider.on(["thumb-drag", "thumb-change"], (delta)=>{
+          updateRenderer("StdZ", delta)
+        });
+
+        document
+          .getElementById("blendOptions")
+          .addEventListener("calciteRadioGroupChange", changeVariableName);
+
+        let activeWidget;
+        view.ui.add(["layers", "depth", "time", "basemap", "bookmarks"], "top-left");
+        view.ui.add("info", "top-right");
+        const handleActionBarClick = ({ target }) => {
+          if (target.tagName !== "CALCITE-ACTION") {
+            return;
+          }
+          if (activeWidget) {
+            document.querySelector(
+              `[data-action-id=${activeWidget}]`
+            ).active = false;
+            document.querySelector(
+              `[data-panel-id=${activeWidget}]`
+            ).hidden = true;
+          }
+          const nextWidget = target.dataset.actionId;
+          if (nextWidget !== activeWidget) {
+            document.querySelector(
+              `[data-action-id=${nextWidget}]`
+            ).active = true;
+            document.querySelector(
+              `[data-panel-id=${nextWidget}]`
+            ).hidden = false;
+            activeWidget = nextWidget;
+          } else {
+            activeWidget = null;
+          }
+        };
+
+        document
+          .querySelector("calcite-action-bar")
+          .addEventListener("click", handleActionBarClick);
+
+        function initializeWidgets() {
+          // move default placement of zoom widget
+          view.ui.move("zoom", "bottom-right");
+
+          // create legend widget
+          const legend = new Legend({
+            view: view,
+            container: "legend-container",
+          });
+
+          // create BM gallery widget
+          const basemapGallery = new BasemapGallery({
+            container: "basemapGallery",
+            view: view,
+            source: [
+              Basemap.fromId("dark-gray-vector"),
+              new Basemap({
+                portalItem: {
+                  id:"0edb5ec64db046a0bcf2df8281a6dabf"
+                },
+                thumbnailUrl: "./img/spilhaus.png",
+                title: "Spilhaus Basemap",
+              }),
+            ],
+          });
+
+          const bookmarks = new Bookmarks({
+            view: view,
+            container: "bookmarksDiv",
+            bookmarks: [
+            new Bookmark({
+                name: "Baltic Sea",
+                viewpoint: {
+                  targetGeometry: {
+                    type: "extent",
+                    spatialReference: {
+                      latestWkid: 3857,
+                      wkid: 102100
+                    },
+                    xmin: -224482.01000108384,
+                    ymin: 6449879.712990707,
+                    xmax: 3062921.7024869025,
+                    ymax: 8842052.950202947
+                  }
+                }
+              }),
+              new Bookmark({
+                name: "Gulf Stream",
+                viewpoint: {
+                  targetGeometry: {
+                    type: "extent",
+                    spatialReference: {
+                      wkid: 102100
+                    },
+                    xmin: -9862464.691001784,
+                    ymin: 2648875.442316749,
+                    xmax: -6575060.978513799,
+                    ymax: 5041048.679528989,
+                  }
+                }
+              }),
+              new Bookmark({
+                name: "Zoom out",
+                viewpoint: {
+                  targetGeometry: {
+                    type: "extent",
+                    spatialReference: {
+                      wkid: 102100
+                    },
+                    xmin: -14413051.24167044,
+                    ymin: -8591157.67444289,
+                    xmax: 11886178.458233621,
+                    ymax: 10546228.223255156
+                  }
+                }
+              })
+            ]
+          })
+        }
+        map.watch("basemap", (newVal, oldVal)=>{
+          console.log(newVal)
+          if (newVal.title == "Spilhaus Basemap (Dark)") {
+            document.getElementById("viewDiv").style.backgroundColor = "#777777";
+            view.goTo({target: new Extent({
+                  spatialReference: {
+                    wkid: 54099
+                  },
+                  xmax: 11380778.276919162,
+                  xmin: -15391801.309906682,
+                  ymax: 5981832.7601944,
+                  ymin: -10190855.835182793
+            })})
+          } else {
+            document.getElementById("viewDiv").style.backgroundColor = "#2b2b2b";
+            view.goTo({target: new Extent({
+              spatialReference: {
+                      wkid: 102100
+                    },
+                    xmin: -14413051.24167044,
+                    ymin: -8591157.67444289,
+                    xmax: 11886178.458233621,
+                    ymax: 10546228.223255156
+            })})
+          }
+        })
+
+        function changeVariableName(event) {
+          let variableName = event.detail;
+          const selectedDim = layermultidimensionalDefinition.variables.filter(
+            (def) => { 
+              if (def.name == variableName) {
+                return def;
+              }
+            });
+
+          console.log('selectedDim', selectedDim);
+          let multidimensionalDefinition;
+          if (variableName === "Sea Water Salinity (PSS)" || variableName === "Water Temperature (Celsius)"){
+            multidimensionalDefinition = [
+              {
+                variableName: variableName,
+                dimensionName: "StdTime",
+                values: [1645401600000],
+              },
+              {
+                variableName: variableName,
+                dimensionName:"StdZ",
+                values:[0]
+              }
+            ];
+          }
+          else {
+             multidimensionalDefinition = [
+              {
+                variableName: variableName,
+                dimensionName: "StdTime",
+                values: [1645401600000],
+              }
+            ];
+          }
+            const renderer = hycom.renderer.clone();
+            switch (variableName) {
+              case "Sea Water Salinity (PSS)":
+                renderer.statistics = [[1, 40]];
+                break;
+              case "Water Temperature (Celsius)":
+                renderer.statistics = [[2, 34]];
+                break;
+              default: 
+            } 
+            hycom.title = variableName;
+            hycom.multidimensionalDefinition = multidimensionalDefinition;
+            hycom.renderer = renderer;
+        }
+      });
+    </script>
+  </head>
+
+  <body class="calcite-theme-dark">
+    <calcite-shell>
+      <calcite-shell-panel
+        slot="primary-panel"
+        width-scale="s"
+        detached
+        collapsed
+      >
+        <calcite-action-bar slot="action-bar">
+          <calcite-action
+            data-action-id="layers"
+            icon="layers"
+            text="Layers"
+          ></calcite-action>
+          <calcite-action
+            data-action-id="bookmarks"
+            icon="bookmark"
+            text="Bookmarks"
+          ></calcite-action>
+          <calcite-action
+            data-action-id="depth"
+            icon="altitude"
+            text="Depth"
+          ></calcite-action>
+          <calcite-action
+            data-action-id="time"
+            icon="clock"
+            text="Time"
+          ></calcite-action>
+          <calcite-action
+            data-action-id="basemap"
+            icon="basemap"
+            text="Basemap"
+          ></calcite-action>
+        </calcite-action-bar>
+      </calcite-shell-panel>
+
+      <div id="viewDiv"></div>
+    </calcite-shell>
+
+    <calcite-panel
+      id="layers"
+      heading="Layers"
+      height-scale="l"
+      data-panel-id="layers"
+      hidden
+      >
+      <calcite-radio-group id="blendOptions" width="full">
+        <calcite-radio-group-item value="Sea Water Salinity (PSS)"
+          >Salinity</calcite-radio-group-item
+        >
+        <calcite-radio-group-item value="Water Temperature (Celsius)" checked
+          >Temperature</calcite-radio-group-item
+        >
+      </calcite-radio-group>
+    </calcite-panel>
+    <calcite-panel
+      id="bookmarks"
+      heading="Bookmarks"
+      data-panel-id="bookmarks"
+      hidden
+      ><div id="bookmarksDiv"></div>
+    </calcite-panel>
+    <calcite-panel
+      id="depth"
+      heading="Depth"
+      height-scale="l"
+      data-panel-id="depth"
+      hidden
+      >
+      <div id="depthSlider" class="slider2"></div>
+    </calcite-panel>
+    <calcite-panel
+      id="time"
+      heading="Time"
+      height-scale="l"
+      data-panel-id="time"
+      hidden
+    >
+      <div id="timeSlider"></div>
+    </calcite-panel>
+    <calcite-panel
+      id="basemap"
+      heading="Basemap"
+      height-scale="l"
+      data-panel-id="basemap"
+      hidden
+    >
+      <div id="basemapGallery"></div>
+    </calcite-panel>
+
+    <div id="info" class="esri-widget info" style="width: 340">
+      <h1>HYCOM Ocean Currents</h1>
+      <div>
+        <b>Date:</b> <span id="curDate"></span><br />
+        <b>Depth:</b> <span id="curDepth">0 m</span>
+      </div>
+      <div id="legend-container"></div>
+    </div>
+  </body>
+</html>
