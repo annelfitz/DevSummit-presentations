@@ -1,0 +1,80 @@
+<!-- https://plans.trafimage.ch/zuerich-hb -->
+<!-- https://stations.sbb.cartaro-enterprise.com/de/api/models/swagger/ -->
+<!-- UID Zurich HB: 8503000-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Example 1: Labels</title>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.23/@arcgis/core/assets/esri/themes/light/main.css"
+    />
+    <link rel="stylesheet" href="./data/zurich-hb.css" />
+    <script type="module">
+      import {
+        commonSceneConfig,
+        wallsLayer,
+        servicesLayer,
+        areasLayer,
+        simplAreasRenderer,
+        elevationInfo,
+        floorNames,
+        createLabels,
+      } from "./data/zurich-hb.js";
+      import SceneView from "https://jsdev.arcgis.com/4.23/@arcgis/core/views/SceneView.js";
+
+      commonSceneConfig.camera = {
+        position: {
+          spatialReference: { latestWkid: 3857, wkid: 102100 },
+          x: 950987.9072765803,
+          y: 6003529.140121761,
+          z: 596.9138961620629,
+        },
+        heading: 320.7579124832217,
+        tilt: 60.82844809803898,
+      };
+      const simpleElevation = {
+        mode: "relative-to-ground",
+        offset: 0,
+      };
+      servicesLayer.elevationInfo = simpleElevation;
+      servicesLayer.labelingInfo = [];
+      const verticalOffset =
+        servicesLayer.renderer.symbol.verticalOffset.clone();
+      servicesLayer.renderer.symbol.verticalOffset = null;
+      const callout = servicesLayer.renderer.symbol.callout.clone();
+      servicesLayer.renderer.symbol.callout = null;
+      areasLayer.elevationInfo = simpleElevation;
+      areasLayer.renderer = simplAreasRenderer;
+      commonSceneConfig.map.layers.remove(servicesLayer);
+
+      // Only display first floor
+      areasLayer.definitionExpression = `floor IN (${floorNames(1)})`;
+
+      const view = new SceneView(commonSceneConfig);
+      window.view = view;
+      const doc = parent.document;
+
+      if (doc && doc.getElementById("background-1-1")) {
+        doc.getElementById("background-1-1").onclick = function () {
+          view.map.layers.add(servicesLayer);
+        };
+
+        doc.getElementById("background-1-2").onclick = function () {
+          const renderer = servicesLayer.renderer.clone();
+          renderer.symbol.callout = callout;
+          renderer.symbol.verticalOffset = verticalOffset;
+          servicesLayer.renderer = renderer;
+        };
+      }
+    </script>
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

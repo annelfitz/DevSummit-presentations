@@ -1,0 +1,397 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+
+    <title>Wurman dots | Sample | ArcGIS API for JavaScript 4.22</title>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+      .description {
+        background-color: white;
+        padding: 10px;
+      }
+      .title {
+        background-color: inherit;
+        text-align: center;
+        font-size: 16pt;
+        padding: 5px 10px 10px 10px;
+        color: #363636
+      }
+      .high-population {
+        color: #C9770C;
+        font-weight: 900;
+      }
+      .low-population {
+        color: #4B6147;
+        font-weight: 900;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.23/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.23/"></script>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/FeatureLayer",
+        "esri/widgets/Expand"
+      ], (Map, MapView, FeatureLayer, Expand) => {
+        const map = new Map({
+          basemap: {
+            portalItem: {
+              id: "71463912e8ce4ee3a3e4fd307095484b"
+            }
+          }
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          center: [-85, 38],
+          zoom: 5,
+          constraints: {
+            minScale: 18489300,
+            maxScale: 2311161
+          },
+          highlightOptions: {
+            fillOpacity: 0
+          }
+        });
+
+        const featureLayer = new FeatureLayer({
+          url: "https://services1.arcgis.com/4yjifSiIG17X0gW4/arcgis/rest/services/Landcover_30km_centroids_from_hex/FeatureServer",
+          renderer: {
+            type: "simple",
+            symbol: {
+              type: "cim",
+              data: {
+                type: "CIMSymbolReference",
+                symbol: {
+                  type: "CIMPointSymbol",
+                  symbolLayers: [
+                    {
+                      type: "CIMVectorMarker",
+                      enable: true,
+                      anchorPoint: { x: 0, y: 0 },
+                      anchorPointUnits: "Relative",
+                      primitiveName: "innerSizeOverride",
+                      frame: { xmin: 0.0, ymin: 0.0, xmax: 17.0, ymax: 17.0 },
+                      markerGraphics: [
+                        {
+                          type: "CIMMarkerGraphic",
+                          geometry: {
+                            rings: [
+                              [
+                                [8.5, 0.2],
+                                [7.06, 0.33],
+                                [5.66, 0.7],
+                                [4.35, 1.31],
+                                [3.16, 2.14],
+                                [2.14, 3.16],
+                                [1.31, 4.35],
+                                [0.7, 5.66],
+                                [0.33, 7.06],
+                                [0.2, 8.5],
+                                [0.33, 9.94],
+                                [0.7, 11.34],
+                                [1.31, 12.65],
+                                [2.14, 13.84],
+                                [3.16, 14.86],
+                                [4.35, 15.69],
+                                [5.66, 16.3],
+                                [7.06, 16.67],
+                                [8.5, 16.8],
+                                [9.94, 16.67],
+                                [11.34, 16.3],
+                                [12.65, 15.69],
+                                [13.84, 14.86],
+                                [14.86, 13.84],
+                                [15.69, 12.65],
+                                [16.3, 11.34],
+                                [16.67, 9.94],
+                                [16.8, 8.5],
+                                [16.67, 7.06],
+                                [16.3, 5.66],
+                                [15.69, 4.35],
+                                [14.86, 3.16],
+                                [13.84, 2.14],
+                                [12.65, 1.31],
+                                [11.34, 0.7],
+                                [9.94, 0.33],
+                                [8.5, 0.2]
+                              ]
+                            ]
+                          },
+                          symbol: {
+                            type: "CIMPolygonSymbol",
+                            symbolLayers: [
+                              {
+                                type: "CIMSolidFill",
+                                enable: true,
+                                color: [0, 0, 0, 30]
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      scaleSymbolsProportionally: true,
+                      respectFrame: true
+                    },
+                    {
+                      type: "CIMVectorMarker",
+                      enable: true,
+                      anchorPoint: { x: 0, y: 0 },
+                      anchorPointUnits: "Relative",
+                      primitiveName: "outerSizeOverride",
+                      size: 10,
+                      frame: { xmin: 0.0, ymin: 0.0, xmax: 17.0, ymax: 17.0 },
+                      markerGraphics: [
+                        {
+                          type: "CIMMarkerGraphic",
+                          geometry: {
+                            rings: [
+                              [
+                                [8.5, 0.2],
+                                [7.06, 0.33],
+                                [5.66, 0.7],
+                                [4.35, 1.31],
+                                [3.16, 2.14],
+                                [2.14, 3.16],
+                                [1.31, 4.35],
+                                [0.7, 5.66],
+                                [0.33, 7.06],
+                                [0.2, 8.5],
+                                [0.33, 9.94],
+                                [0.7, 11.34],
+                                [1.31, 12.65],
+                                [2.14, 13.84],
+                                [3.16, 14.86],
+                                [4.35, 15.69],
+                                [5.66, 16.3],
+                                [7.06, 16.67],
+                                [8.5, 16.8],
+                                [9.94, 16.67],
+                                [11.34, 16.3],
+                                [12.65, 15.69],
+                                [13.84, 14.86],
+                                [14.86, 13.84],
+                                [15.69, 12.65],
+                                [16.3, 11.34],
+                                [16.67, 9.94],
+                                [16.8, 8.5],
+                                [16.67, 7.06],
+                                [16.3, 5.66],
+                                [15.69, 4.35],
+                                [14.86, 3.16],
+                                [13.84, 2.14],
+                                [12.65, 1.31],
+                                [11.34, 0.7],
+                                [9.94, 0.33],
+                                [8.5, 0.2]
+                              ]
+                            ]
+                          },
+                          symbol: {
+                            type: "CIMLineSymbol",
+                            symbolLayers: [
+                              {
+                                type: "CIMSolidStroke",
+                                enable: true,
+                                color: [150, 150, 150, 50],
+                                width: 1
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      scaleSymbolsProportionally: true,
+                      respectFrame: true
+                    }
+                  ]
+                },
+                primitiveOverrides: [
+                  {
+                    type: "CIMPrimitiveOverride",
+                    primitiveName: "innerSizeOverride",
+                    propertyName: "Size",
+                    valueExpressionInfo: {
+                      type: "CIMExpressionInfo",
+                      title: "Size in pixels of inner ring at maxScale",
+                      // outerSize is the pixel size at the largest scale
+                      // The innerSize is determined by multiplying
+                      // the outerSize by the forest ratio
+                      expression: `
+                        var forestRatio = $feature.NLCDfrstPt / 10;
+                        return IIF( forestRatio < 3, 3, forestRatio );
+                      `,
+                      returnType: "Default"
+                    }
+                  }
+                ]
+              }
+            },
+            visualVariables: [
+              {
+                type: "color",
+                field: "POP2010",
+                stops: [
+                  {
+                    value: 0,
+                    color: [57, 74, 53]
+                  },
+                  {
+                    value: 15000,
+                    color: [94, 120, 89]
+                  },
+                  {
+                    value: 30000,
+                    color: [235, 227, 215]
+                  },
+                  {
+                    value: 90000,
+                    color: [199, 143, 70]
+                  },
+                  {
+                    value: 150000,
+                    color: [201, 114, 0]
+                  }
+                ]
+              }
+            ]
+          },
+          popupTemplate: {
+            content: [
+              {
+                type: "fields",
+                fieldInfos: [
+                  {
+                    fieldName: "NLCDfrstPt",
+                    label: "% forested land (NLCD)",
+                    format: {
+                      places: 0
+                    }
+                  },
+                  {
+                    fieldName: "POP2010",
+                    label: "Population (2010)",
+                    format: {
+                      places: 0,
+                      digitSeparator: true
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          definitionExpression: "NLCDfrstPt > 1"
+        });
+        view.map.add(featureLayer);
+
+        // Add custom legend as an image to an Expand instance
+
+        const descriptionContainer = document.createElement("div");
+        descriptionContainer.classList.add("description");
+
+        const descriptionTitle = document.createElement("div");
+        descriptionTitle.innerHTML = `
+          Percent of forested land (size)</br>by population
+          (color: <span class="high-population">high population</span>, <span class="low-population">low population</span>)
+        `;
+        descriptionTitle.classList.add("esri-widget");
+        descriptionTitle.classList.add("title");
+        descriptionContainer.appendChild(descriptionTitle);
+
+        const image = document.createElement("img");
+        image.src =
+          "https://arcgis.github.io/arcgis-samples-javascript/sample-data/cim-primitive-overrides/wurman-legend.png";
+        descriptionContainer.appendChild(image);
+
+        view.ui.add(
+          new Expand({
+            view: view,
+            content: descriptionContainer,
+            expandIconClass: "esri-icon-description"
+          }),
+          "top-left"
+        );
+
+        // Adjusts the size of the legend image
+        // based on the size of the view
+        view.when().then(adjustLegendByViewSize);
+        view.watch("widthBreakpoint", adjustLegendByViewSize);
+
+        function adjustLegendByViewSize() {
+          if (view.widthBreakpoint === "xsmall") {
+            image.style.width = "100%";
+          } else {
+            image.style.width = null;
+          }
+        }
+
+        window.view = view;
+        const doc = parent.document;
+
+      if (doc && doc.getElementById("example-view-scale")) {
+        doc.getElementById("example-view-scale").onclick = function () {
+            let renderer = featureLayer.renderer.clone();
+            renderer.symbol.data.primitiveOverrides = [
+            {
+                    type: "CIMPrimitiveOverride",
+                    primitiveName: "outerSizeOverride",
+                    propertyName: "Size",
+                    valueExpressionInfo: {
+                      type: "CIMExpressionInfo",
+                      title: "Size in pixels of outer ring at maxScale",
+                      // the pixel size at the largest scale
+                      // 42 represents the pixel size of the
+                      // circles at the view's largest scale (1:2,311,161)
+                      expression: "42 * 2311161 / $view.scale",
+                      returnType: "Default"
+                    }
+                  },
+                  {
+                    type: "CIMPrimitiveOverride",
+                    primitiveName: "innerSizeOverride",
+                    propertyName: "Size",
+                    valueExpressionInfo: {
+                      type: "CIMExpressionInfo",
+                      title: "Size in pixels of inner ring at maxScale",
+                      // outerSize is the pixel size at the largest scale
+                      // The innerSize is determined by multiplying
+                      // the outerSize by the forest ratio
+                      expression: `
+                        var forestRatio = $feature.NLCDfrstPt / 100;
+                        var outerSize = 42 * 2311161 / $view.scale;
+                        var innerSize = outerSize * forestRatio;
+                        return IIF( innerSize < 3, 3, innerSize );
+                      `,
+                      returnType: "Default"
+                    }
+                  }
+            ];
+            featureLayer.renderer = renderer;
+        };
+    }
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

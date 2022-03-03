@@ -1,0 +1,33 @@
+html,
+body,
+#viewDiv {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  font-family: "Avenir Next W00", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: linear-gradient(
+    0deg,
+    rgba(228, 234, 242, 1) 5%,
+    rgba(255, 255, 255, 1) 50%
+  );
+}
+
+#menu {
+  padding: 1em;
+  background: white;
+}
+
+.esri-slider {
+  min-height: 200px;
+  min-width: 210px;
+  padding: 30px;
+}
+
+.esri-slider__tick-label {
+  transform: none !important;
+}
+
+.esri-slider__content {
+  margin-left: 10px !important;
+}

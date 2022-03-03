@@ -1,0 +1,58 @@
+<!-- https://plans.trafimage.ch/zuerich-hb -->
+<!-- https://stations.sbb.cartaro-enterprise.com/de/api/models/swagger/ -->
+<!-- UID Zurich HB: 8503000-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Example 4: Visual Variables</title>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.23/@arcgis/core/assets/esri/themes/light/main.css"
+    />
+    <link rel="stylesheet" href="./data/zurich-hb.css" />
+    <script type="module">
+      import {
+        commonSceneConfig,
+        fadeFloor,
+        wallsLayer,
+        planeLayer,
+      } from "./data/zurich-hb.js";
+      import SceneView from "https://jsdev.arcgis.com/4.23/@arcgis/core/views/SceneView.js";
+
+      commonSceneConfig.camera = {
+        position: {
+          spatialReference: { latestWkid: 3857, wkid: 102100 },
+          x: 951241.0068592154,
+          y: 6002904.390406648,
+          z: 797.9509591711685,
+        },
+        heading: 327.9980631465813,
+        tilt: 68.33007090069397,
+      };
+      commonSceneConfig.map.layers.add(wallsLayer);
+      const view = new SceneView(commonSceneConfig);
+      window.view = view;
+      const doc = parent.document;
+
+      if (doc && doc.getElementById("example-4-1")) {
+        // Fade floor:
+        doc.getElementById("example-4-1").onclick = function () {
+          fadeFloor(1);
+        };
+
+        // Add the white plane:
+        doc.getElementById("example-4-2").onclick = function () {
+          view.map.layers.add(planeLayer);
+        };
+      }
+    </script>
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

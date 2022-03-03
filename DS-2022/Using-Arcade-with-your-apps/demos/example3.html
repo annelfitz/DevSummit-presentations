@@ -1,0 +1,59 @@
+<!-- https://plans.trafimage.ch/zuerich-hb -->
+<!-- https://stations.sbb.cartaro-enterprise.com/de/api/models/swagger/ -->
+<!-- UID Zurich HB: 8503000-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Example 3: UniqueValueRenderer</title>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.23/@arcgis/core/assets/esri/themes/light/main.css"
+    />
+    <link rel="stylesheet" href="./data/zurich-hb.css" />
+    <script type="module">
+      import {
+        commonSceneConfig,
+        wallsLayer,
+        areasLayer,
+        simplAreasRenderer,
+        simpleWallsRenderer,
+      } from "./data/zurich-hb.js";
+      import SceneView from "https://jsdev.arcgis.com/4.23/@arcgis/core/views/SceneView.js";
+
+      commonSceneConfig.camera = {
+        position: {
+          spatialReference: { latestWkid: 3857, wkid: 102100 },
+          x: 950899.1476430027,
+          y: 6002921.309040705,
+          z: 689.2360500562936,
+        },
+        heading: 343.3545836643262,
+        tilt: 73.4800027357591,
+      };
+      const uvRenderer = areasLayer.renderer.clone();
+      areasLayer.renderer = simplAreasRenderer;
+      const uvRendererWall = wallsLayer.renderer.clone();
+      wallsLayer.renderer = simpleWallsRenderer;
+      commonSceneConfig.map.layers.add(wallsLayer);
+      const view = new SceneView(commonSceneConfig);
+      window.view = view;
+      const doc = parent.document;
+
+      if (doc && doc.getElementById("example-3-1")) {
+        // Fade floor:
+        doc.getElementById("example-3-1").onclick = function () {
+          areasLayer.renderer = uvRenderer;
+          wallsLayer.renderer = uvRendererWall;
+        };
+      }
+    </script>
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

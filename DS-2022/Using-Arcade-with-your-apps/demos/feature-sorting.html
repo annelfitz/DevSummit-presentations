@@ -1,0 +1,148 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      Configure feature sort order | Sample | ArcGIS API for JavaScript 4.22
+    </title>
+
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/1.0.0-beta.69/calcite.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://js.arcgis.com/calcite-components/1.0.0-beta.69/calcite.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/1.0.0-beta.69/calcite.css"
+    />
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .esri-legend .esri-legend__layer-caption {
+        display: none;
+      }
+      #legend {
+        width: 260px;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.23/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.23/"></script>
+
+    <script>
+      require(["esri/WebMap", "esri/views/MapView", "esri/layers/FeatureLayer","esri/widgets/Legend"], (
+        WebMap,
+        MapView,
+        FeatureLayer,
+        Legend
+      ) => {
+
+        const layer = new FeatureLayer({
+          portalItem: {
+            id: "f4817839816247528ede23faa20dd5eb"
+          },
+          minScale: 0,
+          maxScale: 0
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: new WebMap({
+            layers: [
+              layer
+            ]
+          })
+        });
+
+        const valueExpression = `
+          Decode($feature.MaxCrashInjSeverity,
+            "Fatal", 4,
+            "Severe", 3,
+            "Minor", 2,
+            "None", 1,
+            0
+          )
+        `;
+
+        view.when().then(async () => {
+          const layer = view.map.layers.getItemAt(0);
+
+          // Sort features by crash severity
+          // fatalities on top - less severe crashes below
+          layer.orderBy = [
+            {
+              valueExpression,
+              order: "descending" // "descending" | "ascending"
+            }
+          ];
+
+          const sortOrder = document.getElementById("sort-order");
+          const ascText = "Sort features with small values on top";
+          const descText = "Sort features with large values on top";
+
+          // logic for toggling ascending and descending order
+          sortOrder.addEventListener("click", () => {
+            const order =
+              layer.orderBy[0].order === "ascending"
+                ? "descending"
+                : "ascending";
+
+            layer.orderBy = [
+              {
+                valueExpression,
+                order
+              }
+            ];
+
+            // toggles ui icon and description for the sortOrder button
+            if (order === "ascending") {
+              sortOrder.text = descText;
+              sortOrder.icon = `sort-descending-arrow`;
+            } else {
+              sortOrder.text = ascText;
+              sortOrder.icon = `sort-ascending-arrow`;
+            }
+          });
+        });
+
+        view.ui.add("legend", "bottom-left");
+
+        new Legend({
+          container: "legend",
+          view
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+    <div id="legend">
+      <calcite-action
+        active
+        id="sort-order"
+        text="Sort features with small values on top"
+        text-enabled
+        icon="sort-ascending-arrow"
+        scale="s"
+      ></calcite-action>
+    </div>
+  </body>
+</html>
