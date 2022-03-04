@@ -25,49 +25,53 @@
         elevationInfo,
         floorNames,
         createLabels,
+        simpleWallsRenderer,
       } from "./data/zurich-hb.js";
       import SceneView from "https://jsdev.arcgis.com/4.23/@arcgis/core/views/SceneView.js";
 
       commonSceneConfig.camera = {
         position: {
           spatialReference: { latestWkid: 3857, wkid: 102100 },
-          x: 950987.9072765803,
-          y: 6003529.140121761,
-          z: 596.9138961620629,
+          x: 950872.3150345061,
+          y: 6003591.387876175,
+          z: 583.769418336451,
         },
-        heading: 320.7579124832217,
-        tilt: 60.82844809803898,
+        heading: 328.70254971698625,
+        tilt: 63.94714548925045,
       };
       const simpleElevation = {
         mode: "relative-to-ground",
         offset: 0,
       };
-      servicesLayer.elevationInfo = simpleElevation;
       servicesLayer.labelingInfo = [];
-      areasLayer.elevationInfo = simpleElevation;
+      servicesLayer.elevationInfo = elevationInfo;
+      areasLayer.elevationInfo = elevationInfo;
       areasLayer.renderer = simplAreasRenderer;
-
-      // Only display first floor
-      areasLayer.definitionExpression = `floor IN (${floorNames(1)})`;
+      wallsLayer.renderer = simpleWallsRenderer;
+      // commonSceneConfig.map.layers.remove(servicesLayer);
+      commonSceneConfig.map.layers.add(wallsLayer);
 
       const view = new SceneView(commonSceneConfig);
       window.view = view;
       const doc = parent.document;
 
-      if (doc && doc.getElementById("example-1-1")) {
-        doc.getElementById("example-1-1").onclick = function () {
+      if (doc && doc.getElementById("example-1-2")) {
+        // doc.getElementById("example-1-1").onclick = function () {
+        //   view.map.layers.add(servicesLayer);
+        // };
+        doc.getElementById("example-1-2").onclick = function () {
           servicesLayer.labelingInfo = createLabels(
             (label) => (label.labelExpressionInfo.expression = "$feature.name")
           );
         };
-        doc.getElementById("example-1-2").onclick = function () {
+        doc.getElementById("example-1-3").onclick = function () {
           servicesLayer.labelingInfo = createLabels(
             (label) =>
               (label.labelExpressionInfo.expression =
                 "$feature.name + TextFormatting.NewLine + $feature.category")
           );
         };
-        doc.getElementById("example-1-3").onclick = function () {
+        doc.getElementById("example-1-4").onclick = function () {
           servicesLayer.labelingInfo = createLabels(
             (label) =>
               (label.labelExpressionInfo.expression = `

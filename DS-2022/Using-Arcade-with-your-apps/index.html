@@ -148,6 +148,10 @@
       button.play:hover {
         background-image: url("./images/play_64.png");
       }
+
+      .code-snippet.fragment.fade-out.visible {
+        display: none;
+      }
     </style>
 
     <!-- Theme used for syntax highlighted code -->
@@ -240,16 +244,7 @@
         >
           <h2 data-id="code-title">First example</h2>
           <div class="subtitle">Background...</div>
-          <img src="./images/swisstrain.jpg" style="width: auto; height: 500px; margin-top: 40px;"/>
-          <!-- I am from Switzerland, Zurich. In this country, we are proud of our train, so let me take an example the Zurich main station. It looks like this. Throughout this presentation, I'll show you how you can build this application with Arcade expression. -->
-        </section>
-
-        <section
-          data-auto-animate
-          data-background="../../reveal.js/img/2022/dev-summit/bg-3.png"
-        >
-          <h2 data-id="code-title">First example</h2>
-          <div class="subtitle">Background...</div>
+          <img src="./images/swisstrain.jpg" style="width: auto; height: 700px; position: absolute;" class="fragment fade-out"/>
           <iframe src="./demos/fullexample.html" style="width: 100%; height: 500px; margin-top: 40px;"></iframe>
         </section>
 
@@ -258,7 +253,7 @@
           data-background="../../reveal.js/img/2022/dev-summit/bg-3.png"
         >
           <h2 data-id="code-title">First example</h2>
-          <div class="subtitle">Background...</div>
+          <div class="subtitle">Z-Values</div>
           
 					<div class="two-columns" style="margin-top: 40px;">
             <div class="left-column">
@@ -270,51 +265,59 @@
 ...
 {
   ...
-  "geometry": { "coordinates": [8.53951848821041, 47.37861708480265] },
+  "geometry": { /* A polygon */ },
   "properties": {
-    "name": "Press & Books",
-    "category": "Shopping",
-    "floor": "Untergeschoss",
-    ...
-    "openhours_from": "05:45",
-    "openhours_to": "00:00",
-    ...
+    "floor": "Erdgeschoss",
+    "floor_id": 7089,
+    "type": "rolltreppe",
   }
 }
 					        </code>
                 </pre>
               </div>
 
-              <div data-fragment-id="category" class="code-snippet fragment" style="margin-top: 20px">
-                <button class="play" id="background-1-1"></button>
+              <div data-fragment-id="category" class="code-snippet fragment fade-out" style="margin-top: 20px">
+                <!-- <button class="play" id="background-1-1"></button> -->
                 <pre
             data-id="code-animation"
           ><code class="hljs" data-trim data-line-numbers>
-const servicesLayer =  = new GeoJSONLayer({
-  url: "./data/services.json",
+const areasLayer =  = new GeoJSONLayer({
+  url: "./data/area.json",
   elevationInfo: ...
-  renderer: {
-    type: "simple",
-    symbol: ...
-  }
 }
 
 const view = new SceneView({
   container: "viewDiv",
   map: new Map({
-    layers: []
+    layers: [ areasLayer ]
   })
 });
 					        </code>
                 </pre>
               </div>
-              <div data-fragment-id="category" class="code-snippet fragment" style="margin-top: 20px">
+              <div data-fragment-id="z-value" class="code-snippet fragment">
                 <button class="play" id="background-1-2"></button>
-                <pre
-            data-id="code-animation"
-          ><code class="hljs" data-trim data-line-numbers>
-servicesLayer.renderer.symbol.callout = { ... };
-servicesLayer.renderer.symbol.verticalOffset = { ... };
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
+elevationInfo = {
+  mode: "relative-to-ground",
+  featureExpressionInfo: {
+    expression: "
+        if(Includes(['Löwenstrasse', 'Bahnhof SZU'], $feature.floor)) {
+          return 0;
+        }
+
+        if (Includes(['Shopville', 'Aufgänge', 'Untergeschoss'], $feature.floor)) {
+          return 50;
+        }
+
+        if ($feature.floor == 'Erdgeschoss') {
+          return 150;
+        }
+
+        return 100;",
+  },
+}
 					        </code>
                 </pre>
               </div>
@@ -327,66 +330,97 @@ servicesLayer.renderer.symbol.verticalOffset = { ... };
           </div>
         </section>
 
-
-        <section
-          data-auto-animate
-          data-background="../../reveal.js/img/2022/dev-summit/bg-3.png"
-        >
-          <h2 data-id="code-title">First example</h2>
-          <div class="subtitle">Formatting labels</div>
+        <!-- <section data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png">
+          <h2 data-id="code-title">Z Values</h2>
           <div class="two-columns" style="margin-top: 40px;">
             <div class="left-column">
-              <div data-fragment-id="add-widget" class="code-snippet">
-                <button class="play" id="example-1-1"></button>
+                            <div data-fragment-id="add-widget" class="code-snippet">
                 <pre
             data-id="code-animation"
           ><code class="hljs" data-trim data-line-numbers>
-labelingInfo: [
-  new LabelClass({
+...
+{
+    "name": "Press & Books",
+    "category": "Shopping",
     ...
-    labelExpressionInfo: { 
-			expression: "$feature.name"
-		},
-    symbol: ...,
-  })
-]
-					        </code>
-                </pre>
-              </div>
+    "floor": "Untergeschoss",
+    ...
+    "openhours_from": "05:45",
+    "openhours_to": "00:00",
+},
+...
+				        </code>
+              </pre>
+            </div>
+          </div>
+          <div class="right-column">
+            <div class="iframe-wrapper">
+              <iframe data-src="./demos/example2.html"></iframe>
+            </div>
+          </div>
+        </div>
+      </section> -->
 
-              <div data-fragment-id="category" class="code-snippet fragment" style="margin-top: 20px">
-                <button class="play" id="example-1-2"></button>
-                <pre
-            data-id="code-animation"
-          ><code class="hljs" data-trim data-line-numbers>
-	  expression: "$feature.name + TextFormatting.NewLine + $feature.Category"
-					        </code>
-                </pre>
-              </div>
-              <div data-fragment-id="opening-hours" class="code-snippet fragment" style="margin-top: 20px">
-                <button class="play" id="example-1-3"></button>
-                <pre
-            data-id="code-animation"
-          ><code class="hljs" data-trim data-line-numbers>
-var hourFrom = $feature.openhours_from;
-var hourTo = $feature.openhours_to;
+      <!-- <section data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png">
+          <h2 data-id="code-title">First example</h2>
+          <div class="subtitle">Background...</div>
+          <div class="two-columns" style="margin-top: 40px;">
+            <div class="left-column">
+              <div data-fragment-id="z-value" class="code-snippet">
+                <button class="play" id="example-2-1"></button>
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
+elevationInfo = {
+  mode: "relative-to-ground",
+  featureExpressionInfo: {
+    expression: "
+        if(Includes(['Löwenstrasse', 'Bahnhof SZU'], $feature.floor)) {
+          return 0;
+        }
 
-if (IsEmpty(hourFrom) || IsEmpty(hourTo)) {
-  return $feature.name;
+        if (Includes(['Shopville', 'Aufgänge', 'Untergeschoss'], $feature.floor)) {
+          return 50;
+        }
+
+        if ($feature.floor == 'Erdgeschoss') {
+          return 150;
+        }
+
+        return 100;",
+  },
 }
+					        </code>
+                </pre>
+              </div>
+              <br>
+              <div data-fragment-id="z-value" class="code-snippet fragment">
+                <button class="play" id="example-2-2"></button>
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
 
-return $feature.name + TextFormatting.NewLine + hourFrom + " - " + hourTo;
+symbol: {
+  type: "line-3d",
+  symbolLayers: [
+    {
+      type: "path",
+      material: { color: "#FFBBAA" },
+      width: 0.5,
+      height: 2
+      ...
+    },
+  ],
+}
 					        </code>
                 </pre>
               </div>
             </div>
             <div class="right-column">
               <div class="iframe-wrapper">
-                <iframe data-src="./demos/example1.html"></iframe>
+                <iframe data-src="./demos/example2.html"></iframe>
               </div>
             </div>
           </div>
-          </section>
+        </section> -->
 
 		<section
 		data-background="../../reveal.js/img/2022/dev-summit/bg-4.png"
@@ -521,92 +555,128 @@ return $feature.name + TextFormatting.NewLine + hourFrom + " - " + hourTo;
 
 		</p>
 	  </section>
-     <section data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png">
-          <h2 data-id="code-title">Z Values</h2>
-          <div class="two-columns" style="margin-top: 40px;">
-            <div class="left-column">
-                            <div data-fragment-id="add-widget" class="code-snippet">
-                <pre
-            data-id="code-animation"
-          ><code class="hljs" data-trim data-line-numbers>
-...
-{
-    "name": "Press & Books",
-    "category": "Shopping",
-    ...
-    "floor": "Untergeschoss",
-    ...
-    "openhours_from": "05:45",
-    "openhours_to": "00:00",
-},
-...
-				        </code>
-              </pre>
-            </div>
-          </div>
-          <div class="right-column">
-            <div class="iframe-wrapper">
-              <iframe data-src="./demos/example2.html"></iframe>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section data-background="../..//reveal.js/img/2022/dev-summit/bg-2.png">
-          <h2 data-id="code-title">Z Values</h2>
+    <section
+          data-auto-animate
+          data-background="../../reveal.js/img/2022/dev-summit/bg-3.png"
+        >
+          <h2 data-id="code-title">Back to the station demo...</h2>
           <div class="two-columns" style="margin-top: 40px;">
             <div class="left-column">
               <div data-fragment-id="z-value" class="code-snippet">
                 <button class="play" id="example-2-1"></button>
                 <pre>
                   <code class="hljs" data-trim data-line-numbers>
-elevationInfo = {
-  mode: "relative-to-ground",
-  featureExpressionInfo: {
-    expression: "
-        if(Includes(['Löwenstrasse', 'Bahnhof SZU'], $feature.floor)) {
-          return 0;
-        }
-
-        if (Includes(['Shopville', 'Aufgänge', 'Untergeschoss'], $feature.floor)) {
-          return 50;
-        }
-
-        if ($feature.floor == 'Erdgeschoss') {
-          return 150;
-        }
-
-        return 100;",
-  },
+const wallLayer =  = new GeoJSONLayer({
+  url: "./data/walls.json",
+  renderer: {
+    type: "simple",
+    symbol: {
+      type: "line-3d",
+      symbolLayers: [
+        {
+          type: "path",
+          material: { color: "#FFBBAA" },
+          width: 0.5,
+          height: 2
+          ...
+        },
+      ],
+    }
+  }
 }
 					        </code>
                 </pre>
               </div>
-              <br>
-              <div data-fragment-id="z-value" class="code-snippet fragment">
+              <div data-fragment-id="add-widget" class="code-snippet fragment">
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
+...
+{
+  ...
+  "geometry": { "coordinates": [8.53951848821041, 47.37861708480265] },
+  "properties": {
+    "name": "Press & Books",
+    "category": "Shopping",
+    "floor": "Untergeschoss",
+    ...
+    "openhours_from": "05:45",
+    "openhours_to": "00:00",
+    ...
+  }
+}
+					        </code>
+                </pre>
+              </div>
+              <div class="code-snippet fragment" style="margin-top: 20px">
                 <button class="play" id="example-2-2"></button>
                 <pre>
                   <code class="hljs" data-trim data-line-numbers>
-
-symbol: {
-  type: "line-3d",
-  symbolLayers: [
-    {
-      type: "path",
-      material: { color: "#FFBBAA" },
-      width: 0.5,
-      height: 2
-      ...
-    },
-  ],
+const servicesLayer =  = new GeoJSONLayer({
+  url: "./data/services.json",
+  elevationInfo: ...
 }
-					        </code>
+                  </code>
                 </pre>
               </div>
             </div>
             <div class="right-column">
               <div class="iframe-wrapper">
                 <iframe data-src="./demos/example2.html"></iframe>
+              </div>
+            </div>
+          </div>
+        </section>
+
+            <section
+          data-auto-animate
+          data-background="../../reveal.js/img/2022/dev-summit/bg-3.png"
+        >
+          <h2 data-id="code-title">Formatting labels</h2>
+          <div class="two-columns" style="margin-top: 40px;">
+            <div class="left-column">
+              <div data-fragment-id="add-widget" class="code-snippet">
+                <button class="play" id="example-1-2"></button>
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
+labelingInfo: [
+  new LabelClass({
+    ...
+    labelExpressionInfo: { 
+			expression: "$feature.name"
+		},
+    symbol: ...,
+  })
+]
+					        </code>
+                </pre>
+              </div>
+              <div class="code-snippet fragment" style="margin-top: 20px">
+                <button class="play" id="example-1-3"></button>
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
+	  expression: "$feature.name + TextFormatting.NewLine + $feature.Category"
+					        </code>
+                </pre>
+              </div>
+              <div data-fragment-id="opening-hours" class="code-snippet fragment" style="margin-top: 20px">
+                <button class="play" id="example-1-4"></button>
+                <pre>
+                  <code class="hljs" data-trim data-line-numbers>
+var hourFrom = $feature.openhours_from;
+var hourTo = $feature.openhours_to;
+
+if (IsEmpty(hourFrom) || IsEmpty(hourTo)) {
+  return $feature.name;
+}
+
+return $feature.name + TextFormatting.NewLine + hourFrom + " - " + hourTo;
+					        </code>
+                </pre>
+              </div>
+            </div>
+            <div class="right-column">
+              <div class="iframe-wrapper">
+                <iframe data-src="./demos/example1.html"></iframe>
               </div>
             </div>
           </div>

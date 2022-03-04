@@ -9,7 +9,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>Example 2: Z-Values</title>
+    <title>Example 1: Labels</title>
     <link
       rel="stylesheet"
       href="https://js.arcgis.com/4.23/@arcgis/core/assets/esri/themes/light/main.css"
@@ -23,6 +23,8 @@
         areasLayer,
         simplAreasRenderer,
         elevationInfo,
+        floorNames,
+        createLabels,
         simpleWallsRenderer,
       } from "./data/zurich-hb.js";
       import SceneView from "https://jsdev.arcgis.com/4.23/@arcgis/core/views/SceneView.js";
@@ -41,10 +43,13 @@
         mode: "relative-to-ground",
         offset: 0,
       };
-      servicesLayer.elevationInfo = simpleElevation;
-      areasLayer.elevationInfo = simpleElevation;
+      servicesLayer.labelingInfo = [];
+      servicesLayer.elevationInfo = elevationInfo;
+      areasLayer.elevationInfo = elevationInfo;
       areasLayer.renderer = simplAreasRenderer;
       wallsLayer.renderer = simpleWallsRenderer;
+      commonSceneConfig.map.layers.remove(servicesLayer);
+      commonSceneConfig.map.layers.remove(wallsLayer);
 
       const view = new SceneView(commonSceneConfig);
       window.view = view;
@@ -52,11 +57,10 @@
 
       if (doc && doc.getElementById("example-2-1")) {
         doc.getElementById("example-2-1").onclick = function () {
-          servicesLayer.elevationInfo = elevationInfo;
-          areasLayer.elevationInfo = elevationInfo;
+          view.map.layers.add(wallsLayer);
         };
         doc.getElementById("example-2-2").onclick = function () {
-          view.map.layers.add(wallsLayer);
+          view.map.layers.add(servicesLayer);
         };
       }
     </script>

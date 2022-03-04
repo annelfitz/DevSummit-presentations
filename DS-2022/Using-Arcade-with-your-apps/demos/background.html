@@ -9,7 +9,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>Example 1: Labels</title>
+    <title>Example 1: Z-Values</title>
     <link
       rel="stylesheet"
       href="https://js.arcgis.com/4.23/@arcgis/core/assets/esri/themes/light/main.css"
@@ -42,35 +42,37 @@
         mode: "relative-to-ground",
         offset: 0,
       };
-      servicesLayer.elevationInfo = simpleElevation;
-      servicesLayer.labelingInfo = [];
-      const verticalOffset =
-        servicesLayer.renderer.symbol.verticalOffset.clone();
-      servicesLayer.renderer.symbol.verticalOffset = null;
-      const callout = servicesLayer.renderer.symbol.callout.clone();
-      servicesLayer.renderer.symbol.callout = null;
       areasLayer.elevationInfo = simpleElevation;
       areasLayer.renderer = simplAreasRenderer;
       commonSceneConfig.map.layers.remove(servicesLayer);
+      // commonSceneConfig.map.layers.remove(areasLayer);
+      // commonSceneConfig.map.ground = {
+      //   opacity: 0,
+      // };
 
       // Only display first floor
-      areasLayer.definitionExpression = `floor IN (${floorNames(1)})`;
+      // areasLayer.definitionExpression = `floor IN (${floorNames(1)})`;
 
       const view = new SceneView(commonSceneConfig);
       window.view = view;
       const doc = parent.document;
 
-      if (doc && doc.getElementById("background-1-1")) {
-        doc.getElementById("background-1-1").onclick = function () {
-          view.map.layers.add(servicesLayer);
-        };
+      if (doc && doc.getElementById("background-1-2")) {
+        // doc.getElementById("background-1-1").onclick = function () {
+        //   view.map.layers.add(areasLayer);
+        // };
 
         doc.getElementById("background-1-2").onclick = function () {
-          const renderer = servicesLayer.renderer.clone();
-          renderer.symbol.callout = callout;
-          renderer.symbol.verticalOffset = verticalOffset;
-          servicesLayer.renderer = renderer;
+          // servicesLayer.elevationInfo = elevationInfo;
+          areasLayer.elevationInfo = elevationInfo;
         };
+
+        // doc.getElementById("background-1-2").onclick = function () {
+        //   const renderer = servicesLayer.renderer.clone();
+        //   renderer.symbol.callout = callout;
+        //   renderer.symbol.verticalOffset = verticalOffset;
+        //   servicesLayer.renderer = renderer;
+        // };
       }
     </script>
   </head>
