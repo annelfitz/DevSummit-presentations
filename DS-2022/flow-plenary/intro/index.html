@@ -37,21 +37,9 @@
         width: 100%;
       }
 
-      .custom-code-icon:before {
-        width: 16px;
-        height: 16px;
-        content: url(https://unpkg.com/@esri/calcite-components@1.0.0-beta.77/dist/calcite/assets/icon/banana32.json);
-      }
-
-      #controls {
-        width: 300px;
-        max-height: 90vh;
-        overflow: auto;
-      }
-
       #codeSnippet {
-        display: none; overflow-x: auto; padding: 0.5em; color: #d1d1d1; background: #242424;
-        font-size: 20;
+        overflow-x: auto; padding: 0.5em; color: #d1d1d1; background: #242424;
+        font-size: 16;
       }
     </style>
 
@@ -62,11 +50,6 @@
         "esri/layers/ImageryTileLayer",
         "esri/widgets/Legend",
         "esri/widgets/Expand",
-        "esri/widgets/Swipe",
-        "esri/rest/support/MultipartColorRamp",
-        "esri/rest/support/AlgorithmicColorRamp",
-        "esri/widgets/LayerList",
-        "esri/layers/GroupLayer",
         "esri/renderers/FlowRenderer",
         "esri/Color",
       ], (
@@ -75,83 +58,11 @@
         ImageryTileLayer,
         Legend,
         Expand,
-        Swipe,
-        MultipartColorRamp,
-        AlgorithmicColorRamp,
-        LayerList,
-        GroupLayer,
         FlowRenderer,
         Color
       ) =>
         (async () => {
-          const rasterStretch = new ImageryTileLayer({
-            url: "https://tiledimageservices.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/NLDAS_Hourly_8_30_2021/ImageServer",
-            title: "Raster Stretch Renderer",
-            copyright:
-              "NASA EarthData. https://disc.gsfc.nasa.gov/datasets/NLDAS_FORA0125_H_002/summary",
-            bandIds: [0],
-            renderer: {
-              type: "raster-stretch",
-              outputMin: 0,
-              outputMax: 255,
-              statistics: [
-                [
-                  -11.329999923706056, 13.149999618530272, 0.9044536856119724,
-                  2.6931997077090086,
-                ],
-              ],
-              stretchType: "min-max",
-              gamma: [1],
-              colorRamp: new MultipartColorRamp({
-                colorRamps: [
-                  new AlgorithmicColorRamp({
-                    fromColor: new Color([9, 9, 145, 255]),
-                    toColor: new Color([31, 131, 224, 255]),
-                  }),
-                  new AlgorithmicColorRamp({
-                    fromColor: new Color([31, 131, 224, 255]),
-                    toColor: new Color([182, 237, 240, 255]),
-                  }),
-                ],
-              }),
-            },
-          });
-          // image service contains wind speed and direction variables which can be visualized
-          // with VectorFieldRenderer. VectorFieldRenderer has size visual variables set for magnitude
-          // and rotation visual variables set for directions
-          const vectorField = new ImageryTileLayer({
-            url: "https://tiledimageservices.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/NLDAS_Hourly_8_30_2021/ImageServer",
-            title: "Vector Field Renderer",
-            copyright:
-              "NASA EarthData. https://disc.gsfc.nasa.gov/datasets/NLDAS_FORA0125_H_002/summary",
-            visible: false,
-            renderer: {
-              type: "vector-field",
-              style: "beaufort-kn", // Beaufort point symbol (knots)
-              flowRepresentation: "flow-from", // show flow from angle for wind direction
-              // symbolTileSize: 10, // draw one symbol in every 10x10 pixels
-              visualVariables: [
-                {
-                  type: "size",
-                  field: "Magnitude", // values read from the first band
-                  maxDataValue: 13.72,
-                  maxSize: 40,
-                  minDataValue: 0,
-                  minSize: 10,
-                },
-                {
-                  type: "rotation",
-                  field: "Direction", // values read from the second band
-                },
-              ],
-            },
-          });
-
-          const groupLayer = new GroupLayer({
-            visibilityMode: "exclusive",
-            title: "Imagery renderers",
-            layers: [rasterStretch, vectorField],
-          });
+          let vvFlow = true;
 
           const flowLayer = new ImageryTileLayer({
             portalItem: {
@@ -187,7 +98,7 @@
           });
           const map = new Map({
             basemap: "dark-gray-vector",
-            layers: [groupLayer, flowLayer],
+            layers: [flowLayer],
           });
           const view = new MapView({
             map: map,
@@ -196,78 +107,56 @@
             zoom: 4,
           });
 
-          const layerlist = new LayerList({ view: view });
-
-          view.ui.add(layerlist, "bottom-left");
-          // create a new Swipe widget
-          const swipe = new Swipe({
-            leadingLayers: [rasterStretch, vectorField],
-            trailingLayers: [flowLayer],
-            position: 100,
-            view: view,
-          });
-
           const expandCode = new Expand({
             view: view,
-            // expandIconClass: "custom-code-icon",
             content: document.getElementById("codeSnippet"),
+            expanded: true
           });
-          view.ui.add("showFlow", "top-right");
-          document
-            .getElementById("showFlow")
-            .addEventListener("click", moveSwipe);
-
-          function moveSwipe() {
-            view.ui.remove(layerlist);
-            view.ui.add(swipe);
-            document.getElementById("codeSnippet").style.display = "block";
-            view.ui.add(expandCode, "bottom-left");
-            let animating = true;
-            let value = 100;
-            let direction = 0.2;
-
-            const frame = () => {
-              if (!animating) {
-                return;
-              }
-
-              value -= direction;
-              if (value < 0) {
-                animating = false;
-              }
-
-              swipe.position = value;
-              requestAnimationFrame(frame);
-            };
-
-            requestAnimationFrame(frame);
-          }
-          function updateRenderer(event) {
-            let propName = event.target.id;
-            let propValue = event.target.value;
-
-            if (propName && propValue != null) {
-              let tempRenderer = flowLayer.renderer.clone();
-              if (propName == "color") {
-                tempRenderer.visualVariables = null;
-              }
-
-              tempRenderer[propName] = propValue;
-              flowLayer.renderer = tempRenderer;
-            }
-          }
+          view.ui.add(expandCode, "bottom-left");
+          
           document.getElementById("refreshProps").onclick = refresh;
           function refresh() {
             let tempRenderer = flowLayer.renderer.clone();
-            tempRenderer.visualVariables = null;
-            tempRenderer.maxPathLength = 20;
-            tempRenderer.trailLength = 10;
-            tempRenderer.trailWidth = 5;
-            tempRenderer.density = 0.4;
-            tempRenderer.color = [144, 177, 234, 1];
+
+            if (vvFlow) {
+              tempRenderer.visualVariables = null;
+              tempRenderer.maxPathLength = 20;
+              tempRenderer.trailLength = 10;
+              tempRenderer.trailWidth = 5;
+              tempRenderer.density = 0.4;
+              tempRenderer.color = [144, 177, 234, 1];
+              document.getElementById("snippet1").style.display = "none";
+              document.getElementById("snippet2").style.display = "block";
+            } else {
+              tempRenderer.visualVariables = [
+                {
+                  type: "color",
+                  field: "Magnitude",
+                  stops: [
+                    {
+                      color: [40, 146, 199],
+                      value: 0,
+                    },
+                    {
+                      color: [160, 194, 155],
+                      value: 5,
+                    },
+                    {
+                      color: [218, 230, 119],
+                      value: 10,
+                    },
+                  ],
+                },
+              ];
+              tempRenderer.maxPathLength = 200;
+              tempRenderer.trailLength = 100;
+              tempRenderer.trailWidth = 1.5;
+              tempRenderer.density = 0.8;
+              document.getElementById("snippet1").style.display = "block";
+              document.getElementById("snippet2").style.display = "none";
+            }
             flowLayer.renderer = tempRenderer;
-            document.getElementById("snippet1").style.display = "none";
-            document.getElementById("snippet2").style.display = "block";
+            vvFlow = !vvFlow;
           }
         })());
     </script>
