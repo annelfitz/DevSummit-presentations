@@ -50,7 +50,7 @@
       }
 
       #codeSnippet {
-        display: block; overflow-x: auto; padding: 0.5em; color: #d1d1d1; background: #242424;
+        display: none; overflow-x: auto; padding: 0.5em; color: #d1d1d1; background: #242424;
         font-size: 20;
       }
     </style>
@@ -220,6 +220,7 @@
           function moveSwipe() {
             view.ui.remove(layerlist);
             view.ui.add(swipe);
+            document.getElementById("codeSnippet").style.display = "block";
             view.ui.add(expandCode, "bottom-left");
             let animating = true;
             let value = 100;

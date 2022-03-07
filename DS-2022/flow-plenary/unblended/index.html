@@ -84,33 +84,29 @@
         MosaicRule,
         esriConfig
       ) => {
-        // define API key to access HYCOM layer
-        esriConfig.apiKey =
-          "AAPK9635124828b94b438e9b17d6fe436f3b6o14wdek-SEbsWOPzDjszSeCFb0qzaAgsMMBw37zmFk2eQX5MoSiJvZXaMxcLmW4";
 
-        let depthDef = new DimensionalDefinition({
-          dimensionName: "StdZ", // Water depth
-          values: [0], // Sea surface or 0ft
-          isSlice: true,
-        });
-
-        const mr = new MosaicRule({
-          multidimensionalDefinition: [depthDef],
-        });
-
-        const hycom = new ImageryLayer({
-          url: "https://oceans4.arcgis.com/arcgis/rest/services/HYCOM/ImageServer",
-          title: "Sea water temperature ˚C",
-          mosaicRule: mr,
-          renderingRule: new RasterFunction({
-            functionName: "Sea Water Temperature Celsius",
-            variableName: "Raster",
-          }),
+        const hycom = new ImageryTileLayer({
+          url: "https://tiledimageservices.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/HYCOM/ImageServer",
+          copyright: "HYCOM, Esri",
+          multidimensionalDefinition: [
+            {
+              variableName: "Water Temperature (Celsius)",
+              dimensionName: "StdTime",
+              values: [1645401600000],
+              isSlice: true
+            },
+            {
+              variableName: "Water Temperature (Celsius)",
+              dimensionName:"StdZ",
+              values:[0],
+              isSlice: true
+            }
+          ],
+          title: "Water Temperature (Celsius)"
         });
 
         const currents = new ImageryTileLayer({
           url: "https://tiledimageservices.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/HYCOM_Currents__UV_/ImageServer",
-          // mosaicRule: mr,
           renderer: {
             type: "flow",
             trailWidth: 1.5,
@@ -118,12 +114,20 @@
             maxPathLength: 50,
             trailLength: 100,
             flowRepresentation: "flow-from",
-          }
-        });
-        currents.load().then(()=>{
-          let md = currents.multidimensionalDefinition;
-          md[1].values = [0];
-          currents.multidimensionalDefinition = md;
+          },
+          legendEnabled: false,
+          multidimensionalDefinition: [{
+              dimensionName: "StdTime",
+              variableName: "Ocean Current Velocity (UV)",
+              values: [1645401600000],
+              isSlice: true
+            },
+            {
+              dimensionName:"StdZ",
+              variableName: "Ocean Current Velocity (UV)",
+              values:[0],
+              isSlice: true
+            }]
         });
 
         const map = new Map({
