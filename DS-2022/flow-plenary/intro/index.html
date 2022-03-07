@@ -1,0 +1,359 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>DS2022 - FlowRenderer intro</title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/next/esri/themes/dark/main.css"
+    />
+    <script src="https://js.arcgis.com/next/"></script>
+
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.css"
+    />
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      .custom-code-icon:before {
+        width: 16px;
+        height: 16px;
+        content: url(https://unpkg.com/@esri/calcite-components@1.0.0-beta.77/dist/calcite/assets/icon/banana32.json);
+      }
+
+      #controls {
+        width: 300px;
+        max-height: 90vh;
+        overflow: auto;
+      }
+
+      #codeSnippet {
+        display: none; overflow-x: auto; padding: 0.5em; color: #d1d1d1; background: #242424;
+        font-size: 20;
+      }
+    </style>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/ImageryTileLayer",
+        "esri/widgets/Legend",
+        "esri/widgets/Expand",
+        "esri/widgets/Swipe",
+        "esri/rest/support/MultipartColorRamp",
+        "esri/rest/support/AlgorithmicColorRamp",
+        "esri/widgets/LayerList",
+        "esri/layers/GroupLayer",
+        "esri/renderers/FlowRenderer",
+        "esri/Color",
+      ], (
+        Map,
+        MapView,
+        ImageryTileLayer,
+        Legend,
+        Expand,
+        Swipe,
+        MultipartColorRamp,
+        AlgorithmicColorRamp,
+        LayerList,
+        GroupLayer,
+        FlowRenderer,
+        Color
+      ) =>
+        (async () => {
+          const rasterStretch = new ImageryTileLayer({
+            url: "https://tiledimageservices.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/NLDAS_Hourly_8_30_2021/ImageServer",
+            title: "Raster Stretch Renderer",
+            copyright:
+              "NASA EarthData. https://disc.gsfc.nasa.gov/datasets/NLDAS_FORA0125_H_002/summary",
+            bandIds: [0],
+            renderer: {
+              type: "raster-stretch",
+              outputMin: 0,
+              outputMax: 255,
+              statistics: [
+                [
+                  -11.329999923706056, 13.149999618530272, 0.9044536856119724,
+                  2.6931997077090086,
+                ],
+              ],
+              stretchType: "min-max",
+              gamma: [1],
+              colorRamp: new MultipartColorRamp({
+                colorRamps: [
+                  new AlgorithmicColorRamp({
+                    fromColor: new Color([9, 9, 145, 255]),
+                    toColor: new Color([31, 131, 224, 255]),
+                  }),
+                  new AlgorithmicColorRamp({
+                    fromColor: new Color([31, 131, 224, 255]),
+                    toColor: new Color([182, 237, 240, 255]),
+                  }),
+                ],
+              }),
+            },
+          });
+          // image service contains wind speed and direction variables which can be visualized
+          // with VectorFieldRenderer. VectorFieldRenderer has size visual variables set for magnitude
+          // and rotation visual variables set for directions
+          const vectorField = new ImageryTileLayer({
+            url: "https://tiledimageservices.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/NLDAS_Hourly_8_30_2021/ImageServer",
+            title: "Vector Field Renderer",
+            copyright:
+              "NASA EarthData. https://disc.gsfc.nasa.gov/datasets/NLDAS_FORA0125_H_002/summary",
+            visible: false,
+            renderer: {
+              type: "vector-field",
+              style: "beaufort-kn", // Beaufort point symbol (knots)
+              flowRepresentation: "flow-from", // show flow from angle for wind direction
+              // symbolTileSize: 10, // draw one symbol in every 10x10 pixels
+              visualVariables: [
+                {
+                  type: "size",
+                  field: "Magnitude", // values read from the first band
+                  maxDataValue: 13.72,
+                  maxSize: 40,
+                  minDataValue: 0,
+                  minSize: 10,
+                },
+                {
+                  type: "rotation",
+                  field: "Direction", // values read from the second band
+                },
+              ],
+            },
+          });
+
+          const groupLayer = new GroupLayer({
+            visibilityMode: "exclusive",
+            title: "Imagery renderers",
+            layers: [rasterStretch, vectorField],
+          });
+
+          const flowLayer = new ImageryTileLayer({
+            portalItem: {
+              id: "de35233eccad44c8a2df2ca53cfa8e5e"
+            },
+            renderer: new FlowRenderer({
+              flowRepresentation: "flow-to",
+              visualVariables: [
+                {
+                  type: "color",
+                  field: "Magnitude",
+                  stops: [
+                    {
+                      color: [40, 146, 199],
+                      value: 0,
+                    },
+                    {
+                      color: [160, 194, 155],
+                      value: 5,
+                    },
+                    {
+                      color: [218, 230, 119],
+                      value: 10,
+                    },
+                  ],
+                },
+              ],
+            }),
+            copyright:
+              "NASA EarthData. https://disc.gsfc.nasa.gov/datasets/NLDAS_FORA0125_H_002/summary",
+            listMode: "hide",
+            effect: "bloom(1.5, 0.5px, 0)",
+          });
+          const map = new Map({
+            basemap: "dark-gray-vector",
+            layers: [groupLayer, flowLayer],
+          });
+          const view = new MapView({
+            map: map,
+            container: "viewDiv",
+            center: [-100, 38],
+            zoom: 4,
+          });
+
+          const layerlist = new LayerList({ view: view });
+
+          view.ui.add(layerlist, "bottom-left");
+          // create a new Swipe widget
+          const swipe = new Swipe({
+            leadingLayers: [rasterStretch, vectorField],
+            trailingLayers: [flowLayer],
+            position: 100,
+            view: view,
+          });
+
+          const expandCode = new Expand({
+            view: view,
+            // expandIconClass: "custom-code-icon",
+            content: document.getElementById("codeSnippet"),
+          });
+          view.ui.add("showFlow", "top-right");
+          document
+            .getElementById("showFlow")
+            .addEventListener("click", moveSwipe);
+
+          function moveSwipe() {
+            view.ui.remove(layerlist);
+            view.ui.add(swipe);
+            document.getElementById("codeSnippet").style.display = "block";
+            view.ui.add(expandCode, "bottom-left");
+            let animating = true;
+            let value = 100;
+            let direction = 0.2;
+
+            const frame = () => {
+              if (!animating) {
+                return;
+              }
+
+              value -= direction;
+              if (value < 0) {
+                animating = false;
+              }
+
+              swipe.position = value;
+              requestAnimationFrame(frame);
+            };
+
+            requestAnimationFrame(frame);
+          }
+          function updateRenderer(event) {
+            let propName = event.target.id;
+            let propValue = event.target.value;
+
+            if (propName && propValue != null) {
+              let tempRenderer = flowLayer.renderer.clone();
+              if (propName == "color") {
+                tempRenderer.visualVariables = null;
+              }
+
+              tempRenderer[propName] = propValue;
+              flowLayer.renderer = tempRenderer;
+            }
+          }
+          document.getElementById("refreshProps").onclick = refresh;
+          function refresh() {
+            let tempRenderer = flowLayer.renderer.clone();
+            tempRenderer.visualVariables = null;
+            tempRenderer.maxPathLength = 20;
+            tempRenderer.trailLength = 10;
+            tempRenderer.trailWidth = 5;
+            tempRenderer.density = 0.4;
+            tempRenderer.color = [144, 177, 234, 1];
+            flowLayer.renderer = tempRenderer;
+            document.getElementById("snippet1").style.display = "none";
+            document.getElementById("snippet2").style.display = "block";
+          }
+        })());
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+    <calcite-button
+      id="showFlow"
+      color="neutral"
+      icon-start="compare"
+    ></calcite-button>
+
+    <div id="codeSnippet">
+      <calcite-action
+        id="refreshProps"
+        icon="refresh"
+        style="float: right"
+        scale="s"
+      ></calcite-action>
+      <span id="snippet1">
+        <pre><code>
+<span style="color: #d1d1d1; font-weight: bold;">const</span> flowLayer = <span
+        style="color: #d1d1d1; font-weight: bold;">new</span> ImageryTileLayer({
+   portalItem: {
+      id: <span style="color: #ff809f;">"de35233eccad44c8a2df2ca53cfa8e5e"</span>,
+   },
+   renderer: <span
+        style="color: #d1d1d1; font-weight: bold;">new</span> FlowRenderer({
+      visualVariables: [{
+        type: <span
+        style="color: #ff809f;">"color"</span>,
+        field: <span
+        style="color: #ff809f;">"Magnitude"</span>,
+        stops: [
+          { color: [<span
+        style="color: #77bbbb;">40</span>, <span
+        style="color: #77bbbb;">146</span>, <span
+        style="color: #77bbbb;">199</span>, <span
+        style="color: #77bbbb;">1</span>], value: <span
+        style="color: #77bbbb;">0</span> },
+          { color: [<span
+        style="color: #77bbbb;">160</span>, <span
+        style="color: #77bbbb;">194</span>, <span
+        style="color: #77bbbb;">155</span>, <span
+        style="color: #77bbbb;">1</span>], value: <span
+        style="color: #77bbbb;">5</span>},
+          { color: [<span
+        style="color: #77bbbb;">218</span>, <span
+        style="color: #77bbbb;">230</span>, <span
+        style="color: #77bbbb;">119</span>, <span
+        style="color: #77bbbb;">1</span>], value: <span
+        style="color: #77bbbb;">10</span>},
+        ]
+      }]
+   }),
+   effect: <span style="color: #ff809f;">"bloom(1.5, 0.5px, 0)"</span>
+});
+       
+       </code></pre>
+      </span>
+      <span id="snippet2" style="display: none">
+        <pre><code>
+<span
+          style="color: #d1d1d1; font-weight: bold;">const</span> flowLayer = <span
+          style="color: #d1d1d1; font-weight: bold;">new</span> ImageryTileLayer({
+  portalItem: {
+    id: <span style="color: #ff809f;">"de35233eccad44c8a2df2ca53cfa8e5e"</span>,
+  },
+  renderer: <span style="color: #d1d1d1; font-weight: bold;">new</span> FlowRenderer({
+    maxPathLength: <span style="color: #77bbbb;">20</span>,
+    trailLength: <span style="color: #77bbbb;">10</span>,
+    trailWidth: <span style="color: #77bbbb;">5</span>,
+    density: <span style="color: #77bbbb;">0.4</span>,
+    color: [<span
+          style="color: #77bbbb;">144</span>, <span
+          style="color: #77bbbb;">177</span>, <span
+          style="color: #77bbbb;">234</span>, <span
+          style="color: #77bbbb;">1</span>]
+  }),
+  effect: <span
+          style="color: #ff809f;">"bloom(1.5, 0.5px, 0)"</span>
+});
+         
+         </code></pre>
+      </span>
+    </div>
+  </body>
+</html>
