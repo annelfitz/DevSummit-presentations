@@ -2,6 +2,17 @@
 
 Here you can access presentations and demos from the Esri Developer Summit.
 
+### DevSummit 2020
+
+#### Plenary session
+- [FlowRenderer intro](https://annelfitz.github.io/DevSummit-presentations/DS-2022/flow-plenary/intro/)
+- [HYCOM Ocean Currents](https://annelfitz.github.io/DevSummit-presentations/DS-2022/flow-plenary/ocean-currents/)
+
+#### Technical sessions
+- ArcGIS API for JavaScript: Using Arcade with Your Apps
+  - [Presentation](https://afitz.esri.com/testing/DevSummit-presentations/DS-2022/Using-Arcade-with-your-apps/)
+
+
 ### DevSummit 2021
 
 #### Plenary session
