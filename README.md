@@ -2,7 +2,7 @@
 
 Here you can access presentations and demos from the Esri Developer Summit.
 
-### DevSummit 2020
+### DevSummit 2022
 
 #### Plenary session
 - [FlowRenderer intro](https://annelfitz.github.io/DevSummit-presentations/DS-2022/flow-plenary/intro/)
@@ -11,6 +11,10 @@ Here you can access presentations and demos from the Esri Developer Summit.
 #### Technical sessions
 - ArcGIS API for JavaScript: Using Arcade with Your Apps
   - [Presentation](https://afitz.esri.com/testing/DevSummit-presentations/DS-2022/Using-Arcade-with-your-apps/)
+
+- ArcGIS API for JavaScript: Dynamic Vector Symbology
+- ArcGIS API for JavaScript: Visualizing Change Over Time
+- ArcGIS API for JavaScript: Visualizing Large Datasets
 
 
 ### DevSummit 2021
