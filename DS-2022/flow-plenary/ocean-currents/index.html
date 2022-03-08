@@ -27,36 +27,7 @@
       href="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.css"
     />
 
-    <style>
-      html,
-      body {
-        padding: 0;
-        margin: 0;
-        height: 100%;
-        width: 100%;
-      }
-
-      #viewDiv {
-        padding: 0;
-        margin: 0;
-        height: 100%;
-        width: 100%;
-      }
-
-      .slider2 {
-        width: 150px;
-        height: 300px;
-        overflow-x: hidden;
-      }
-
-      /* hide the minor ticks on the timeslider */
-      #timeSlider .esri-slider__tick.minorTick {
-        display: none;
-      }
-      .info {
-        padding: 10px;
-      }
-    </style>
+    <link rel="stylesheet" href="app.css" />
 
     <script>
       require([
@@ -72,7 +43,8 @@
         "esri/widgets/BasemapGallery",
         "esri/Basemap",
         "esri/geometry/Extent",
-        "esri/core/promiseUtils"
+        "esri/core/promiseUtils",
+        "esri/core/watchUtils"
       ], (
         Map,
         MapView,
@@ -86,9 +58,10 @@
         BasemapGallery,
         Basemap,
         Extent,
-        promiseUtils
+        promiseUtils,
+        watchUtils
       ) => {
-        let layermultidimensionalDefinition;
+        let layermultidimensionalDefinition, currentsLayerView;
 
         const hycom = new ImageryTileLayer({
           url: "https://tiledimageservices.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/HYCOM/ImageServer",
@@ -166,7 +139,14 @@
           layermultidimensionalDefinition = hycom.rasterInfo.multidimensionalInfo;
         });
 
+        const loadingControl = document.getElementById("loading-control");
+
         view.whenLayerView(currents).then((lv) => {
+          currentsLayerView = lv;
+          watchUtils.whenFalseOnce(lv, "updating", function(updating){
+            view.container.style.opacity = "100%";
+            loadingControl.style.visibility = "hidden";
+          });
           // create time slider widget
           const timeSlider = new TimeSlider({
             container: "timeSlider",
@@ -469,7 +449,12 @@
         </calcite-action-bar>
       </calcite-shell-panel>
 
-      <div id="viewDiv"></div>
+      <div id="viewDiv">
+        <div id="loading-control" class="esri-widget">
+          Hold on while we load data the size of an ocean...
+          <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </div>
+      </div>
     </calcite-shell>
 
     <calcite-panel
