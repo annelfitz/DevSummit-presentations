@@ -41,6 +41,7 @@
         "esri/widgets/Bookmarks",
         "esri/webmap/Bookmark",
         "esri/widgets/BasemapGallery",
+        "esri/widgets/Expand",
         "esri/Basemap",
         "esri/geometry/Extent",
         "esri/core/promiseUtils",
@@ -56,6 +57,7 @@
         Bookmarks,
         Bookmark,
         BasemapGallery,
+        Expand,
         Basemap,
         Extent,
         promiseUtils,
@@ -203,7 +205,7 @@
 
         let activeWidget;
         view.ui.add(["layers", "depth", "time", "basemap", "bookmarks"], "top-left");
-        view.ui.add("info", "top-right");
+
         const handleActionBarClick = ({ target }) => {
           if (target.tagName !== "CALCITE-ACTION") {
             return;
@@ -237,6 +239,14 @@
         function initializeWidgets() {
           // move default placement of zoom widget
           view.ui.move("zoom", "bottom-right");
+
+          const infoExpand = new Expand({
+            view: view,
+            content: document.getElementById("info"),
+            expandIconClass: "esri-icon-legend"
+          });
+
+          view.ui.add(infoExpand, "top-right");
 
           // create legend widget
           const legend = new Legend({
