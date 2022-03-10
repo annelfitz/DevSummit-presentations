@@ -1,3 +1,64 @@
+// CA block group layer
+const featureLayer = new FeatureLayer({
+    blendMode: "source-in", // will be blended with the buildingFootprints layer
+    portalItem: {
+        id: "86e2f7a5de0f4a86b2ff09c8abc4ab87" // CA block group with income
+    },
+    outFields: ["*"],
+    renderer: {
+        type: "simple",
+        symbol: {
+            type: "simple-fill",
+            color: "white",
+            outline: null
+        },
+        visualVariables: [{
+            type: "color",
+            valueExpression: createAgeRange(
+                ageSlider.values[0],
+                ageSlider.values[1]
+            ),
+            valueExpressionTitle: "Percent of population aged " +
+                ageSlider.values[0] +
+                " - " +
+                ageSlider.values[1],
+            stops: [{
+                    value: 0.25,
+                    label: "0.25%",
+                    color: "#474333"
+                },
+                {
+                    value: 10,
+                    label: "10%",
+                    color: "#23ccff"
+                }
+            ]
+        }]
+    }
+});
+
+// LA building footprints
+const buildingFootprints = new TileLayer({
+    portalItem: {
+        id: "7009e50f4c7b4eb7a77fb92cfac3835a"
+    },
+    legendEnabled: false,
+    renderer: {
+        type: "simple",
+        symbol: {
+            type: "simple-fill"
+        }
+    },
+    minScale: 245270,
+    maxScale: 0
+});
+
+// group layer for blending block groups with building footprints
+const groupLayer = new GroupLayer({
+    layers: [buildingFootprints, featureLayer],
+});
+
+
 featureLayer.renderer = {
     type: "simple",
     symbol: {

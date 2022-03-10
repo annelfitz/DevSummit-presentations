@@ -1,6 +1,7 @@
 import './style.css'
 
-import '@arcgis/core/assets/esri/themes/light/main.css';
+// import '@arcgis/core/assets/esri/themes/light/main.css';
+
 
 import WebMap from '@arcgis/core/WebMap';
 import MapView from '@arcgis/core/views/MapView';

@@ -8,10 +8,10 @@
     "copy": "ncp ./node_modules/@arcgis/core/assets ./assets"
   },
   "devDependencies": {
-    "vite": "^2.0.1"
+    "vite": "^2.4.1"
   },
   "dependencies": {
-    "@arcgis/core": "^4.18.1",
-    "@esri/calcite-components": "^1.0.0-beta.50"
+    "@arcgis/core": "^4.20.2",
+    "@esri/calcite-components": "^1.0.0-beta.59"
   }
 }
