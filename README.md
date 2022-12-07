@@ -10,7 +10,7 @@ Here you can access presentations and demos from the Esri Developer Summit.
 
 #### Technical sessions
 - ArcGIS API for JavaScript: Using Arcade with Your Apps
-  - [Presentation](https://afitz.esri.com/testing/DevSummit-presentations/DS-2022/Using-Arcade-with-your-apps/)
+  - [Presentation](https://annelfitz.github.io/DevSummit-presentations/DS-2022/Using-Arcade-with-your-apps/)
 
 - ArcGIS API for JavaScript: Dynamic Vector Symbology
 - ArcGIS API for JavaScript: Visualizing Change Over Time
