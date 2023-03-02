@@ -1,0 +1,111 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Tree inventory</title>
+
+  <script src="https://js.arcgis.com/calcite-components/1.0.5/calcite.esm.js" type="module"></script>
+  <link rel="stylesheet" href="https://js.arcgis.com/calcite-components/1.0.5/calcite.css" />
+
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/default.min.css">
+  <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <script src="https://jsdev.arcgis.com/4.26/"></script>
+  <link rel="stylesheet" href="https://jsdev.arcgis.com/4.26/esri/themes/light/main.css" />
+
+  <link rel="stylesheet" href="css/app.css" />
+  <script src="js/app.js"></script>
+
+</head>
+
+<body>
+  <calcite-loader></calcite-loader>
+  <calcite-shell content-behind>
+    <calcite-shell-panel slot="panel-start" detached>
+      <calcite-action-bar slot="action-bar">
+        <calcite-action data-action-id="arcadeSyntax" text="Arcade script" icon="script"></calcite-action>
+        <calcite-action data-action-id="visibility" text="Visible expression" icon="brackets-curly"></calcite-action>
+        <calcite-action data-action-id="webappCode"  text="Web app" icon="code"></calcite-action>
+      </calcite-action-bar>
+
+      <!-- Arcade syntax panel showing small snippet of syntax used in demo-->
+      <calcite-panel heading="Parcel ID expression" headingLevel = "2"
+        data-panel-id="arcadeSyntax" hidden>
+        <div id="arcadeSyntax-container">
+          <pre><code class="language-javascript">  
+  // Check that there is a feature
+  if (IsEmpty(Geometry($feature))) {
+    return;
+  }
+  
+  // Grab the parcels that intersect tree feature
+  var parcels = Intersects( FeatureSetByName($map,"Parcels"), $feature);
+  
+  // Return the first returned parcel
+  if (IsEmpty(parcels)) {
+    return null;
+  } else {
+    var parcel = First(parcels);
+    return parcel.PARCEL;
+  }</code></pre>
+        </div>
+      </calcite-panel>
+
+      <!-- Visibility panel from the SDK -->
+      <calcite-panel heading="Group visibility expression" headingLevel="2" data-panel-id="visibility" hidden>
+        <div id="visibility-container">
+        <pre><code class="language-javascript">// Show the proximity violation fields if the Tree information is set and not using "Shrub
+// Also show if the distance between the tree and any
+// building is less than 10 feet.
+            
+if (($feature.treetype != "Shrub") && (!IsEmpty($feature.CommonName)) && ($feature["distancetobldg"] < 10)) {
+
+  return true;
+
+}
+
+return false;</code></pre></div>
+      </calcite-panel>
+
+      <!-- Web app panel showing small snippet of web app used in demo-->
+      <calcite-panel heading="Web app code" headingLevel="2" data-panel-id="webappCode" hidden>
+        <div id="webappCode-container"><pre><code class="language-javascript">
+  require([
+    "esri/WebMap",
+    "esri/views/MapView",
+    "esri/widgets/Editor"
+    ], (WebMap, MapView, Editor) => {
+      // Create a map from the referenced webmap item id
+      const webmap = new WebMap({
+        portalItem: {
+          id: "c00a227875b24891a1feca50157d73be"
+        }
+      });
+      const view = new MapView({
+        container: "viewDiv",
+        map: webmap
+      });
+      const editor = new Editor({
+        view,
+      });
+      view.ui.add(editor, "top-right");
+  });</code></pre></div>
+      </calcite-panel>
+
+    </calcite-shell-panel>
+
+    <!-- Editor panel -->
+    <calcite-shell-panel slot="panel-end">
+      <div id="editor"></div>
+    </calcite-shell-panel>
+    <div id="viewDiv"></div>
+  </calcite-shell>
+</body>
+
+<script>
+
+</script>
+
+</html>

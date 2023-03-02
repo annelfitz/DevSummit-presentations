@@ -1,0 +1,110 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>DS2022 - Ocean currents (blended)</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/next/esri/themes/dark/main.css" />
+  <script src="https://js.arcgis.com/next/"></script>
+
+  <script type="module" src="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.esm.js"></script>
+  <script nomodule="" src="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.0.0-beta.76/calcite.css" />
+
+  <link rel="stylesheet" href="app.css" />
+
+  <script>
+    require([
+      "esri/WebMap",
+      "esri/views/MapView",
+      "esri/widgets/Legend",
+      "esri/widgets/Expand",
+      "esri/widgets/Editor"
+    ], (
+      WebMap,
+      MapView,
+      Legend,
+      Expand,
+      Editor
+    ) => {
+
+      const map = new WebMap({
+        portalItem: { id: "736bed524f294e2e8866036b3dc72723" }
+      });
+
+      const view = new MapView({
+        map,
+        container: "viewDiv",
+        padding: {
+          left: 49
+        }
+      });
+
+      view.when(() => {
+        initializeWidgets();
+      });
+      
+      let activeWidget;
+      view.ui.add(["legend", "arcadeScript", "webappCode"], "top-left");
+
+      const handleActionBarClick = ({ target }) => {
+        if (target.tagName !== "CALCITE-ACTION") {
+          return;
+        }
+        if (activeWidget) {
+          document.querySelector(
+            `[data-action-id=${activeWidget}]`
+          ).active = false;
+          document.querySelector(
+            `[data-panel-id=${activeWidget}]`
+          ).hidden = true;
+        }
+        const nextWidget = target.dataset.actionId;
+        if (nextWidget !== activeWidget) {
+          document.querySelector(
+            `[data-action-id=${nextWidget}]`
+          ).active = true;
+          document.querySelector(
+            `[data-panel-id=${nextWidget}]`
+          ).hidden = false;
+          activeWidget = nextWidget;
+        } else {
+          activeWidget = null;
+        }
+      };
+
+      document
+        .querySelector("calcite-action-bar")
+        .addEventListener("click", handleActionBarClick);
+
+      function initializeWidgets() {
+        // move default placement of zoom widget
+        view.ui.move("zoom", "bottom-left");
+
+        // create legend widget
+        const legend = new Legend({
+          view: view,
+          container: "legend-container",
+        });
+      }
+    });
+  </script>
+</head>
+
+<body class="calcite-theme-dark">
+  <calcite-shell>
+    <calcite-shell-panel slot="primary-panel" width-scale="s" detached collapsed>
+      <calcite-action-bar slot="action-bar">
+        <calcite-action data-action-id="legend" icon="layers" text="Layers"></calcite-action>
+        <calcite-action data-action-id="arcadeScript" icon="script" text="Arcade script"></calcite-action>
+        <calcite-action data-action-id="webappCode" icon="code" text="Web app"></calcite-action>
+      </calcite-action-bar>
+    </calcite-shell-panel>
+
+    <div id="viewDiv">
+    </div>
+  </calcite-shell>
+</body>
+
+</html>

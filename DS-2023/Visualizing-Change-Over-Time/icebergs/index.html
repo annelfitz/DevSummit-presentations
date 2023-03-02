@@ -1,0 +1,251 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <!--
+     ArcGIS Maps SDK for JavaScript, https://js.arcgis.com
+     For more information about the timeslider-filter sample,
+     read the original sample description at developers.arcgis.com.
+     https://developers.arcgis.com/javascript/latest/sample-code/timeslider-filter/
+     -->
+    <title>
+      Filter features with TimeSlider | Sample | ArcGIS Maps SDK for JavaScript
+      4.26
+    </title>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      #timeSlider {
+        width: 600px;
+      }
+      #infoDiv {
+        background-color: #303030;
+        width: 250px;
+        height: 100px;
+        padding: 10px;
+        color: white;
+      }
+      #infoDiv > h2 {
+        color: #7beaff;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.26/esri/themes/dark/main.css"
+    />
+    <script src="https://js.arcgis.com/4.26/"></script>
+    <script>
+      let view;
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/FeatureLayer",
+        "esri/widgets/TimeSlider",
+        "esri/widgets/Expand",
+        "esri/widgets/Legend",
+        "esri/layers/support/FeatureFilter",
+        "esri/layers/TileLayer"
+      ], (
+        Map,
+        MapView,
+        FeatureLayer,
+        TimeSlider,
+        Expand,
+        Legend,
+        FeatureFilter,
+        TileLayer
+      ) => {
+        let layerView;
+
+        const spilhausBasemap = new TileLayer({
+          url: "https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/Spilhaus_Vibrant_Basemap/MapServer",
+          effect: "saturate(10%) brightness(0.3)" // dim brightness to create darker style basemap
+        });
+        // set the timeInfo on GeoJSONLayer at the time initialization
+        const layer = new FeatureLayer({
+          url: "https://services.arcgis.com/nGt4QxSblgDfeJn9/arcgis/rest/services/Icebergs/FeatureServer/1",
+          definitionExpression: "date >= '2002-09-08' AND date < '2003-09-08'",
+          effect: "bloom(150%, 1px, 0.2)",
+          fields: [
+            {
+              name: "date",
+              type: "date",
+            },
+          ],
+          renderer: {
+            type: "simple",
+            symbol: {
+              type: "picture-marker",
+              url: "data:image/png;base64,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",
+            },
+            visualVariables: [
+              {
+                type: "size",
+                field: "size",
+                minSize: 10,
+                maxSize: 90,
+                minDataValue: -7075,
+                maxDataValue: 100,
+              },
+            ],
+          },
+          timeInfo: {
+            startField: "date", // name of the date field
+          },
+          orderBy: {
+            field: "size",
+          },
+        });
+        const map = new Map({
+          basemap: {
+            baseLayers: [spilhausBasemap]
+          },
+          layers: [layer],
+        });
+        view = new MapView({
+          map: map,
+          container: "viewDiv",
+          extent: {
+            spatialReference: {
+              wkid: 54099
+            },
+            xmax: -2032652.513304136,
+            xmin: -4717765.305404721,
+            ymax: -3214349.9841679195,
+            ymin: -5231801.93573849
+          }
+        });
+        // create a new time slider widget
+        // set other properties when the layer view is loaded
+        // by default timeSlider.mode is "time-window" - shows
+        // data falls within time range
+        const timeSlider = new TimeSlider({
+          container: "timeSlider",
+          playRate: 50,
+          mode: "time-window",
+          stops: {
+            interval: {
+              value: 6,
+              unit: "hours",
+            },
+          },
+        });
+        view.ui.add(timeSlider, "bottom-left");
+        // wait till the layer view is loaded
+        view.whenLayerView(layer).then((lv) => {
+          layerView = lv;
+          // start time of the time slider - 5/25/2019
+          const start = new Date(2002, 8, 8);
+          // set time slider's full extent to
+          // 5/25/5019 - until end date of layer's fullTimeExtent
+          timeSlider.fullTimeExtent = {
+            start: start,
+            end: new Date(2003, 8, 8),
+          };
+          let end = new Date(start);
+
+          end.setDate(end.getDate() + 1);
+          // timeExtent property is set so that timeslider
+          // widget show the first day. We are setting
+          // the thumbs positions.
+          timeSlider.timeExtent = {
+            start,
+            end,
+          };
+        });
+        // watch for time slider timeExtent change
+        timeSlider.watch("timeExtent", () => {
+          document.getElementById("date").innerHTML = timeSlider.timeExtent.end;
+          layer.renderer = createRenderer(timeSlider.timeExtent.end.getTime());
+          // only show earthquakes happened up until the end of
+          // timeSlider's current time extent.
+          layerView.filter = new FeatureFilter({
+            where:
+              "date <= " +
+              timeSlider.timeExtent.end.getTime() +
+              " AND date > " +
+              timeSlider.fullTimeExtent.start.getTime(),
+          });
+        });
+
+        function createRenderer(end) {
+          let renderer = {
+            type: "simple",
+            symbol: {
+              type: "picture-marker",
+              url: "data:image/png;base64,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",
+            },
+            visualVariables: [
+              {
+                type: "size",
+                field: "size",
+                minSize: 10,
+                maxSize: 45,
+                minDataValue: -7075,
+                maxDataValue: 130498,
+              },
+              {
+                type: "opacity",
+                valueExpression: `
+              var endDate = Date("${end}");
+              var curDate = Date($feature['date']);
+              var diff = DateDiff(endDate, curDate, "days");
+              // console(diff)
+              if (diff < 15) {
+                return 15 - diff
+              } else {
+                return 0
+              }
+            `,
+                stops: [
+                  {
+                    value: 0,
+                    opacity: 0.05,
+                  },
+                  {
+                    value: 15,
+                    opacity: 1,
+                  },
+                ],
+              },
+            ],
+          };
+          return renderer;
+        }
+        // add a legend for the earthquakes layer
+        const legendExpand = new Expand({
+          collapsedIconClass: "esri-icon-collapse",
+          expandIconClass: "esri-icon-expand",
+          expandTooltip: "Legend",
+          view: view,
+          content: new Legend({
+            view: view,
+          }),
+          expanded: false,
+        });
+        view.ui.add(legendExpand, "top-left");
+        view.ui.add(document.getElementById("infoDiv"), "top-right")
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+    <div id="timeSlider"></div>
+    <div id="infoDiv">
+        <h2>Iceberg Movement</h2>
+        <span id="date"></span>
+    </div>
+  </body>
+</html>

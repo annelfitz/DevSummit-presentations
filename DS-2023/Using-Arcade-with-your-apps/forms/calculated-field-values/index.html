@@ -1,0 +1,535 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1, maximum-scale=1,user-scalable=no"
+    />
+    <!--
+     ArcGIS Maps SDK for JavaScript, https://js.arcgis.com
+     For more information about the widgets-featureform-async sample,
+     read the original sample description at developers.arcgis.com.
+     https://developers.arcgis.com/javascript/latest/sample-code/widgets-featureform-async/
+     -->
+    <title>
+      Editing with calculated field expressions | Sample | ArcGIS Maps SDK for
+      JavaScript
+    </title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.26/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.26/"></script>
+
+    <script type="text/plain" id="tree-dbh">
+      // Tree info group -> Diameter at breast height(DBH) field
+        var circumference = $feature.circumference;
+        if (IsEmpty(circumference)) {
+          return 0;
+        }
+        return Round((circumference / PI),1)
+    </script>
+
+    <script type="text/plain" id="nearest-address">
+      // Location group -> Nearest address field
+        if (isEmpty(Geometry($feature))) {
+          return;
+        }
+
+        // Buffer distance (in feet)
+        var bufferDistance = 300;
+        var bufferGeom = Buffer($feature, bufferDistance, "feet")
+
+        // query for nearby address points
+        var addresses = Intersects(FeatureSetByName($map, "Address points",["FULL_ADDRESS"],true), bufferGeom);
+
+        // return if no results
+        if (Count(addresses) == 0) {
+          return null;
+        }
+
+        var nearestAddress
+        var minDistance = Infinity;
+
+        // iterate through the address points
+        for (var address in addresses) {
+          var addressDistance = Distance(address, $feature, "feet");
+
+          if (addressDistance < minDistance) {
+            nearestAddress = address;
+            minDistance = addressDistance;
+          }
+        }
+
+        // return street address from nearest
+        return Proper(nearestAddress.FULL_ADDRESS);
+    </script>
+
+    <script type="text/plain" id="municipality">
+      // Location group -> Municipality field
+        if (isEmpty(Geometry($feature))) {
+          return;
+        }
+
+        // Buffer distance (in feet)
+        var bufferDistance = 300;
+        var bufferGeom = Buffer($feature, bufferDistance, "feet")
+
+        // query for nearby address points
+        var addresses = Intersects(FeatureSetByName($map, "Address points",["CITY"],true), bufferGeom);
+
+        // return if no results
+        if (Count(addresses) == 0) {
+          return null;
+        }
+
+        var nearestAddress;
+        var minDistance = Infinity;
+
+        // iterate through the address points
+        for (var address in addresses) {
+          var addressDistance = Distance(address, $feature, "feet");
+
+          if (addressDistance < minDistance) {
+            nearestAddress = address;
+            minDistance = addressDistance;
+          }
+        }
+        Console(nearestAddress)
+        // return street address from nearest
+        return "City of " + Proper(nearestAddress.CITY);
+    </script>
+
+    <script type="text/plain" id="district">
+      if (IsEmpty(Geometry($feature))) {
+          return;
+        }
+        var districts = Intersects( FeatureSetByName($map,"Districts"), $feature);
+        Console(IsEmpty(First(districts)))
+
+        if (IsEmpty(First(districts))) {
+          return null;
+        } else {
+          var district = First(districts);
+          return district.DISTRICT;
+        }
+    </script>
+
+    <script type="text/plain" id="latitude">
+      // Location group -> Latitude field
+        function MetersToLatLon(x, y) {
+
+          // Converts XY point from Spherical Mercator EPSG:900913 to lat/lon in WGS84 Datum
+          // Source: http://www.maptiler.org/google-maps-coordinates-tile-bounds-projection/
+
+          var originShift = 2.0 * PI * 6378137.0 / 2.0;
+          var lon = (x / originShift) * 180.0;
+          var lat = (y / originShift) * 180.0;
+          lat = 180.0 / PI * (2.0 * Atan( Exp( lat * PI / 180.0)) - PI / 2.0);
+          return [lat, lon];
+        }
+
+        if (IsEmpty(Geometry($feature))) {
+          return null;
+        }
+
+        // use function to get the desired output
+        var latlon = MetersToLatLon(Geometry($feature).X, Geometry($feature).Y);
+
+        return Round(latlon[0],6);
+    </script>
+
+    <script type="text/plain" id="longitude">
+      // Location group -> Longitude field
+        function MetersToLatLon(x, y) {
+
+          // Converts XY point from Spherical Mercator EPSG:900913 to lat/lon in WGS84 Datum
+          // Source: http://www.maptiler.org/google-maps-coordinates-tile-bounds-projection/
+
+          var originShift = 2.0 * PI * 6378137.0 / 2.0;
+          var lon = (x / originShift) * 180.0;
+          var lat = (y / originShift) * 180.0;
+          lat = 180.0 / PI * (2.0 * Atan( Exp( lat * PI / 180.0)) - PI / 2.0);
+
+          return [lat, lon];
+        }
+
+        if (IsEmpty(Geometry($feature))) {
+          return null;
+        }
+
+        // use function to get the desired output
+        var latlon = MetersToLatLon(Geometry($feature).X, Geometry($feature).Y);
+
+        return Round(latlon[1],6);
+    </script>
+
+    <script type="text/plain" id="current-user">
+      // Ownership group -> Collected By field
+        var portalURL = "https://www.arcgis.com";
+        var userInfo = GetUser(Portal(portalURL),"");
+
+        if(IsEmpty(userInfo)) {
+          return "anonymous";
+        }
+
+        //username
+        return (userInfo["fullname"])
+    </script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <script>
+      require([
+        "esri/WebMap",
+        "esri/views/MapView",
+        "esri/layers/FeatureLayer",
+        "esri/widgets/Editor",
+        "esri/form/ExpressionInfo",
+        "esri/form/FormTemplate",
+        "esri/form/elements/GroupElement",
+        "esri/form/elements/FieldElement",
+      ], (
+        WebMap,
+        MapView,
+        FeatureLayer,
+        Editor,
+        ExpressionInfo,
+        FormTemplate,
+        GroupElement,
+        FieldElement
+      ) => {
+        //================================================
+        //   Set the expressionInfos for the tree formTemplate
+        //================================================
+        const dbhExpression = new ExpressionInfo({
+          expression: document.getElementById("tree-dbh").text,
+          name: "tree-dbh",
+          title: "Tree DBH",
+          returnType: "number",
+        });
+        const nearAddressExpr = new ExpressionInfo({
+          expression: document.getElementById("nearest-address").text,
+          name: "nearest-address",
+          title: "Nearest Address",
+          returnType: "string",
+        });
+        const muniExpression = new ExpressionInfo({
+          expression: document.getElementById("municipality").text,
+          name: "municipality",
+          returnType: "string",
+          title: "Municipality",
+        });
+        const districtExpression = new ExpressionInfo({
+          expression: document.getElementById("district").text,
+          name: "district",
+          returnType: "string",
+          title: "District",
+        });
+        const latExpression = new ExpressionInfo({
+          expression: document.getElementById("latitude").text,
+          name: "latitude",
+          title: "Latitude",
+        });
+        const longExpression = new ExpressionInfo({
+          expression: document.getElementById("longitude").text,
+          name: "longitude",
+          title: "Longitude",
+        });
+        const currentUserExpression = new ExpressionInfo({
+          expression: document.getElementById("current-user").text,
+          name: "current-user",
+          title: "Current User",
+          returnType: "string",
+        });
+        //================================================
+        // Set of field elements for grouping tree species
+        //================================================
+        // Common tree name field element
+        const commonTreeFieldElement = new FieldElement({
+          label: "Common name",
+          editable: true,
+          fieldName: "commonname",
+          input: {
+            // autocastable to ComboBoxInput
+            type: "combo-box",
+            showNoValueOption: true,
+          },
+        });
+        // Genus name field element
+        const genusFieldElement = new FieldElement({
+          label: "Genus",
+          editable: true,
+          fieldName: "genus",
+          input: {
+            // autocastable to ComboBoxInput
+            type: "combo-box",
+            showNoValueOption: false,
+          },
+        });
+        // Tree species field element
+        const treeSpeciesFieldElement = new FieldElement({
+          label: "Species",
+          editable: true,
+          fieldName: "species",
+          input: {
+            // autocastable to ComboBoxInput
+            type: "combo-box",
+            showNoValueOption: false,
+          },
+        });
+        // First grouping of elements for tree species
+        const groupElementTreeSpecies = new GroupElement({
+          label: "Tree Species",
+          elements: [
+            commonTreeFieldElement,
+            genusFieldElement,
+            treeSpeciesFieldElement,
+          ],
+          initialState: "collapsed",
+        });
+        //======================================
+        // Field elements for Tree info grouping
+        //======================================
+        // Tree circumference field element
+        const circumFieldElement = new FieldElement({
+          label: "Circumference (in²)",
+          editable: true,
+          fieldName: "circumference",
+          input: {
+            //autocastable to TextBoxInput
+            type: "text-box",
+            minLength: 0,
+          },
+        });
+        // Diameter at breast height field element.
+        // Since this field element uses a value expression, the editable property must be set to false
+        const dbhFieldElement = new FieldElement({
+          description: "Computed from Tree Circumference, (in inches)",
+          label: "Diameter at breast height (DBH)",
+          editable: false,
+          fieldName: "diameter",
+          input: {
+            // autocastable to TextBoxInput
+            type: "text-box",
+          },
+          valueExpression: dbhExpression.name,
+        });
+        // Second grouping of elements for Tree info
+        const groupElementTreeInfo = new GroupElement({
+          label: "Tree info",
+          elements: [circumFieldElement, dbhFieldElement],
+          initialState: "collapsed",
+        });
+        //======================================
+        // Field elements for Location grouping
+        //======================================
+        // Nearest address field element
+        const addressFieldElement = new FieldElement({
+          label: "Nearest address",
+          editable: false,
+          fieldName: "fulladdr",
+          input: {
+            // autocastable to TextBoxInput
+            type: "text-box",
+            maxLength: 250,
+            minLength: 0,
+          },
+          valueExpression: nearAddressExpr.name,
+        });
+        // Municipality field element
+        const muniFieldElement = new FieldElement({
+          label: "Municipality",
+          editable: false,
+          fieldName: "municipality",
+          input: {
+            // autocastable to TextBoxInput
+            type: "text-box",
+            maxLength: 150,
+            minLength: 0,
+          },
+          valueExpression: muniExpression.name,
+        });
+        // District field element
+        const distFieldElement = new FieldElement({
+          label: "District or neighborhood",
+          editable: false,
+          fieldName: "district",
+          input: {
+            // autocastable to TextBoxInput
+            type: "text-box",
+            maxLength: 255,
+            minLength: 0,
+          },
+          valueExpression: districtExpression.name,
+        });
+        // Latitude field element
+        const latFieldElement = new FieldElement({
+          label: "Latitude",
+          editable: false,
+          fieldName: "latitude",
+          inputType: {
+            type: "text-box",
+            minLength: 0,
+          },
+          valueExpression: latExpression.name,
+        });
+        // Longitude field element
+        const longFieldElement = new FieldElement({
+          label: "Longitude",
+          editable: false,
+          fieldName: "longitude",
+          inputType: {
+            type: "text-box",
+            minLength: 0,
+          },
+          valueExpression: longExpression.name,
+        });
+        // Third grouping of elements for location
+        const groupElementLocation = new GroupElement({
+          label: "Location",
+          elements: [
+            addressFieldElement,
+            muniFieldElement,
+            distFieldElement,
+            latFieldElement,
+            longFieldElement,
+          ],
+          initialState: "collapsed",
+        });
+        //======================================
+        // Field elements for Ownership grouping
+        //======================================
+        // Collected by field element
+        const collNameFieldElement = new FieldElement({
+          label: "Collected By",
+          editable: false,
+          fieldName: "collector_name",
+          input: {
+            // autocastable to TextBoxInput
+            type: "text-box",
+            maxLength: 50,
+            minLength: 0,
+          },
+          valueExpression: currentUserExpression.name,
+        });
+        // Owner name field element
+        const ownedByFieldElement = new FieldElement({
+          label: "Owned by",
+          editable: true,
+          fieldName: "ownedby",
+          input: {
+            // autocastable to RadioButtonsInput
+            type: "radio-buttons",
+            noValueOptionLabel: "No value",
+            showNoValueOption: true,
+          },
+        });
+        // Maintainer name field element
+        const maintainFieldElement = new FieldElement({
+          label: "Maintained by",
+          editable: true,
+          fieldName: "maintby",
+          input: {
+            // autocastable to RadioButtonsInput
+            type: "radio-buttons",
+            showNoValueOption: false,
+          },
+        });
+        // Fourth grouping of elements for Ownership
+        const groupElementOwner = new GroupElement({
+          label: "Ownership",
+          elements: [
+            collNameFieldElement,
+            ownedByFieldElement,
+            maintainFieldElement,
+          ],
+          initialState: "collapsed",
+        });
+        // Tree notes field element
+        const treeNotesFieldElement = new FieldElement({
+          label: "Tree notes",
+          editable: true,
+          fieldName: "treenotes",
+          input: {
+            // autocastable to TextBoxInput
+            type: "text-box",
+            maxLength: 4000,
+            minLength: 0,
+          },
+        });
+        //================================================
+        //   Set the properties for the
+        //   trees feature layer's FormTemplate
+        //================================================
+        const treeformTemplate = new FormTemplate({
+          title: "Tree inventory",
+          description: "Redlands trees",
+          elements: [
+            groupElementTreeSpecies,
+            groupElementTreeInfo,
+            groupElementLocation,
+            groupElementOwner,
+            treeNotesFieldElement,
+          ],
+          expressionInfos: [
+            dbhExpression,
+            nearAddressExpr,
+            muniExpression,
+            districtExpression,
+            currentUserExpression,
+            latExpression,
+            longExpression,
+          ],
+        });
+        //================================================
+        //   Access the webmap
+        //================================================
+        const webmap = new WebMap({
+          portalItem: {
+            id: "1e2a951b191c4c4998700ddcf8b46f02",
+          },
+        });
+        const view = new MapView({
+          container: "viewDiv",
+          map: webmap,
+          center: [-117.18954, 34.03711],
+          zoom: 18,
+        });
+        view.when(() => {
+          view.map.loadAll().then(() => {
+            view.map.editableLayers.forEach((layer) => {
+              // Grab the trees layer from the webmap and set its formTemplate.
+              if (layer.type === "feature" && layer.title === "Trees") {
+                layer.formTemplate = treeformTemplate;
+              }
+            });
+          });
+          const editor = new Editor({
+            view: view,
+            supportingWidgetDefaults: {
+              featureForm: {
+                groupDisplay: "sequential",
+              },
+            },
+          });
+          view.ui.add(editor, "top-right");
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

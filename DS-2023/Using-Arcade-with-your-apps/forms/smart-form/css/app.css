@@ -1,0 +1,55 @@
+html,
+#viewDiv {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.header-actions--start header-actions {
+  margin: 5px;
+}
+
+.esri-ui-top-left {
+  left: 12;
+}
+
+body {
+  display: flex;
+}
+
+calcite-loader {
+  align-self: center;
+  justify-self: center;
+}
+
+#visibility-container {
+  overflow-x: auto;
+  overflow-y: auto;
+  padding: 0.3em;
+  color: #d1d1d1;
+  background: #f3f3f3;
+  font-size: 18;
+}
+
+#arcadeSyntax-container {
+  overflow-x: auto;
+  overflow-y: auto;
+    padding: 0.3em;
+    color: #d1d1d1;
+    background: #f3f3f3;
+    font-size: 18;
+}
+
+#webAppCode-container {
+    overflow-x: auto;
+      overflow-y: auto;
+        padding: 0.3em;
+      color: #d1d1d1;
+      background: #f3f3f3;
+      font-size: 18;
+} 
+
+calcite-shell-panel[detached] {
+  --calcite-shell-panel-min-width: 56vw;
+}

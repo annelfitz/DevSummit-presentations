@@ -1,0 +1,91 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>CIMSymbol Donut effect 4.25</title>
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://jsdev.arcgis.com/4.26/esri/themes/light/main.css"
+    />
+    <script src="https://jsdev.arcgis.com/4.26/"></script>
+
+    <script>
+      require(["esri/views/MapView", "esri/Map", "esri/layers/FeatureLayer"], (
+        MapView,
+        Map,
+        FeatureLayer
+      ) => {
+        const grandCanyon = new FeatureLayer({
+          url: "https://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/NPS_Land_Resources_Division_Boundary_and_Tract_Data_Service/FeatureServer/2",
+          definitionExpression: "UNIT_NAME = 'Grand Canyon National Park'",
+          renderer: {
+            type: "simple",
+            symbol: {
+              type: "cim",
+              data: {
+                type: "CIMSymbolReference",
+                symbol: {
+                  type: "CIMPolygonSymbol",
+                  symbolLayers: [
+                    {
+                      type: "CIMSolidStroke",
+                      width: 0.5,
+                      color: [140, 140, 140, 255],
+                    },
+                    {
+                      type: "CIMSolidFill",
+                      enable: true,
+                      color: [242, 190, 0, 255],
+                      effects: [
+                        {
+                          type: "CIMGeometricEffectDonut",
+                          width: 8,
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        });
+        // set up the map and view
+        const map = new Map({
+          basemap: {
+            portalItem: {
+              id: "f33a34de3a294590ab48f246e99958c9",
+            },
+          },
+          layers: [grandCanyon], // add layers to the map
+        });
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          center: [-113.0359, 36.14538],
+          zoom: 10,
+          constraints: {
+            snapToZoom: false,
+          },
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

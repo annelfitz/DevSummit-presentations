@@ -1,0 +1,505 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      CIMSymbol lines and polygons | Sample | ArcGIS API for JavaScript 4.22
+    </title>
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.26/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.26/"></script>
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/1.0.7/calcite.esm.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/1.0.7/calcite.css"
+    />
+
+    <script>
+      require([
+        "esri/views/MapView",
+        "esri/Map",
+        "esri/layers/FeatureLayer",
+        "esri/layers/VectorTileLayer",
+        "esri/widgets/Expand",
+        "esri/widgets/Slider",
+        "esri/widgets/Home",
+        "esri/symbols/support/cimSymbolUtils",
+      ], (
+        MapView,
+        Map,
+        FeatureLayer,
+        VectorTileLayer,
+        Expand,
+        Slider,
+        Home,
+        cimSymbolUtils
+      ) => {
+        // Tahoe Rim Trail feature layer
+        const rimTrail = new FeatureLayer({
+          portalItem: {
+            id: "9a61ba12e9904388a0d17c48ce6a5662",
+          },
+          renderer: {
+            type: "simple",
+            symbol: {
+              type: "cim",
+              // CIM Line Symbol
+              data: {
+                type: "CIMSymbolReference",
+                symbol: {
+                  type: "CIMLineSymbol",
+                  symbolLayers: [
+                    {
+                      type: "CIMSolidStroke",
+                      effects: [
+                        {
+                          type: "CIMGeometricEffectDashes",
+                          dashTemplate: [2, 2, 2, 2],
+                          lineDashEnding: "NoConstraint",
+                          controlPointEnding: "NoConstraint",
+                        },
+                      ],
+                      enable: true,
+                      capStyle: "Butt",
+                      joinStyle: "Round",
+                      width: 1,
+                      color: [255, 255, 255, 255],
+                    },
+                    {
+                      type: "CIMSolidStroke",
+                      enable: true,
+                      capStyle: "Butt",
+                      joinStyle: "Round",
+                      width: 3,
+                      color: [56, 168, 0, 255],
+                    },
+                    {
+                      type: "CIMSolidStroke",
+                      enable: true,
+                      capStyle: "Butt",
+                      joinStyle: "Round",
+                      width: 6,
+                      color: [0, 115, 76, 255],
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        });
+        // Lake Tahoe feature layer
+        const lakeLayer = new FeatureLayer({
+          url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Lake_Tahoe/FeatureServer",
+          renderer: {
+            type: "simple",
+            symbol: {
+              type: "cim",
+              data: {
+                type: "CIMSymbolReference",
+                symbol: {
+                  type: "CIMPolygonSymbol",
+                  symbolLayers: [
+                    {
+                      type: "CIMSolidStroke",
+                      enable: true,
+                      width: 0.4,
+                      color: [0, 92, 230, 255],
+                    },
+                    {
+                      type: "CIMHatchFill",
+                      enable: true,
+                      lineSymbol: {
+                        type: "CIMLineSymbol",
+                        symbolLayers: [
+                          {
+                            type: "CIMSolidStroke",
+                            effects: [
+                              {
+                                type: "CIMGeometricEffectDashes",
+                                dashTemplate: [1, 2],
+                                lineDashEnding: "FullPattern",
+                              },
+                            ],
+                            enable: true,
+                            width: 1,
+                            color: [0, 92, 230, 255],
+                          },
+                        ],
+                      },
+                      rotation: 45,
+                      separation: 4,
+                    },
+                    {
+                      type: "CIMSolidFill",
+                      enable: true,
+                      color: [151, 219, 242, 150],
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        });
+        // add trailheads feature layer as webstyle symbol
+        const trailheads = new FeatureLayer({
+          url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/TahoeTrailheads/FeatureServer",
+          renderer: {
+            type: "simple",
+            symbol: {
+              type: "cim",
+              data: {
+                type: "CIMSymbolReference",
+                symbol: {
+                  type: "CIMPointSymbol",
+                  symbolLayers: [
+                    {
+                      type: "CIMVectorMarker",
+                      enable: true,
+                      anchorPointUnits: "Relative",
+                      dominantSizeAxis3D: "Y",
+                      size: 25,
+                      colorLocked: true,
+                      billboardMode3D: "FaceNearPlane",
+                      frame: {
+                        xmin: 0,
+                        ymin: 0,
+                        xmax: 21,
+                        ymax: 21,
+                      },
+                      markerGraphics: [
+                        {
+                          type: "CIMMarkerGraphic",
+                          geometry: {
+                            rings: [
+                              [
+                                [11.67, 14.51],
+                                [13, 13],
+                                [14.6, 13],
+                                [14.61, 13],
+                                [15.05, 12.82],
+                                [15.25, 12.38],
+                                [15.14, 11.99],
+                                [14.78, 11.74],
+                                [14.78, 4],
+                                [14, 4],
+                                [14, 11.7],
+                                [12.38, 11.7],
+                                [11.31, 12.81],
+                                [10.45, 10.39],
+                                [12.19, 8.42],
+                                [12.41, 8.14],
+                                [12.49, 7.85],
+                                [12.5, 4.13],
+                                [12.44, 3.84],
+                                [12.28, 3.6],
+                                [12.04, 3.44],
+                                [11.75, 3.38],
+                                [11.46, 3.44],
+                                [11.22, 3.6],
+                                [11.06, 3.84],
+                                [11, 4.13],
+                                [11, 7.66],
+                                [9.64, 9.02],
+                                [8.46, 6.61],
+                                [6.25, 3.94],
+                                [5.79, 3.6],
+                                [5.35, 3.63],
+                                [5, 3.91],
+                                [4.87, 4.33],
+                                [5.09, 4.87],
+                                [7.45, 7.88],
+                                [9.35, 13.84],
+                                [9.6, 14.38],
+                                [9.89, 14.8],
+                                [10.2, 15.06],
+                                [10.52, 15.14],
+                                [11.15, 14.98],
+                                [11.67, 14.51],
+                              ],
+                              [
+                                [7.04, 10.98],
+                                [5.8, 11.38],
+                                [5.51, 11.63],
+                                [5.48, 12],
+                                [6.69, 15.77],
+                                [6.94, 16.06],
+                                [7.32, 16.09],
+                                [8.55, 15.69],
+                                [8.84, 15.45],
+                                [8.88, 15.06],
+                                [7.66, 11.3],
+                                [7.41, 11.01],
+                                [7.04, 10.98],
+                              ],
+                              [
+                                [11.5, 15.15],
+                                [10.98, 15.25],
+                                [10.55, 15.55],
+                                [10.25, 15.98],
+                                [10.15, 16.5],
+                                [10.25, 17.02],
+                                [10.54, 17.46],
+                                [10.98, 17.75],
+                                [11.5, 17.85],
+                                [12.02, 17.75],
+                                [12.46, 17.46],
+                                [12.75, 17.02],
+                                [12.85, 16.5],
+                                [12.75, 15.98],
+                                [12.45, 15.55],
+                                [12.02, 15.25],
+                                [11.5, 15.15],
+                              ],
+                            ],
+                          },
+                          symbol: {
+                            type: "CIMPolygonSymbol",
+                            symbolLayers: [
+                              {
+                                type: "CIMSolidStroke",
+                                enable: true,
+                                capStyle: "Round",
+                                joinStyle: "Round",
+                                lineStyle3D: "Strip",
+                                miterLimit: 10,
+                                width: 0,
+                                color: [0, 0, 0, 255],
+                              },
+                              {
+                                type: "CIMSolidFill",
+                                enable: true,
+                                color: [13, 119, 34, 255],
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                      scaleSymbolsProportionally: true,
+                      respectFrame: true,
+                    },
+                    {
+                      type: "CIMVectorMarker",
+                      enable: true,
+                      anchorPoint: {
+                        x: 0,
+                        y: 0,
+                      },
+                      anchorPointUnits: "Relative",
+                      dominantSizeAxis3D: "Y",
+                      size: 30,
+                      billboardMode3D: "FaceNearPlane",
+                      frame: {
+                        xmin: 0,
+                        ymin: 0,
+                        xmax: 15,
+                        ymax: 16.99,
+                      },
+                      markerGraphics: [
+                        {
+                          type: "CIMMarkerGraphic",
+                          geometry: {
+                            rings: [
+                              [
+                                [15, 13.94],
+                                [15, 6.34],
+                                [14.85, 4.38],
+                                [14.65, 3.69],
+                                [14.35, 3.16],
+                                [13.97, 2.76],
+                                [13.46, 2.42],
+                                [11.5, 1.59],
+                                [8.6, 0.31],
+                                [7.5, 0],
+                                [6.42, 0.3],
+                                [3.5, 1.59],
+                                [1.54, 2.42],
+                                [1.03, 2.76],
+                                [0.65, 3.16],
+                                [0.36, 3.69],
+                                [0.16, 4.38],
+                                [0, 6.34],
+                                [0, 13.94],
+                                [0.09, 15.33],
+                                [0.43, 16.25],
+                                [0.7, 16.57],
+                                [1.03, 16.8],
+                                [1.93, 16.99],
+                                [13.07, 16.99],
+                                [13.96, 16.8],
+                                [14.3, 16.57],
+                                [14.57, 16.25],
+                                [14.9, 15.33],
+                                [15, 13.94],
+                              ],
+                            ],
+                          },
+                          symbol: {
+                            type: "CIMPolygonSymbol",
+                            symbolLayers: [
+                              {
+                                type: "CIMSolidStroke",
+                                enable: true,
+                                capStyle: "Round",
+                                joinStyle: "Round",
+                                lineStyle3D: "Strip",
+                                miterLimit: 10,
+                                width: 1,
+                                color: [255, 255, 255, 255],
+                              },
+                              {
+                                type: "CIMSolidFill",
+                                enable: true,
+                                color: [203, 216, 205, 255],
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                      scaleSymbolsProportionally: true,
+                      respectFrame: true,
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        });
+
+        // set up the map and view
+        const map = new Map({
+          basemap: {
+            // using a custom basemap from ArcGIS Online
+            baseLayers: new VectorTileLayer({
+              portalItem: {
+                id: "b5676525747f499687f12746441101ef",
+              },
+            }),
+            referenceLayers: new VectorTileLayer({
+              portalItem: {
+                id: "94329802cbfa44a18f423e6f1a0b875c",
+              },
+            }),
+          },
+          layers: [rimTrail, lakeLayer, trailheads], // add layers to the map
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          center: [-120, 39.05], // centered at Lake Tahoe
+          zoom: 9,
+        });
+        const symbolSize = cimSymbolUtils.getCIMSymbolSize(
+          trailheads.renderer.symbol
+        );
+        document.getElementById("size").innerHTML = symbolSize;
+        const sizeSlider = new Slider({
+          container: "sizeSlider",
+          precision: 2,
+          min: 0,
+          max: 50,
+          values: [symbolSize], // starting size of the CIMPointSymbol
+        });
+
+        sizeSlider.on(["thumb-drag", "thumb-change"], (event) => {
+          const value = event.value;
+          document.getElementById("size").innerHTML = value;
+          const newSymbol = trailheads.renderer.symbol.clone(); // clone the current symbol
+          cimSymbolUtils.scaleCIMSymbolTo(newSymbol, value); // use CIM util function to scale the symbol to a new size
+          // update the renderer to the new symbol
+          trailheads.renderer = {
+            type: "simple",
+            symbol: newSymbol,
+          };
+        });
+
+        const rotationSlider = new Slider({
+          container: "rotationSlider",
+          precision: 0,
+          min: 0,
+          max: 360,
+          values: [0], // starting rotation of the CIMPointSymbol
+        });
+
+        rotationSlider.on(["thumb-drag", "thumb-change"], (event) => {
+          const value = event.value;
+          document.getElementById("rotation").innerHTML = value;
+          const newSymbol = trailheads.renderer.symbol.clone(); // clone the current symbol
+          cimSymbolUtils.applyCIMSymbolRotation(newSymbol, value); // use CIM util function to change the rotation of the symbol
+          // update the renderer to the new symbol
+          trailheads.renderer = {
+            type: "simple",
+            symbol: newSymbol,
+          };
+        });
+
+        const colorPicker = document.getElementById("colorPicker");
+        colorPicker.value = cimSymbolUtils
+          .getCIMSymbolColor(trailheads.renderer.symbol)
+          .toHex();
+        colorPicker.addEventListener("calciteColorPickerInput", (event) => {
+          const newSymbol = trailheads.renderer.symbol.clone();
+          cimSymbolUtils.applyCIMSymbolColor(newSymbol, event.target.value);
+          trailheads.renderer = {
+            type: "simple",
+            symbol: newSymbol,
+          };
+        });
+
+        // create and add the Expand widget for the CIMSymbol controls
+        const edits = new Expand({
+          view: view,
+          content: document.getElementById("symbolControls"),
+          expandIconClass: "esri-icon-edit",
+          expandTooltip: "Edit the CIMPointSymbol",
+        });
+        view.ui.add(edits, "top-right");
+
+        // create and add Home widget to the view
+        const home = new Home({
+          view: view,
+        });
+        view.ui.add(home, "top-left");
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+    <calcite-card id="symbolControls">
+      <h3 slot="title">Edit Symbols</h3>
+      <calcite-label>
+        <div>Size value: <span id="size"></span></div>
+        <div id="sizeSlider"></div>
+      </calcite-label>
+      <calcite-label>
+        <div>Rotation value: <span id="rotation">0</span></div>
+        <div id="rotationSlider"></div>
+      </calcite-label>
+      <calcite-label
+        >Color:
+        <calcite-color-picker id="colorPicker"></calcite-color-picker>
+      </calcite-label>
+    </calcite-card>
+  </body>
+</html>

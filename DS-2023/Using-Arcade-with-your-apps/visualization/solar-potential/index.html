@@ -1,0 +1,183 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+
+    <title>
+      Create a custom visualization using Arcade | Sample | ArcGIS Maps SDK for
+      JavaScript 4.26
+    </title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.26/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.26/"></script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <!--ARCADE SCRIPTS-->
+
+    <!--SOLAR POTENTIAL-->
+    <script type="text/plain" id="solar-potential">
+      // Percent of occupied housing units which are heated mostly by solar energy > 50%
+      if ($feature["B25040_calc_pctSolarE"] > 0.5) {
+          return "using solar"
+      }
+      // PVOUT = Photovolatic (PV) Electricity Output
+      else if ($feature.PVOUT < 1650) {
+          return "low potential"
+      }
+      else if (1650 <= $feature.PVOUT && $feature.PVOUT < 1750){
+          return "low usage, fair potential"
+      }
+      else if (1750 <= $feature.PVOUT && $feature.PVOUT < 1850){
+          return "low usage, more potential"
+      }
+      else if (1850 <= $feature.PVOUT && $feature.PVOUT < 1950){
+          return "low usage, even more potential"
+      }
+      else {
+          return "low usage, most potential"
+      }
+    </script>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/FeatureLayer",
+        "esri/widgets/Legend",
+        "esri/config",
+      ], (Map, MapView, FeatureLayer, Legend, esriConfig) => {
+        esriConfig.apiKey =
+          "AAPKe6af3913aa5f40328bbc6bcd68824740vAVwt_8WlPRIL0bpvLhoIja29SYda5BEjRhNppeoJBgs_K0JyN83Kx_-L4qz9odT";
+        // Get Arcade expression returning the solar potential from the
+        // solar-potential script referenced above.
+        const potentialArcade = document.getElementById("solar-potential").text;
+
+        // Add the expression to a unique value renderer and create a fill
+        // symbol for each possible value.
+
+        const renderer = {
+          type: "unique-value", // autocasts as new UniqueValueRenderer()
+          valueExpression: potentialArcade,
+          valueExpressionTitle: "Tract Status",
+          uniqueValueInfos: [
+            {
+              value: "using solar",
+              symbol: createSymbol("#fef2b1"),
+              label: "Households here are already using solar",
+            },
+            {
+              value: "low potential",
+              symbol: createSymbol("#e8e8e8"),
+              label: "This area has low solar potential",
+            },
+            {
+              value: "low usage, fair potential",
+              symbol: createSymbol("#acefac"),
+              label: "Low usage, fair potential",
+            },
+            {
+              value: "low usage, more potential",
+              symbol: createSymbol("#72cc7d"),
+              label: "Low usage, more potential",
+            },
+            {
+              value: "low usage, even more potential",
+              symbol: createSymbol("#3baa4b"),
+              label: "Low usage, even more potential",
+            },
+            {
+              value: "low usage, most potential",
+              symbol: createSymbol("#247227"),
+              label: "Low usage, most potential",
+            },
+          ],
+        };
+
+        // Create FeatureLayer instance
+
+        const layer = new FeatureLayer({
+          portalItem: {
+            // autocasts as new PortalItem()
+            id: "56f91702feaf417d955a7948b68af5fa",
+          },
+          outFields: ["B25040_calc_pctSolarE", "PVOUT"],
+          renderer: renderer,
+          popupTemplate: {
+            title: "{County}, {State}",
+            content: "{expression/solar-output}",
+            expressionInfos: [
+              {
+                name: "solar-output",
+                title: "Solar Output",
+                expression: `
+                var text = when( $feature.PVOUT<1650, "Solar potential in this tract is relatively low, only " + number($feature.PVOUT) + " kWh per capacity installed.",
+                        $feature.B25040_calc_pctSolarE>=0.5,"Households here are already tapping into solar. The most recently reported usage among households was " + $feature.B25040_calc_pctSolarE + "%.",
+                        $feature["B25040_001E"]==0,"There are no occupied housing units here.",
+                        "Promote solar here!" + TextFormatting.newLine + TextFormatting.newLine + "This tract has a high potential for solar (" + number($feature.PVOUT) + " kWh per capacity installed) and is largely untapped, with a low percentage of households currently using solar (" + $feature.B25040_calc_pctSolarE + "%).")
+
+                return $feature.NAME + TextFormatting.NewLine + TextFormatting.NewLine + text
+                `,
+              },
+            ],
+          },
+        });
+
+        const map = new Map({
+          basemap: "arcgis-terrain",
+          layers: [layer],
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          center: [-109.76155, 37.30891],
+          zoom: 6,
+        });
+
+        const legend = new Legend({
+          view: view,
+          layerInfos: [
+            {
+              layer: layer,
+              title: "Untapped Solar Potential",
+            },
+          ],
+        });
+        view.ui.add(legend, "bottom-left");
+
+        // Creates a SimpleFillSymbol based on an input color
+
+        function createSymbol(color) {
+          return {
+            type: "simple-fill", // autocasts as new SimpleFillSymbol()
+            color: color,
+            outline: {
+              width: 0.2,
+              color: [0, 0, 0, 0.1],
+            },
+          };
+        }
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

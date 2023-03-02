@@ -1,0 +1,183 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1, maximum-scale=1,user-scalable=no"
+    />
+    <title>CIM Marker Placement Overrides</title>
+
+    <style>
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #viewDiv {
+        height: 100%;
+        max-width: 1000%;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.26/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.26/"></script>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/FeatureLayer",
+        "esri/symbols/CIMSymbol",
+        "esri/widgets/Legend",
+      ], function (Map, MapView, FeatureLayer, CIMSymbol, Legend) {
+        const treeSymbol = new CIMSymbol({
+          data: {
+            type: "CIMSymbolReference",
+            primitiveOverrides: [
+              {
+                type: "CIMPrimitiveOverride",
+                primitiveName: "placementOverride",
+                propertyName: "StepX",
+                valueExpressionInfo: {
+                  type: "CIMExpressionInfo",
+                  title: "StepX override",
+                  expression: `80 - $feature.CAN_P`,
+                  returnType: "Default",
+                },
+              },
+              {
+                type: "CIMPrimitiveOverride",
+                primitiveName: "placementOverride",
+                propertyName: "StepY",
+                valueExpressionInfo: {
+                  type: "CIMExpressionInfo",
+                  title: "StepY override",
+                  expression: `80 - $feature.CAN_P`,
+                  returnType: "Default",
+                },
+              },
+              {
+                type: "CIMPrimitiveOverride",
+                primitiveName: "sizeOverride",
+                propertyName: "Size",
+                valueExpressionInfo: {
+                  type: "CIMExpressionInfo",
+                  title: "Size override",
+                  expression: `
+                    if ($feature.CAN_P > 15)
+                        return $feature.CAN_P
+                    else 
+                        return 15
+                `,
+                  returnType: "Default",
+                },
+              },
+            ],
+            symbol: {
+              type: "CIMPolygonSymbol",
+              symbolLayers: [
+                {
+                  type: "CIMPictureMarker",
+                  primitiveName: "sizeOverride",
+                  enable: true,
+                  anchorPointUnits: "Relative",
+                  dominantSizeAxis3D: "Z",
+                  size: 20,
+                  colorLocked: true,
+                  billboardMode3D: "FaceNearPlane",
+                  invertBackfaceTexture: true,
+                  scaleX: 1,
+                  textureFilter: "Picture",
+                  url: "https://raw.githubusercontent.com/annelfitz/annelfitz.github.io/master/img/tree.gif",
+                  animatedSymbolProperties: {
+                    type: "CIMAnimatedSymbolProperties",
+                    playAnimation: true,
+                    randomizeStartTime: true,
+                    repeatType: "Loop",
+                  },
+                  markerPlacement: {
+                    type: "CIMMarkerPlacementInsidePolygon",
+                    primitiveName: "placementOverride",
+                    gridType: "Random",
+                    randomness: 100,
+                    stepX: 25,
+                    stepY: 25,
+                  },
+                },
+                {
+                  type: "CIMSolidFill",
+                  enable: true,
+                  color: [188, 207, 180, 255],
+                },
+                {
+                  type: "CIMSolidStroke",
+                  enable: true,
+                  capStyle: "Round",
+                  joinStyle: "Round",
+                  lineStyle3D: "Strip",
+                  miterLimit: 10,
+                  width: 0.5,
+                  color: [28, 110, 55, 255],
+                },
+              ],
+            },
+          },
+        });
+        // get layer from online portal
+        const layer = new FeatureLayer({
+          url: "https://services6.arcgis.com/T3FSmui8zLfsD6P1/arcgis/rest/services/Land_Cover_City_WFL1/FeatureServer/0",
+          renderer: {
+            type: "simple",
+            symbol: treeSymbol,
+            visualVariables: [
+              {
+                type: "color",
+                field: "CAN_P",
+                stops: [
+                  {
+                    value: 5,
+                    color: "#fffee6",
+                  },
+                  {
+                    value: 50,
+                    color: "#6d9383",
+                  },
+                ],
+              },
+            ],
+          },
+        });
+        // setup the map
+        const map = new Map({
+          basemap: "gray-vector",
+          layers: [layer],
+        });
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          center: [-118.18546116765617, 34.00738603193378],
+          zoom: 10,
+          popup: {
+            autoOpenEnabled: false,
+          },
+        });
+        view.ui.add(
+          new Legend({
+            view,
+          }),
+          "bottom-right"
+        );
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

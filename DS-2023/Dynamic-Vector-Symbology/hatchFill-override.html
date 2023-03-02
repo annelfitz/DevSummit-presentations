@@ -1,0 +1,143 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+
+    <title>CIM hatch fill primitive override</title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.26/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.26/"></script>
+
+    <script>
+      require(["esri/Map", "esri/layers/FeatureLayer", "esri/views/MapView"], (
+        Map,
+        FeatureLayer,
+        MapView
+      ) => {
+        //--------------------------------------------------------------------------
+        //
+        //  Setup Map and View
+        //
+        //--------------------------------------------------------------------------
+        const layer = new FeatureLayer({
+          portalItem: {
+            id: "82d43f88d6dc4c848c2509e9b95add8a",
+          },
+          renderer: {
+            type: "simple",
+            symbol: {
+              type: "cim",
+              data: {
+                type: "CIMSymbolReference",
+                primitiveOverrides: [
+                  {
+                    type: "CIMPrimitiveOverride",
+                    primitiveName: "hatchFillOverride",
+                    propertyName: "Separation",
+                    valueExpressionInfo: {
+                      type: "CIMExpressionInfo",
+                      title: "Population growth % from 2010 to 2020",
+                      expression: `
+                         var popGrowth = Abs(( $feature.TOTPOP20 - $feature.TOTPOP10 ) / $feature.TOTPOP10 * 100)
+                      return 50 / popGrowth 
+                       `,
+                      returnType: "Default",
+                    },
+                  },
+                  {
+                    type: "CIMPrimitiveOverride",
+                    primitiveName: "lineColor",
+                    propertyName: "Color",
+                    valueExpressionInfo: {
+                      type: "CIMExpressionInfo",
+                      title: "Population growth % from 2010 to 2020",
+                      expression: `
+                            var popGrowth = $feature.TOTPOP20 - $feature.TOTPOP10;
+                            if (popGrowth > 0) {
+                                return "rgb(1, 68, 33)"
+                            }
+                            return "rgb(150, 0, 0)"
+                        `,
+                      returnType: "Default",
+                    },
+                  },
+                ],
+                symbol: {
+                  type: "CIMPolygonSymbol",
+                  symbolLayers: [
+                    {
+                      type: "CIMSolidStroke",
+                      enable: true,
+                      capStyle: "Round",
+                      joinStyle: "Round",
+                      lineStyle3D: "Strip",
+                      miterLimit: 10,
+                      width: 0.4,
+                      color: [1, 68, 33, 255],
+                    },
+                    {
+                      type: "CIMHatchFill",
+                      enable: true,
+                      primitiveName: "hatchFillOverride",
+                      lineSymbol: {
+                        type: "CIMLineSymbol",
+                        symbolLayers: [
+                          {
+                            type: "CIMSolidStroke",
+                            primitiveName: "lineColor",
+                            enable: true,
+                            capStyle: "Butt",
+                            joinStyle: "Miter",
+                            lineStyle3D: "Strip",
+                            miterLimit: 10,
+                            width: 1,
+                            color: [1, 68, 33, 255],
+                          },
+                        ],
+                      },
+                      rotation: 45,
+                      separation: 5,
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        });
+        const view = new MapView({
+          map: new Map({
+            basemap: "gray-vector",
+            layers: [layer],
+          }),
+          container: "viewDiv",
+          constraints: {
+            snapToZoom: false,
+          },
+          center: [-103.51954, 47.55016],
+          zoom: 7,
+        });
+      });
+    </script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>
