@@ -67,7 +67,7 @@
         TileLayer
       ) => {
         let layerView;
-
+        // create dark spilhaus layer to use as basemap
         const spilhausBasemap = new TileLayer({
           url: "https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/Spilhaus_Vibrant_Basemap/MapServer",
           effect: "saturate(10%) brightness(0.3)" // dim brightness to create darker style basemap
