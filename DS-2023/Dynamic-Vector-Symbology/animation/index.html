@@ -1,0 +1,101 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <!--
+     ArcGIS API for JavaScript, https://js.arcgis.com
+     For more information about the visualization-trees-2d sample,
+     read the original sample description at developers.arcgis.com.
+     https://developers.arcgis.com/javascript/latest/sample-code/visualization-trees-2d/
+     -->
+  <title>
+    Randomize animation - CIMSymbol
+  </title>
+
+  <link rel="stylesheet" href="https://jsdev.arcgis.com/4.26/esri/themes/light/main.css" />
+  <script src="https://jsdev.arcgis.com/4.26/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/FeatureLayer"
+    ], (Map, MapView, FeatureLayer) => {
+      const renderer = {
+        type: "simple", // autocasts as new SimpleRenderer()
+        symbol: {
+          type: "cim", // autocasts as new SimpleMarkerSymbol()
+          data: {
+            type: "CIMSymbolReference",
+            symbol: {
+              type: "CIMPointSymbol",
+              symbolLayers: [{
+                type: "CIMPictureMarker",
+                enable: true,
+                anchorPointUnits: "Relative",
+                dominantSizeAxis3D: "Z",
+                size: 10,
+                billboardMode3D: "FaceNearPlane",
+                invertBackfaceTexture: true,
+                scaleX: 1,
+                textureFilter: "Picture",
+                url: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/87fb72ad-f111-458e-8773-c00d6dc51d92/dcalj9z-d5128cba-a2c8-492f-a280-cff29fa6b832.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzg3ZmI3MmFkLWYxMTEtNDU4ZS04NzczLWMwMGQ2ZGM1MWQ5MlwvZGNhbGo5ei1kNTEyOGNiYS1hMmM4LTQ5MmYtYTI4MC1jZmYyOWZhNmI4MzIuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.ANw9TyQQeM3FDztdumDEwN86XE3wGeyGUIBQkBlpgOg",
+                animatedSymbolProperties: {
+                  type: "CIMAnimatedSymbolProperties",
+                  playAnimation: true,
+                  randomizeStartTime: true,
+                  repeatType: "Loop"
+                }
+              }]
+            }
+          }
+        },
+        label: "tree",
+        visualVariables: [{
+          type: "size",
+          field: "Width_EW",
+          valueUnit: "feet", // values of Width_EW are expressed in feet
+          valueRepresentation: "diameter"
+        }]
+      };
+      // Assign the renderer to the layer
+      const treesLayer = new FeatureLayer({
+        title: "Carbon storage of trees",
+        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0",
+        renderer: renderer
+      });
+      const map = new Map({
+        basemap: "topo-vector",
+        layers: [treesLayer]
+      });
+      const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-82.441933, 35.611474],
+        zoom: 19,
+        constraints: {
+            maxZoom: 19,
+            minZoom: 17
+        }
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

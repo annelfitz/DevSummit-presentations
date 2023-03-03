@@ -93,7 +93,7 @@
               {
                 type: "size",
                 field: "size",
-                minSize: 10,
+                minSize: 20,
                 maxSize: 90,
                 minDataValue: -7075,
                 maxDataValue: 100,
@@ -190,7 +190,7 @@
               {
                 type: "size",
                 field: "size",
-                minSize: 10,
+                minSize: 15,
                 maxSize: 45,
                 minDataValue: -7075,
                 maxDataValue: 130498,
@@ -201,7 +201,6 @@
               var endDate = Date("${end}");
               var curDate = Date($feature['date']);
               var diff = DateDiff(endDate, curDate, "days");
-              // console(diff)
               if (diff < 15) {
                 return 15 - diff
               } else {
@@ -211,7 +210,7 @@
                 stops: [
                   {
                     value: 0,
-                    opacity: 0.05,
+                    opacity: 0,
                   },
                   {
                     value: 15,
