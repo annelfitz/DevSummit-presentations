@@ -72,7 +72,7 @@
           url: "https://tiles.arcgis.com/tiles/nGt4QxSblgDfeJn9/arcgis/rest/services/Spilhaus_Vibrant_Basemap/MapServer",
           effect: "saturate(10%) brightness(0.3)" // dim brightness to create darker style basemap
         });
-        // set the timeInfo on GeoJSONLayer at the time initialization
+
         const layer = new FeatureLayer({
           url: "https://services.arcgis.com/nGt4QxSblgDfeJn9/arcgis/rest/services/Icebergs/FeatureServer/1",
           definitionExpression: "date >= '2002-09-08' AND date < '2003-09-08'",
@@ -145,10 +145,9 @@
         // wait till the layer view is loaded
         view.whenLayerView(layer).then((lv) => {
           layerView = lv;
-          // start time of the time slider - 5/25/2019
+          // start time of the time slider 
           const start = new Date(2002, 8, 8);
-          // set time slider's full extent to
-          // 5/25/5019 - until end date of layer's fullTimeExtent
+          // set time slider's full extent until end date of layer's fullTimeExtent
           timeSlider.fullTimeExtent = {
             start: start,
             end: new Date(2003, 8, 8),

@@ -1,0 +1,83 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      Synchronize 2 MapViews | Sample | ArcGIS API for JavaScript
+    </title>
+
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.26/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.26/"></script>
+
+    <script>
+      require(["esri/Map", "esri/views/MapView"], (
+        Map,
+        MapView
+      ) => {
+        const map = new Map({
+          basemap: "satellite"
+        });
+
+        const view1 = new MapView({
+          container: "view1Div",
+          map: map,
+          constraints: {
+            snapToZoom: false
+          }
+        });
+
+        const view2 = new MapView({
+          container: "view2Div",
+          map: map,
+          constraints: {
+            // Disable zoom snapping to get the best synchronization
+            snapToZoom: false
+          }
+        });
+
+        const views = [view1, view2];
+        let active;
+
+        const sync = (source) => {
+          if (!active || !active.viewpoint || active !== source) {
+            return;
+          }
+
+          for (const view of views) {
+            if (view !== active) {
+              view.viewpoint = active.viewpoint;
+            }
+          }
+        };
+
+        for (const view of views) {
+          view.watch(["interacting", "animation"], () => {
+            active = view;
+            sync(active);
+          });
+
+          view.watch("viewpoint", () => sync(view));
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div id="view1Div" style="float: left; width: 50%; height: 100%;"></div>
+    <div id="view2Div" style="float: left; width: 50%; height: 100%"></div>
+  </body>
+</html>
