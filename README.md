@@ -2,22 +2,53 @@
 
 Here you can access presentations and demos from the Esri Developer Summit.
 
+### DevSummit 2023
+
+<details>
+  <summary>Presentations and demos</summary>
+  
+  #### Plenary session
+  
+  - [Arcade](https://mediaspace.esri.com/media/t/1_tjdxro7g)
+  
+  #### Technical sessions
+  - ArcGIS Maps SDK for JavaScript: Visualizing Change Over Time
+    - [Demos](https://github.com/annelfitz/DevSummit-presentations/tree/main/DS-2023/Visualizing-Change-Over-Time)
+    - [Slides](https://annelfitz.github.io/DevSummit-presentations/DS-2023/Visualizing-Change-Over-Time/slides.pdf)
+  - ArcGIS Maps SDK for JavaScript: Using Arcade with your Apps
+    - [Demos](https://github.com/annelfitz/DevSummit-presentations/tree/main/DS-2023/Using-Arcade-with-your-apps)
+    - [Slides](https://annelfitz.github.io/DevSummit-presentations/DS-2023/Using-Arcade-with-your-apps/slides.pdf)
+  - ArcGIS Maps SDK for JavaScript: Dynamic Vector Symbology
+    - [Demos](https://github.com/annelfitz/DevSummit-presentations/tree/main/DS-2023/Dynamic-Vector-Symbology)
+    - [Slides](https://annelfitz.github.io/DevSummit-presentations/DS-2023/Dynamic-Vector-Symbology/slides.pdf)
+  
+</details>
+
 ### DevSummit 2022
 
+<details>
+<summary>Presentations and demos</summary>
+
 #### Plenary session
+- [Video](https://mediaspace.esri.com/media/t/1_1wf8y676)
 - [FlowRenderer intro](https://annelfitz.github.io/DevSummit-presentations/DS-2022/flow-plenary/intro/)
 - [HYCOM Ocean Currents](https://annelfitz.github.io/DevSummit-presentations/DS-2022/flow-plenary/ocean-currents/)
 
 #### Technical sessions
-- ArcGIS API for JavaScript: Using Arcade with Your Apps
+- [ArcGIS API for JavaScript: Using Arcade with Your Apps](https://mediaspace.esri.com/media/t/1_l0jw7zrw)
   - [Presentation](https://annelfitz.github.io/DevSummit-presentations/DS-2022/Using-Arcade-with-your-apps/)
 
-- ArcGIS API for JavaScript: Dynamic Vector Symbology
-- ArcGIS API for JavaScript: Visualizing Change Over Time
-- ArcGIS API for JavaScript: Visualizing Large Datasets
+- [ArcGIS API for JavaScript: Dynamic Vector Symbology](https://mediaspace.esri.com/media/t/1_n4rmiwq0)
+- [ArcGIS API for JavaScript: Visualizing Change Over Time](https://mediaspace.esri.com/media/t/1_ehxkjdru)
+- [ArcGIS API for JavaScript: Visualizing Large Datasets](https://mediaspace.esri.com/media/t/1_y3iild83)
+
+</details>
 
 
 ### DevSummit 2021
+
+<details>
+<summary>Presentations and demos</summary>
 
 #### Plenary session
 - [Web App Design Demo](https://youtu.be/_yKBDw3D_q0)
@@ -47,3 +78,7 @@ Here you can access presentations and demos from the Esri Developer Summit.
 - ArcGIS API for JavaScript: Clustering
   - [Presentation - Download the slides](https://raw.githubusercontent.com/annelfitz/DevSummit-presentations/main/DS-2021/Clustering/slides.pptx)
   - [Demos](https://github.com/annelfitz/DevSummit-presentations/DS-2021/Clustering/demos/)
+
+- ArcGIS API for JavaScript: Visualizing Large Datasets
+
+</details>
