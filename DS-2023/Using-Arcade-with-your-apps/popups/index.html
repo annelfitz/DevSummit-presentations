@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="./node_modules/@arcgis/core/assets/esri/themes/dark/main.css"
+    />
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        background: rgba(50, 50, 50);
+      }
+    </style>
+    <title>Popup demo</title>
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+    <script type="text/plain" id="post-vs-nonpost">
+      // Bachelors + Graduate
+      var post = Sum($feature.BACHDEG_CY, $feature.GRADDEG_CY);
+
+      // High school + < 9 grade
+      var nonPost = Sum($feature.HSGRAD_CY, $feature.NOHS_CY);
+
+      return {
+        type: "media",
+        attributes: { 'Post secondary graduates': post, '< 12 grade only': nonPost },
+        title: "Post secondary vs < 12 grade (25+)",
+        mediaInfos: [{ type: "columnchart", value: { fields: ['Post secondary graduates', '< 12 grade only'] } }]
+      };
+    </script>
+    <script type="text/plain" id="edu-levels-chart">
+      // List the fields referenced by the expression.
+      Expects($aggregatedFeatures, "BACHDEG_CY, GRADDEG_CY", "HSGRAD_CY", "NOHS_CY");
+
+      var graduate = Sum($aggregatedFeatures, "GRADDEG_CY");
+      var bachelors = Sum($aggregatedFeatures, "BACHDEG_CY");
+      var highSchool = Sum($aggregatedFeatures, "HSGRAD_CY");
+      var noHighSchool = Sum($aggregatedFeatures, "NOHS_CY");
+
+      return {
+        type: "media",
+        attributes: { "Graduate": graduate, "Bachelors": bachelors, "High School": highSchool, "No High School": noHighSchool },
+        title: "Highest education (25+)",
+        mediaInfos: [
+          {
+            type: "columnchart",
+            value: { fields: ["Graduate", "Bachelors", "High School", "No High School"] }
+          }
+        ]
+      };
+    </script>
+    <script type="module">
+      import WebMap from "@arcgis/core/WebMap";
+      import MapView from "@arcgis/core/views/MapView";
+      import Legend from "@arcgis/core/widgets/Legend";
+      import TextContent from "@arcgis/core/popup/content/TextContent";
+      import ExpressionContent from "@arcgis/core/popup/content/ExpressionContent";
+      import * as arcadeUtils from "@arcgis/core/layers/support/arcadeUtils.js";
+
+      const webmap = new WebMap({
+        portalItem: {
+          id: "8016ebc57e2f4331b647bffd434107f5",
+        },
+      });
+
+      const view = new MapView({
+        map: webmap,
+        container: "viewDiv",
+      });
+
+      let legend = new Legend({
+        view: view,
+      });
+
+      view.ui.add(legend, "bottom-left");
+
+      view.when(() => {
+        const featureLayer = webmap.findLayerById("18685c8ce55-layer-1");
+
+        /* Popup and popup element */
+
+        const template = {
+          title: "Census tract {ID}",
+          expressionInfos: [
+            // Popup
+            {
+              name: "median-income-popup",
+              title: "Median Income ($)",
+              expression: "return Text($feature.MEDHINC_CY, '$#')",
+            },
+          ],
+          content: [
+            {
+              type: "text",
+              text: "This census tract has a median household income of {expression/median-income-popup}",
+            },
+            // Popup Element
+            {
+              type: "expression",
+              expressionInfo: {
+                title: "Post secondary vs < 12 grade (25+)",
+                // defined in separate script element
+                expression: document.getElementById("post-vs-nonpost").text,
+              },
+            },
+          ],
+        };
+
+        featureLayer.popupTemplate = template;
+
+        /* Feature reduction popup element (modifying existing popupTemplate) */
+
+        featureLayer.featureReduction.popupTemplate.content.push(
+          new ExpressionContent({
+            expressionInfo: {
+              title: "Edu Levels Chart",
+              // defined in separate script element
+              expression: document.getElementById("edu-levels-chart").text,
+            },
+          })
+        );
+
+        console.log(arcadeUtils.getExpressionsFromLayer(featureLayer));
+      });
+    </script>
+  </body>
+</html>

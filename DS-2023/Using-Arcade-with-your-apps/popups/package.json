@@ -1,0 +1,17 @@
+{
+  "name": "popups",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^4.1.4"
+  },
+  "dependencies": {
+    "@arcgis/core": "^4.26.1"
+  }
+}
