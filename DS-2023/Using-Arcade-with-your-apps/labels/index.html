@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="./node_modules/@arcgis/core/assets/esri/themes/dark/main.css"
+    />
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        background: rgba(50, 50, 50);
+      }
+    </style>
+    <title>Labels demo</title>
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+    <script type="text/plain" id="label-expression">
+      Console($feature)
+      return $feature.TEMP;
+
+      // field storing wind direction as a number from 0 - 360
+      var DEG = $feature.WIND_DIRECT;
+
+      // field storing wind speed in mph
+      var SPEED = $feature.WIND_SPEED;
+
+      // The When() function will classify the wind direction
+      // to a compass point (e.g. N, NW, S, SE)
+      var DIR = When(
+        SPEED == 0, // Expression
+        null, // Result
+        DEG < 22.5 && DEG >= 0 || DEG > 337.5,
+        "N",
+        DEG >= 22.5 && DEG < 67.5,
+        "NE",
+        DEG >= 67.5 && DEG < 112.5,
+        "E",
+        DEG >= 112.5 && DEG < 157.5,
+        "SE",
+        DEG >= 157.5 && DEG < 202.5,
+        "S",
+        DEG >= 202.5 && DEG < 247.5,
+        "SW",
+        DEG >= 247.5 && DEG < 292.5,
+        "W",
+        DEG >= 292.5 && DEG < 337.5,
+        "NW",
+        null // Default value
+      );
+      var WIND = SPEED + " mph " + DIR;
+      var TEMP = Round($feature.TEMP) + "° F";
+      var RH = $feature.R_HUMIDITY + "% RH";
+      var NAME = $feature.STATION_NAME;
+
+      var labels = [NAME, TEMP, WIND, RH];
+
+      // Concatenate all label variables in the same string
+      // but on multiple lines
+      return Concatenate(labels, "\n");
+    </script>
+    <script type="module">
+      import WebMap from "@arcgis/core/WebMap";
+      import MapView from "@arcgis/core/views/MapView";
+      import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
+
+      const minScale = 250000000;
+      const serviceUrl =
+        "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/weather_stations_010417/FeatureServer/0";
+
+      const view = new MapView({
+        container: "viewDiv",
+        map: new WebMap({
+          portalItem: {
+            id: "372b7caa8fe340b0a6300df93ef18a7e",
+          },
+          layers: [
+            new FeatureLayer({
+              url: serviceUrl,
+              renderer: {
+                type: "simple",
+                symbol: {
+                  type: "simple-marker",
+                  color: [75, 75, 75, 0.7],
+                  size: 4,
+                  outline: null,
+                },
+              },
+              labelingInfo: [
+                {
+                  labelExpressionInfo: {
+                    expression:
+                      document.getElementById("label-expression").text,
+                  },
+                  labelPlacement: "center-right",
+                  minScale: minScale,
+                  symbol: {
+                    type: "text",
+                    font: {
+                      size: 9,
+                      family: "Noto Sans",
+                    },
+                    horizontalAlignment: "left",
+                    color: "#2b2b2b",
+                  },
+                },
+              ],
+            }),
+          ],
+        }),
+        center: [-117.842, 33.799],
+        zoom: 9,
+      });
+    </script>
+  </body>
+</html>
