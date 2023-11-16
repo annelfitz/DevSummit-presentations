@@ -1,0 +1,323 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>
+    Air Quality - Animated CIM Symbols
+  </title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.28/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    #titleDiv {
+      padding: 10px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+
+  <script>
+    require([
+      "esri/WebMap",
+      "esri/views/MapView",
+      "esri/layers/FeatureLayer",
+      "esri/symbols/CIMSymbol",
+      "esri/widgets/Legend",
+      "esri/widgets/Expand",
+      "esri/widgets/Bookmarks",
+      "esri/widgets/Search"
+    ], (WebMap, MapView, FeatureLayer, CIMSymbol, Legend, Expand, Bookmarks, Search) => {
+      // check for reduced motion
+      const isReduced = window.matchMedia(`(prefers-reduced-motion: reduce)`) === true || window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
+
+      // create CIMSymbol with provided rgb color
+      function createCIMSymbol(r, g, b) {
+        return new CIMSymbol({
+          data: {
+            type: "CIMSymbolReference",
+            primitiveOverrides: [{
+              type: "CIMPrimitiveOverride",
+              primitiveName: "animationOverride",
+              propertyName: "PlayAnimation",
+              valueExpressionInfo: {
+                type: "CIMExpressionInfo",
+                // only play the animation if AQI is greater than 151 and user does not have reduced motion
+                expression: `$feature.OZONEPM_AQI_SORT >= 151 && !${isReduced}`
+              }
+            },
+            {
+              type: "CIMPrimitiveOverride",
+              primitiveName: "animationOverride",
+              propertyName: "Duration",
+              valueExpressionInfo: {
+                type: "CIMExpressionInfo",
+                // decrease the duration of the animation when the AQI is higher
+                expression: `When(
+                      $feature.OZONEPM_AQI_SORT >= 151 && $feature.OZONEPM_AQI_SORT < 200, 1,
+                      $feature.OZONEPM_AQI_SORT >= 201 && $feature.OZONEPM_AQI_SORT < 300, 0.5,
+                      0.35
+                    )`
+              }
+            }
+            ],
+            symbol: {
+              type: "CIMPointSymbol",
+              symbolLayers: [{
+                type: "CIMPictureMarker",
+                enable: true,
+                size: 25,
+                scaleX: 1,
+                tintColor: [r, g, b, 255],
+                url: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Cercle_white_blink.gif",
+                animatedSymbolProperties: {
+                  primitiveName: "animationOverride",
+                  playAnimation: true,
+                  duration: 0.75,
+                  repeatType: "Loop"
+                }
+              },
+              {
+                type: "CIMVectorMarker",
+                enable: true,
+                anchorPoint: {
+                  x: 0,
+                  y: 0
+                },
+                anchorPointUnits: "Relative",
+                dominantSizeAxis3D: "Y",
+                size: 22,
+                billboardMode3D: "FaceNearPlane",
+                frame: {
+                  xmin: 0,
+                  ymin: 0,
+                  xmax: 17,
+                  ymax: 17
+                },
+                markerGraphics: [{
+                  type: "CIMMarkerGraphic",
+                  geometry: {
+                    rings: [
+                      [
+                        [8.5, 0],
+                        [7.02, 0.13],
+                        [5.59, 0.51],
+                        [4.25, 1.14],
+                        [3.04, 1.99],
+                        [1.99, 3.04],
+                        [1.14, 4.25],
+                        [0.51, 5.59],
+                        [0.13, 7.02],
+                        [0, 8.5],
+                        [0.13, 9.98],
+                        [0.51, 11.41],
+                        [1.14, 12.75],
+                        [1.99, 13.96],
+                        [3.04, 15.01],
+                        [4.25, 15.86],
+                        [5.59, 16.49],
+                        [7.02, 16.87],
+                        [8.5, 17],
+                        [9.98, 16.87],
+                        [11.41, 16.49],
+                        [12.75, 15.86],
+                        [13.96, 15.01],
+                        [15.01, 13.96],
+                        [15.86, 12.75],
+                        [16.49, 11.41],
+                        [16.87, 9.98],
+                        [17, 8.5],
+                        [16.87, 7.02],
+                        [16.49, 5.59],
+                        [15.86, 4.25],
+                        [15.01, 3.04],
+                        [13.96, 1.99],
+                        [12.75, 1.14],
+                        [11.41, 0.51],
+                        [9.98, 0.13],
+                        [8.5, 0]
+                      ]
+                    ]
+                  },
+                  symbol: {
+                    type: "CIMPolygonSymbol",
+                    symbolLayers: [{
+                      type: "CIMSolidFill",
+                      enable: true,
+                      color: [r, g, b, 125]
+                    }]
+                  }
+                }],
+                scaleSymbolsProportionally: true,
+                respectFrame: true
+              }
+              ]
+            }
+          }
+        });
+      }
+
+      const aqiLayer = new FeatureLayer({
+        portalItem: {
+          id: "2d718d2733a74d1689d72b922c0ac4f4"
+        },
+        minScale: 0,
+        maxScale: 0,
+        orderBy: {
+          field: "OZONEPM_AQI_SORT",
+          order: "descending"
+        },
+        labelingInfo: [{
+          labelExpressionInfo: {
+            expression: `if ($feature.OZONEPM_AQI_LABEL != "ND") return $feature.OZONEPM_AQI_LABEL`
+          },
+          minScale: 1500000,
+          labelPlacement: "center-center",
+          symbol: {
+            type: "text", // autocasts as new TextSymbol()
+            color: "black",
+            font: {
+              family: "Avenir Next LT Pro Medium",
+              weight: "bold"
+            },
+            haloSize: 1,
+            haloColor: "white"
+          }
+        }],
+        renderer: {
+          type: "class-breaks",
+          field: "OZONEPM_AQI_SORT",
+          legendOptions: {
+            title: "Ozone & PM AQI"
+          },
+          classBreakInfos: [{
+            minValue: 301,
+            maxValue: 5000,
+            symbol: createCIMSymbol(126, 0, 35),
+            label: "Hazardous"
+          },
+          {
+            minValue: 201,
+            maxValue: 300,
+            symbol: createCIMSymbol(143, 63, 151),
+            label: "Very Unhealthy"
+          },
+          {
+            minValue: 151,
+            maxValue: 200,
+            symbol: createCIMSymbol(255, 0, 0),
+            label: "Unhealthy"
+          },
+          {
+            minValue: 101,
+            maxValue: 150,
+            symbol: createCIMSymbol(255, 126, 0),
+            label: "Unhealthy for Sensitive Groups"
+          },
+          {
+            minValue: 51,
+            maxValue: 100,
+            symbol: createCIMSymbol(255, 255, 0),
+            label: "Moderate"
+          },
+          {
+            minValue: 0,
+            maxValue: 50,
+            symbol: createCIMSymbol(0, 228, 0),
+            label: "Good"
+          }
+          ],
+          defaultSymbol: createCIMSymbol(255, 255, 255)
+        }
+      });
+      // add context from a live feed of smoke detection from NOAA
+      const smokeLayer = new FeatureLayer({
+        portalItem: {
+          id: "670753899cdb49509b0225496a5b5808"
+        },
+        legendEnabled: false
+      });
+
+      const map = new WebMap({
+        portalItem: {
+          id: "81bfc8a612d3426583fb9c93381dae84"
+        },
+        basemap: "gray-vector",
+        layers: [smokeLayer, aqiLayer] // add layers to the map
+      });
+
+      const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-117.87574, 34.31224],
+        zoom: 8,
+        constraints: {
+          minScale: 9000000
+        }
+      });
+
+      const legend = new Legend({
+          view: view,
+          container: "legendDiv"
+      });
+      view.ui.add("titleDiv", "top-right");
+
+      view.ui.add(new Expand({
+        view,
+        group: "left",
+        content: new Bookmarks({
+          view,
+          visibleElements: {
+            // hide the bookmark thumbnails
+            thumbnail: false
+          }
+        })
+      }), "top-left");
+
+      view.ui.add(new Expand({
+        view,
+        group: "left",
+        content: new Search({ view })
+      }), "top-left");
+
+      view.whenLayerView(aqiLayer).then((aqiLayerView) => {
+        document.getElementById("date").innerHTML = aqiLayer.editingInfo.lastEditDate.toLocaleString();
+        const worstBtn = document.getElementById("worstAQI");
+        worstBtn.addEventListener("click", () => {
+          // query for the highest AQI and navigate the user to that feature
+          const query = {
+            where: "1=1",
+            orderByFields: ["OZONEPM_AQI_SORT DESC"],
+            outFields: ["OZONEPM_AQI_SORT"],
+            num: 1,
+            returnGeometry: true
+          };
+          aqiLayerView.queryFeatures(query).then((results) => {
+            const worst = results.features[0];
+            view.goTo(worst);
+          })
+        })
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+  <div id="titleDiv" class="esri-widget">
+    <div id="legendDiv"></div>
+    <p>Last updated: <span id="date"></span></p>
+    <button id="worstAQI" class="esri-widget esri-button">Find the worst AQI</button>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>
+        Add labels to a FeatureLayer | Sample | ArcGIS Maps SDK for JavaScript
+        4.28
+    </title>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css" />
+
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+            background-color: black;
+        }
+    </style>
+
+    <script src="https://js.arcgis.com/4.28/"></script>
+
+    <script>
+        require([
+            "esri/Map",
+            "esri/views/MapView",
+            "esri/layers/FeatureLayer"
+        ], (Map, MapView, FeatureLayer) => {
+            const labelClass = {
+                // autocasts as new LabelClass()
+                symbol: {
+                    type: "text", // autocasts as new TextSymbol()
+                    color: "#008061",
+                    backgroundColor: "white",
+                    borderLineColor: "#008061",
+                    borderLineSize: 0.5,
+                    font: {
+                        // autocast as new Font()
+                        family: "Playfair Display",
+                        size: 10,
+                        weight: "bold"
+                    }
+                },
+                labelPlacement: "center-center",
+                labelExpressionInfo: {
+                    expression: "$feature.KURZTEXT"
+                }
+            };
+
+            const view = new MapView({
+                container: "viewDiv",
+                map: new Map({
+                    basemap: {
+                        portalItem: {
+                            id: "2e8a3ccdfd6d42a995b79812b3b0ebc6"
+                        }
+                    },
+                    layers: [
+                        new FeatureLayer({
+                            portalItem: {
+                                // autocasts as new PortalItem
+                                id: "1c759c94a6414e9399138bd2aa5be3d6"
+                            },
+                            labelingInfo: [labelClass],
+                            labelsVisible: true,
+                            renderer: {
+                                type: "simple", // autocasts as new SimpleRenderer()
+                                symbol: {
+                                    type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+                                    color: "rgba(0,100,0,0)",
+                                    size: 3,
+                                    outline: {
+                                        color: [0, 0, 0, 0],
+                                        width: 0.5
+                                    }
+                                }
+                            }
+                        })
+                    ]
+                }),
+                center: [7.83511, 46.08427],
+                zoom: 11
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div id="viewDiv"></div>
+</body>
+
+</html>
