@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Arcade - unit conversion labels</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.29/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/FeatureLayer"
+    ], function (
+      Map,
+      MapView,
+      FeatureLayer
+    ) {
+      const map = new Map({ basemap: "dark-gray-vector" });
+
+      const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-117.17240, 32.72975], // San Diego
+        zoom: 10
+      });
+
+      // Arcade expression that converts the temperature to a
+      // string and concatenates it with the degree symbol and units
+
+      const tempClass = {
+        labelExpressionInfo: {
+          // expression: "$feature.TEMP"
+          // expression: "Round($feature.TEMP) + '° F';"
+          expression: "Text((($feature.TEMP - 32) * 5/9), '#° C')"
+        },
+        symbol: {
+          type: "text",
+          font: {
+            size: 18,
+            weight: "bold"
+          },
+          color: "#f1c40f"
+        }
+      };
+
+      // Create the layer and add it to the map
+
+      const serviceUrl =
+        "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/NOAA_METAR_current_wind_speed_direction_v1/FeatureServer";
+      const layer = new FeatureLayer({
+        url: serviceUrl,
+        renderer: {
+          type: "simple",
+          symbol: {
+            type: "simple-marker",
+            color: [255, 255, 255, 0.1],
+            size: 5,
+            outline: null
+          }
+        },
+        labelingInfo: [tempClass]
+      });
+
+      view.map.add(layer);
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

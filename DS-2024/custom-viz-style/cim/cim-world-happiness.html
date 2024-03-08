@@ -1,0 +1,272 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>World Happiness Report 2022</title>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    #legendDivParent>span {
+      margin: 20px;
+      font-weight: bold;
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.29/"></script>
+
+  <script>
+    require([
+      "esri/WebMap",
+      "esri/layers/FeatureLayer",
+      "esri/views/MapView",
+      "esri/widgets/Legend"
+    ], (Map, FeatureLayer, MapView, Legend) => {
+      const symbolLayerInfo = [{
+          primitiveName: "GDP",
+          fieldName: "Explained_by__GDP_per_capita",
+          fieldMax: 2.20939540863037,
+          offset: -25,
+          color: [0, 132, 168, 255]
+        },
+        {
+          primitiveName: "SocialSupport",
+          fieldName: "Explained_by__Social_support",
+          fieldMax: 1.31991350650787,
+          offset: -15,
+          color: [137, 68, 68, 255]
+        },
+        {
+          primitiveName: "HealthyLife",
+          fieldName: "Explained_by__Healthy_life_expe",
+          fieldMax: 0.942,
+          offset: -5,
+          color: [112, 168, 0, 255]
+        },
+        {
+          primitiveName: "Freedom",
+          fieldName: "Explained_by__Freedom_to_make_l",
+          fieldMax: 0.740038573741913,
+          offset: 5,
+          color: [255, 192, 36, 255]
+        },
+        {
+          primitiveName: "Generosity",
+          fieldName: "Explained_by__Generosity",
+          fieldMax: 0.467925846576691,
+          offset: 15,
+          color: [122, 182, 245, 255]
+        },
+        {
+          primitiveName: "Corruption",
+          fieldName: "Explained_by__Perceptions_of_co",
+          fieldMax: 0.586828052997589,
+          offset: 25,
+          color: [230, 76, 0, 255]
+        },
+      ];
+      let primitiveOverrides = [];
+      let symbolLayers = [];
+      symbolLayerInfo.forEach((info) => {
+        primitiveOverrides.push(createPrimitiveOverride(info.primitiveName, info.fieldName, info.fieldMax))
+        symbolLayers.push(createSymbolLayer(info.offset, info.color, info.primitiveName))
+      })
+      const url =
+        "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/2022_World_Happiness_Report/FeatureServer/0";
+      const renderer = {
+        type: "simple",
+        symbol: {
+          type: "cim",
+          data: {
+            type: "CIMSymbolReference",
+            primitiveOverrides: primitiveOverrides,
+            symbol: {
+              type: "CIMPointSymbol",
+              symbolLayers: [
+                ...symbolLayers,
+                {
+                  type: "CIMVectorMarker",
+                  enable: true,
+                  colorLocked: true,
+                  size: 10,
+                  frame: {
+                    xmin: -5,
+                    ymin: -0.5,
+                    xmax: 5,
+                    ymax: 0.5
+                  },
+                  markerGraphics: [{
+                    type: "CIMMarkerGraphic",
+                    geometry: {
+                      rings: [
+                        [
+                          [-3, 0.75],
+                          [3, 0.75],
+                          [3, -0.75],
+                          [-3, -0.75],
+                          [-3, 0.75]
+                        ]
+                      ]
+                    },
+                    symbol: {
+                      type: "CIMPolygonSymbol",
+                      symbolLayers: [{
+                        type: "CIMSolidFill",
+                        enable: true,
+                        color: [255, 255, 255, 255]
+                      }]
+                    }
+                  }],
+                  scaleSymbolsProportionally: true,
+                  respectFrame: true
+                }
+              ],
+              haloSize: 1,
+              scaleX: 1,
+              angleAlignment: "Display"
+            }
+          }
+        }
+      };
+      const worldHappiness = new FeatureLayer({
+        url: url,
+        renderer: renderer,
+        title: "2022 World Happiness Report",
+        copyright: "World Happiness Report, https://worldhappiness.report/",
+        labelingInfo: [{
+          labelExpressionInfo: {
+            expression: "\"#\"+ $feature[\"RANK\"]+ \" \" +$feature[\"Country\"]",
+            title: "Custom"
+          },
+          labelPlacement: "above-center",
+          maxScale: 0,
+          minScale: 26099339.602435,
+          symbol: {
+            type: "text",
+            color: [
+              105,
+              105,
+              105,
+              255
+            ],
+            font: {
+              family: "Alegreya",
+              size: 12,
+              weight: "bold"
+            },
+            horizontalAlignment: "center",
+            haloColor: [
+              255,
+              255,
+              255,
+              255
+            ],
+            haloSize: 1,
+            yoffset: -5,
+          }
+        }]
+      });
+      const map = new Map({
+        basemap: {
+          portalItem: {
+            id: "51646395247d456394af563307ed18c0"
+          }
+        },
+        layers: [worldHappiness]
+      });
+      const view = new MapView({
+        container: "viewDiv",
+        center: [7.41827, 59.53116],
+        zoom: 4,
+        map: map,
+        popup: {
+            defaultPopupTemplateEnabled: true
+        }
+      });
+
+      function createPrimitiveOverride(primitiveName, field, max) {
+        return {
+          type: "CIMPrimitiveOverride",
+          primitiveName: primitiveName,
+          propertyName: "Size",
+          valueExpressionInfo: {
+            type: "CIMExpressionInfo",
+            title: "Custom",
+            expression: "$feature." + field + " / " + max + " * 10",
+            returnType: "Default"
+          }
+        }
+      }
+
+      function createSymbolLayer(offset, color, primitiveName) {
+        return {
+          type: "CIMVectorMarker",
+          enable: true,
+          primitiveName: primitiveName,
+          offsetX: offset,
+          colorLocked: true,
+          size: 10,
+          frame: {
+            xmin: 0,
+            ymin: 0,
+            xmax: 17,
+            ymax: 17
+          },
+          markerGraphics: [{
+            type: "CIMMarkerGraphic",
+            geometry: {
+              rings: [
+                [
+                  [0, 17],
+                  [17, 17],
+                  [17, 0],
+                  [0, 0],
+                  [0, 17]
+                ]
+              ]
+            },
+            symbol: {
+              type: "CIMPolygonSymbol",
+              symbolLayers: [{
+                type: "CIMSolidFill",
+                enable: true,
+                color: color
+              }]
+            }
+          }],
+          scaleSymbolsProportionally: true,
+          respectFrame: true
+        }
+      }
+      const legend = new Legend({
+        view: view,
+        container: "legendDiv"
+      })
+      view.ui.add(document.getElementById("legendDivParent"), "bottom-left");
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+  <div id="legendDivParent" class="esri-widget">
+    <div id="legendDiv"></div>
+    <span style="color:#0084A8;">GDP per capita</span><br>
+    <span style="color:#894444;">Social support</span><br>
+    <span style="color:#70A800;">Healthy life expectancy</span><br>
+    <span style="color:#FFC024;">Freedom to make life choices</span><br>
+    <span style="color:#7AB6F5;">Generosity</span><br>
+    <span style="color:#E64C00;">Perceptions of corruption</span><br><br>
+  </div>
+</body>
+
+</html>

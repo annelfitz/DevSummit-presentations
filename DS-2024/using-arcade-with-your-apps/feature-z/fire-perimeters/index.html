@@ -1,0 +1,125 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>
+      Configure feature sort order | Sample | ArcGIS Maps SDK for JavaScript
+      4.26
+    </title>
+
+    <script
+      type="module"
+      src="https://js.arcgis.com/calcite-components/1.0.7/calcite.esm.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://js.arcgis.com/calcite-components/1.0.7/calcite.css"
+    />
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .esri-legend .esri-legend__layer-caption {
+        display: none;
+      }
+      #legend {
+        width: 260px;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.29/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.29/"></script>
+
+    <script>
+      require(["esri/WebMap", "esri/views/MapView", "esri/widgets/Legend"], (
+        WebMap,
+        MapView,
+        Legend
+      ) => {
+        const view = new MapView({
+          container: "viewDiv",
+          map: new WebMap({
+            portalItem: {
+              id: "3b3eee1344c347888bf7284e0435e249"
+            }
+          })
+        });
+
+        view.when().then(() => {
+          const layer = view.map.layers.getItemAt(0);
+
+          // Sort features by length of the fire
+          // large symbols on top - small symbols on the bottom
+          layer.orderBy = [
+            {
+              valueExpression: `DateDiff($feature.CONT_DATE, $feature.ALARM_DATE)`,
+              order: "descending" // "descending" | "ascending"
+            }
+          ];
+
+          const sortOrder = document.getElementById("sort-order");
+          const ascText = "Sort features with small values on top";
+          const descText = "Sort features with large values on top";
+
+          // logic for toggling ascending and descending order
+          sortOrder.addEventListener("click", () => {
+            const order =
+              layer.orderBy[0].order === "ascending"
+                ? "descending"
+                : "ascending";
+
+            layer.orderBy = [
+              {
+                valueExpression: `DateDiff($feature.CONT_DATE, $feature.ALARM_DATE)`,
+                order
+              }
+            ];
+
+            // toggles ui icon and description for the sortOrder button
+            if (order === "ascending") {
+              sortOrder.text = descText;
+              sortOrder.icon = `sort-descending-arrow`;
+            } else {
+              sortOrder.text = ascText;
+              sortOrder.icon = `sort-ascending-arrow`;
+            }
+          });
+        });
+
+        view.ui.add("legend", "bottom-left");
+
+        new Legend({
+          container: "legend",
+          view
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+    <div id="legend">
+      <calcite-action
+        active
+        id="sort-order"
+        text="Sort features with small values on top"
+        text-enabled
+        icon="sort-ascending-arrow"
+        scale="s"
+      ></calcite-action>
+    </div>
+  </body>
+</html>

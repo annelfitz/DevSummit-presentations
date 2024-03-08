@@ -1,0 +1,261 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+    <title>
+        Motor vehicle crashes - pie charts
+    </title>
+
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.29/"></script>
+
+    <script type="text/javascript">
+        require([
+            "esri/WebMap",
+            "esri/views/MapView",
+            "esri/layers/FeatureLayer",
+            "esri/layers/support/LabelClass",
+            "esri/layers/support/AggregateField",
+            "esri/widgets/Legend",
+            "esri/widgets/Expand",
+            "esri/widgets/Home",
+            "esri/Color"
+        ], function (
+            WebMap,
+            MapView,
+            FeatureLayer,
+            LabelClass,
+            AggregateField,
+            Legend,
+            Expand,
+            Home,
+            Color
+        ) {
+            (async () => {
+
+                const colors = ["#ffdf3c", "#d92b30", "#3cccb4", "#0095ba", "#c27c30", "#f260a1"].map(c => new Color(c));
+
+                const layer = new FeatureLayer({
+                    title: "Motor vehicle crashes (2020)",
+                    url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/accidents2021/FeatureServer/0",
+                    maxScale: 0,
+                    renderer: {
+                        type: "unique-value",
+                        valueExpression: `
+                            var d = $feature.TSODate;
+                            var h = Hour(d);
+
+                            When(
+                                h <= 6, "night",
+                                h <= 12, "morning",
+                                h <= 18, "afternoon",
+                                "evening"
+                            );
+                        `,
+                        uniqueValueInfos: [
+                            {
+                                value: "morning",
+                                symbol: createSymbol(colors[0])
+                            },
+                            {
+                                value: "afternoon",
+                                symbol: createSymbol(colors[1])
+                            },
+                            {
+                                value: "evening",
+                                symbol: createSymbol(colors[2])
+                            },
+                            {
+                                value: "night",
+                                symbol: createSymbol(colors[3])
+                            }
+                        ],
+                        defaultSymbol: createSymbol("gray")
+                    }
+                });
+
+                function createSymbol(color) {
+                    return {
+                        type: "simple-marker",
+                        color: color,
+                        size: "5px",
+                        outline: null,
+                        outline: {
+                            color: "rgba(153, 31, 23, 0.3)",
+                            width: 0.3
+                        }
+                    };
+                }
+
+                const map = new WebMap({
+                    portalItem: {
+                        id: "3582b744bba84668b52a16b0b6942544"
+                    },
+                    layers: [layer]
+                });
+
+                const view = new MapView({
+                    container: "viewDiv",
+                    map,
+                    center: [-101.32544, 40.05961],
+                    zoom: 4,
+                    constraints: {
+                        // maxScale: 18000,
+                        snapToZoom: false
+                    }
+                });
+
+                await view.when();
+
+                const featureReduction = {
+
+                    type: "cluster",
+                    clusterRadius: "60px",
+                    clusterMinSize: "15px",
+                    clusterMaxSize: "60px",
+                    fields: [
+                        new AggregateField({
+                            name: "aggregateCount",
+                            alias: "Total count",
+                            statisticType: "count"
+                        }),
+                        new AggregateField({
+                            name: "SUM_MORNING",
+                            onStatisticExpression: {
+                                expression:
+                                    `
+                                var d = $feature.TSODate;
+                                var h = Hour(d);
+                                return Number(h > 6 && h <=12)
+                            `
+                            },
+                            statisticType: "sum"
+                        }),
+                        new AggregateField({
+                            name: "SUM_NIGHT",
+                            onStatisticExpression: {
+                                expression: `var d = $feature.TSODate;
+                                var h = Hour(d);
+                                return Number(h <= 6)
+                            `
+                            },
+                            statisticType: "sum"
+                        }),
+                        new AggregateField({
+                            name: "SUM_AFTERNOON",
+                            onStatisticExpression: {
+                                expression: `
+                                var d = $feature.TSODate;
+                                var h = Hour(d);
+                                return Number(h >= 12 && h < 18)
+                            `
+                            },
+                            statisticType: "sum"
+                        }),
+                        new AggregateField({
+                            name: "SUM_EVENING",
+                            onStatisticExpression: {
+                                expression: `
+                                var d = $feature.TSODate;
+                                var h = Hour(d);
+                                return Number(h >= 18)
+                            `
+                            },
+                            statisticType: "sum"
+                        }),
+                    ],
+                    renderer: {
+                        type: "pie-chart",
+                        size: 6,
+                        attributes: [
+                            {
+                                field: "SUM_MORNING",
+                                color: colors[0],
+                                label: "Morning",
+                            },
+                            {
+                                field: "SUM_AFTERNOON",
+                                color: colors[1],
+                                label: "Afternoon"
+                            },
+                            {
+                                field: "SUM_EVENING",
+                                color: colors[2],
+                                label: "Evening"
+                            },
+                            {
+                                field: "SUM_NIGHT",
+                                color: colors[3],
+                                label: "Night"
+                            }
+                        ],
+                        holePercentage: 0,
+                        backgroundSymbol: null,
+                        defaultColor: null,
+                        outline: {
+                            width: 0,
+                            color: "white"
+                        },
+                    }
+                };
+
+                function createSymbol(color) {
+                    return {
+                        type: "simple-marker",
+                        style: "circle",
+                        size: 5,
+                        color,
+                        outline: {
+                            style: "solid",
+                            color: [15, 15, 15, 0.3],
+                            width: 0.5
+                        }
+                    };
+                }
+
+                layer.featureReduction = featureReduction;
+
+                view.ui.add(
+                    new Home({
+                        view: view
+                    }),
+                    "top-left"
+                );
+
+                const legend = new Legend({
+                    view: view,
+                    container: "legendDiv"
+                });
+
+                view.ui.add(
+                    legend,
+                    "bottom-left"
+                );
+
+            })()
+        });
+    </script>
+</head>
+
+<body>
+    <div id="viewDiv"></div>
+    <div id="infoDiv" class="esri-widget">
+        <button id="cluster" class="esri-button">Disable Clustering</button>
+        <div id="legendDiv"></div>
+      </div>
+</body>
+
+</html>

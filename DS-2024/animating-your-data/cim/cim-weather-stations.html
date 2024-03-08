@@ -1,0 +1,168 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>CIM Weather Stations - Animation primitive override</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.24/esri/themes/dark/main.css" />
+  <script src="https://js.arcgis.com/4.24"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/symbols/CIMSymbol", "esri/widgets/Legend"], function(
+      Map,
+      MapView,
+      FeatureLayer,
+      CIMSymbol,
+      Legend
+    ) {
+      const referenceScale = 9244650;
+      const map = new Map({
+        basemap: "dark-gray-vector",
+        layers: []
+      });
+      const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-88.63069, 43.17813],
+        zoom: 7
+      });
+      const windSym = new CIMSymbol({
+        data: {
+          type: "CIMSymbolReference",
+          primitiveOverrides: [{
+              type: "CIMPrimitiveOverride",
+              primitiveName: "windSpeed",
+              propertyName: "PlayAnimation",
+              valueExpressionInfo: {
+                type: "CIMExpressionInfo",
+                title: "PlayAnimation override",
+                expression: "IIF($feature.WIND_SPEED == 0, false, true)"
+              }
+            },
+            {
+              type: "CIMPrimitiveOverride",
+              primitiveName: "windSpeed",
+              propertyName: "Duration",
+              valueExpressionInfo: {
+                type: "CIMExpressionInfo",
+                title: "Duration override",
+                expression: `WHEN (
+                    $feature.WIND_SPEED >= 0 && $feature.WIND_SPEED < 12, 3,
+                    $feature.WIND_SPEED >= 12 && $feature.WIND_SPEED < 39, 1.5,
+                    $feature.WIND_SPEED >= 39 && $feature.WIND_SPEED < 62, 0.5,
+                    5
+                  )`
+              }
+            }
+          ],
+          symbol: {
+            "type": "CIMPointSymbol",
+            "symbolLayers": [{
+              "type": "CIMPictureMarker",
+              "enable": true,
+              "size": 50,
+              url: "https://upload.wikimedia.org/wikipedia/commons/9/92/Orange_animated_right_arrow.gif",
+              "animatedSymbolProperties": {
+                primitiveName: "windSpeed",
+                "type": "CIMAnimatedSymbolProperties",
+                "playAnimation": true,
+                "randomizeStartTime": true,
+                "repeatType": "Loop"
+              }
+            }],
+            "angleAlignment": "Map"
+          }
+        }
+      });
+      const featureLayer = new FeatureLayer({
+        portalItem: {
+          id: "cb1886ff0a9d4156ba4d2fadd7e8a139"
+        },
+        renderer: {
+          type: "simple",
+          symbol: windSym,
+          visualVariables: [{
+              type: "rotation",
+              valueExpression: "$feature.WIND_DIRECT + 90",
+              rotationType: "geographic"
+            },
+            {
+              type: "size",
+              field: "WIND_SPEED",
+              minDataValue: 0,
+              maxDataValue: 60,
+              minSize: {
+                type: "size",
+                valueExpression: "$view.scale",
+                // adjust the min size by scale
+                stops: [{
+                    value: referenceScale,
+                    size: 14
+                  },
+                  {
+                    value: referenceScale * 2,
+                    size: 12
+                  },
+                  {
+                    value: referenceScale * 4,
+                    size: 10
+                  },
+                  {
+                    value: referenceScale * 8,
+                    size: 8
+                  }
+                ]
+              },
+              maxSize: {
+                type: "size",
+                valueExpression: "$view.scale",
+                // adjust the max size by scale
+                stops: [{
+                    value: referenceScale,
+                    size: 40
+                  },
+                  {
+                    value: referenceScale * 2,
+                    size: 30
+                  },
+                  {
+                    value: referenceScale * 4,
+                    size: 20
+                  },
+                  {
+                    value: referenceScale * 8,
+                    size: 10
+                  }
+                ]
+              }
+            },
+          ]
+        },
+        // Ensure that all features are shown at all scales
+        maxScale: 0,
+        minScale: 0,
+      });
+      map.add(featureLayer);
+
+      view.ui.add(new Legend({view}), "bottom-left")
+    });
+  </script>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>

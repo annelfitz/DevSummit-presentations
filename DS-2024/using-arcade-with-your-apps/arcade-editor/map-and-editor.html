@@ -1,0 +1,136 @@
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>Coding and map components</title>
+  <style>
+    html,
+    body {
+      background-color: var(--calcite-ui-foreground-2);
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    .container {
+      height: 100%;
+    }
+
+    .editor-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      height: 40%;
+      min-height: 400px;
+    }
+
+    arcgis-map {
+      height: 55%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 10px 0 10px;
+    }
+  </style>
+  <!-- Load Calcite Components -->
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/2.4.0/calcite.css" />
+  <script type="module" src="https://js.arcgis.com/calcite-components/2.4.0/calcite.esm.js"></script>
+
+  <!-- Load the ArcGIS Maps SDK for JavaScript -->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.29/"></script>
+
+  <!-- Load the Coding Components -->
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/coding-components/4.29/arcgis-coding-components.css" />
+  <script type="module" src="https://js.arcgis.com/coding-components/4.29/arcgis-coding-components.esm.js"></script>
+
+  <!-- Load the Map Components -->
+  <script type="module" src="https://js.arcgis.com/map-components/4.29/arcgis-map-components.esm.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="editor-wrapper">
+      <arcgis-arcade-editor />
+    </div>
+    <arcgis-map item-id="2084f514a77a4578a496e9ddd79946d7">
+      <arcgis-legend position="bottom-left" expandable></arcgis-legend>
+    </arcgis-map>
+  </div>
+  <calcite-scrim id="scrim" loading></calcite-scrim>
+  <script>
+    // Set up label class
+    const labelClass = {
+      symbol: {
+        type: "text",
+        color: "white",
+        haloColor: "#575757",
+        haloSize: 1,
+        font: {
+          family: "Audiowide",
+          size: 12
+        },
+      },
+      labelPlacement: "above-center",
+      labelExpressionInfo: {
+        expression: "$feature.TEMP",
+      },
+    };
+    // Get the Arcade editor element
+    const arcadeEditorElt = document.querySelector("arcgis-arcade-editor");
+    // Get the map element
+    const mapElm = document.querySelector("arcgis-map");
+    mapElm.addEventListener("arcgisViewReadyChange", async (e) => {
+      const view = mapElm.view;
+      // Set up the Arcade editor with data from the map
+      const webMap = view.map;
+      const featureLayer = webMap.layers.items[0];
+      featureLayer.labelingInfo = [labelClass];
+      const featureSet = await featureLayer.queryFeatures({
+        where: "1=1",
+        outFields: ["*"],
+        returnGeometry: true
+      });
+      // Tells Arcade Editor to use the 'labeling' profile and provides the necessary data used as
+      // definition for the profile variables. Feature Layer and Web Map instances are used by the
+      // Editor UX to help users understand the structure of data used.
+      // Note that for the $feature variable, we pass the feature layer instance as for definition
+      // the editor needs the metadata of the feature not an actual feature.
+      arcadeEditorElt.profile = {
+        id: "labeling",
+        definitions: {
+          $feature: featureLayer,
+        }
+      };
+      // Tells Arcade Editor to the following test data. The data provided must match the expected data for the
+      // profile used.
+      // Note that for test data, the feature must an instance of a feature. This is not used for user experience
+      // but for actually executing the the Arcade expression in the editor.
+      arcadeEditorElt.testData = {
+        profileVariableInstances: {
+          $feature: featureSet.features[0],
+        }
+      };
+      // Set a script on the editor
+      arcadeEditorElt.script = "// Labeling profile\nreturn $feature.TEMP;";
+      // Everything has been loaded and assigned, we can remove scrim
+      document.getElementById("scrim").remove();
+      // Add a button to the map to test the Arcade expression
+      const buttonElm = document.createElement("calcite-button");
+      buttonElm.position = "top-right";
+      buttonElm.innerText = "Test arcade expression";
+      view.ui.add(buttonElm, "top-right");
+      buttonElm.addEventListener("click", async () => {
+        const testResult = await arcadeEditorElt.getTestResult();
+        if (testResult.type === "text" || testResult.type === "number") {
+          featureLayer.labelingInfo[0].labelExpressionInfo.expression = await arcadeEditorElt.getScript();
+        }
+      })
+    });
+  </script>
+</body>
+
+</html>
