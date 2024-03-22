@@ -22,14 +22,15 @@
       height: 100%;
       width: 100%;
     }
+
     #info {
-        background-color: white;
-        opacity: 0.75;
-        color: dodgerblue;
-        font-size: 18pt;
-        padding: 8px;
-        visibility: hidden;
-      }
+      background-color: white;
+      opacity: 0.75;
+      color: dodgerblue;
+      font-size: 18pt;
+      padding: 8px;
+      visibility: hidden;
+    }
   </style>
 
   <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css" />
@@ -45,7 +46,7 @@
       MapView,
       FeatureLayer
     ) => {
-      const createRenderer = (airportVal) => {
+      const createRenderer = (name) => {
         return {
           type: "simple",
           symbol: {
@@ -61,7 +62,7 @@
                     enable: true,
                     size: 22,
                     scaleX: 1,
-                    tintColor: [255,255,255,255],
+                    tintColor: [255, 255, 255, 255],
                     url: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Cercle_white_blink.gif",
                     animatedSymbolProperties: {
                       primitiveName: "animationOverride",
@@ -69,85 +70,93 @@
                       duration: 1,
                       repeatType: "Loop"
                     }
-                  }, 
+                  },
                   {
-                    type: "CIMVectorMarker",
-                    enable: true,
-                    anchorPointUnits: "Relative",
-                    dominantSizeAxis3D: "Y",
-                    size: 15,
-                    billboardMode3D: "FaceNearPlane",
-                    frame: {
-                      xmin: 0,
-                      ymin: 0,
-                      xmax: 21,
-                      ymax: 21
+                    "type": "CIMVectorMarker",
+                    "enable": true,
+                    "anchorPointUnits": "Relative",
+                    "dominantSizeAxis3D": "Y",
+                    "size": 15,
+                    "billboardMode3D": "FaceNearPlane",
+                    "frame": {
+                      "xmin": 0,
+                      "ymin": 0,
+                      "xmax": 21,
+                      "ymax": 21
                     },
-                    markerGraphics: [{
-                      type: "CIMMarkerGraphic",
-                      geometry: {
-                        rings: [
-                          [
-                            [11.9, 12.17],
-                            [17.42, 8.13],
-                            [18.03, 7.47],
-                            [18.24, 6.86],
-                            [18.24, 6.05],
-                            [11.9, 8.48],
-                            [11.7, 6.19],
-                            [11.48, 4.82],
-                            [12.94, 3.42],
-                            [13.24, 3.1],
-                            [13.35, 2.79],
-                            [13.35, 2],
-                            [10.5, 2.77],
-                            [7.65, 2],
-                            [7.65, 2.79],
-                            [7.76, 3.1],
-                            [8.06, 3.42],
-                            [9.52, 4.82],
-                            [9.3, 6.19],
-                            [9.1, 8.48],
-                            [2.76, 6.05],
-                            [2.76, 6.86],
-                            [2.97, 7.47],
-                            [3.58, 8.13],
-                            [9.1, 12.17],
-                            [9.1, 15.76],
-                            [9.19, 16.78],
-                            [9.46, 17.68],
-                            [9.92, 18.45],
-                            [10.5, 19],
-                            [11.08, 18.45],
-                            [11.54, 17.68],
-                            [11.81, 16.78],
-                            [11.9, 15.76],
-                            [11.9, 12.17]
+                    "markerGraphics": [
+                      {
+                        "type": "CIMMarkerGraphic",
+                        "geometry": {
+                          "rings": [
+                            [
+                              [
+                                19,
+                                5
+                              ],
+                              [
+                                1.55,
+                                5
+                              ],
+                              [
+                                6.5,
+                                16
+                              ],
+                              [
+                                10.56,
+                                6.99
+                              ],
+                              [
+                                10.2,
+                                10.22
+                              ],
+                              [
+                                8.99,
+                                12.9
+                              ],
+                              [
+                                12.58,
+                                20
+                              ],
+                              [
+                                19,
+                                5
+                              ]
+                            ]
                           ]
-                        ]
+                        },
+                        "symbol": {
+                          "type": "CIMPolygonSymbol",
+                          "symbolLayers": [
+                            {
+                              "type": "CIMSolidStroke",
+                              "enable": true,
+                              "capStyle": "Round",
+                              "joinStyle": "Round",
+                              "lineStyle3D": "Strip",
+                              "miterLimit": 10,
+                              "width": 0,
+                              "color": [
+                                110,
+                                110,
+                                110,
+                                255
+                              ]
+                            },
+                            {
+                              "type": "CIMSolidFill",
+                              "enable": true,
+                              "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                              ]
+                            }
+                          ]
+                        }
                       },
-                      symbol: {
-                        type: "CIMPolygonSymbol",
-                        symbolLayers: [{
-                            type: "CIMSolidStroke",
-                            enable: true,
-                            capStyle: "Round",
-                            joinStyle: "Round",
-                            lineStyle3D: "Strip",
-                            miterLimit: 10,
-                            width: 0,
-                            color: [0, 0, 0, 255]
-                          },
-                          {
-                            type: "CIMSolidFill",
-                            enable: true,
-                            color: [255, 255, 255, 255]
-                          }
-                        ]
-                      }
-                    }],
-                    scaleSymbolsProportionally: true,
-                    respectFrame: true
+                    ],
                   },
                   {
                     type: "CIMVectorMarker",
@@ -233,7 +242,8 @@
                 valueExpressionInfo: {
                   type: "CIMExpressionInfo",
                   title: "Custom",
-                  expression: `iif($feature.LocationID == "${airportVal}", true, false)`,
+                  // only play animation for selected feature
+                  expression: `iif($feature.Name == "${name}", true, false)`,
                   returnType: "Default"
                 }
               },
@@ -243,7 +253,8 @@
                 valueExpressionInfo: {
                   type: "CIMExpressionInfo",
                   title: "Custom",
-                  expression: `iif($feature.LocationID == "${airportVal}", "rgba(255,0,255,1)", "rgba(255,255,255,1)")`,
+                  // change tint color for selected feature
+                  expression: `iif($feature.Name == "${name}", "rgba(255,0,255,1)", "rgba(255,255,255,1)")`,
                   returnType: "Default"
                 }
               }]
@@ -251,46 +262,46 @@
           }
         };
       };
-      const airports = new FeatureLayer({
-        url: "https://maps6.arcgisonline.com/ArcGIS/rest/services/A-16/FAA_5010_Airports/MapServer/1",
+      const skiResorts = new FeatureLayer({
+        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/California_Ski_Resorts/FeatureServer/0",
         renderer: createRenderer(null),
-        outFields: ["LocationID", "FacilityName"],
+        outFields: ["Name"],
         labelingInfo: null,
         maxScale: 0
       });
       const view = new MapView({
         map: new Map({
           basemap: "gray-vector",
-          layers: [airports],
+          layers: [skiResorts],
         }),
         container: "viewDiv",
-        center: [-117.78932, 34.86647],
-        zoom: 6,
+        center: [-120.03634, 39.04502],
+        zoom: 9,
         highlightOptions: {
-          color:"white",
+          color: "white",
           haloOpacity: 0,
           fillOpacity: 0
         }
       });
       view.ui.add("info", "top-right");
       // Get the screen point from the view's click event
-      view.on("click", function(event) {
+      view.on("click", function (event) {
         // Search for graphics at the clicked location. View events can be used
         // as screen locations as they expose an x,y coordinate that conforms
         // to the ScreenPoint definition.
-        view.hitTest(event).then(function(response) {
-          // only get the graphics returned from airports layer
+        view.hitTest(event).then(function (response) {
           const graphicHits = response.results?.filter(
-            (hitResult) => hitResult.type === "graphic" && hitResult.graphic.layer === airports
+            (hitResult) => hitResult.type === "graphic" && hitResult.graphic.layer === skiResorts
           );
           if (graphicHits?.length > 0) {
-            // do something with the features returned from hittest
             graphicHits.forEach((graphicHit) => {
               let attributes = graphicHit.graphic.attributes;
-              let airportID = attributes.LocationID;
-              airports.renderer = createRenderer(airportID);
+              let name = attributes.name;
+              // update symbology based on selected feature
+              skiResorts.renderer = createRenderer(name);
+              // display selected feature in top right corner
               document.getElementById("info").style.visibility = "visible";
-              document.getElementById("name").innerHTML = `${attributes.FacilityName} (${airportID})`;
+              document.getElementById("name").innerHTML = `${name}`;
             });
           }
         });

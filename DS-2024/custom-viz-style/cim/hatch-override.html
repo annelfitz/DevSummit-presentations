@@ -35,79 +35,79 @@
         title: "Population change % from 2010 to 2020",
         renderer: {
           type: "simple",
-              symbol: {
-                type: "cim",
-                data: {
-                  type: "CIMSymbolReference",
-                  primitiveOverrides: [{
-                    type: "CIMPrimitiveOverride",
-                    primitiveName: "hatchFillOverride",
-                    propertyName: "Separation",
-                    valueExpressionInfo: {
-                      type: "CIMExpressionInfo",
-                      title: "Population growth % from 2010 to 2020",
-                      expression: `
+          symbol: {
+            type: "cim",
+            data: {
+              type: "CIMSymbolReference",
+              primitiveOverrides: [{
+                type: "CIMPrimitiveOverride",
+                primitiveName: "hatchFillOverride",
+                propertyName: "Separation",
+                valueExpressionInfo: {
+                  type: "CIMExpressionInfo",
+                  title: "Population growth % from 2010 to 2020",
+                  expression: `
                          // calculate the population change
                          var popChange = Abs(( $feature.TOTPOP20 - $feature.TOTPOP10 ) / $feature.TOTPOP10 * 100)
-                      return 50 / popChange
+                         return 50 / popChange
                        `,
-                      returnType: "Default"
-                    }
-                  }, {
-                      type: "CIMPrimitiveOverride",
-                      primitiveName: "lineColor",
-                      propertyName: "Color",
-                      valueExpressionInfo: {
-                        type: "CIMExpressionInfo",
-                        title: "Population growth % from 2010 to 2020",
-                        expression: `
+                  returnType: "Default"
+                }
+              }, {
+                type: "CIMPrimitiveOverride",
+                primitiveName: "lineColor",
+                propertyName: "Color",
+                valueExpressionInfo: {
+                  type: "CIMExpressionInfo",
+                  title: "Population growth % from 2010 to 2020",
+                  expression: `
                             var popChange = $feature.TOTPOP20 - $feature.TOTPOP10;
                             if (popChange > 0) {
                                 return "rgb(1, 68, 33)"
                             }
                             return "rgb(150, 0, 0)"
                         `,
-                        returnType: "Default"
-                      }
-                  }],
-                  symbol: {
-                    type: "CIMPolygonSymbol",
-                    symbolLayers: [{
-                        type: "CIMSolidStroke",
-                        primitiveName: "lineColor",
-                        enable: true,
-                        capStyle: "Round",
-                        joinStyle: "Round",
-                        lineStyle3D: "Strip",
-                        miterLimit: 10,
-                        width: 0.4,
-                        color: [1, 68, 33, 255]
-                      },
-                      {
-                        type: "CIMHatchFill",
-                        enable: true,
-                        primitiveName: "hatchFillOverride",
-                        lineSymbol: {
-                          type: "CIMLineSymbol",
-                          symbolLayers: [{
-                            type: "CIMSolidStroke",
-                            primitiveName: "lineColor",
-                            enable: true,
-                            capStyle: "Butt",
-                            joinStyle: "Miter",
-                            lineStyle3D: "Strip",
-                            miterLimit: 10,
-                            width: 1,
-                            color: [1, 68, 33, 255]
-                          }]
-                        },
-                        rotation: 45,
-                        separation: 5
-                      }
-                    ]
-                  }
+                  returnType: "Default"
                 }
+              }],
+              symbol: {
+                type: "CIMPolygonSymbol",
+                symbolLayers: [{
+                  type: "CIMSolidStroke",
+                  primitiveName: "lineColor",
+                  enable: true,
+                  capStyle: "Round",
+                  joinStyle: "Round",
+                  lineStyle3D: "Strip",
+                  miterLimit: 10,
+                  width: 0.4,
+                  color: [1, 68, 33, 255]
+                },
+                {
+                  type: "CIMHatchFill",
+                  enable: true,
+                  primitiveName: "hatchFillOverride",
+                  lineSymbol: {
+                    type: "CIMLineSymbol",
+                    symbolLayers: [{
+                      type: "CIMSolidStroke",
+                      primitiveName: "lineColor",
+                      enable: true,
+                      capStyle: "Butt",
+                      joinStyle: "Miter",
+                      lineStyle3D: "Strip",
+                      miterLimit: 10,
+                      width: 1,
+                      color: [1, 68, 33, 255]
+                    }]
+                  },
+                  rotation: 45,
+                  separation: 5
+                }
+                ]
               }
+            }
+          }
         }
       });
       const view = new MapView({
