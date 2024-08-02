@@ -7,67 +7,50 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css" />
-    <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/dark/main.css" />
-    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.0.0-beta.52/calcite.css" />
+    <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/dark/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/2.8.5/calcite.css" />
     <link rel="stylesheet" href="css/main.css">
 
-    <script src="https://js.arcgis.com/4.19/"></script>
-    <script type="module" src="https://js.arcgis.com/calcite-components/1.0.0-beta.52/calcite.esm.js"></script>
-<script nomodule="" src="https://js.arcgis.com/calcite-components/1.0.0-beta.52/calcite.js"></script>
+    <script src="https://js.arcgis.com/4.30/"></script>
+    <script type="module" src="https://js.arcgis.com/calcite-components/2.8.5/calcite.esm.js"></script>
+<script nomodule="" src="https://js.arcgis.com/calcite-components/2.8.5/calcite.js"></script>
 
     <script src="js/main.js"></script>
 </head>
 
-<body>
+<body class="calcite-mode-dark">
     <!-- container for the map -->
     <div id="viewDiv"></div>
     <!-- controls for rendering/filtering, made with calcite components -->
     <div id="sidePanel">
-        <calcite-tabs id="navTabs" layout="inline" position="above" theme="dark">
-            <calcite-tab-nav slot="tab-nav">
-                <calcite-tab-title active="" icon-start="group">Age</calcite-tab-title>
+        <calcite-tabs layout="inline" position="above" theme="dark">
+            <calcite-tab-nav id="navTabs" slot="title-group">
+                <calcite-tab-title selected icon-start="group">Age</calcite-tab-title>
                 <calcite-tab-title icon-start="calculator">Income</calcite-tab-title>
             </calcite-tab-nav>
 
-            <calcite-tab active="" class="tab">
+            <calcite-tab selected class="tab">
                 <div id="ageRender">
                     <h3>Render by age group</h3>
                     <div id="buttonFilters">
                         <p>Choose from a predefined age range:</p>
-                        <calcite-radio-group id="filterAge" layout="horizontal" theme="dark" appearance="solid"
-                            scale="m" width="auto" role="radiogroup" calcite-hydrated="">
-                            <calcite-radio-group-item value="none" tabindex="0" appearance="solid" aria-checked="false"
-                                layout="horizontal" role="radio" calcite-hydrated="">
-                                Custom
-                            </calcite-radio-group-item>
-                            <calcite-radio-group-item value="infant" ">
-                                Infants (<1) </calcite-radio-group-item> <calcite-radio-group-item value="child">
-                                    Children (1-11)
-                            </calcite-radio-group-item>
-                            <calcite-radio-group-item value="teen">
-                                Teens (12-17)
-                            </calcite-radio-group-item>
-                            <calcite-radio-group-item value="college" checked="" >
-                                College Age (18-22)
-                            </calcite-radio-group-item>
-                            <calcite-radio-group-item value="millenials">
-                                Millenials (24-39)
-                            </calcite-radio-group-item>
-                            <calcite-radio-group-item value="genx">
-                                Generation X (40-55)
-                            </calcite-radio-group-item>
-                            <calcite-radio-group-item value="boomer">
-                                Baby Boomers (56-74)
-                            </calcite-radio-group-item>
-                            <input type="hidden" />
-                        </calcite-radio-group>
+                        <calcite-chip-group id="filterAge" width="full" selection-mode="single-persist">
+                            <calcite-chip value="infant">Infants (less than 1)</calcite-chip>
+                            <calcite-chip value="child">Children (1-11)</calcite-chip>
+                            <calcite-chip value="teen">Teens (12-17)</calcite-chip>
+                            <calcite-chip value="college" selected>College Age (18-23)</calcite-chip>
+                            <calcite-chip value="millenials">Millenials (24-39)</calcite-chip>
+                            <calcite-chip value="genx">Generation X (40-55)</calcite-chip>
+                            <calcite-chip value="boomer">Baby Boomers (56-74)</calcite-chip>
+                            <calcite-chip value="none">Custom</calcite-chip>
+                        </calcite-chip-group>
                     </div>
                     <div id="sliderDivWrapper">
                         <p>Or use the slider to select a custom age range to be visualized:</p>
                         <div id="sliderDiv"></div>
                     </div>
                     <label>
-                        <calcite-switch id="switch" name="setting" value="enabled" scale="m">
+                        <calcite-switch id="switch" scale="m">
                         </calcite-switch> Above and below color ramp
                     </label>
                 </div>
@@ -82,34 +65,16 @@
                     <h3>Render by income predominance</h3>
                     <div id="btnLabel">Choose an age range:</div>
                     <div id="buttonFilters">
-                        <calcite-radio-group id="ageForIncome" layout="horizontal" theme="dark" appearance="solid"
-                            scale="m" width="auto" role="radiogroup" calcite-hydrated="">
-                            <calcite-radio-group-item value="HINC" checked="" tabindex="0">
-                                All ages
-                            </calcite-radio-group-item>
-                            <calcite-radio-group-item value="A15"">
-                                15-24
-                            </calcite-radio-group-item>
-                            <calcite-radio-group-item value="A25">
-                                25-34
-                            </calcite-radio-group-item>
-                            <calcite-radio-group-item value="A35">
-                                35-44
-                            </calcite-radio-group-item>
-                            <calcite-radio-group-item value="A45">
-                                45-54
-                            </calcite-radio-group-item>
-                            <calcite-radio-group-item value="A55">
-                                55-64
-                            </calcite-radio-group-item>
-                            <calcite-radio-group-item value="A65">
-                                65-74
-                            </calcite-radio-group-item>
-                            <calcite-radio-group-item value="A75"">
-                                75+
-                            </calcite-radio-group-item>
-                            <input type="hidden" />
-                        </calcite-radio-group>
+                        <calcite-chip-group id="filterAgeIncome" width="full" selection-mode="single-persist">
+                            <calcite-chip value="HINC" selected>All ages</calcite-chip>
+                            <calcite-chip value="A15">15-24</calcite-chip>
+                            <calcite-chip value="A25">25-34</calcite-chip>
+                            <calcite-chip value="A35">35-44</calcite-chip>
+                            <calcite-chip value="A45">45-54</calcite-chip>
+                            <calcite-chip value="A55">55-64</calcite-chip>
+                            <calcite-chip value="A65">65-74</calcite-chip>
+                            <calcite-chip value="A75">75+</calcite-chip>
+                          </calcite-chip-group>
                     </div>
                     <div id="stats">
                         <div id="chartPanelDonut"><canvas id="chartDonut"></canvas></div>
@@ -120,9 +85,7 @@
                         <div id="filterHeader">
                             <span id="filterTitle">Filter by median income</span>
                             <div id="filterSwitchDiv">
-                                <calcite-switch id="filterSwitch" name="setting" value="enabled" scale="s">
-                                    <input id="filterCbx" type="checkbox" name="setting" value="enabled" />
-                                </calcite-switch>
+                                <calcite-switch id="filterSwitch" scale="s"></calcite-switch>
                             </div>
                         </div>
                         <div id="incomeSliderDivWrapper" class="disabled">

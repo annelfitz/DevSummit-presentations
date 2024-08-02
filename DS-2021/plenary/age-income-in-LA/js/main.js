@@ -7,7 +7,7 @@ require([
     "esri/layers/VectorTileLayer",
     "esri/widgets/Slider",
     "esri/widgets/Legend",
-    "esri/core/watchUtils",
+    "esri/core/reactiveUtils",
     "esri/widgets/Sketch/SketchViewModel",
     "esri/geometry/Polyline",
     "esri/Graphic",
@@ -24,7 +24,7 @@ require([
     VectorTileLayer,
     Slider,
     Legend,
-    watchUtils,
+    reactiveUtils,
     SketchViewModel,
     Polyline,
     Graphic,
@@ -48,7 +48,7 @@ require([
       }
 
     // App 'globals'
-    let sketchViewModel, featureLayerView, pausableWatchHandle, aboveAndBelow, legend, chart, chartDonut;
+    let sketchViewModel, featureLayerView, aboveAndBelow, legend, chart, chartDonut;
     let statDefinitions, labels = [];
     let animation = null;
     let incomeAge = "HINC";
@@ -88,11 +88,11 @@ require([
 
     // slider for income range, for layer effects
     const incomeSlider = new Slider({
-        container: "incomeSliderDiv",
+        container: document.getElementById("incomeSliderDiv"),
         min: 15000,
         max: 210000,
         values: [75000, 90000],
-        labelFormatFunction: function (value, type) {
+        labelFormatFunction: (value, type) => {
             let formattedVal = "$" + numberWithCommas(value)
             return formattedVal;
         },
@@ -101,7 +101,7 @@ require([
         visibleElements: {
             rangeLabels: true,
         },
-        disabled: true // initially disabled until filter is enabled
+        // disabled: true // initially disabled until filter is enabled
     });
 
     sliderValue.innerHTML = "<span style='font-weight:bold; font-size:120%'>" +
@@ -207,48 +207,49 @@ require([
      * set up calcite components and event listeners
      *********************************************************/
     const filterSwitch = document.getElementById("filterSwitch");
-    const radioAgeIncome = document.getElementById("ageForIncome");
+    const radioAgeIncome = document.getElementById("filterAgeIncome");
     const tabs = document.getElementById("navTabs");
     const rendererSwitch = document.getElementById("switch");
     const radio = document.getElementById("filterAge");
     const playButton = document.getElementById("playButton");
     const incomeSliderDiv = document.getElementById("incomeSliderDivWrapper");
 
-    radio.addEventListener("calciteRadioGroupChange", updateSlider);
+    radio.addEventListener("calciteChipSelect", updateSlider);
 
     rendererSwitch.addEventListener("calciteSwitchChange", function (event) {
-        aboveAndBelow = event.detail.switched;
+        aboveAndBelow = event.target.checked;
         updateVisualization();
     });
 
     tabs.addEventListener("calciteTabChange", function (event) {
-        if (event.detail.tab == 1) {
-            activeTab = "income";
-            map.removeMany([bufferLayer, graphicsLayer]); // remove sketch/buffer graphics when switching to income tab
-            sketchViewModel.view = null;
-            view.ui.remove(legend);
-            generatePredominanceRenderer(incomeAge); // update renderer
-        } else {
-            activeTab = "age";
-            map.addMany([bufferLayer, graphicsLayer]);
-            pausableWatchHandle.resume();
-            setUpSketch();
-            if (effect) {
-                switchFunction(false)
-                filterSwitch.switched = false;
+        event.target.selectedTitle.getTabIndex().then(function (index) { 
+            if (index == 1) {
+                activeTab = "income";
+                map.removeMany([bufferLayer, graphicsLayer]); // remove sketch/buffer graphics when switching to income tab
+                sketchViewModel.view = null;
+                view.ui.remove(legend);
+                generatePredominanceRenderer(incomeAge); // update renderer
+            } else {
+                activeTab = "age";
+                map.addMany([bufferLayer, graphicsLayer]);
+                setUpSketch();
+                if (effect) {
+                    switchFunction(false)
+                    filterSwitch.checked = false;
+                }
+                updateVisualization();
+                view.ui.add(legend, "bottom-left");
             }
-            updateVisualization();
-            view.ui.add(legend, "bottom-left");
-        }
+        });
     });
 
-    radioAgeIncome.addEventListener("calciteRadioGroupChange", function (event) {
-        incomeAge = event.detail;
+    radioAgeIncome.addEventListener("calciteChipSelect", function (event) {
+        incomeAge = event.target.value;
         generatePredominanceRenderer(incomeAge)
     });
 
     filterSwitch.addEventListener("calciteSwitchChange", function (event) {
-        switchFunction(event.detail.switched)
+        switchFunction(event.target.checked)
     })
     // start/stop animation for median income when play button is clicked
     playButton.addEventListener("click", function () {
@@ -259,8 +260,8 @@ require([
         }
     });
 
-    function switchFunction(switched) {
-        if (switched) {
+    function switchFunction(checked) {
+        if (checked) {
             effect = true;
             incomeSlider.disabled = false; // enable slider
             incomeSliderDiv.classList.remove("disabled");
@@ -269,7 +270,7 @@ require([
             effect = false;
             incomeSlider.disabled = true; // disable slider
             incomeSliderDiv.classList.add("disabled");
-            featureLayerView.effect = {
+            featureLayerView.featureEffect = {
                 filter: {
                     where: "MEDHINC_CY > " + incomeSlider.values[0] + " AND MEDHINC_CY < " + incomeSlider.values[1]
                 },
@@ -281,7 +282,7 @@ require([
     }
 
     function updateSlider(event) {
-        switch (event.detail) {
+        switch (event.target.value) {
             case "infant":
                 ageSlider.values = [0, 1];
                 ageSlider.disabled = true;
@@ -666,15 +667,12 @@ require([
         view.whenLayerView(featureLayer).then(function (layerView) {
             featureLayerView = layerView;
 
-            pausableWatchHandle = watchUtils.pausable(
-                featureLayerView,
-                "updating",
-                function (val) {
-                    if (!val) {
-                        drawBufferPolygon();
-                    }
+            reactiveUtils.when(
+                () => !featureLayerView.dataUpdating,
+                async () => {
+                    await drawBufferPolygon();
                 }
-            );
+            )
             const bookmarks = new Bookmarks({
                 view: view
             });
@@ -682,7 +680,7 @@ require([
             // Resume drawBufferPolygon() function; user searched for a new location
             // Must update the buffer polygon and re-run the stats query
             bookmarks.on("bookmark-select", function () {
-                pausableWatchHandle.resume();
+                drawBufferPolygon();
             });
 
             legend = new Legend({
@@ -841,11 +839,6 @@ require([
      * when user clicks a bookmark
      **************************************************/
     function drawBufferPolygon() {
-        // When pause() is called on the watch handle, the callback represented by the
-        // watch is no longer invoked, but is still available for later use
-        // this watch handle will be resumed when user searches for a new location
-        pausableWatchHandle.pause();
-
         // Initial location for the center, edge and polylines on the view
         const viewCenter = view.center.clone();
         const centerScreenPoint = view.toScreen(viewCenter);
@@ -1133,7 +1126,7 @@ require([
     }
     // creates the filter for the effect based on the values from the slider
     function createEffect(min, max) {
-        featureLayerView.effect = {
+        featureLayerView.featureEffect = {
             filter: {
                 where: "MEDHINC_CY > " + min + " AND MEDHINC_CY < " + max
             },
