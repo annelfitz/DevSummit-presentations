@@ -40,7 +40,7 @@ const featureLayer = new FeatureLayer({
 // LA building footprints
 const buildingFootprints = new TileLayer({
     portalItem: {
-        id: "7009e50f4c7b4eb7a77fb92cfac3835a"
+        id: "f40326b0dea54330ae39584012807126"
     },
     legendEnabled: false,
     renderer: {

@@ -158,17 +158,11 @@ require([
     });
 
     // LA building footprints
-    const buildingFootprints = new TileLayer({
+    const buildingFootprints = new VectorTileLayer({
         portalItem: {
-            id: "7009e50f4c7b4eb7a77fb92cfac3835a"
+            id: "f40326b0dea54330ae39584012807126"
         },
         legendEnabled: false,
-        renderer: {
-            type: "simple",
-            symbol: {
-                type: "simple-fill"
-            }
-        },
         minScale: 245270,
         maxScale: 0
     });
@@ -195,9 +189,11 @@ require([
     view.watch("scale", function (newValue) {
         if (newValue > 245270) {
             featureLayer.blendMode = "normal";
+            buildingFootprints.visible = false;
         } else {
             if (featureLayer.blendMode == "normal") {
                 featureLayer.blendMode = "source-in";
+                buildingFootprints.visible = true;
             }
         }
     })
