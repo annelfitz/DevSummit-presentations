@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Geometry Operators</title>
+
+
+  <!-- Load Calcite components from CDN -->
+  <script type="module" src="https://js.arcgis.com/calcite-components/3.0.3/calcite.esm.js"></script>
+
+  <!-- Load the ArcGIS Maps SDK for JavaScript -->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.32/esri/themes/dark/main.css" />
+  <script src="https://js.arcgis.com/4.32/"></script>
+
+  <!-- Load Map components from CDN-->
+  <script type="module" src="https://js.arcgis.com/map-components/4.32/arcgis-map-components.esm.js"></script>
+
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+    #coverage-result {
+      display: none;
+      color: #d1d1d1;
+      background-color: #242424;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    #coveragePct {
+      font-weight: bold;
+      font-size: larger;
+    }
+  </style>
+</head>
+
+<body class="calcite-mode-dark">
+  <arcgis-map item-id="960c2d619e45482f891cb90a513e4b82">
+    <arcgis-zoom position="top-left"></arcgis-zoom>
+    <arcgis-layer-list position="top-right"></arcgis-layer-list>
+    <arcgis-placement position="top-right">
+      <calcite-button id="coverage-button">Calculate Light Coverage</calcite-button>
+    </arcgis-placement>
+    <arcgis-placement position="top-left">
+      <div id="coverage-result"><span id="coveragePct"></span> of the park is covered by light.</div>
+    </arcgis-placement>
+    
+  </arcgis-map>
+
+  <script type="module">
+    require([
+        "esri/geometry/operators/unionOperator",
+        "esri/geometry/operators/differenceOperator",
+        "esri/geometry/operators/areaOperator",
+        "esri/Graphic"
+      ], (unionOperator, differenceOperator, areaOperator, Graphic) => {
+        let view;
+        let parkBoundaryLayer, lightCoverageLayer;
+
+        const arcgisMap = document.querySelector("arcgis-map");
+        const coverageButton = document.getElementById("coverage-button");
+
+        arcgisMap.addEventListener("arcgisViewReadyChange", async ({ target }) => {
+          view = target.view;
+          await view.map.loadAll();
+          parkBoundaryLayer = view.map.layers.find(layer => layer.title === "Park Boundary");
+          parkBoundaryLayer.outFields = ["*"];
+          lightCoverageLayer = view.map.layers.find(layer => layer.title === "Lighting Coverage");
+        });
+
+        coverageButton.addEventListener("click", getParkLightCoveragePercentage);
+
+        async function getParkLightCoveragePercentage() {
+          // get features to work with from a client-side query
+          const boundaryFeature = await queryLayerView(parkBoundaryLayer, { where: "PARK_NAME='Brookside'" });
+          const lightCoverageFeatures = await queryLayerView(lightCoverageLayer, { geometry: view.extent });
+
+          // union the light coverage feature geometries
+          const intersectingLayerFeaturesUnion = getFeaturesUnion(lightCoverageFeatures);
+
+          // displayGraphic(intersectingLayerFeaturesUnion, "red");
+
+          // get difference between boundary geometry and light coverage geometries
+          const differenceGeometry = getDifferenceGeometry(boundaryFeature[0].geometry, intersectingLayerFeaturesUnion);
+
+          // displayGraphic(differenceGeometry, "blue");
+
+          // calculate the percentage of light coverage
+          const percentageOfCoverage = getAreaPercentageLeft(boundaryFeature[0].geometry, differenceGeometry);
+          
+          document.querySelector("#coveragePct").append(`${percentageOfCoverage}%`);
+          document.querySelector("#coverage-result").style.display = "block";
+        }
+
+        async function queryLayerView(layer, options) {
+          const layerView = await view.whenLayerView(layer);
+
+          let query = layerView.createQuery();
+          query = Object.assign(query, options);
+          query.returnGeometry = true;
+
+          const queryResult = await layerView.queryFeatures(query);
+          return queryResult.features;
+        }
+
+        function getFeaturesUnion(features) {
+          const featureGeometriesToUnion = features.map((feature) => {
+            return feature.geometry;
+          });
+          return unionOperator.executeMany(featureGeometriesToUnion);
+        }
+        function displayGraphic(geometry, color) {
+          // display the union graphic
+          const graphic = new Graphic({
+            geometry: geometry,
+            symbol: {
+              type: "simple-fill",
+              color: [0, 0, 0, 0],
+              outline: {
+                color: color,
+                width: 2
+              }
+            }
+          })
+          view.graphics.add(graphic);
+        }
+
+        function getDifferenceGeometry(geometry, subtractor) {
+          return differenceOperator.execute(geometry, subtractor);
+        }
+
+        function getAreaPercentageLeft(initialGeometry, differenceGeom) {
+          if (differenceGeom === null) {
+            // complete coverage
+            return 100;
+          }
+          const initialGeometryArea = areaOperator.execute(initialGeometry, { unit: "square-meters" });
+          const differenceGeomArea = areaOperator.execute(differenceGeom, { unit: "square-meters" });
+
+          let percentageCovered = (differenceGeomArea / initialGeometryArea) * 100;
+          percentageCovered = 100 - percentageCovered;
+          return percentageCovered.toFixed(1);
+        }
+
+      });
+  </script>
+</body>
+
+</html>

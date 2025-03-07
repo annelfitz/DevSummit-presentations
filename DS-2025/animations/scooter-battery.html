@@ -1,0 +1,1035 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Animated symbols | Primitive overrides</title>
+    <style>
+        html,
+        body,
+        arcgis-map {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        #infoDiv {
+            width: 300px;
+            padding: 10px;
+        }
+    </style>
+    <!-- Load Calcite components from CDN -->
+    <script type="module" src="https://js.arcgis.com/calcite-components/3.0.3/calcite.esm.js"></script>
+
+    <!-- Load the ArcGIS Maps SDK for JavaScript from CDN -->
+    <link rel="stylesheet" href="https://js.arcgis.com/4.31/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.31/"></script>
+
+    <!-- Load Map components from CDN-->
+    <script type="module" src="https://js.arcgis.com/map-components/4.31/arcgis-map-components.esm.js"></script>
+</head>
+
+<body>
+    <!-- load USGS earthquake webmap from ID -->
+    <arcgis-map item-id="a7bdd20b53744a87b157208456ff7130">
+        <arcgis-zoom position="top-left"></arcgis-zoom>
+        <arcgis-expand position="top-right" expanded expand-icon="legend">
+            <arcgis-legend></arcgis-legend>
+        </arcgis-expand>
+    </arcgis-map>
+    <script>
+        // check for reduced motion
+        const isReduced = window.matchMedia(`(prefers-reduced-motion: reduce)`) === true || window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
+
+        document.querySelector("arcgis-map").addEventListener("arcgisViewReadyChange", (event) => {
+            // get the map component
+            const map = event.target.map;
+            // find earthquakes layer
+            const earthquakesLayer = map.layers.find((layer) => layer.title === "Electric scooters");
+            earthquakesLayer.copyright = "U.S. Geological Survey";
+            // apply new renderer with animated CIM symbol
+            earthquakesLayer.renderer = {
+                type: "simple",
+                symbol: {
+                    type: "cim",
+                    data: {
+                        type: "CIMSymbolReference",
+                        primitiveOverrides: [{
+                            type: "CIMPrimitiveOverride",
+                            primitiveName: "battery-level-3",
+                            propertyName: "Color",
+                            valueExpressionInfo: {
+                                type: "CIMExpressionInfo",
+                                expression: `iif($feature.battery_level < 66, "rgba(255,255,255,0)", "green");`,
+                                returnType: "Default"
+                            }
+                        }, {
+                            type: "CIMPrimitiveOverride",
+                            primitiveName: "battery-level-2",
+                            propertyName: "Color",
+                            valueExpressionInfo: {
+                                type: "CIMExpressionInfo",
+                                expression: `When( 
+                                        $feature.battery_level < 50 && $feature.battery_level >= 33, "#FFAE42",
+                                        $feature.battery_level < 33, "rgba(255,255,255,0)", 
+                                        "green"
+                                    )`,
+                                returnType: "Default"
+                            }
+                        }, {
+                            type: "CIMPrimitiveOverride",
+                            primitiveName: "battery-level-1",
+                            propertyName: "Color",
+                            valueExpressionInfo: {
+                                type: "CIMExpressionInfo",
+                                expression: `When( 
+                                        $feature.battery_level < 50 && $feature.battery_level >= 25, "#FFAE42",
+                                        $feature.battery_level < 25, "red", 
+                                        "green"
+                                    )`,
+                                returnType: "Default"
+                            }
+                        }, {
+                            type: "CIMPrimitiveOverride",
+                            primitiveName: "animationOverride",
+                            propertyName: "PlayAnimation",
+                            valueExpressionInfo: {
+                                type: "CIMExpressionInfo",
+                                expression: `$feature.battery_level < 25;`,
+                                returnType: "Default"
+                            }
+                        }],
+                        symbol: {
+                            "type": "CIMPointSymbol",
+                            "symbolLayers": [
+                                createBatteryLevel(3, 11, false),
+                                createBatteryLevel(2, 7, false),
+                                createBatteryLevel(1, 3, true),
+                                {
+                                    "type": "CIMVectorMarker",
+                                    primitiveName: "battery-level-1",
+                                    "enable": true,
+                                    "anchorPointUnits": "Relative",
+                                    "dominantSizeAxis3D": "Y",
+                                    "size": 3.5,
+                                    "billboardMode3D": "FaceNearPlane",
+                                    "frame": {
+                                        "xmin": 0,
+                                        "ymin": 0,
+                                        "xmax": 28,
+                                        "ymax": 17
+                                    },
+                                    "markerGraphics": [
+                                        {
+                                            "type": "CIMMarkerGraphic",
+                                            "geometry": {
+                                                "rings": [
+                                                    [
+                                                        [
+                                                            25.36,
+                                                            0
+                                                        ],
+                                                        [
+                                                            2.64,
+                                                            0
+                                                        ],
+                                                        [
+                                                            1.63,
+                                                            0.19
+                                                        ],
+                                                        [
+                                                            0.77,
+                                                            0.74
+                                                        ],
+                                                        [
+                                                            0.2,
+                                                            1.56
+                                                        ],
+                                                        [
+                                                            0,
+                                                            2.52
+                                                        ],
+                                                        [
+                                                            0,
+                                                            14.48
+                                                        ],
+                                                        [
+                                                            0.2,
+                                                            15.44
+                                                        ],
+                                                        [
+                                                            0.77,
+                                                            16.26
+                                                        ],
+                                                        [
+                                                            1.63,
+                                                            16.81
+                                                        ],
+                                                        [
+                                                            2.64,
+                                                            17
+                                                        ],
+                                                        [
+                                                            25.36,
+                                                            17
+                                                        ],
+                                                        [
+                                                            26.37,
+                                                            16.81
+                                                        ],
+                                                        [
+                                                            27.23,
+                                                            16.26
+                                                        ],
+                                                        [
+                                                            27.8,
+                                                            15.44
+                                                        ],
+                                                        [
+                                                            28,
+                                                            14.48
+                                                        ],
+                                                        [
+                                                            28,
+                                                            2.52
+                                                        ],
+                                                        [
+                                                            27.8,
+                                                            1.56
+                                                        ],
+                                                        [
+                                                            27.23,
+                                                            0.74
+                                                        ],
+                                                        [
+                                                            26.37,
+                                                            0.19
+                                                        ],
+                                                        [
+                                                            25.36,
+                                                            0
+                                                        ]
+                                                    ]
+                                                ]
+                                            },
+                                            "symbol": {
+                                                "type": "CIMPolygonSymbol",
+                                                "symbolLayers": [
+                                                    {
+                                                        "type": "CIMSolidFill",
+                                                        primitiveName: "battery-level-1",
+                                                        "enable": true,
+                                                        "color": [
+                                                            41,
+                                                            153,
+                                                            0,
+                                                            255
+                                                        ],
+                                                        "animations": [
+                                                            {
+                                                                "type": "CIMSymbolAnimationTransparency",
+                                                                "toTransparency": 100,
+                                                                "animatedSymbolProperties": {
+                                                                    primitiveName: "animationOverride",
+                                                                    "type": "CIMAnimatedSymbolProperties",
+                                                                    "playAnimation": false,
+                                                                    "randomizeStartTime": false,
+                                                                    "repeatType": "Oscillate",
+                                                                    "repeatDelay": 0.5,
+                                                                    "duration": 0.5,
+                                                                    "easing": "EaseIn"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "scaleSymbolsProportionally": true,
+                                    "respectFrame": true,
+                                    "offsetX": -10,
+                                    "offsetY": 3
+                                },
+                                {
+                                    "type": "CIMVectorMarker",
+                                    "enable": true,
+                                    colorLocked: true,
+                                    "anchorPointUnits": "Relative",
+                                    "dominantSizeAxis3D": "Z",
+                                    "size": 24,
+                                    "billboardMode3D": "FaceNearPlane",
+                                    "frame": {
+                                        "xmin": 0,
+                                        "ymin": 0,
+                                        "xmax": 24,
+                                        "ymax": 24
+                                    },
+                                    "markerGraphics": [
+                                        {
+                                            "type": "CIMMarkerGraphic",
+                                            "geometry": {
+                                                "rings": [
+                                                    [
+                                                        [
+                                                            8.5,
+                                                            5.7
+                                                        ],
+                                                        [
+                                                            8.5,
+                                                            18.9
+                                                        ],
+                                                        [
+                                                            15.5,
+                                                            18.9
+                                                        ],
+                                                        [
+                                                            15.5,
+                                                            5.7
+                                                        ],
+                                                        [
+                                                            8.5,
+                                                            5.7
+                                                        ],
+                                                        [
+                                                            8.5,
+                                                            5.7
+                                                        ]
+                                                    ],
+                                                    [
+                                                        [
+                                                            7.75,
+                                                            2
+                                                        ],
+                                                        [
+                                                            16.25,
+                                                            2
+                                                        ],
+                                                        [
+                                                            16.78,
+                                                            2.22
+                                                        ],
+                                                        [
+                                                            17,
+                                                            2.75
+                                                        ],
+                                                        [
+                                                            17,
+                                                            19.65
+                                                        ],
+                                                        [
+                                                            16.78,
+                                                            20.18
+                                                        ],
+                                                        [
+                                                            16.25,
+                                                            20.4
+                                                        ],
+                                                        [
+                                                            14,
+                                                            20.4
+                                                        ],
+                                                        [
+                                                            14,
+                                                            22
+                                                        ],
+                                                        [
+                                                            10,
+                                                            22
+                                                        ],
+                                                        [
+                                                            10,
+                                                            20.4
+                                                        ],
+                                                        [
+                                                            7.75,
+                                                            20.4
+                                                        ],
+                                                        [
+                                                            7.22,
+                                                            20.18
+                                                        ],
+                                                        [
+                                                            7,
+                                                            19.65
+                                                        ],
+                                                        [
+                                                            7,
+                                                            2.75
+                                                        ],
+                                                        [
+                                                            7.22,
+                                                            2.22
+                                                        ],
+                                                        [
+                                                            7.75,
+                                                            2
+                                                        ],
+                                                        [
+                                                            7.75,
+                                                            2
+                                                        ]
+                                                    ]
+                                                ]
+                                            },
+                                            "symbol": {
+                                                "type": "CIMPolygonSymbol",
+                                                "symbolLayers": [
+                                                    {
+                                                        "type": "CIMSolidFill",
+                                                        "enable": true,
+                                                        "color": [
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            255
+                                                        ]
+                                                    }
+                                                ],
+                                                "angleAlignment": "Map"
+                                            }
+                                        }
+                                    ],
+                                    "scaleSymbolsProportionally": true,
+                                    "respectFrame": true,
+                                    "offsetX": -10,
+                                    "offsetY": 7
+                                },
+                                {
+                                    "type": "CIMVectorMarker",
+                                    "enable": true,
+                                    colorLocked: true,
+                                    "anchorPointUnits": "Relative",
+                                    "dominantSizeAxis3D": "Z",
+                                    "size": 27,
+                                    "billboardMode3D": "FaceNearPlane",
+                                    "frame": {
+                                        "xmin": 0,
+                                        "ymin": 0,
+                                        "xmax": 800,
+                                        "ymax": 800
+                                    },
+                                    "markerGraphics": [
+                                        {
+                                            "type": "CIMMarkerGraphic",
+                                            "geometry": {
+                                                "rings": [
+                                                    [
+                                                        [
+                                                            707,
+                                                            93
+                                                        ],
+                                                        [
+                                                            693,
+                                                            96
+                                                        ],
+                                                        [
+                                                            681,
+                                                            104
+                                                        ],
+                                                        [
+                                                            672,
+                                                            116
+                                                        ],
+                                                        [
+                                                            669,
+                                                            131
+                                                        ],
+                                                        [
+                                                            672,
+                                                            143
+                                                        ],
+                                                        [
+                                                            683,
+                                                            119
+                                                        ],
+                                                        [
+                                                            693,
+                                                            108
+                                                        ],
+                                                        [
+                                                            707,
+                                                            104
+                                                        ],
+                                                        [
+                                                            719,
+                                                            106
+                                                        ],
+                                                        [
+                                                            733,
+                                                            122
+                                                        ],
+                                                        [
+                                                            732,
+                                                            143
+                                                        ],
+                                                        [
+                                                            721,
+                                                            167
+                                                        ],
+                                                        [
+                                                            739,
+                                                            153
+                                                        ],
+                                                        [
+                                                            746,
+                                                            131
+                                                        ],
+                                                        [
+                                                            743,
+                                                            116
+                                                        ],
+                                                        [
+                                                            734,
+                                                            104
+                                                        ],
+                                                        [
+                                                            722,
+                                                            96
+                                                        ],
+                                                        [
+                                                            707,
+                                                            93
+                                                        ]
+                                                    ],
+                                                    [
+                                                        [
+                                                            93,
+                                                            93
+                                                        ],
+                                                        [
+                                                            78,
+                                                            96
+                                                        ],
+                                                        [
+                                                            66,
+                                                            104
+                                                        ],
+                                                        [
+                                                            57,
+                                                            116
+                                                        ],
+                                                        [
+                                                            54,
+                                                            131
+                                                        ],
+                                                        [
+                                                            57,
+                                                            146
+                                                        ],
+                                                        [
+                                                            66,
+                                                            158
+                                                        ],
+                                                        [
+                                                            78,
+                                                            166
+                                                        ],
+                                                        [
+                                                            93,
+                                                            169
+                                                        ],
+                                                        [
+                                                            110,
+                                                            165
+                                                        ],
+                                                        [
+                                                            123,
+                                                            154
+                                                        ],
+                                                        [
+                                                            93,
+                                                            154
+                                                        ],
+                                                        [
+                                                            73,
+                                                            146
+                                                        ],
+                                                        [
+                                                            65,
+                                                            126
+                                                        ],
+                                                        [
+                                                            73,
+                                                            107
+                                                        ],
+                                                        [
+                                                            93,
+                                                            99
+                                                        ],
+                                                        [
+                                                            113,
+                                                            99
+                                                        ],
+                                                        [
+                                                            93,
+                                                            93
+                                                        ]
+                                                    ],
+                                                    [
+                                                        [
+                                                            93,
+                                                            38
+                                                        ],
+                                                        [
+                                                            120,
+                                                            43
+                                                        ],
+                                                        [
+                                                            145,
+                                                            55
+                                                        ],
+                                                        [
+                                                            166,
+                                                            75
+                                                        ],
+                                                        [
+                                                            179,
+                                                            99
+                                                        ],
+                                                        [
+                                                            569,
+                                                            99
+                                                        ],
+                                                        [
+                                                            588,
+                                                            107
+                                                        ],
+                                                        [
+                                                            596,
+                                                            126
+                                                        ],
+                                                        [
+                                                            599,
+                                                            150
+                                                        ],
+                                                        [
+                                                            608,
+                                                            172
+                                                        ],
+                                                        [
+                                                            623,
+                                                            192
+                                                        ],
+                                                        [
+                                                            642,
+                                                            207
+                                                        ],
+                                                        [
+                                                            645,
+                                                            199
+                                                        ],
+                                                        [
+                                                            623,
+                                                            168
+                                                        ],
+                                                        [
+                                                            615,
+                                                            131
+                                                        ],
+                                                        [
+                                                            622,
+                                                            96
+                                                        ],
+                                                        [
+                                                            642,
+                                                            66
+                                                        ],
+                                                        [
+                                                            672,
+                                                            45
+                                                        ],
+                                                        [
+                                                            707,
+                                                            38
+                                                        ],
+                                                        [
+                                                            743,
+                                                            45
+                                                        ],
+                                                        [
+                                                            773,
+                                                            66
+                                                        ],
+                                                        [
+                                                            793,
+                                                            96
+                                                        ],
+                                                        [
+                                                            800,
+                                                            131
+                                                        ],
+                                                        [
+                                                            793,
+                                                            166
+                                                        ],
+                                                        [
+                                                            773,
+                                                            196
+                                                        ],
+                                                        [
+                                                            743,
+                                                            216
+                                                        ],
+                                                        [
+                                                            707,
+                                                            223
+                                                        ],
+                                                        [
+                                                            694,
+                                                            223
+                                                        ],
+                                                        [
+                                                            473,
+                                                            692
+                                                        ],
+                                                        [
+                                                            514,
+                                                            709
+                                                        ],
+                                                        [
+                                                            529,
+                                                            724
+                                                        ],
+                                                        [
+                                                            529,
+                                                            745
+                                                        ],
+                                                        [
+                                                            514,
+                                                            760
+                                                        ],
+                                                        [
+                                                            493,
+                                                            759
+                                                        ],
+                                                        [
+                                                            355,
+                                                            701
+                                                        ],
+                                                        [
+                                                            340,
+                                                            686
+                                                        ],
+                                                        [
+                                                            340,
+                                                            665
+                                                        ],
+                                                        [
+                                                            350,
+                                                            653
+                                                        ],
+                                                        [
+                                                            365,
+                                                            649
+                                                        ],
+                                                        [
+                                                            376,
+                                                            651
+                                                        ],
+                                                        [
+                                                            423,
+                                                            671
+                                                        ],
+                                                        [
+                                                            618,
+                                                            256
+                                                        ],
+                                                        [
+                                                            592,
+                                                            237
+                                                        ],
+                                                        [
+                                                            570,
+                                                            213
+                                                        ],
+                                                        [
+                                                            554,
+                                                            185
+                                                        ],
+                                                        [
+                                                            544,
+                                                            154
+                                                        ],
+                                                        [
+                                                            249,
+                                                            154
+                                                        ],
+                                                        [
+                                                            240,
+                                                            191
+                                                        ],
+                                                        [
+                                                            223,
+                                                            223
+                                                        ],
+                                                        [
+                                                            199,
+                                                            249
+                                                        ],
+                                                        [
+                                                            170,
+                                                            267
+                                                        ],
+                                                        [
+                                                            149,
+                                                            267
+                                                        ],
+                                                        [
+                                                            134,
+                                                            252
+                                                        ],
+                                                        [
+                                                            134,
+                                                            231
+                                                        ],
+                                                        [
+                                                            149,
+                                                            217
+                                                        ],
+                                                        [
+                                                            177,
+                                                            193
+                                                        ],
+                                                        [
+                                                            194,
+                                                            154
+                                                        ],
+                                                        [
+                                                            182,
+                                                            154
+                                                        ],
+                                                        [
+                                                            170,
+                                                            181
+                                                        ],
+                                                        [
+                                                            149,
+                                                            204
+                                                        ],
+                                                        [
+                                                            123,
+                                                            218
+                                                        ],
+                                                        [
+                                                            93,
+                                                            223
+                                                        ],
+                                                        [
+                                                            57,
+                                                            216
+                                                        ],
+                                                        [
+                                                            27,
+                                                            196
+                                                        ],
+                                                        [
+                                                            7,
+                                                            166
+                                                        ],
+                                                        [
+                                                            0,
+                                                            131
+                                                        ],
+                                                        [
+                                                            7,
+                                                            96
+                                                        ],
+                                                        [
+                                                            27,
+                                                            66
+                                                        ],
+                                                        [
+                                                            57,
+                                                            45
+                                                        ],
+                                                        [
+                                                            93,
+                                                            38
+                                                        ]
+                                                    ]
+                                                ]
+                                            },
+                                            "symbol": {
+                                                "type": "CIMPolygonSymbol",
+                                                "symbolLayers": [
+                                                    {
+                                                        "type": "CIMSolidFill",
+                                                        "enable": true,
+                                                        "color": [
+                                                            33,
+                                                            25,
+                                                            21,
+                                                            255
+                                                        ]
+                                                    }
+                                                ],
+                                                "angleAlignment": "Map"
+                                            }
+                                        }
+                                    ],
+                                    "scaleSymbolsProportionally": true,
+                                    "respectFrame": true,
+                                }
+                            ],
+                        }
+                    }
+                }
+            };
+
+            function createBatteryLevel(level, offset, hasAnimation) {
+                var animations = [
+                    {
+                        "type": "CIMSymbolAnimationTransparency",
+                        "toTransparency": 100,
+                        "animatedSymbolProperties": {
+                            primitiveName: "animationOverride",
+                            "type": "CIMAnimatedSymbolProperties",
+                            "playAnimation": false,
+                            "randomizeStartTime": false,
+                            "repeatType": "Oscillate",
+                            "repeatDelay": 0.5,
+                            "duration": 0.5,
+                            "easing": "EaseIn"
+                        }
+                    }
+                ];
+                return {
+                    "type": "CIMVectorMarker",
+                    "enable": true,
+                    "anchorPointUnits": "Relative",
+                    "dominantSizeAxis3D": "Y",
+                    "size": 3.5,
+                    "billboardMode3D": "FaceNearPlane",
+                    "frame": {
+                        "xmin": 0,
+                        "ymin": 0,
+                        "xmax": 28,
+                        "ymax": 17
+                    },
+                    "markerGraphics": [
+                        {
+                            "type": "CIMMarkerGraphic",
+                            "geometry": {
+                                "rings": [
+                                    [
+                                        [
+                                            25.36,
+                                            0
+                                        ],
+                                        [
+                                            2.64,
+                                            0
+                                        ],
+                                        [
+                                            1.63,
+                                            0.19
+                                        ],
+                                        [
+                                            0.77,
+                                            0.74
+                                        ],
+                                        [
+                                            0.2,
+                                            1.56
+                                        ],
+                                        [
+                                            0,
+                                            2.52
+                                        ],
+                                        [
+                                            0,
+                                            14.48
+                                        ],
+                                        [
+                                            0.2,
+                                            15.44
+                                        ],
+                                        [
+                                            0.77,
+                                            16.26
+                                        ],
+                                        [
+                                            1.63,
+                                            16.81
+                                        ],
+                                        [
+                                            2.64,
+                                            17
+                                        ],
+                                        [
+                                            25.36,
+                                            17
+                                        ],
+                                        [
+                                            26.37,
+                                            16.81
+                                        ],
+                                        [
+                                            27.23,
+                                            16.26
+                                        ],
+                                        [
+                                            27.8,
+                                            15.44
+                                        ],
+                                        [
+                                            28,
+                                            14.48
+                                        ],
+                                        [
+                                            28,
+                                            2.52
+                                        ],
+                                        [
+                                            27.8,
+                                            1.56
+                                        ],
+                                        [
+                                            27.23,
+                                            0.74
+                                        ],
+                                        [
+                                            26.37,
+                                            0.19
+                                        ],
+                                        [
+                                            25.36,
+                                            0
+                                        ]
+                                    ]
+                                ]
+                            },
+                            "symbol": {
+                                "type": "CIMPolygonSymbol",
+                                "symbolLayers": [
+                                    {
+                                        "type": "CIMSolidFill",
+                                        primitiveName: "battery-level-" + level,
+                                        "enable": true,
+                                        "color": [
+                                            41,
+                                            153,
+                                            0,
+                                            255
+                                        ],
+                                        animations: hasAnimation ? animations : []
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "scaleSymbolsProportionally": true,
+                    "respectFrame": true,
+                    "offsetX": -10,
+                    "offsetY": offset
+                };
+            }
+
+        });
+    </script>
+
+</body>
+
+</html>

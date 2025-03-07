@@ -1,0 +1,99 @@
+/* Calcite Dev Summit 2024 Demo Template */
+/* Demo template theming example */
+
+body {
+  --calcite-color-brand: #00c291;
+  --calcite-color-brand-hover: #00ad82;
+  --calcite-color-brand-press: #00916d;
+  --calcite-color-background: #f2f7f4;
+  --calcite-color-foreground-1: #fafffd;
+  --calcite-color-foreground-2: #edf7f3;
+  --calcite-color-foreground-3: #e4ebe8;
+  --calcite-color-foreground-current: #c7ffda;
+  --calcite-color-info: #007f99;
+  --calcite-color-success: #47ac35;
+  --calcite-color-warning: #eeb417;
+  --calcite-color-danger: #d92024;
+  --calcite-color-danger-hover: #a91e20;
+  --calcite-color-danger-press: #7c1315;
+  --calcite-color-text-1: #222927;
+  --calcite-color-text-2: #333d3a;
+  --calcite-color-text-3: #3a4541;
+  --calcite-color-text-inverse: #fafffd;
+  --calcite-color-text-link: #04716c;
+  --calcite-color-border-1: #c3c7c5;
+  --calcite-color-border-2: #cdd4d0;
+  --calcite-color-border-3: #dfe8e3;
+  --calcite-color-border-input: #727d77;
+}
+
+body.calcite-mode-dark {
+  --calcite-color-brand: #00dea6;
+  --calcite-color-brand-hover: #00c997;
+  --calcite-color-brand-press: #00b386;
+  --calcite-color-background: #252927;
+  --calcite-color-foreground-1: #282f2c;
+  --calcite-color-foreground-2: #2f3633;
+  --calcite-color-foreground-3: #353b38;
+  --calcite-color-foreground-current: #588572;
+  --calcite-color-info: #38deff;
+  --calcite-color-success: #60fc44;
+  --calcite-color-warning: #ffca38;
+  --calcite-color-danger: #ff3639;
+  --calcite-color-danger-hover: #d93437;
+  --calcite-color-danger-press: #7c1d13;
+  --calcite-color-text-1: #f5fffc;
+  --calcite-color-text-2: #e6fcf6;
+  --calcite-color-text-3: #d6fff0;
+  --calcite-color-text-inverse: #1a1c1b;
+  --calcite-color-text-link: #15e8dd;
+  --calcite-color-border-1: #202422;
+  --calcite-color-border-2: #39473f;
+  --calcite-color-border-3: #2b3d33;
+  --calcite-color-border-input: rgb(80, 87, 83);
+}
+
+/* Calcite Dev Summit 2024 Demo Template */
+/* Demo template supporting styles */
+
+html,
+body,
+arcgis-map {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+calcite-menu-item {
+  --calcite-color-foreground-1: var(--calcite-color-background);
+}
+
+calcite-navigation-logo {
+  --calcite-ui-icon-color: var(--calcite-color-brand);
+}
+
+calcite-shell-panel[slot="panel-start"] calcite-panel {
+  border-top: 0;
+}
+
+calcite-action-pad {
+  margin-inline-end: 0.5rem;
+}
+
+#modal hr {
+  margin: 1rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--calcite-color-border-3);
+}
+
+#modal ul li {
+  margin-bottom: 0.5rem;
+}
+
+#modal calcite-notice {
+  margin-bottom: 1.25rem;
+}
+
+/* Calcite Dev Summit 2024 Demo Template */
+/* Custom styles below */

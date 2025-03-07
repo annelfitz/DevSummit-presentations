@@ -1,0 +1,145 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>2025 Esri Developer & Technology Summit - Designing Apps with Calcite Design System</title>
+
+  <!-- Calcite imports -->
+  <script type="module" src="https://js.arcgis.com/calcite-components/3.0.0/calcite.esm.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/3.0.0/calcite.css" />
+
+  <!-- ArcGIS Maps SDK for JavaScript imports -->
+  <script src="https://js.arcgis.com/4.32/"></script>
+  <link id="jsapi-mode-light" rel="stylesheet" href="https://js.arcgis.com/4.32/esri/themes/light/main.css" />
+  <link disabled id="jsapi-mode-dark" rel="stylesheet" href="https://js.arcgis.com/4.32/esri/themes/dark/main.css" />
+  <script type="module" src="https://js.arcgis.com/map-components/4.32/arcgis-map-components.esm.js"></script>
+
+  <!-- Demo imports -->
+  <script src="./app.js" defer></script>
+  <script src="./main.js"></script>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <calcite-shell content-behind>
+    <calcite-navigation navigation-action slot="header" id="nav">
+      <calcite-navigation-logo href="#" icon="image-layer" alt="Application logo" slot="logo"
+        heading="My demo application" description="Esri Developer & Technology Summit"></calcite-navigation-logo>
+      <calcite-action-pad layout="horizontal" expand-disabled slot="content-end">
+        <calcite-action id="toggle-mode" text="Toggle mode" icon="brightness"></calcite-action>
+        <calcite-action id="toggle-modal" text="About this application" icon="information"></calcite-action>
+      </calcite-action-pad>
+
+      <calcite-tooltip placement="bottom" reference-element="toggle-mode" slot="content-end">Toggle
+        mode</calcite-tooltip>
+      <calcite-tooltip placement="bottom" reference-element="toggle-modal" close-on-click slot="content-end">About this
+        application</calcite-tooltip>
+    </calcite-navigation>
+
+    <calcite-shell-panel slot="panel-end" display-mode="float">
+      <calcite-panel heading="Maps SDK for JavaScript" description="Showcased product">
+        <calcite-action id="toggle-instructions" text="Instructions" icon="lightbulb"
+          slot="header-actions-end"></calcite-action>
+        <calcite-tooltip placement="bottom" reference-element="toggle-instructions" slot="header-actions-end">Pre-generate popup
+          templates for your data.</calcite-tooltip>
+        <calcite-notice open scale="s" slot="footer">
+          <span slot="title">What is being demonstrated?</span>
+          <span slot="message">
+            This demonstration application showcases how to generate popup
+            templates using the smart mapping popupTemplateCreator.
+          </span>
+        </calcite-notice>
+
+        <calcite-block collapsible heading="Generated popup templates"
+          description="Update the layer's popup template with pre-generated ones" open>
+          <calcite-icon scale="s" slot="icon" icon="effects"></calcite-icon>
+        
+          <body></body>
+          <calcite-label>
+            Template type
+            <calcite-segmented-control id="control" width="full">
+              <calcite-segmented-control-item value="Primary">Primary</calcite-segmented-control-item>
+              <calcite-segmented-control-item value="Text">Text</calcite-segmented-control-item>
+              <calcite-segmented-control-item value="Chart">Chart</calcite-segmented-control-item>
+            </calcite-segmented-control>
+          </calcite-label>
+        </calcite-block>
+
+      </calcite-panel>
+    </calcite-shell-panel>
+
+    <arcgis-map item-id="0a4a5b9b70c9449b9f2e87a6864db2a7">
+      <arcgis-zoom position="top-left"></arcgis-zoom>
+      <arcgis-expand position="bottom-right">
+        <arcgis-legend></arcgis-legend>
+      </arcgis-expand>
+      <arcgis-expand expand-icon="code" position="top-left">
+        <arcgis-placement>
+        <div id="codeSnippet">
+          <img src="./popup-template-creator.png" />
+        </div>
+        </arcgis-placement>
+    </arcgis-map>
+  </calcite-shell>
+
+  <!-- Demo template interactive elements -->
+  <calcite-alert open icon="effects">
+    <div slot="title">Esri Developer & Technology Summit</div>
+    <div slot="message">Welcome to beautiful Palm Springs!</div>
+  </calcite-alert>
+
+  <calcite-dialog modal id="modal" heading="About this application">
+    <div>
+      <calcite-notice open>
+        <span slot="title">This demonstration application is a companion resource to the
+        "ArcGIS Maps SDK for JavaScript: Better UX with Popups" session at
+        Esri Developer Summit
+        </span>
+      </calcite-notice>
+      This example illustrates:
+      <li>
+        Generating popup templates using the
+        <calcite-link target="_blank"
+          href="https://developers.arcgis.com/javascript/latest/api-reference/esri-smartMapping-popup-templates.html">SmartMapping
+          API</calcite-link>
+        .
+      </li>
+      </ul>
+      Learn more in the
+      <calcite-link target="_blank" href="https://developers.arcgis.com/javascript/latest/">
+        documentation</calcite-link>.
+      <hr />
+      <calcite-link target="_blank" href="#">Application source code</calcite-link>
+      is available in the
+      <calcite-link target="_blank" href="https://github.com/EsriDevEvents/">Esri Developer Events GitHub
+        organization</calcite-link>.
+      <hr />
+      <calcite-link target="_blank" href="#">Map data </calcite-link> is sourced from Esri Data and Maps /
+      <calcite-link target="_blank" href="https://livingatlas.arcgis.com/en/home/">ArcGIS Living Atlas of the
+        World</calcite-link>.
+    </div>
+  </calcite-dialog>
+
+  <calcite-sheet id="sheet" display-mode="float" width-scale="m">
+    <calcite-panel heading="Esri Developer & Technology Summit" description="Helpful conference links" closable
+      id="sheet-panel">
+      <calcite-menu layout="vertical" label="2025 Esri Developer & Technology Summit Menu">
+        <calcite-menu-item text="2025 Esri Developer & Technology Summit Overview" icon-end="launch"
+          href="https://www.esri.com/en-us/about/events/devsummit/overview" target="_blank"></calcite-menu-item>
+        <calcite-menu-item text="Esri Developer Events GitHub" icon-end="launch" href="https://github.com/EsriDevEvents"
+          target="_blank"></calcite-menu-item>
+        <calcite-menu-item text="Esri.com" icon-end="launch" href="https://esri.com"
+          target="_blank"></calcite-menu-item>
+      </calcite-menu>
+      <calcite-notice open slot="footer" width="full" scale="s">
+        <span slot="title">Note</span>
+        <span slot="message">This is a demonstration application showcasing platform functionality. While Esri strives
+          to ensure the sample is accurate, it
+          may not reflect implementation behavior in certain environments.</span>
+      </calcite-notice>
+    </calcite-panel>
+  </calcite-sheet>
+</body>
+
+</html>

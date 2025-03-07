@@ -1,0 +1,89 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>ArcGIS Maps SDK for JavaScript Tutorials: Display a web scene</title>
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        #queryDiv,
+        #resultDiv {
+            min-width: 250px;
+            font-size: 14px;
+            padding: 10px;
+            background-color: white;
+            display: none;
+        }
+
+        .geometry-options {
+            display: flex;
+            flex-direction: row;
+        }
+    </style>
+    <!-- Load the Chart.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <!-- Load Calcite components from CDN -->
+    <script type="module" src="https://js.arcgis.com/calcite-components/3.0.3/calcite.esm.js"></script>
+
+    <!-- Load the ArcGIS Maps SDK for JavaScript from CDN -->
+    <link rel="stylesheet" href="https://js.arcgis.com/4.32/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.32/"></script>
+
+    <!-- Load Map components from CDN-->
+    <script type="module" src="https://js.arcgis.com/map-components/4.32/arcgis-map-components.esm.js"></script>
+
+    <script src="./app.js" defer></script>
+</head>
+
+<body>
+    <arcgis-scene item-id="fb5948b2bb76439792786000b942e5b7">
+        <arcgis-zoom position="top-left"></arcgis-zoom>
+        <arcgis-navigation-toggle position="top-left"></arcgis-navigation-toggle>
+        <arcgis-placement position="bottom-left">
+            <div id="queryDiv">
+                <b>Query by geometry</b>
+                <calcite-label>Draw a geometry to query by:
+                    <div class="geometry-options">
+                        <calcite-button icon-start="pin" appearance="outline" width="full" id="point-geometry-button"
+                            label="point" title="Query by point"></calcite-button>
+                        <calcite-button icon-start="line" appearance="outline" width="full" id="line-geometry-button"
+                            label="polyline" title="Query by line"></calcite-button>
+                        <calcite-button icon-start="polygon" appearance="outline" width="full"
+                            id="polygon-geometry-button" label="polygon" title="Query by polygon"></calcite-button>
+                    </div>
+                </calcite-label>
+                <div class="tooltip">
+                    <calcite-label for="bufferNum">Set a geometry buffer size:
+                        <calcite-slider min="0" max="500" id="bufferNum" label-handles></calcite-slider>
+                    </calcite-label>
+                </div>
+                <calcite-button id="clearGeometry">Clear</calcite-button>
+            </div>
+        </arcgis-placement>
+        <arcgis-placement position="top-right">
+            <div id="resultDiv">
+                <div class="count">
+                    Selected Buildings:
+                    <div class="count" id="count">0</div>
+                </div>
+                <div class="charts">
+                    <div>
+                        <canvas id="year-chart" height="250" width="260" />
+                    </div>
+                    <div>
+                        <canvas id="material-chart" width="250" height="300" />
+                    </div>
+                </div>
+            </div>
+        </arcgis-placement>
+    </arcgis-scene>
+</body>
+
+</html>
