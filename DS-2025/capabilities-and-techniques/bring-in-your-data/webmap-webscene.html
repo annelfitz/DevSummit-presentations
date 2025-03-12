@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Load a WebMap or WebScene</title>
+
+  <!-- Load Calcite components from CDN -->
+  <script type="module" src="https://js.arcgis.com/calcite-components/3.0.3/calcite.esm.js"></script>
+
+  <!-- Load the ArcGIS Maps SDK for JavaScript -->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.32/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.32/"></script>
+
+  <!-- Load Map components from CDN-->
+  <script type="module" src="https://js.arcgis.com/map-components/4.32/arcgis-map-components.esm.js"></script>
+
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Web Map -->
+  <!-- <arcgis-map item-id="fed375434db840babdb65bf8b3fd03fc">
+    <arcgis-zoom></arcgis-zoom>
+  </arcgis-map> -->
+
+  <!-- Millikin University Web Scene-->
+  <arcgis-scene item-id="fbbc829fa7d342e7ae8d18c54a5eab37">
+    <arcgis-zoom></arcgis-zoom>
+  </arcgis-scene>
+</body>
+
+</html>

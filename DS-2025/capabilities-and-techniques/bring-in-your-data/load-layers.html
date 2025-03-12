@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Add Layers to the Map</title>
+
+  <!-- Load Calcite components from CDN -->
+  <script type="module" src="https://js.arcgis.com/calcite-components/3.0.3/calcite.esm.js"></script>
+
+  <!-- Load the ArcGIS Maps SDK for JavaScript -->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.32/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.32/"></script>
+
+  <!-- Load Map components from CDN-->
+  <script type="module" src="https://js.arcgis.com/map-components/4.32/arcgis-map-components.esm.js"></script>
+
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <arcgis-map 
+    basemap="topo-vector"
+    center="-118.43281, 37.49901"
+    zoom="6"
+  >
+  <arcgis-zoom position="top-left"></arcgis-zoom>
+  <arcgis-legend position="bottom-left"></arcgis-legend>
+  </arcgis-map>
+
+  <script>
+    require(["esri/layers/FeatureLayer"], (FeatureLayer) => {
+
+      const arcgisMap = document.querySelector("arcgis-map");
+
+      arcgisMap.addEventListener("arcgisViewReadyChange", () => {
+        const layer = new FeatureLayer({ 
+          url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Global_power_plants/FeatureServer/0" 
+        });
+        arcgisMap.addLayer(layer);
+      });
+
+    });
+  </script>
+</body>
+
+
+</html>
