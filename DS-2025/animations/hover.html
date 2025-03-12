@@ -591,7 +591,6 @@
 
             // Get the screen point from the view's click event
             arcgisMap.addEventListener("arcgisViewPointerMove", (event) => {
-                console.log(event)
                 arcgisMap.hitTest(event.detail).then((response) => {
                     const graphicHits = response.results?.filter(
                         (hitResult) => hitResult.type === "graphic" && hitResult.graphic.layer === skiResorts
