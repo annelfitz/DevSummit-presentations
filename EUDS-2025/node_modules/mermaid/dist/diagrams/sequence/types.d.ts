@@ -18,6 +18,7 @@ export interface Actor {
     type: string;
 }
 export interface Message {
+    id: string;
     from?: string;
     to?: string;
     message: string | {

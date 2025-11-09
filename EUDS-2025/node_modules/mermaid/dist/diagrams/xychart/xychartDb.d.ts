@@ -1,5 +1,5 @@
 import type { SVGGroup } from '../../diagram-api/types.js';
-import type { DrawableElem, XYChartConfig, XYChartThemeConfig } from './chartBuilder/interfaces.js';
+import type { DrawableElem, XYChartConfig, XYChartData, XYChartThemeConfig } from './chartBuilder/interfaces.js';
 interface NormalTextType {
     type: 'text';
     text: string;
@@ -16,6 +16,7 @@ declare function setBarData(title: NormalTextType, data: number[]): void;
 declare function getDrawableElem(): DrawableElem[];
 declare function getChartThemeConfig(): XYChartThemeConfig;
 declare function getChartConfig(): XYChartConfig;
+declare function getXYChartData(): XYChartData;
 declare const _default: {
     getDrawableElem: typeof getDrawableElem;
     clear: () => void;
@@ -36,5 +37,6 @@ declare const _default: {
     setTmpSVGG: typeof setTmpSVGG;
     getChartThemeConfig: typeof getChartThemeConfig;
     getChartConfig: typeof getChartConfig;
+    getXYChartData: typeof getXYChartData;
 };
 export default _default;

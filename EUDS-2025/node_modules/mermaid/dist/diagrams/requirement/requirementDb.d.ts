@@ -1,70 +1,54 @@
-declare namespace _default {
-    export { RequirementType };
-    export { RiskLevel };
-    export { VerifyType };
-    export { Relationships };
-    export function getConfig(): any;
-    export { addRequirement };
-    export { getRequirements };
-    export { setNewReqId };
-    export { setNewReqText };
-    export { setNewReqRisk };
-    export { setNewReqVerifyMethod };
-    export { setAccTitle };
-    export { getAccTitle };
-    export { setAccDescription };
-    export { getAccDescription };
-    export { addElement };
-    export { getElements };
-    export { setNewElementType };
-    export { setNewElementDocRef };
-    export { addRelationship };
-    export { getRelationships };
-    export { clear };
+import type { DiagramDB } from '../../diagram-api/types.js';
+import type { Node, Edge } from '../../rendering-util/types.js';
+import type { Element, Relation, RelationshipType, Requirement, RequirementClass, RequirementType, RiskLevel, VerifyType } from './types.js';
+export declare class RequirementDB implements DiagramDB {
+    private relations;
+    private latestRequirement;
+    private requirements;
+    private latestElement;
+    private elements;
+    private classes;
+    private direction;
+    private RequirementType;
+    private RiskLevel;
+    private VerifyType;
+    private Relationships;
+    constructor();
+    getDirection(): string;
+    setDirection(dir: string): void;
+    private resetLatestRequirement;
+    private resetLatestElement;
+    private getInitialRequirement;
+    private getInitialElement;
+    addRequirement(name: string, type: RequirementType): Requirement | undefined;
+    getRequirements(): Map<string, Requirement>;
+    setNewReqId(id: string): void;
+    setNewReqText(text: string): void;
+    setNewReqRisk(risk: RiskLevel): void;
+    setNewReqVerifyMethod(verifyMethod: VerifyType): void;
+    addElement(name: string): Element | undefined;
+    getElements(): Map<string, Element>;
+    setNewElementType(type: string): void;
+    setNewElementDocRef(docRef: string): void;
+    addRelationship(type: RelationshipType, src: string, dst: string): void;
+    getRelationships(): Relation[];
+    clear(): void;
+    setCssStyle(ids: string[], styles: string[]): void;
+    setClass(ids: string[], classNames: string[]): void;
+    defineClass(ids: string[], style: string[]): void;
+    getClasses(): Map<string, RequirementClass>;
+    getData(): {
+        nodes: Node[];
+        edges: Edge[];
+        other: {};
+        config: import("../../config.type.js").MermaidConfig;
+        direction: string;
+    };
+    setAccTitle: (txt: string) => void;
+    getAccTitle: () => string;
+    setAccDescription: (txt: string) => void;
+    getAccDescription: () => string;
+    setDiagramTitle: (txt: string) => void;
+    getDiagramTitle: () => string;
+    getConfig: () => import("../../config.type.js").RequirementDiagramConfig | undefined;
 }
-export default _default;
-declare namespace RequirementType {
-    let REQUIREMENT: string;
-    let FUNCTIONAL_REQUIREMENT: string;
-    let INTERFACE_REQUIREMENT: string;
-    let PERFORMANCE_REQUIREMENT: string;
-    let PHYSICAL_REQUIREMENT: string;
-    let DESIGN_CONSTRAINT: string;
-}
-declare namespace RiskLevel {
-    let LOW_RISK: string;
-    let MED_RISK: string;
-    let HIGH_RISK: string;
-}
-declare namespace VerifyType {
-    let VERIFY_ANALYSIS: string;
-    let VERIFY_DEMONSTRATION: string;
-    let VERIFY_INSPECTION: string;
-    let VERIFY_TEST: string;
-}
-declare namespace Relationships {
-    let CONTAINS: string;
-    let COPIES: string;
-    let DERIVES: string;
-    let SATISFIES: string;
-    let VERIFIES: string;
-    let REFINES: string;
-    let TRACES: string;
-}
-declare function addRequirement(name: any, type: any): any;
-declare function getRequirements(): Map<any, any>;
-declare function setNewReqId(id: any): void;
-declare function setNewReqText(text: any): void;
-declare function setNewReqRisk(risk: any): void;
-declare function setNewReqVerifyMethod(verifyMethod: any): void;
-import { setAccTitle } from '../common/commonDb.js';
-import { getAccTitle } from '../common/commonDb.js';
-import { setAccDescription } from '../common/commonDb.js';
-import { getAccDescription } from '../common/commonDb.js';
-declare function addElement(name: any): any;
-declare function getElements(): Map<any, any>;
-declare function setNewElementType(type: any): void;
-declare function setNewElementDocRef(docRef: any): void;
-declare function addRelationship(type: any, src: any, dst: any): void;
-declare function getRelationships(): any[];
-declare function clear(): void;

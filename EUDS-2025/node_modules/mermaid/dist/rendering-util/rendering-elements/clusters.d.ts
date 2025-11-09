@@ -1,4 +1,4 @@
-export function insertCluster(elem: any, node: import('../types.js').ClusterNode): Promise<any>;
+export function insertCluster(elem: any, node: import("../types.js").ClusterNode): Promise<any>;
 export function getClusterTitleWidth(elem: any, node: any): any;
 export function clear(): void;
 export function positionCluster(node: any): void;

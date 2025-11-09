@@ -4,7 +4,7 @@ export declare const log: Record<import("../logger.js").LogLevel, {
     (...data: any[]): void;
     (message?: any, ...optionalParams: any[]): void;
 }>;
-export declare const setLogLevel: (level?: number | import("../logger.js").LogLevel) => void;
+export declare const setLogLevel: (level?: keyof typeof import("../logger.js").LEVELS | number) => void;
 export declare const getConfig: () => import("../config.type.js").MermaidConfig;
 export declare const setConfig: (conf: import("../config.type.js").MermaidConfig) => import("../config.type.js").MermaidConfig;
 export declare const defaultConfig: import("../config.type.js").MermaidConfig;

@@ -38,7 +38,10 @@ declare const db: {
     readonly typeStr2Type: typeof typeStr2Type;
     readonly edgeTypeStr2Type: typeof edgeTypeStr2Type;
     readonly edgeStrToEdgeData: typeof edgeStrToEdgeData;
-    readonly getLogger: () => Console;
+    readonly getLogger: () => Record<import("../../logger.js").LogLevel, {
+        (...data: any[]): void;
+        (message?: any, ...optionalParams: any[]): void;
+    }>;
     readonly getBlocksFlat: () => Block[];
     readonly getBlocks: () => Block[];
     readonly getEdges: () => Block[];

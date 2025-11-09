@@ -14,5 +14,5 @@ export declare const registerIconPacks: (iconLoaders: IconLoader[]) => void;
 export declare const isIconAvailable: (iconName: string) => Promise<boolean>;
 export declare const getIconSVG: (iconName: string, customisations?: IconifyIconCustomisations & {
     fallbackPrefix?: string;
-}) => Promise<string>;
+}, extraAttributes?: Record<string, string>) => Promise<string>;
 export {};

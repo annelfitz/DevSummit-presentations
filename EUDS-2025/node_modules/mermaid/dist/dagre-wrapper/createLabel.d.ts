@@ -6,4 +6,4 @@ export default createLabel;
  * @param isNode
  * @deprecated svg-util/createText instead
  */
-declare function createLabel(_vertexText: any, style: any, isTitle: any, isNode: any): SVGTextElement | SVGForeignObjectElement;
+declare function createLabel(_vertexText: any, style: any, isTitle: any, isNode: any): Promise<SVGTextElement | SVGForeignObjectElement>;

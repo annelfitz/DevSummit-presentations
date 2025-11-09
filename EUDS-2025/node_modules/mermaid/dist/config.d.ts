@@ -96,3 +96,4 @@ export declare const addDirective: (directive: MermaidConfig) => void;
  * Defaults to the current siteConfig (e.g returned by {@link getSiteConfig}).
  */
 export declare const reset: (config?: MermaidConfig) => void;
+export declare const getUserDefinedConfig: () => MermaidConfig;

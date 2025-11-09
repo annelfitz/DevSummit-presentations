@@ -27,7 +27,7 @@ declare namespace _default {
 }
 export default _default;
 /**
- * Draws an boundary in the diagram
+ * Draws a boundary in the diagram
  *
  * @param {any} elem - The diagram we'll draw to.
  * @param {any} boundary - The boundary to draw.

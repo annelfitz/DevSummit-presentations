@@ -126,7 +126,7 @@ declare const setParseErrorHandler: (parseErrorHandler: (err: any, hash: any) =>
  */
 declare const parse: typeof mermaidAPI.parse;
 /**
- * Function that renders an svg with a graph from a chart definition. Usage example below.
+ * Function that renders an SVG with a graph from a chart definition. Usage example below.
  *
  * ```javascript
  *  element = document.querySelector('#graphDiv');
@@ -149,6 +149,12 @@ declare const parse: typeof mermaidAPI.parse;
  * @returns Returns the SVG Definition and BindFunctions.
  */
 declare const render: typeof mermaidAPI.render;
+/**
+ * Gets the metadata for all registered diagrams.
+ * Currently only the id is returned.
+ * @returns An array of objects with the id of the diagram.
+ */
+declare const getRegisteredDiagramsMetadata: () => Pick<ExternalDiagramDefinition, "id">[];
 export interface Mermaid {
     startOnLoad: boolean;
     parseError?: ParseErrorFunction;
@@ -171,6 +177,7 @@ export interface Mermaid {
     setParseErrorHandler: typeof setParseErrorHandler;
     detectType: typeof detectType;
     registerIconPacks: typeof registerIconPacks;
+    getRegisteredDiagramsMetadata: typeof getRegisteredDiagramsMetadata;
 }
 declare const mermaid: Mermaid;
 export default mermaid;

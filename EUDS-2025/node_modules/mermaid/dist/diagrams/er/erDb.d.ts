@@ -1,54 +1,53 @@
-declare namespace _default {
-    export { Cardinality };
-    export { Identification };
-    export function getConfig(): import("../../config.type.js").ErDiagramConfig | undefined;
-    export { addEntity };
-    export { addAttributes };
-    export { getEntities };
-    export { addRelationship };
-    export { getRelationships };
-    export { clear };
-    export { setAccTitle };
-    export { getAccTitle };
-    export { setAccDescription };
-    export { getAccDescription };
-    export { setDiagramTitle };
-    export { getDiagramTitle };
+import type { Edge, Node } from '../../rendering-util/types.js';
+import type { EntityNode, Attribute, Relationship, EntityClass, RelSpec } from './erTypes.js';
+import type { DiagramDB } from '../../diagram-api/types.js';
+export declare class ErDB implements DiagramDB {
+    private entities;
+    private relationships;
+    private classes;
+    private direction;
+    private Cardinality;
+    private Identification;
+    constructor();
+    /**
+     * Add entity
+     * @param name - The name of the entity
+     * @param alias - The alias of the entity
+     */
+    addEntity(name: string, alias?: string): EntityNode;
+    getEntity(name: string): EntityNode | undefined;
+    getEntities(): Map<string, EntityNode>;
+    getClasses(): Map<string, EntityClass>;
+    addAttributes(entityName: string, attribs: Attribute[]): void;
+    /**
+     * Add a relationship
+     *
+     * @param entA - The first entity in the relationship
+     * @param rolA - The role played by the first entity in relation to the second
+     * @param entB - The second entity in the relationship
+     * @param rSpec - The details of the relationship between the two entities
+     */
+    addRelationship(entA: string, rolA: string, entB: string, rSpec: RelSpec): void;
+    getRelationships(): Relationship[];
+    getDirection(): string;
+    setDirection(dir: string): void;
+    private getCompiledStyles;
+    addCssStyles(ids: string[], styles: string[]): void;
+    addClass(ids: string[], style: string[]): void;
+    setClass(ids: string[], classNames: string[]): void;
+    clear(): void;
+    getData(): {
+        nodes: Node[];
+        edges: Edge[];
+        other: {};
+        config: import("../../config.type.js").MermaidConfig;
+        direction: string;
+    };
+    setAccTitle: (txt: string) => void;
+    getAccTitle: () => string;
+    setAccDescription: (txt: string) => void;
+    getAccDescription: () => string;
+    setDiagramTitle: (txt: string) => void;
+    getDiagramTitle: () => string;
+    getConfig: () => import("../../config.type.js").ErDiagramConfig | undefined;
 }
-export default _default;
-declare namespace Cardinality {
-    let ZERO_OR_ONE: string;
-    let ZERO_OR_MORE: string;
-    let ONE_OR_MORE: string;
-    let ONLY_ONE: string;
-    let MD_PARENT: string;
-}
-declare namespace Identification {
-    let NON_IDENTIFYING: string;
-    let IDENTIFYING: string;
-}
-/**
- * Add entity
- * @param {string} name - The name of the entity
- * @param {string | undefined} alias - The alias of the entity
- */
-declare function addEntity(name: string, alias?: string | undefined): any;
-declare function addAttributes(entityName: any, attribs: any): void;
-declare function getEntities(): Map<any, any>;
-/**
- * Add a relationship
- *
- * @param entA The first entity in the relationship
- * @param rolA The role played by the first entity in relation to the second
- * @param entB The second entity in the relationship
- * @param rSpec The details of the relationship between the two entities
- */
-declare function addRelationship(entA: any, rolA: any, entB: any, rSpec: any): void;
-declare function getRelationships(): any[];
-declare function clear(): void;
-import { setAccTitle } from '../common/commonDb.js';
-import { getAccTitle } from '../common/commonDb.js';
-import { setAccDescription } from '../common/commonDb.js';
-import { getAccDescription } from '../common/commonDb.js';
-import { setDiagramTitle } from '../common/commonDb.js';
-import { getDiagramTitle } from '../common/commonDb.js';

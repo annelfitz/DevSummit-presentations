@@ -81,7 +81,7 @@ declare function initialize(userOptions?: MermaidConfig): void;
 export declare const mermaidAPI: Readonly<{
     render: (id: string, text: string, svgContainingElement?: Element) => Promise<RenderResult>;
     parse: typeof parse;
-    getDiagramFromText: (text: string, metadata?: Pick<DiagramMetadata, 'title'>) => Promise<Diagram>;
+    getDiagramFromText: (text: string, metadata?: Pick<DiagramMetadata, "title">) => Promise<Diagram>;
     initialize: typeof initialize;
     getConfig: () => MermaidConfig;
     setConfig: (conf: MermaidConfig) => MermaidConfig;

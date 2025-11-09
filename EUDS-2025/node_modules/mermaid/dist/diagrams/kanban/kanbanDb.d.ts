@@ -26,7 +26,7 @@ declare const db: {
         class?: string;
         icon?: string;
     }) => void;
-    readonly type2Str: (type: number) => "rect" | "circle" | "no-border" | "rounded-rect" | "cloud" | "bang" | "hexgon";
+    readonly type2Str: (type: number) => "rect" | "circle" | "bang" | "cloud" | "no-border" | "rounded-rect" | "hexgon";
     readonly getLogger: () => Record<import("../../logger.js").LogLevel, {
         (...data: any[]): void;
         (message?: any, ...optionalParams: any[]): void;

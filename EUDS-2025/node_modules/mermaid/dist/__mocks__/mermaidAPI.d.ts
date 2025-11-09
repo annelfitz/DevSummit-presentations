@@ -1,12 +1,12 @@
 export declare const mermaidAPI: {
-    render: import("vitest").Mock<any, any>;
+    render: import("vitest").Mock<(...args: any[]) => any>;
     parse: {
         (text: string, parseOptions: import("../types.js").ParseOptions & {
             suppressErrors: true;
-        }): Promise<false | import("../types.js").ParseResult>;
-        (text: string, parseOptions?: import("../types.js").ParseOptions | undefined): Promise<import("../types.js").ParseResult>;
+        }): Promise<import("../types.js").ParseResult | false>;
+        (text: string, parseOptions?: import("../types.js").ParseOptions): Promise<import("../types.js").ParseResult>;
     };
-    initialize: import("vitest").Mock<any, any>;
+    initialize: import("vitest").Mock<(...args: any[]) => any>;
     getConfig: () => import("../config.type.js").MermaidConfig;
     setConfig: (conf: import("../config.type.js").MermaidConfig) => import("../config.type.js").MermaidConfig;
     getSiteConfig: () => import("../config.type.js").MermaidConfig;

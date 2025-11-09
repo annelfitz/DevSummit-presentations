@@ -73,6 +73,7 @@ export interface XYChartConfig {
     titleFontSize: number;
     titlePadding: number;
     showTitle: boolean;
+    showDataLabel: boolean;
     xAxis: XYChartAxisConfig;
     yAxis: XYChartAxisConfig;
     chartOrientation: 'vertical' | 'horizontal';
