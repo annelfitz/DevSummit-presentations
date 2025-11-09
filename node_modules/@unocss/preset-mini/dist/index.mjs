@@ -1,0 +1,82 @@
+import { entriesToCss, toArray, definePreset } from '@unocss/core';
+import { extractorArbitraryVariants } from '@unocss/extractor-arbitrary-variants';
+import { g as globalKeywords } from './shared/preset-mini.Cdp6npIx.mjs';
+export { k as parseColor } from './shared/preset-mini.Cdp6npIx.mjs';
+import { i as variants } from './shared/preset-mini.qZ_LpAyQ.mjs';
+import { r as rules } from './shared/preset-mini.DRIYNCtU.mjs';
+import { t as theme } from './shared/preset-mini.DJIbJ1xi.mjs';
+export { colors } from './colors.mjs';
+import '@unocss/rule-utils';
+import './shared/preset-mini.DC_GL9Sv.mjs';
+
+function preflights(options) {
+  if (options.preflight) {
+    return [
+      {
+        layer: "preflights",
+        getCSS({ theme, generator }) {
+          if (theme.preflightBase) {
+            let entries = Object.entries(theme.preflightBase);
+            if (options.preflight === "on-demand") {
+              const keys = new Set(Array.from(generator.activatedRules).map((r) => r[2]?.custom?.preflightKeys).filter(Boolean).flat());
+              entries = entries.filter(([k]) => keys.has(k));
+            }
+            if (entries.length > 0) {
+              let css = entriesToCss(entries);
+              if (options.variablePrefix !== "un-") {
+                css = css.replace(/--un-/g, `--${options.variablePrefix}`);
+              }
+              const roots = toArray(theme.preflightRoot ?? ["*,::before,::after", "::backdrop"]);
+              return roots.map((root) => `${root}{${css}}`).join("");
+            }
+          }
+        }
+      }
+    ];
+  }
+}
+
+const shorthands = {
+  position: [
+    "relative",
+    "absolute",
+    "fixed",
+    "sticky",
+    "static"
+  ],
+  globalKeyword: globalKeywords
+};
+
+const presetMini = definePreset((options = {}) => {
+  options.dark = options.dark ?? "class";
+  options.attributifyPseudo = options.attributifyPseudo ?? false;
+  options.preflight = options.preflight ?? true;
+  options.variablePrefix = options.variablePrefix ?? "un-";
+  return {
+    name: "@unocss/preset-mini",
+    theme,
+    rules,
+    variants: variants(options),
+    options,
+    prefix: options.prefix,
+    postprocess: VarPrefixPostprocessor(options.variablePrefix),
+    preflights: preflights(options),
+    extractorDefault: options.arbitraryVariants === false ? void 0 : extractorArbitraryVariants(),
+    autocomplete: {
+      shorthands
+    }
+  };
+});
+function VarPrefixPostprocessor(prefix) {
+  if (prefix !== "un-") {
+    return (obj) => {
+      obj.entries.forEach((i) => {
+        i[0] = i[0].replace(/^--un-/, `--${prefix}`);
+        if (typeof i[1] === "string")
+          i[1] = i[1].replace(/var\(--un-/g, `var(--${prefix}`);
+      });
+    };
+  }
+}
+
+export { VarPrefixPostprocessor, presetMini as default, preflights, presetMini, theme };
