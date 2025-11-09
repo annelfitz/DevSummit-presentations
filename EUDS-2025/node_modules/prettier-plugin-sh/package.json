@@ -1,0 +1,46 @@
+{
+  "name": "prettier-plugin-sh",
+  "version": "0.14.0",
+  "type": "module",
+  "description": "An opinionated `shellscript` formatter plugin for Prettier, also support simple format of `Dockerfile`, `properties`, `gitignore`, `dotenv`, `hosts`, `jvmoptions`...",
+  "repository": "git@github.com/un-ts/prettier.git",
+  "homepage": "https://github.com/un-ts/prettier/tree/master/packages/sh",
+  "author": "JounQin (https://www.1stG.me) <admin@1stg.me>",
+  "funding": "https://opencollective.com/unts",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "main": "./lib/index.cjs",
+  "module": "./lib/index.js",
+  "exports": {
+    "types": "./lib/index.d.ts",
+    "import": "./lib/index.js",
+    "require": "./lib/index.cjs"
+  },
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "dockerfile",
+    "ini",
+    "properties",
+    "sh",
+    "shell",
+    "shellscript",
+    "plugin",
+    "prettier",
+    "prettier-plugin"
+  ],
+  "peerDependencies": {
+    "prettier": "^3.0.3"
+  },
+  "dependencies": {
+    "mvdan-sh": "^0.10.1",
+    "sh-syntax": "^0.4.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

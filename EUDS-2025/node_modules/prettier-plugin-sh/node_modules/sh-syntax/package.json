@@ -1,0 +1,97 @@
+{
+  "name": "sh-syntax",
+  "version": "0.4.2",
+  "type": "module",
+  "description": "A WASM shell parser and formatter with bash support, based on mvdan/sh",
+  "repository": "git+https://github.com/rx-ts/sh-syntax.git",
+  "author": "JounQin (https://www.1stG.me) <admin@1stg.me>",
+  "funding": "https://opencollective.com/unts",
+  "license": "MIT",
+  "packageManager": "pnpm@8.12.1",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "main": "./lib/index.cjs",
+  "module": "./lib/index.js",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "require": "./lib/index.cjs",
+      "browser": "./lib/browser.js"
+    },
+    "./main.wasm": "./main.wasm",
+    "./package.json": "./package.json",
+    "./vendors/wasm_exec": "./vendors/wasm_exec.cjs",
+    "./vendors/wasm_exec.cjs": "./vendors/wasm_exec.cjs"
+  },
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib",
+    "main.wasm",
+    "vendors",
+    "!**/*.tsbuildinfo"
+  ],
+  "dependencies": {
+    "tslib": "^2.6.2"
+  },
+  "devDependencies": {
+    "@1stg/lib-config": "^12.0.0",
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.26.2",
+    "@types/golang-wasm-exec": "^1.15.2",
+    "@types/mvdan-sh": "^0.10.9",
+    "@types/node": "^20.4.0",
+    "@types/web": "^0.0.115",
+    "@vitest/coverage-istanbul": "^0.32.4",
+    "mitata": "^0.1.6",
+    "mvdan-sh": "^0.10.1",
+    "size-limit": "^8.2.6",
+    "size-limit-preset-node-lib": "^0.2.0",
+    "synckit": "^0.8.5",
+    "type-coverage": "^2.26.2",
+    "typescript": "^5.1.6",
+    "vitest": "^0.32.4"
+  },
+  "sideEffects": [
+    "lib/browser.js",
+    "lib/index.cjs",
+    "lib/index.js",
+    "lib/shim.js",
+    "vendors/wasm_exec.js"
+  ],
+  "size-limit": [
+    {
+      "path": "lib/browser.js",
+      "limit": "150B"
+    },
+    {
+      "path": "lib/index.js",
+      "limit": "400B"
+    }
+  ],
+  "typeCoverage": {
+    "atLeast": 100,
+    "cache": true,
+    "detail": true,
+    "ignoreAsAssertion": true,
+    "ignoreNonNullAssertion": true,
+    "showRelativePath": true,
+    "strict": true,
+    "update": true
+  },
+  "scripts": {
+    "benchmark": "NO_COLOR=1 node benchmark > benchmark/benchmark.txt",
+    "build": "run-p build:*",
+    "build:r": "r -f cjs -x **/vendors/wasm_exec.cjs",
+    "build:ts": "tsc -p src",
+    "lint": "run-p lint:*",
+    "lint:es": "eslint . --cache -f friendly --max-warnings 10",
+    "lint:tsc": "tsc --noEmit",
+    "prerelease": "pnpm build",
+    "release": "changeset publish",
+    "test": "vitest run --coverage",
+    "typecov": "type-coverage",
+    "wasm": "tinygo build -o main.wasm -target wasm --no-debug"
+  }
+}
