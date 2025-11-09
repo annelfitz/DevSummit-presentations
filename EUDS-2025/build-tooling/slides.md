@@ -95,7 +95,7 @@ graph LR
 layout: center
 ---
 
-# Demo: [Get started with Vite](https://github.com/maxpatiiuk/esri-dev-summit-presentations/tree/main/2025/build-tooling/demo/1-javascript)
+# Demo: [Get started with Vite](https://github.com/annelfitz/DevSummit-presentations/tree/main/EUDS-2025/build-tooling/demo/1-javascript)
 
 <!--
 - Create a Vite starter project
@@ -120,7 +120,7 @@ layout: center
 layout: center
 ---
 
-# Demo: [Add basic React 19](https://github.com/maxpatiiuk/esri-dev-summit-presentations/tree/main/2025/build-tooling/demo/2-react)
+# Demo: [Add basic React 19](https://github.com/annelfitz/DevSummit-presentations/tree/main/EUDS-2025/build-tooling/demo/2-react)
 
 ---
 
@@ -134,7 +134,7 @@ layout: center
 layout: center
 ---
 
-# Demo: [Add Calcite and JS Maps SDK components](https://github.com/maxpatiiuk/esri-dev-summit-presentations/tree/main/2025/build-tooling/demo/3-web-components)
+# Demo: [Add Calcite and JS Maps SDK components](https://github.com/annelfitz/DevSummit-presentations/tree/main/EUDS-2025/build-tooling/demo/3-web-components)
 
 ---
 
@@ -158,7 +158,7 @@ project.
 layout: center
 ---
 
-# Demo: [Adopt TypeScript](https://github.com/maxpatiiuk/esri-dev-summit-presentations/tree/main/2025/build-tooling/demo/4-typescript)
+# Demo: [Adopt TypeScript](https://github.com/annelfitz/DevSummit-presentations/tree/main/EUDS-2025/build-tooling/demo/4-typescript)
 
 ---
 
@@ -173,7 +173,7 @@ layout: center
 layout: center
 ---
 
-# Demo: [Use ESLint](https://github.com/maxpatiiuk/esri-dev-summit-presentations/tree/main/2025/build-tooling/demo/5-eslint)
+# Demo: [Use ESLint](https://github.com/annelfitz/DevSummit-presentations/tree/main/EUDS-2025/build-tooling/demo/5-eslint)
 
 ---
 
@@ -250,7 +250,7 @@ layout: intro
 layout: center
 ---
 
-# Demo: [Lazy loading & routes with React Router](https://github.com/maxpatiiuk/esri-dev-summit-presentations/tree/main/2025/build-tooling/demo/6-routes)
+# Demo: [Lazy loading & routes with React Router](https://github.com/annelfitz/DevSummit-presentations/tree/main/EUDS-2025/build-tooling/demo/6-routes)
 
 ---
 
@@ -267,7 +267,7 @@ Testing is great, Vitest is also great!
 layout: center
 ---
 
-# Demo: [Add tests with Vitest](https://github.com/maxpatiiuk/esri-dev-summit-presentations/tree/main/2025/build-tooling/demo/7-tests)
+# Demo: [Add tests with Vitest](https://github.com/annelfitz/DevSummit-presentations/tree/main/EUDS-2025/build-tooling/demo/7-tests)
 
 ---
 
@@ -280,7 +280,7 @@ layout: center
 layout: center
 ---
 
-# Demo: [Add custom plugins](https://github.com/maxpatiiuk/esri-dev-summit-presentations/tree/main/2025/build-tooling/demo/8-plugins)
+# Demo: [Add custom plugins](https://github.com/annelfitz/DevSummit-presentations/tree/main/EUDS-2025/build-tooling/demo/8-plugins)
 
 ---
 
