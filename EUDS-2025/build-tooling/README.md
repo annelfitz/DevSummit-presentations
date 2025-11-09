@@ -7,18 +7,8 @@ streamlines the entire development workflow from bundling to deployment. Paired
 with Vitest for testing, these tools help ensure that your apps are both
 high-performing and production-ready.
 
-When: Wednesday, March 12 | 4:00 PM - 5:00 PM PDT
 
-Where: Smoketree C | Palm Springs Convention Center
-
-Presenters: [Max Payson](https://github.com/mpayson) &
-[Max Patiiuk](https://github.com/maxpatiiuk)
-
-Presented at [Esri Developer Summit 2025](https://devtechsummit2025.esri.com/).
-
-[![ArcGIS Maps SDK for JavaScript: Fast Development and Build Tooling header slide](./assets/header-slide.webp)](https://maxpatiiuk.github.io/esri-dev-summit-presentations/2025/build-tooling)
-
-[Slides](https://maxpatiiuk.github.io/esri-dev-summit-presentations/2025/build-tooling)
+[Slides](https://annelfitz.github.io/DevSummit-presentations/EUDS-2025/build-tooling)
 
 ## Resources
 
