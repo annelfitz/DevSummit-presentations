@@ -40,6 +40,7 @@ export class MenuId {
     static { this.DebugToolBar = new MenuId('DebugToolBar'); }
     static { this.DebugToolBarStop = new MenuId('DebugToolBarStop'); }
     static { this.DebugCallStackToolbar = new MenuId('DebugCallStackToolbar'); }
+    static { this.DebugCreateConfiguration = new MenuId('DebugCreateConfiguration'); }
     static { this.EditorContext = new MenuId('EditorContext'); }
     static { this.SimpleEditorContext = new MenuId('SimpleEditorContext'); }
     static { this.EditorContent = new MenuId('EditorContent'); }
@@ -111,6 +112,7 @@ export class MenuId {
     static { this.SCMSourceControl = new MenuId('SCMSourceControl'); }
     static { this.SCMSourceControlInline = new MenuId('SCMSourceControlInline'); }
     static { this.SCMSourceControlTitle = new MenuId('SCMSourceControlTitle'); }
+    static { this.SCMHistoryTitle = new MenuId('SCMHistoryTitle'); }
     static { this.SCMTitle = new MenuId('SCMTitle'); }
     static { this.SearchContext = new MenuId('SearchContext'); }
     static { this.SearchActionMenu = new MenuId('SearchActionContext'); }

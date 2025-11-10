@@ -26,12 +26,13 @@ class FastLabelNode {
         this._textContent = content;
         this._element.textContent = content;
     }
-    set className(className) {
-        if (this.disposed || className === this._className) {
+    set classNames(classNames) {
+        if (this.disposed || equals(classNames, this._classNames)) {
             return;
         }
-        this._className = className;
-        this._element.className = className;
+        this._classNames = classNames;
+        this._element.classList.value = '';
+        this._element.classList.add(...classNames);
     }
     set empty(empty) {
         if (this.disposed || empty === this._empty) {
@@ -104,9 +105,10 @@ export class IconLabel extends Disposable {
         else if (existingIconNode) {
             existingIconNode.remove();
         }
-        this.domNode.className = labelClasses.join(' ');
+        this.domNode.classNames = labelClasses;
         this.domNode.element.setAttribute('aria-label', ariaLabel);
-        this.labelContainer.className = containerClasses.join(' ');
+        this.labelContainer.classList.value = '';
+        this.labelContainer.classList.add(...containerClasses);
         this.setupHover(options?.descriptionTitle ? this.labelContainer : this.element, options?.title);
         this.nameNode.setLabel(label, options);
         if (description || this.descriptionNode) {

@@ -2,30 +2,44 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { equals } from '../../../base/common/arrays.js';
-import { RunOnceScheduler } from '../../../base/common/async.js';
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+var TokenizationTextModelPart_1;
 import { BugIndicatingError, onUnexpectedError } from '../../../base/common/errors.js';
-import { Emitter } from '../../../base/common/event.js';
-import { Disposable, DisposableMap, MutableDisposable } from '../../../base/common/lifecycle.js';
+import { Emitter, Event } from '../../../base/common/event.js';
+import { DisposableMap, DisposableStore, MutableDisposable } from '../../../base/common/lifecycle.js';
 import { countEOL } from '../core/eolCounter.js';
 import { LineRange } from '../core/lineRange.js';
 import { Position } from '../core/position.js';
 import { getWordAtText } from '../core/wordHelper.js';
-import { TokenizationRegistry } from '../languages.js';
+import { TokenizationRegistry, TreeSitterTokenizationRegistry } from '../languages.js';
+import { ILanguageService } from '../languages/language.js';
+import { ILanguageConfigurationService } from '../languages/languageConfigurationRegistry.js';
 import { TextModelPart } from './textModelPart.js';
 import { DefaultBackgroundTokenizer, TokenizerWithStateStoreAndTextModel, TrackingTokenizationStateStore } from './textModelTokens.js';
+import { AbstractTokens, AttachedViewHandler } from './tokens.js';
+import { TreeSitterTokens } from './treeSitterTokens.js';
+import { ITreeSitterParserService } from '../services/treeSitterParserService.js';
 import { ContiguousMultilineTokensBuilder } from '../tokens/contiguousMultilineTokensBuilder.js';
 import { ContiguousTokensStore } from '../tokens/contiguousTokensStore.js';
 import { SparseTokensStore } from '../tokens/sparseTokensStore.js';
-export class TokenizationTextModelPart extends TextModelPart {
-    constructor(_languageService, _languageConfigurationService, _textModel, _bracketPairsTextModelPart, _languageId, _attachedViews) {
+let TokenizationTextModelPart = TokenizationTextModelPart_1 = class TokenizationTextModelPart extends TextModelPart {
+    constructor(_textModel, _bracketPairsTextModelPart, _languageId, _attachedViews, _languageService, _languageConfigurationService, _treeSitterService) {
         super();
-        this._languageService = _languageService;
-        this._languageConfigurationService = _languageConfigurationService;
         this._textModel = _textModel;
         this._bracketPairsTextModelPart = _bracketPairsTextModelPart;
         this._languageId = _languageId;
         this._attachedViews = _attachedViews;
+        this._languageService = _languageService;
+        this._languageConfigurationService = _languageConfigurationService;
+        this._treeSitterService = _treeSitterService;
         this._semanticTokens = new SparseTokensStore(this._languageService.languageIdCodec);
         this._onDidChangeLanguage = this._register(new Emitter());
         this.onDidChangeLanguage = this._onDidChangeLanguage.event;
@@ -33,13 +47,53 @@ export class TokenizationTextModelPart extends TextModelPart {
         this.onDidChangeLanguageConfiguration = this._onDidChangeLanguageConfiguration.event;
         this._onDidChangeTokens = this._register(new Emitter());
         this.onDidChangeTokens = this._onDidChangeTokens.event;
-        this.grammarTokens = this._register(new GrammarTokens(this._languageService.languageIdCodec, this._textModel, () => this._languageId, this._attachedViews));
-        this._register(this.grammarTokens.onDidChangeTokens(e => {
+        this._tokensDisposables = this._register(new DisposableStore());
+        this._register(this._languageConfigurationService.onDidChange(e => {
+            if (e.affects(this._languageId)) {
+                this._onDidChangeLanguageConfiguration.fire({});
+            }
+        }));
+        // We just look at registry changes to determine whether to use tree sitter.
+        // This means that removing a language from the setting will not cause a switch to textmate and will require a reload.
+        // Adding a language to the setting will not need a reload, however.
+        this._register(Event.filter(TreeSitterTokenizationRegistry.onDidChange, (e) => e.changedLanguages.includes(this._languageId))(() => {
+            this.createPreferredTokenProvider();
+        }));
+        this.createPreferredTokenProvider();
+    }
+    createGrammarTokens() {
+        return this._register(new GrammarTokens(this._languageService.languageIdCodec, this._textModel, () => this._languageId, this._attachedViews));
+    }
+    createTreeSitterTokens() {
+        return this._register(new TreeSitterTokens(this._treeSitterService, this._languageService.languageIdCodec, this._textModel, () => this._languageId));
+    }
+    createTokens(useTreeSitter) {
+        const needsReset = this._tokens !== undefined;
+        this._tokens?.dispose();
+        this._tokens = useTreeSitter ? this.createTreeSitterTokens() : this.createGrammarTokens();
+        this._tokensDisposables.clear();
+        this._tokensDisposables.add(this._tokens.onDidChangeTokens(e => {
             this._emitModelTokensChangedEvent(e);
         }));
-        this._register(this.grammarTokens.onDidChangeBackgroundTokenizationState(e => {
+        this._tokensDisposables.add(this._tokens.onDidChangeBackgroundTokenizationState(e => {
             this._bracketPairsTextModelPart.handleDidChangeBackgroundTokenizationState();
         }));
+        if (needsReset) {
+            // We need to reset the tokenization, as the new token provider otherwise won't have a chance to provide tokens until some action happens in the editor.
+            this._tokens.resetTokenization();
+        }
+    }
+    createPreferredTokenProvider() {
+        if (TreeSitterTokenizationRegistry.get(this._languageId)) {
+            if (!(this._tokens instanceof TreeSitterTokens)) {
+                this.createTokens(true);
+            }
+        }
+        else {
+            if (!(this._tokens instanceof GrammarTokens)) {
+                this.createTokens(false);
+            }
+        }
     }
     handleLanguageConfigurationServiceChange(e) {
         if (e.affects(this._languageId)) {
@@ -56,17 +110,17 @@ export class TokenizationTextModelPart extends TextModelPart {
                 this._semanticTokens.acceptEdit(c.range, eolCount, firstLineLength, lastLineLength, c.text.length > 0 ? c.text.charCodeAt(0) : 0 /* CharCode.Null */);
             }
         }
-        this.grammarTokens.handleDidChangeContent(e);
+        this._tokens.handleDidChangeContent(e);
     }
     handleDidChangeAttached() {
-        this.grammarTokens.handleDidChangeAttached();
+        this._tokens.handleDidChangeAttached();
     }
     /**
      * Includes grammar and semantic tokens.
      */
     getLineTokens(lineNumber) {
         this.validateLineNumber(lineNumber);
-        const syntacticTokens = this.grammarTokens.getLineTokens(lineNumber);
+        const syntacticTokens = this._tokens.getLineTokens(lineNumber);
         return this._semanticTokens.addSparseTokens(lineNumber, syntacticTokens);
     }
     _emitModelTokensChangedEvent(e) {
@@ -82,35 +136,35 @@ export class TokenizationTextModelPart extends TextModelPart {
         }
     }
     get hasTokens() {
-        return this.grammarTokens.hasTokens;
+        return this._tokens.hasTokens;
     }
     resetTokenization() {
-        this.grammarTokens.resetTokenization();
+        this._tokens.resetTokenization();
     }
     get backgroundTokenizationState() {
-        return this.grammarTokens.backgroundTokenizationState;
+        return this._tokens.backgroundTokenizationState;
     }
     forceTokenization(lineNumber) {
         this.validateLineNumber(lineNumber);
-        this.grammarTokens.forceTokenization(lineNumber);
+        this._tokens.forceTokenization(lineNumber);
     }
     hasAccurateTokensForLine(lineNumber) {
         this.validateLineNumber(lineNumber);
-        return this.grammarTokens.hasAccurateTokensForLine(lineNumber);
+        return this._tokens.hasAccurateTokensForLine(lineNumber);
     }
     isCheapToTokenize(lineNumber) {
         this.validateLineNumber(lineNumber);
-        return this.grammarTokens.isCheapToTokenize(lineNumber);
+        return this._tokens.isCheapToTokenize(lineNumber);
     }
     tokenizeIfCheap(lineNumber) {
         this.validateLineNumber(lineNumber);
-        this.grammarTokens.tokenizeIfCheap(lineNumber);
+        this._tokens.tokenizeIfCheap(lineNumber);
     }
     getTokenTypeIfInsertingCharacter(lineNumber, column, character) {
-        return this.grammarTokens.getTokenTypeIfInsertingCharacter(lineNumber, column, character);
+        return this._tokens.getTokenTypeIfInsertingCharacter(lineNumber, column, character);
     }
     tokenizeLineWithEdit(position, length, newText) {
-        return this.grammarTokens.tokenizeLineWithEdit(position, length, newText);
+        return this._tokens.tokenizeLineWithEdit(position, length, newText);
     }
     // #endregion
     // #region Semantic Tokens
@@ -151,7 +205,7 @@ export class TokenizationTextModelPart extends TextModelPart {
         const lineTokens = this.getLineTokens(position.lineNumber);
         const tokenIndex = lineTokens.findTokenIndexAtOffset(position.column - 1);
         // (1). First try checking right biased word
-        const [rbStartOffset, rbEndOffset] = TokenizationTextModelPart._findLanguageBoundaries(lineTokens, tokenIndex);
+        const [rbStartOffset, rbEndOffset] = TokenizationTextModelPart_1._findLanguageBoundaries(lineTokens, tokenIndex);
         const rightBiasedWord = getWordAtText(position.column, this.getLanguageConfiguration(lineTokens.getLanguageId(tokenIndex)).getWordDefinition(), lineContent.substring(rbStartOffset, rbEndOffset), rbStartOffset);
         // Make sure the result touches the original passed in position
         if (rightBiasedWord &&
@@ -162,7 +216,7 @@ export class TokenizationTextModelPart extends TextModelPart {
         // (2). Else, if we were at a language boundary, check the left biased word
         if (tokenIndex > 0 && rbStartOffset === position.column - 1) {
             // edge case, where `position` sits between two tokens belonging to two different languages
-            const [lbStartOffset, lbEndOffset] = TokenizationTextModelPart._findLanguageBoundaries(lineTokens, tokenIndex - 1);
+            const [lbStartOffset, lbEndOffset] = TokenizationTextModelPart_1._findLanguageBoundaries(lineTokens, tokenIndex - 1);
             const leftBiasedWord = getWordAtText(position.column, this.getLanguageConfiguration(lineTokens.getLanguageId(tokenIndex - 1)).getWordDefinition(), lineContent.substring(lbStartOffset, lbEndOffset), lbStartOffset);
             // Make sure the result touches the original passed in position
             if (leftBiasedWord &&
@@ -223,32 +277,26 @@ export class TokenizationTextModelPart extends TextModelPart {
         };
         this._languageId = languageId;
         this._bracketPairsTextModelPart.handleDidChangeLanguage(e);
-        this.grammarTokens.resetTokenization();
+        this._tokens.resetTokenization();
+        this.createPreferredTokenProvider();
         this._onDidChangeLanguage.fire(e);
         this._onDidChangeLanguageConfiguration.fire({});
     }
-}
-class GrammarTokens extends Disposable {
-    get backgroundTokenizationState() {
-        return this._backgroundTokenizationState;
-    }
-    constructor(_languageIdCodec, _textModel, getLanguageId, attachedViews) {
-        super();
-        this._languageIdCodec = _languageIdCodec;
-        this._textModel = _textModel;
-        this.getLanguageId = getLanguageId;
+};
+TokenizationTextModelPart = TokenizationTextModelPart_1 = __decorate([
+    __param(4, ILanguageService),
+    __param(5, ILanguageConfigurationService),
+    __param(6, ITreeSitterParserService)
+], TokenizationTextModelPart);
+export { TokenizationTextModelPart };
+class GrammarTokens extends AbstractTokens {
+    constructor(languageIdCodec, textModel, getLanguageId, attachedViews) {
+        super(languageIdCodec, textModel, getLanguageId);
         this._tokenizer = null;
         this._defaultBackgroundTokenizer = null;
         this._backgroundTokenizer = this._register(new MutableDisposable());
         this._tokens = new ContiguousTokensStore(this._languageIdCodec);
         this._debugBackgroundTokenizer = this._register(new MutableDisposable());
-        this._backgroundTokenizationState = 1 /* BackgroundTokenizationState.InProgress */;
-        this._onDidChangeBackgroundTokenizationState = this._register(new Emitter());
-        /** @internal, should not be exposed by the text model! */
-        this.onDidChangeBackgroundTokenizationState = this._onDidChangeBackgroundTokenizationState.event;
-        this._onDidChangeTokens = this._register(new Emitter());
-        /** @internal, should not be exposed by the text model! */
-        this.onDidChangeTokens = this._onDidChangeTokens.event;
         this._attachedViewStates = this._register(new DisposableMap());
         this._register(TokenizationRegistry.onDidChange((e) => {
             const languageId = this.getLanguageId();
@@ -447,11 +495,6 @@ class GrammarTokens extends Disposable {
         }
         return this._tokenizer.isCheapToTokenize(lineNumber);
     }
-    tokenizeIfCheap(lineNumber) {
-        if (this.isCheapToTokenize(lineNumber)) {
-            this.forceTokenization(lineNumber);
-        }
-    }
     getLineTokens(lineNumber) {
         const lineText = this._textModel.getLineContent(lineNumber);
         const result = this._tokens.getTokens(this._textModel.getLanguageId(), lineNumber - 1, lineText);
@@ -483,32 +526,5 @@ class GrammarTokens extends Disposable {
     }
     get hasTokens() {
         return this._tokens.hasTokens;
-    }
-}
-class AttachedViewHandler extends Disposable {
-    get lineRanges() { return this._lineRanges; }
-    constructor(_refreshTokens) {
-        super();
-        this._refreshTokens = _refreshTokens;
-        this.runner = this._register(new RunOnceScheduler(() => this.update(), 50));
-        this._computedLineRanges = [];
-        this._lineRanges = [];
-    }
-    update() {
-        if (equals(this._computedLineRanges, this._lineRanges, (a, b) => a.equals(b))) {
-            return;
-        }
-        this._computedLineRanges = this._lineRanges;
-        this._refreshTokens();
-    }
-    handleStateChange(state) {
-        this._lineRanges = state.visibleLineRanges;
-        if (state.stabilized) {
-            this.runner.cancel();
-            this.update();
-        }
-        else {
-            this.runner.schedule();
-        }
     }
 }

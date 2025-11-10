@@ -13,7 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 var CommonFindController_1;
 import { Delayer } from '../../../../base/common/async.js';
-import { Disposable } from '../../../../base/common/lifecycle.js';
+import { Disposable, DisposableStore } from '../../../../base/common/lifecycle.js';
 import * as strings from '../../../../base/common/strings.js';
 import { EditorAction, EditorCommand, MultiEditorAction, registerEditorAction, registerEditorCommand, registerEditorContribution, registerMultiEditorAction } from '../../../browser/editorExtensions.js';
 import { overviewRulerRangeHighlight } from '../../../common/core/editorColorRegistry.js';
@@ -642,7 +642,8 @@ export class MoveToMatchFindAction extends EditorAction {
             return;
         }
         const quickInputService = accessor.get(IQuickInputService);
-        const inputBox = quickInputService.createInputBox();
+        const disposables = new DisposableStore();
+        const inputBox = disposables.add(quickInputService.createInputBox());
         inputBox.placeholder = nls.localize('findMatchAction.inputPlaceHolder', "Type a number to go to a specific match (between 1 and {0})", matchesCount);
         const toFindMatchIndex = (value) => {
             const index = parseInt(value);
@@ -674,10 +675,10 @@ export class MoveToMatchFindAction extends EditorAction {
                 this.clearDecorations(editor);
             }
         };
-        inputBox.onDidChangeValue(value => {
+        disposables.add(inputBox.onDidChangeValue(value => {
             updatePickerAndEditor(value);
-        });
-        inputBox.onDidAccept(() => {
+        }));
+        disposables.add(inputBox.onDidAccept(() => {
             const index = toFindMatchIndex(inputBox.value);
             if (typeof index === 'number') {
                 controller.goToMatch(index);
@@ -686,11 +687,11 @@ export class MoveToMatchFindAction extends EditorAction {
             else {
                 inputBox.validationMessage = nls.localize('findMatchAction.inputValidationMessage', "Please type a number between 1 and {0}", controller.getState().matchesCount);
             }
-        });
-        inputBox.onDidHide(() => {
+        }));
+        disposables.add(inputBox.onDidHide(() => {
             this.clearDecorations(editor);
-            inputBox.dispose();
-        });
+            disposables.dispose();
+        }));
         inputBox.show();
     }
     clearDecorations(editor) {

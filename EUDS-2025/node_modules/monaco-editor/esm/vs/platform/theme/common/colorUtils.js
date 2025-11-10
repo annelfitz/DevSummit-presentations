@@ -43,7 +43,7 @@ class ColorRegistry {
     registerColor(id, defaults, description, needsTransparency = false, deprecationMessage) {
         const colorContribution = { id, description, defaults, needsTransparency, deprecationMessage };
         this.colorsById[id] = colorContribution;
-        const propertySchema = { type: 'string', description, format: 'color-hex', defaultSnippets: [{ body: '${1:#ff0000}' }] };
+        const propertySchema = { type: 'string', format: 'color-hex', defaultSnippets: [{ body: '${1:#ff0000}' }] };
         if (deprecationMessage) {
             propertySchema.deprecationMessage = deprecationMessage;
         }
@@ -52,6 +52,7 @@ class ColorRegistry {
             propertySchema.patternErrorMessage = nls.localize('transparecyRequired', 'This color must be transparent or it will obscure content');
         }
         this.colorSchema.properties[id] = {
+            description,
             oneOf: [
                 propertySchema,
                 { type: 'string', const: DEFAULT_COLOR_CONFIG_VALUE, description: nls.localize('useDefault', 'Use the default color.') }

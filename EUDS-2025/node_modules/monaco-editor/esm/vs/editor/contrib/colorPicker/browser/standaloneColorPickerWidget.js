@@ -22,22 +22,17 @@ import { ILanguageFeaturesService } from '../../../common/services/languageFeatu
 import { registerEditorContribution } from '../../../browser/editorExtensions.js';
 import { EditorContextKeys } from '../../../common/editorContextKeys.js';
 import { IContextKeyService } from '../../../../platform/contextkey/common/contextkey.js';
-import { IModelService } from '../../../common/services/model.js';
-import { ILanguageConfigurationService } from '../../../common/languages/languageConfigurationRegistry.js';
 import { DefaultDocumentColorProvider } from './defaultDocumentColorProvider.js';
 import * as dom from '../../../../base/browser/dom.js';
 import './colorPicker.css';
+import { IEditorWorkerService } from '../../../common/services/editorWorker.js';
 let StandaloneColorPickerController = class StandaloneColorPickerController extends Disposable {
     static { StandaloneColorPickerController_1 = this; }
     static { this.ID = 'editor.contrib.standaloneColorPickerController'; }
-    constructor(_editor, _contextKeyService, _modelService, _keybindingService, _instantiationService, _languageFeatureService, _languageConfigurationService) {
+    constructor(_editor, _contextKeyService, _instantiationService) {
         super();
         this._editor = _editor;
-        this._modelService = _modelService;
-        this._keybindingService = _keybindingService;
         this._instantiationService = _instantiationService;
-        this._languageFeatureService = _languageFeatureService;
-        this._languageConfigurationService = _languageConfigurationService;
         this._standaloneColorPickerWidget = null;
         this._standaloneColorPickerVisible = EditorContextKeys.standaloneColorPickerVisible.bindTo(_contextKeyService);
         this._standaloneColorPickerFocused = EditorContextKeys.standaloneColorPickerFocused.bindTo(_contextKeyService);
@@ -47,7 +42,7 @@ let StandaloneColorPickerController = class StandaloneColorPickerController exte
             return;
         }
         if (!this._standaloneColorPickerVisible.get()) {
-            this._standaloneColorPickerWidget = new StandaloneColorPickerWidget(this._editor, this._standaloneColorPickerVisible, this._standaloneColorPickerFocused, this._instantiationService, this._modelService, this._keybindingService, this._languageFeatureService, this._languageConfigurationService);
+            this._standaloneColorPickerWidget = this._instantiationService.createInstance(StandaloneColorPickerWidget, this._editor, this._standaloneColorPickerVisible, this._standaloneColorPickerFocused);
         }
         else if (!this._standaloneColorPickerFocused.get()) {
             this._standaloneColorPickerWidget?.focus();
@@ -69,11 +64,7 @@ let StandaloneColorPickerController = class StandaloneColorPickerController exte
 };
 StandaloneColorPickerController = StandaloneColorPickerController_1 = __decorate([
     __param(1, IContextKeyService),
-    __param(2, IModelService),
-    __param(3, IKeybindingService),
-    __param(4, IInstantiationService),
-    __param(5, ILanguageFeaturesService),
-    __param(6, ILanguageConfigurationService)
+    __param(2, IInstantiationService)
 ], StandaloneColorPickerController);
 export { StandaloneColorPickerController };
 registerEditorContribution(StandaloneColorPickerController.ID, StandaloneColorPickerController, 1 /* EditorContributionInstantiation.AfterFirstRender */);
@@ -82,15 +73,14 @@ const CLOSE_BUTTON_WIDTH = 22;
 let StandaloneColorPickerWidget = class StandaloneColorPickerWidget extends Disposable {
     static { StandaloneColorPickerWidget_1 = this; }
     static { this.ID = 'editor.contrib.standaloneColorPickerWidget'; }
-    constructor(_editor, _standaloneColorPickerVisible, _standaloneColorPickerFocused, _instantiationService, _modelService, _keybindingService, _languageFeaturesService, _languageConfigurationService) {
+    constructor(_editor, _standaloneColorPickerVisible, _standaloneColorPickerFocused, _instantiationService, _keybindingService, _languageFeaturesService, _editorWorkerService) {
         super();
         this._editor = _editor;
         this._standaloneColorPickerVisible = _standaloneColorPickerVisible;
         this._standaloneColorPickerFocused = _standaloneColorPickerFocused;
-        this._modelService = _modelService;
         this._keybindingService = _keybindingService;
         this._languageFeaturesService = _languageFeaturesService;
-        this._languageConfigurationService = _languageConfigurationService;
+        this._editorWorkerService = _editorWorkerService;
         this.allowEditorOverflow = true;
         this._position = undefined;
         this._body = document.createElement('div');
@@ -188,7 +178,7 @@ let StandaloneColorPickerWidget = class StandaloneColorPickerWidget extends Disp
             range: range,
             color: { red: 0, green: 0, blue: 0, alpha: 1 }
         };
-        const colorHoverResult = await this._standaloneColorPickerParticipant.createColorHover(colorInfo, new DefaultDocumentColorProvider(this._modelService, this._languageConfigurationService), this._languageFeaturesService.colorProvider);
+        const colorHoverResult = await this._standaloneColorPickerParticipant.createColorHover(colorInfo, new DefaultDocumentColorProvider(this._editorWorkerService), this._languageFeaturesService.colorProvider);
         if (!colorHoverResult) {
             return null;
         }
@@ -246,10 +236,9 @@ let StandaloneColorPickerWidget = class StandaloneColorPickerWidget extends Disp
 };
 StandaloneColorPickerWidget = StandaloneColorPickerWidget_1 = __decorate([
     __param(3, IInstantiationService),
-    __param(4, IModelService),
-    __param(5, IKeybindingService),
-    __param(6, ILanguageFeaturesService),
-    __param(7, ILanguageConfigurationService)
+    __param(4, IKeybindingService),
+    __param(5, ILanguageFeaturesService),
+    __param(6, IEditorWorkerService)
 ], StandaloneColorPickerWidget);
 export { StandaloneColorPickerWidget };
 class StandaloneColorPickerResult {

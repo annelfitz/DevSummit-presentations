@@ -18,7 +18,6 @@ import * as platform from '../../../base/common/platform.js';
 import { TextModel } from '../model/textModel.js';
 import { EDITOR_MODEL_DEFAULTS } from '../core/textModelDefaults.js';
 import { PLAINTEXT_LANGUAGE_ID } from '../languages/modesRegistry.js';
-import { ILanguageService } from '../languages/language.js';
 import { ITextResourcePropertiesService } from './textResourceConfiguration.js';
 import { IConfigurationService } from '../../../platform/configuration/common/configuration.js';
 import { IUndoRedoService } from '../../../platform/undoRedo/common/undoRedo.js';
@@ -26,7 +25,7 @@ import { StringSHA1 } from '../../../base/common/hash.js';
 import { isEditStackElement } from '../model/editStack.js';
 import { Schemas } from '../../../base/common/network.js';
 import { equals } from '../../../base/common/objects.js';
-import { ILanguageConfigurationService } from '../languages/languageConfigurationRegistry.js';
+import { IInstantiationService } from '../../../platform/instantiation/common/instantiation.js';
 function MODEL_ID(resource) {
     return resource.toString();
 }
@@ -58,13 +57,12 @@ class DisposedModelInfo {
 let ModelService = class ModelService extends Disposable {
     static { ModelService_1 = this; }
     static { this.MAX_MEMORY_FOR_CLOSED_FILES_UNDO_STACK = 20 * 1024 * 1024; }
-    constructor(_configurationService, _resourcePropertiesService, _undoRedoService, _languageService, _languageConfigurationService) {
+    constructor(_configurationService, _resourcePropertiesService, _undoRedoService, _instantiationService) {
         super();
         this._configurationService = _configurationService;
         this._resourcePropertiesService = _resourcePropertiesService;
         this._undoRedoService = _undoRedoService;
-        this._languageService = _languageService;
-        this._languageConfigurationService = _languageConfigurationService;
+        this._instantiationService = _instantiationService;
         this._onModelAdded = this._register(new Emitter());
         this.onModelAdded = this._onModelAdded.event;
         this._onModelRemoved = this._register(new Emitter());
@@ -251,7 +249,7 @@ let ModelService = class ModelService extends Disposable {
     _createModelData(value, languageIdOrSelection, resource, isForSimpleWidget) {
         // create & save the model
         const options = this.getCreationOptions(languageIdOrSelection, resource, isForSimpleWidget);
-        const model = new TextModel(value, languageIdOrSelection, options, resource, this._undoRedoService, this._languageService, this._languageConfigurationService);
+        const model = this._instantiationService.createInstance(TextModel, value, languageIdOrSelection, options, resource);
         if (resource && this._disposedModels.has(MODEL_ID(resource))) {
             const disposedModelData = this._removeDisposedModel(resource);
             const elements = this._undoRedoService.getElements(resource);
@@ -399,8 +397,7 @@ ModelService = ModelService_1 = __decorate([
     __param(0, IConfigurationService),
     __param(1, ITextResourcePropertiesService),
     __param(2, IUndoRedoService),
-    __param(3, ILanguageService),
-    __param(4, ILanguageConfigurationService)
+    __param(3, IInstantiationService)
 ], ModelService);
 export { ModelService };
 export class DefaultModelSHA1Computer {

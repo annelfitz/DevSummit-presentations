@@ -240,8 +240,7 @@ let FoldingController = class FoldingController extends Disposable {
                         }
                         // some cursors might have moved into hidden regions, make sure they are in expanded regions
                         const selections = this.editor.getSelections();
-                        const selectionLineNumbers = selections ? selections.map(s => s.startLineNumber) : [];
-                        foldingModel.update(foldingRanges, selectionLineNumbers);
+                        foldingModel.update(foldingRanges, toSelectedLines(selections));
                         scrollState?.restore(this.editor);
                         // update debounce info
                         const newValue = this.updateDebounceInfo.update(foldingModel.textModel, sw.elapsed());
@@ -466,6 +465,24 @@ class FoldingAction extends EditorAction {
     }
     run(_accessor, _editor) {
     }
+}
+export function toSelectedLines(selections) {
+    if (!selections || selections.length === 0) {
+        return {
+            startsInside: () => false
+        };
+    }
+    return {
+        startsInside(startLine, endLine) {
+            for (const s of selections) {
+                const line = s.startLineNumber;
+                if (line >= startLine && line <= endLine) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    };
 }
 function foldingArgumentsConstraint(args) {
     if (!types.isUndefined(args)) {

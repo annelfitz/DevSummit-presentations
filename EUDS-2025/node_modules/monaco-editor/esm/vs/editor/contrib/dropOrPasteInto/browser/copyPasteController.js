@@ -82,8 +82,7 @@ let CopyPasteController = class CopyPasteController extends Disposable {
         this._postPasteWidgetManager.clear();
     }
     isPasteAsEnabled() {
-        return this._editor.getOption(85 /* EditorOption.pasteAs */).enabled
-            && !this._editor.getOption(92 /* EditorOption.readOnly */);
+        return this._editor.getOption(85 /* EditorOption.pasteAs */).enabled;
     }
     async finishedPaste() {
         await this._currentPasteOperation;
@@ -92,12 +91,10 @@ let CopyPasteController = class CopyPasteController extends Disposable {
         if (!this._editor.hasTextFocus()) {
             return;
         }
-        if (platform.isWeb) {
-            // Explicitly clear the web resources clipboard.
-            // This is needed because on web, the browser clipboard is faked out using an in-memory store.
-            // This means the resources clipboard is not properly updated when copying from the editor.
-            this._clipboardService.writeResources([]);
-        }
+        // Explicitly clear the clipboard internal state.
+        // This is needed because on web, the browser clipboard is faked out using an in-memory store.
+        // This means the resources clipboard is not properly updated when copying from the editor.
+        this._clipboardService.clearInternalState?.();
         if (!e.clipboardData || !this.isPasteAsEnabled()) {
             return;
         }
@@ -173,8 +170,8 @@ let CopyPasteController = class CopyPasteController extends Disposable {
         if (!selections?.length || !model) {
             return;
         }
-        if (!this.isPasteAsEnabled()
-            && !this._pasteAsActionContext // Still enable if paste as was explicitly requested
+        if (this._editor.getOption(92 /* EditorOption.readOnly */) // Never enabled if editor is readonly.
+            || (!this.isPasteAsEnabled() && !this._pasteAsActionContext) // Or feature disabled (but still enable if paste was explicitly requested)
         ) {
             return;
         }

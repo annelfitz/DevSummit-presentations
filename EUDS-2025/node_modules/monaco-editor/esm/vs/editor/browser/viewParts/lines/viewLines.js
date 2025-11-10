@@ -65,10 +65,6 @@ export class ViewLines extends ViewPart {
     static { this.HORIZONTAL_EXTRA_PX = 30; }
     constructor(context, linesContent) {
         super(context);
-        this._linesContent = linesContent;
-        this._textRangeRestingSpot = document.createElement('div');
-        this._visibleLines = new VisibleLinesCollection(this);
-        this.domNode = this._visibleLines.domNode;
         const conf = this._context.configuration;
         const options = this._context.configuration.options;
         const fontInfo = options.get(50 /* EditorOption.fontInfo */);
@@ -81,6 +77,12 @@ export class ViewLines extends ViewPart {
         this._cursorSurroundingLinesStyle = options.get(30 /* EditorOption.cursorSurroundingLinesStyle */);
         this._canUseLayerHinting = !options.get(32 /* EditorOption.disableLayerHinting */);
         this._viewLineOptions = new ViewLineOptions(conf, this._context.theme.type);
+        this._linesContent = linesContent;
+        this._textRangeRestingSpot = document.createElement('div');
+        this._visibleLines = new VisibleLinesCollection({
+            createLine: () => new ViewLine(this._viewLineOptions),
+        });
+        this.domNode = this._visibleLines.domNode;
         PartFingerprints.write(this.domNode, 8 /* PartFingerprint.ViewLines */);
         this.domNode.setClassName(`view-lines ${MOUSE_CURSOR_TEXT_CSS_CLASS_NAME}`);
         applyFontInfo(this.domNode, fontInfo);
@@ -106,11 +108,6 @@ export class ViewLines extends ViewPart {
     getDomNode() {
         return this.domNode;
     }
-    // ---- begin IVisibleLinesHost
-    createVisibleLine() {
-        return new ViewLine(this._viewLineOptions);
-    }
-    // ---- end IVisibleLinesHost
     // ---- begin view event handlers
     onConfigurationChanged(e) {
         this._visibleLines.onConfigurationChanged(e);
@@ -558,13 +555,10 @@ export class ViewLines extends ViewPart {
         let paddingTop = 0;
         let paddingBottom = 0;
         if (!shouldIgnoreScrollOff) {
-            const context = Math.min((viewportHeight / this._lineHeight) / 2, this._cursorSurroundingLines);
-            if (this._stickyScrollEnabled) {
-                paddingTop = Math.max(context, this._maxNumberStickyLines) * this._lineHeight;
-            }
-            else {
-                paddingTop = context * this._lineHeight;
-            }
+            const maxLinesInViewport = (viewportHeight / this._lineHeight);
+            const surroundingLines = Math.max(this._cursorSurroundingLines, this._stickyScrollEnabled ? this._maxNumberStickyLines : 0);
+            const context = Math.min(maxLinesInViewport / 2, surroundingLines);
+            paddingTop = context * this._lineHeight;
             paddingBottom = Math.max(0, (context - 1)) * this._lineHeight;
         }
         else {

@@ -12,7 +12,6 @@
   },
   "devDependencies": {
     "@arcgis/eslint-config": "~4.32.11",
-    "@maxpatiiuk/prettier-config": "^2.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
     "playwright-chromium": "^1.51.0",

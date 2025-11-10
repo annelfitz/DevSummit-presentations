@@ -139,9 +139,10 @@ let MarkerHoverParticipant = class MarkerHoverParticipant {
                     e.stopPropagation();
                     e.preventDefault();
                     if (this._openerService) {
+                        const editorOptions = { selection: { startLineNumber, startColumn } };
                         this._openerService.open(resource, {
                             fromUserGesture: true,
-                            editorOptions: { selection: { startLineNumber, startColumn } }
+                            editorOptions
                         }).catch(onUnexpectedError);
                     }
                 }));

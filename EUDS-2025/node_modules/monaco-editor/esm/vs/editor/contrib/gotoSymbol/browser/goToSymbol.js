@@ -15,7 +15,7 @@ function shouldIncludeLocationLink(sourceModel, loc) {
         return true;
     }
     // Otherwise filter out locations from internal schemes
-    if (matchesSomeScheme(loc.uri, Schemas.walkThroughSnippet, Schemas.vscodeChatCodeBlock, Schemas.vscodeChatCodeCompareBlock, Schemas.vscodeCopilotBackingChatCodeBlock)) {
+    if (matchesSomeScheme(loc.uri, Schemas.walkThroughSnippet, Schemas.vscodeChatCodeBlock, Schemas.vscodeChatCodeCompareBlock)) {
         return false;
     }
     return true;

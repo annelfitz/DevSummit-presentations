@@ -15,6 +15,7 @@ import { Progress } from '../../../../platform/progress/common/progress.js';
 import { CodeActionKind, CodeActionTriggerSource } from '../common/types.js';
 import { getCodeActions } from './codeAction.js';
 import { HierarchicalKind } from '../../../../base/common/hierarchicalKind.js';
+import { StopWatch } from '../../../../base/common/stopwatch.js';
 export const SUPPORTED_CODE_ACTIONS = new RawContextKey('supportedCodeAction', '');
 export const APPLY_FIX_ALL_COMMAND_ID = '_typescript.applyFixAllCodeAction';
 class CodeActionOracle extends Disposable {
@@ -124,13 +125,14 @@ const emptyCodeActionSet = Object.freeze({
     allAIFixes: false,
 });
 export class CodeActionModel extends Disposable {
-    constructor(_editor, _registry, _markerService, contextKeyService, _progressService, _configurationService) {
+    constructor(_editor, _registry, _markerService, contextKeyService, _progressService, _configurationService, _telemetryService) {
         super();
         this._editor = _editor;
         this._registry = _registry;
         this._markerService = _markerService;
         this._progressService = _progressService;
         this._configurationService = _configurationService;
+        this._telemetryService = _telemetryService;
         this._codeActionOracle = this._register(new MutableDisposable());
         this._state = CodeActionsState.Empty;
         this._onDidChangeState = this._register(new Emitter());
@@ -261,7 +263,19 @@ export class CodeActionModel extends Disposable {
                             }
                         }
                     }
-                    // temporarilly hiding here as this is enabled/disabled behind a setting.
+                    // Case for manual triggers - specifically Source Actions and Refactors
+                    if (trigger.trigger.type === 1 /* CodeActionTriggerType.Invoke */) {
+                        const sw = new StopWatch();
+                        const codeActions = await getCodeActions(this._registry, model, trigger.selection, trigger.trigger, Progress.None, token);
+                        // Telemetry for duration of each code action on save.
+                        if (this._telemetryService) {
+                            this._telemetryService.publicLog2('codeAction.invokedDurations', {
+                                codeActions: codeActions.validActions.length,
+                                duration: sw.elapsed()
+                            });
+                        }
+                        return codeActions;
+                    }
                     return getCodeActions(this._registry, model, trigger.selection, trigger.trigger, Progress.None, token);
                 });
                 if (trigger.trigger.type === 1 /* CodeActionTriggerType.Invoke */) {

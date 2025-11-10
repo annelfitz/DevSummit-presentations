@@ -39,6 +39,7 @@ import { registerThemingParticipant } from '../../../../platform/theme/common/th
 import { CodeActionKind, CodeActionTriggerSource } from '../common/types.js';
 import { CodeActionModel } from './codeActionModel.js';
 import { HierarchicalKind } from '../../../../base/common/hierarchicalKind.js';
+import { ITelemetryService } from '../../../../platform/telemetry/common/telemetry.js';
 const DECORATION_CLASS_NAME = 'quickfix-edit-highlight';
 let CodeActionController = class CodeActionController extends Disposable {
     static { CodeActionController_1 = this; }
@@ -46,17 +47,18 @@ let CodeActionController = class CodeActionController extends Disposable {
     static get(editor) {
         return editor.getContribution(CodeActionController_1.ID);
     }
-    constructor(editor, markerService, contextKeyService, instantiationService, languageFeaturesService, progressService, _commandService, _configurationService, _actionWidgetService, _instantiationService) {
+    constructor(editor, markerService, contextKeyService, instantiationService, languageFeaturesService, progressService, _commandService, _configurationService, _actionWidgetService, _instantiationService, _telemetryService) {
         super();
         this._commandService = _commandService;
         this._configurationService = _configurationService;
         this._actionWidgetService = _actionWidgetService;
         this._instantiationService = _instantiationService;
+        this._telemetryService = _telemetryService;
         this._activeCodeActions = this._register(new MutableDisposable());
         this._showDisabled = false;
         this._disposed = false;
         this._editor = editor;
-        this._model = this._register(new CodeActionModel(this._editor, languageFeaturesService.codeActionProvider, markerService, contextKeyService, progressService, _configurationService));
+        this._model = this._register(new CodeActionModel(this._editor, languageFeaturesService.codeActionProvider, markerService, contextKeyService, progressService, _configurationService, this._telemetryService));
         this._register(this._model.onDidChangeState(newState => this.update(newState)));
         this._lightBulbWidget = new Lazy(() => {
             const widget = this._editor.getContribution(LightBulbWidget.ID);
@@ -128,6 +130,10 @@ let CodeActionController = class CodeActionController extends Disposable {
             return;
         }
         if (this._disposed) {
+            return;
+        }
+        const selection = this._editor.getSelection();
+        if (selection?.startLineNumber !== newState.position.lineNumber) {
             return;
         }
         this._lightBulbWidget.value?.update(actions, newState.trigger, newState.position);
@@ -335,7 +341,8 @@ CodeActionController = CodeActionController_1 = __decorate([
     __param(6, ICommandService),
     __param(7, IConfigurationService),
     __param(8, IActionWidgetService),
-    __param(9, IInstantiationService)
+    __param(9, IInstantiationService),
+    __param(10, ITelemetryService)
 ], CodeActionController);
 export { CodeActionController };
 registerThemingParticipant((theme, collector) => {

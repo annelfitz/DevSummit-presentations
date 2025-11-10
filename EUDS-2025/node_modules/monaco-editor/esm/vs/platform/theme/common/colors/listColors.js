@@ -8,7 +8,7 @@ import { Color } from '../../../../base/common/color.js';
 import { registerColor, darken, lighten, transparent, ifDefinedThenElse } from '../colorUtils.js';
 // Import the colors we need
 import { foreground, contrastBorder, activeContrastBorder, focusBorder, iconForeground } from './baseColors.js';
-import { editorWidgetBackground, editorFindMatchHighlightBorder, editorFindMatchHighlight, widgetShadow } from './editorColors.js';
+import { editorWidgetBackground, editorFindMatchHighlightBorder, editorFindMatchHighlight, widgetShadow, editorWidgetForeground } from './editorColors.js';
 export const listFocusBackground = registerColor('list.focusBackground', null, nls.localize('listFocusBackground', "List/Tree background color for the focused item when the list/tree is active. An active list/tree has keyboard focus, an inactive does not."));
 export const listFocusForeground = registerColor('list.focusForeground', null, nls.localize('listFocusForeground', "List/Tree foreground color for the focused item when the list/tree is active. An active list/tree has keyboard focus, an inactive does not."));
 export const listFocusOutline = registerColor('list.focusOutline', { dark: focusBorder, light: focusBorder, hcDark: activeContrastBorder, hcLight: activeContrastBorder }, nls.localize('listFocusOutline', "List/Tree outline color for the focused item when the list/tree is active. An active list/tree has keyboard focus, an inactive does not."));
@@ -43,3 +43,8 @@ export const treeInactiveIndentGuidesStroke = registerColor('tree.inactiveIndent
 // ------ table
 export const tableColumnsBorder = registerColor('tree.tableColumnsBorder', { dark: '#CCCCCC20', light: '#61616120', hcDark: null, hcLight: null }, nls.localize('tableColumnsBorder', "Table border color between columns."));
 export const tableOddRowsBackgroundColor = registerColor('tree.tableOddRowsBackground', { dark: transparent(foreground, 0.04), light: transparent(foreground, 0.04), hcDark: null, hcLight: null }, nls.localize('tableOddRowsBackgroundColor', "Background color for odd table rows."));
+// ------ action list
+export const editorActionListBackground = registerColor('editorActionList.background', editorWidgetBackground, nls.localize('editorActionListBackground', "Action List background color."));
+export const editorActionListForeground = registerColor('editorActionList.foreground', editorWidgetForeground, nls.localize('editorActionListForeground', "Action List foreground color."));
+export const editorActionListFocusForeground = registerColor('editorActionList.focusForeground', listActiveSelectionForeground, nls.localize('editorActionListFocusForeground', "Action List foreground color for the focused item."));
+export const editorActionListFocusBackground = registerColor('editorActionList.focusBackground', listActiveSelectionBackground, nls.localize('editorActionListFocusBackground', "Action List background color for the focused item."));

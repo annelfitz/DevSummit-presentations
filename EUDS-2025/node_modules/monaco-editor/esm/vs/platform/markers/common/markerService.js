@@ -15,7 +15,6 @@ export const unsupportedSchemas = new Set([
     Schemas.walkThrough,
     Schemas.walkThroughSnippet,
     Schemas.vscodeChatCodeBlock,
-    Schemas.vscodeCopilotBackingChatCodeBlock,
 ]);
 class DoubleResourceMap {
     constructor() {

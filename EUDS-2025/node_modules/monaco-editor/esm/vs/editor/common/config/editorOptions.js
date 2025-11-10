@@ -1203,7 +1203,7 @@ export var ShowLightbulbIconMode;
 })(ShowLightbulbIconMode || (ShowLightbulbIconMode = {}));
 class EditorLightbulb extends BaseEditorOption {
     constructor() {
-        const defaults = { enabled: ShowLightbulbIconMode.On };
+        const defaults = { enabled: ShowLightbulbIconMode.OnCode };
         super(65 /* EditorOption.lightbulb */, 'lightbulb', defaults, {
             'editor.lightbulb.enabled': {
                 type: 'string',

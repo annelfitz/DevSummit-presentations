@@ -66,7 +66,6 @@ let StandaloneCodeEditor = class StandaloneCodeEditor extends CodeEditorWidget {
     constructor(domElement, _options, instantiationService, codeEditorService, commandService, contextKeyService, hoverService, keybindingService, themeService, notificationService, accessibilityService, languageConfigurationService, languageFeaturesService) {
         const options = { ..._options };
         options.ariaLabel = options.ariaLabel || StandaloneCodeEditorNLS.editorViewAccessibleLabel;
-        options.ariaLabel = options.ariaLabel + ';' + (StandaloneCodeEditorNLS.accessibilityHelpMessage);
         super(domElement, options, {}, instantiationService, codeEditorService, commandService, contextKeyService, themeService, notificationService, accessibilityService, languageConfigurationService, languageFeaturesService);
         if (keybindingService instanceof StandaloneKeybindingService) {
             this._standaloneKeybindingService = keybindingService;

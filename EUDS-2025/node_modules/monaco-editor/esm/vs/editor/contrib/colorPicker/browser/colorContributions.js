@@ -7,7 +7,7 @@ import { registerEditorContribution } from '../../../browser/editorExtensions.js
 import { Range } from '../../../common/core/range.js';
 import { ColorDecorationInjectedTextMarker } from './colorDetector.js';
 import { ColorHoverParticipant } from './colorHoverParticipant.js';
-import { HoverController } from '../../hover/browser/hoverController.js';
+import { ContentHoverController } from '../../hover/browser/contentHoverController2.js';
 import { HoverParticipantRegistry } from '../../hover/browser/hoverTypes.js';
 export class ColorContribution extends Disposable {
     static { this.ID = 'editor.contrib.colorContribution'; } // ms
@@ -37,7 +37,7 @@ export class ColorContribution extends Disposable {
         if (!target.range) {
             return;
         }
-        const hoverController = this._editor.getContribution(HoverController.ID);
+        const hoverController = this._editor.getContribution(ContentHoverController.ID);
         if (!hoverController) {
             return;
         }

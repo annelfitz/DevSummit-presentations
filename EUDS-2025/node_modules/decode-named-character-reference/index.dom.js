@@ -1,6 +1,6 @@
 /// <reference lib="dom" />
 
-/* eslint-env browser */
+/* global document */
 
 const element = document.createElement('i')
 

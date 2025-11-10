@@ -6,7 +6,6 @@
 import { getNLSLanguage, getNLSMessages } from './nls.messages.js';
 // eslint-disable-next-line local/code-import-patterns
 export { getNLSLanguage, getNLSMessages } from './nls.messages.js';
-// VSCODE_GLOBALS: NLS
 const isPseudo = getNLSLanguage() === 'pseudo' || (typeof document !== 'undefined' && document.location && document.location.hash.indexOf('pseudo=true') >= 0);
 function _format(message, args) {
     let result;
@@ -48,7 +47,6 @@ export function localize(data /* | number when built */, message /* | null when 
  * depending on the target context.
  */
 function lookupMessage(index, fallback) {
-    // VSCODE_GLOBALS: NLS
     const message = getNLSMessages()?.[index];
     if (typeof message !== 'string') {
         if (typeof fallback === 'string') {

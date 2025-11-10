@@ -160,10 +160,14 @@ class MenuInfoSnapshot {
         this._id = _id;
         this._collectContextKeysForSubmenus = _collectContextKeysForSubmenus;
         this._menuGroups = [];
+        this._allMenuIds = new Set();
         this._structureContextKeys = new Set();
         this._preconditionContextKeys = new Set();
         this._toggledContextKeys = new Set();
         this.refresh();
+    }
+    get allMenuIds() {
+        return this._allMenuIds;
     }
     get structureContextKeys() {
         return this._structureContextKeys;
@@ -177,6 +181,7 @@ class MenuInfoSnapshot {
     refresh() {
         // reset
         this._menuGroups.length = 0;
+        this._allMenuIds.clear();
         this._structureContextKeys.clear();
         this._preconditionContextKeys.clear();
         this._toggledContextKeys.clear();
@@ -190,15 +195,16 @@ class MenuInfoSnapshot {
                 this._menuGroups.push(group);
             }
             group[1].push(item);
-            // keep keys for eventing
-            this._collectContextKeys(item);
+            // keep keys and submenu ids for eventing
+            this._collectContextKeysAndSubmenuIds(item);
         }
+        this._allMenuIds.add(this._id);
     }
     _sort(menuItems) {
         // no sorting needed in snapshot
         return menuItems;
     }
-    _collectContextKeys(item) {
+    _collectContextKeysAndSubmenuIds(item) {
         MenuInfoSnapshot._fillInKbExprKeys(item.when, this._structureContextKeys);
         if (isIMenuItem(item)) {
             // keep precondition keys for event if applicable
@@ -214,7 +220,8 @@ class MenuInfoSnapshot {
         else if (this._collectContextKeysForSubmenus) {
             // recursively collect context keys from submenus so that this
             // menu fires events when context key changes affect submenus
-            MenuRegistry.getMenuItems(item.submenu).forEach(this._collectContextKeys, this);
+            MenuRegistry.getMenuItems(item.submenu).forEach(this._collectContextKeysAndSubmenuIds, this);
+            this._allMenuIds.add(item.submenu);
         }
     }
     static _fillInKbExprKeys(exp, set) {
@@ -330,8 +337,11 @@ let MenuImpl = class MenuImpl {
         }, options.eventDebounceDelay);
         this._disposables.add(rebuildMenuSoon);
         this._disposables.add(MenuRegistry.onDidChangeMenu(e => {
-            if (e.has(id)) {
-                rebuildMenuSoon.schedule();
+            for (const id of this._menuInfo.allMenuIds) {
+                if (e.has(id)) {
+                    rebuildMenuSoon.schedule();
+                    break;
+                }
             }
         }));
         // When context keys or storage state changes we need to check if the menu also has changed. However,

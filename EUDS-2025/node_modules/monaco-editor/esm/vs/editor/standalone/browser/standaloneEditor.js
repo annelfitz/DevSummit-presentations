@@ -10,14 +10,13 @@ import './standalone-tokens.css';
 import { FontMeasurements } from '../../browser/config/fontMeasurements.js';
 import { EditorCommand } from '../../browser/editorExtensions.js';
 import { ICodeEditorService } from '../../browser/services/codeEditorService.js';
-import { createWebWorker as actualCreateWebWorker } from '../../browser/services/webWorker.js';
+import { createWebWorker as actualCreateWebWorker } from './standaloneWebWorker.js';
 import { ApplyUpdateResult, ConfigurationChangedEvent, EditorOptions } from '../../common/config/editorOptions.js';
 import { EditorZoom } from '../../common/config/editorZoom.js';
 import { BareFontInfo, FontInfo } from '../../common/config/fontInfo.js';
 import { EditorType } from '../../common/editorCommon.js';
 import * as languages from '../../common/languages.js';
 import { ILanguageService } from '../../common/languages/language.js';
-import { ILanguageConfigurationService } from '../../common/languages/languageConfigurationRegistry.js';
 import { PLAINTEXT_LANGUAGE_ID } from '../../common/languages/modesRegistry.js';
 import { NullState, nullTokenize } from '../../common/languages/nullTokenize.js';
 import { FindMatch, TextModelResolvedOptions } from '../../common/model.js';
@@ -268,7 +267,7 @@ export function onDidChangeModelLanguage(listener) {
  * Specify an AMD module to load that will `create` an object that will be proxied.
  */
 export function createWebWorker(opts) {
-    return actualCreateWebWorker(StandaloneServices.get(IModelService), StandaloneServices.get(ILanguageConfigurationService), opts);
+    return actualCreateWebWorker(StandaloneServices.get(IModelService), opts);
 }
 /**
  * Colorize the contents of `domNode` using attribute `data-lang`.

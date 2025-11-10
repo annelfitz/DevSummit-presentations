@@ -178,7 +178,6 @@ export class HitTestContext {
         const options = context.configuration.options;
         this.layoutInfo = options.get(146 /* EditorOption.layoutInfo */);
         this.viewDomNode = viewHelper.viewDomNode;
-        this.overflowWidgetsDomNode = viewHelper.overflowWidgetsDomNode ?? null;
         this.lineHeight = options.get(67 /* EditorOption.lineHeight */);
         this.stickyTabStops = options.get(117 /* EditorOption.stickyTabStops */);
         this.typicalHalfwidthCharacterWidth = options.get(50 /* EditorOption.fontInfo */).typicalHalfwidthCharacterWidth;
@@ -311,21 +310,19 @@ class HitTestRequest extends BareHitTestRequest {
         return this._eventTarget;
     }
     get targetPath() {
-        if (this._targetPathCacheElement !== this.target && this._targetElement) {
+        if (this._targetPathCacheElement !== this.target) {
             this._targetPathCacheElement = this.target;
-            this._targetPathCacheValue = PartFingerprints.collect(this.target, this._targetElement);
+            this._targetPathCacheValue = PartFingerprints.collect(this.target, this._ctx.viewDomNode);
         }
         return this._targetPathCacheValue;
     }
-    constructor(ctx, editorPos, pos, relativePos, eventTarget, targetElement = null) {
+    constructor(ctx, editorPos, pos, relativePos, eventTarget) {
         super(ctx, editorPos, pos, relativePos);
         this.hitTestResult = new Lazy(() => MouseTargetFactory.doHitTest(this._ctx, this));
         this._targetPathCacheElement = null;
         this._targetPathCacheValue = new Uint8Array(0);
-        this._targetElement = null;
         this._ctx = ctx;
         this._eventTarget = eventTarget;
-        this._targetElement = targetElement;
         // If no event target is passed in, we will use the hit test target
         const hasEventTarget = Boolean(this._eventTarget);
         this._useHitTestTarget = !hasEventTarget;
@@ -401,9 +398,9 @@ export class MouseTargetFactory {
         }
         return false;
     }
-    createMouseTargetForView(lastRenderData, editorPos, pos, relativePos, target) {
+    createMouseTarget(lastRenderData, editorPos, pos, relativePos, target) {
         const ctx = new HitTestContext(this._context, this._viewHelper, lastRenderData);
-        const request = new HitTestRequest(ctx, editorPos, pos, relativePos, target, ctx.viewDomNode);
+        const request = new HitTestRequest(ctx, editorPos, pos, relativePos, target);
         try {
             const r = MouseTargetFactory._createMouseTarget(ctx, request);
             if (r.type === 6 /* MouseTargetType.CONTENT_TEXT */) {
@@ -419,16 +416,6 @@ export class MouseTargetFactory {
         }
         catch (err) {
             // console.log(err);
-            return request.fulfillUnknown();
-        }
-    }
-    createMouseTargetForOverflowWidgetsDomNode(lastRenderData, editorPos, pos, relativePos, target) {
-        const ctx = new HitTestContext(this._context, this._viewHelper, lastRenderData);
-        const request = new HitTestRequest(ctx, editorPos, pos, relativePos, target, ctx.overflowWidgetsDomNode);
-        try {
-            return MouseTargetFactory._createMouseTarget(ctx, request);
-        }
-        catch (err) {
             return request.fulfillUnknown();
         }
     }

@@ -25,7 +25,7 @@ import { LineRange } from '../../../common/core/lineRange.js';
 import { InlineCompletionTriggerKind } from '../../../common/languages.js';
 import { ILanguageFeaturesService } from '../../../common/services/languageFeatures.js';
 import { IModelService } from '../../../common/services/model.js';
-import { provideInlineCompletions } from '../../inlineCompletions/browser/provideInlineCompletions.js';
+import { provideInlineCompletions } from '../../inlineCompletions/browser/model/provideInlineCompletions.js';
 import { InlineEdit } from './inlineEditsWidget.js';
 let InlineEditsModel = class InlineEditsModel extends Disposable {
     static { InlineEditsModel_1 = this; }

@@ -13,9 +13,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 var WordHighlighter_1, WordHighlighterContribution_1;
 import * as nls from '../../../../nls.js';
-import * as arrays from '../../../../base/common/arrays.js';
 import { alert } from '../../../../base/browser/ui/aria/aria.js';
-import { createCancelablePromise, first, timeout } from '../../../../base/common/async.js';
+import { createCancelablePromise, Delayer, first } from '../../../../base/common/async.js';
 import { CancellationToken } from '../../../../base/common/cancellation.js';
 import { onUnexpectedError, onUnexpectedExternalError } from '../../../../base/common/errors.js';
 import { Disposable, DisposableStore } from '../../../../base/common/lifecycle.js';
@@ -24,26 +23,27 @@ import { EditorAction, registerEditorAction, registerEditorContribution, registe
 import { ICodeEditorService } from '../../../browser/services/codeEditorService.js';
 import { Range } from '../../../common/core/range.js';
 import { EditorContextKeys } from '../../../common/editorContextKeys.js';
-import { DocumentHighlightKind } from '../../../common/languages.js';
 import { shouldSynchronizeModel } from '../../../common/model.js';
 import { ILanguageFeaturesService } from '../../../common/services/languageFeatures.js';
 import { getHighlightDecorationOptions } from './highlightDecorations.js';
 import { IContextKeyService, RawContextKey } from '../../../../platform/contextkey/common/contextkey.js';
-import { Schemas } from '../../../../base/common/network.js';
+import { matchesScheme, Schemas } from '../../../../base/common/network.js';
 import { ResourceMap } from '../../../../base/common/map.js';
 import { score } from '../../../common/languageSelector.js';
-// import { TextualMultiDocumentHighlightFeature } from 'vs/editor/contrib/wordHighlighter/browser/textualHighlightProvider';
-// import { registerEditorFeature } from 'vs/editor/common/editorFeatures';
+import { isEqual } from '../../../../base/common/resources.js';
+import { TextualMultiDocumentHighlightFeature } from './textualHighlightProvider.js';
+import { registerEditorFeature } from '../../../common/editorFeatures.js';
 const ctxHasWordHighlights = new RawContextKey('hasWordHighlights', false);
 export function getOccurrencesAtPosition(registry, model, position, token) {
     const orderedByScore = registry.ordered(model);
     // in order of score ask the occurrences provider
     // until someone response with a good result
-    // (good = none empty array)
+    // (good = non undefined and non null value)
+    // (result of size == 0 is valid, no highlights is a valid/expected result -- not a signal to fall back to other providers)
     return first(orderedByScore.map(provider => () => {
         return Promise.resolve(provider.provideDocumentHighlights(model, position, token))
             .then(undefined, onUnexpectedExternalError);
-    }), arrays.isNonEmptyArray).then(result => {
+    }), (result) => result !== undefined && result !== null).then(result => {
         if (result) {
             const map = new ResourceMap();
             map.set(model.uri, result);
@@ -56,7 +56,8 @@ export function getOccurrencesAcrossMultipleModels(registry, model, position, wo
     const orderedByScore = registry.ordered(model);
     // in order of score ask the occurrences provider
     // until someone response with a good result
-    // (good = none empty array)
+    // (good = non undefined and non null ResourceMap)
+    // (result of size == 0 is valid, no highlights is a valid/expected result -- not a signal to fall back to other providers)
     return first(orderedByScore.map(provider => () => {
         const filteredModels = otherModels.filter(otherModel => {
             return shouldSynchronizeModel(otherModel);
@@ -65,7 +66,7 @@ export function getOccurrencesAcrossMultipleModels(registry, model, position, wo
         });
         return Promise.resolve(provider.provideMultiDocumentHighlights(model, position, filteredModels, token))
             .then(undefined, onUnexpectedExternalError);
-    }), (t) => t instanceof ResourceMap && t.size > 0);
+    }), (result) => result !== undefined && result !== null);
 }
 class OccurenceAtPositionRequest {
     constructor(_model, _selection, _wordSeparators) {
@@ -139,62 +140,11 @@ class MultiModelOccurenceRequest extends OccurenceAtPositionRequest {
         });
     }
 }
-class TextualOccurenceRequest extends OccurenceAtPositionRequest {
-    constructor(model, selection, word, wordSeparators, otherModels) {
-        super(model, selection, wordSeparators);
-        this._otherModels = otherModels;
-        this._selectionIsEmpty = selection.isEmpty();
-        this._word = word;
-    }
-    _compute(model, selection, wordSeparators, token) {
-        return timeout(250, token).then(() => {
-            const result = new ResourceMap();
-            let wordResult;
-            if (this._word) {
-                wordResult = this._word;
-            }
-            else {
-                wordResult = model.getWordAtPosition(selection.getPosition());
-            }
-            if (!wordResult) {
-                return new ResourceMap();
-            }
-            const allModels = [model, ...this._otherModels];
-            for (const otherModel of allModels) {
-                if (otherModel.isDisposed()) {
-                    continue;
-                }
-                const matches = otherModel.findMatches(wordResult.word, true, false, true, wordSeparators, false);
-                const highlights = matches.map(m => ({
-                    range: m.range,
-                    kind: DocumentHighlightKind.Text
-                }));
-                if (highlights) {
-                    result.set(otherModel.uri, highlights);
-                }
-            }
-            return result;
-        });
-    }
-    isValid(model, selection, decorations) {
-        const currentSelectionIsEmpty = selection.isEmpty();
-        if (this._selectionIsEmpty !== currentSelectionIsEmpty) {
-            return false;
-        }
-        return super.isValid(model, selection, decorations);
-    }
-}
 function computeOccurencesAtPosition(registry, model, selection, word, wordSeparators) {
-    if (registry.has(model)) {
-        return new SemanticOccurenceAtPositionRequest(model, selection, wordSeparators, registry);
-    }
-    return new TextualOccurenceRequest(model, selection, word, wordSeparators, []);
+    return new SemanticOccurenceAtPositionRequest(model, selection, wordSeparators, registry);
 }
 function computeOccurencesMultiModel(registry, model, selection, word, wordSeparators, otherModels) {
-    if (registry.has(model)) {
-        return new MultiModelOccurenceRequest(model, selection, wordSeparators, registry, otherModels);
-    }
-    return new TextualOccurenceRequest(model, selection, word, wordSeparators, otherModels);
+    return new MultiModelOccurenceRequest(model, selection, wordSeparators, registry, otherModels);
 }
 registerModelAndPositionCommand('_executeDocumentHighlights', async (accessor, model, position) => {
     const languageFeaturesService = accessor.get(ILanguageFeaturesService);
@@ -203,7 +153,7 @@ registerModelAndPositionCommand('_executeDocumentHighlights', async (accessor, m
 });
 let WordHighlighter = class WordHighlighter {
     static { WordHighlighter_1 = this; }
-    static { this.storedDecorations = new ResourceMap(); }
+    static { this.storedDecorationIDs = new ResourceMap(); }
     static { this.query = null; }
     constructor(editor, providers, multiProviders, contextKeyService, codeEditorService) {
         this.toUnhook = new DisposableStore();
@@ -212,6 +162,7 @@ let WordHighlighter = class WordHighlighter {
         this.workerRequestValue = new ResourceMap();
         this.lastCursorPositionChangeTime = 0;
         this.renderDecorationsTimer = -1;
+        this.runDelayer = this.toUnhook.add(new Delayer(50));
         this.editor = editor;
         this.providers = providers;
         this.multiDocumentProviders = multiProviders;
@@ -230,7 +181,7 @@ let WordHighlighter = class WordHighlighter {
                 // Leave some form of early exit check here if you wish to continue being a cursor position change listener ;)
                 return;
             }
-            this._onPositionChanged(e);
+            this.runDelayer.trigger(() => { this._onPositionChanged(e); });
         }));
         this.toUnhook.add(editor.onDidFocusEditorText((e) => {
             if (this.occurrencesHighlight === 'off') {
@@ -238,11 +189,13 @@ let WordHighlighter = class WordHighlighter {
                 return;
             }
             if (!this.workerRequest) {
-                this._run();
+                this.runDelayer.trigger(() => { this._run(); });
             }
         }));
         this.toUnhook.add(editor.onDidChangeModelContent((e) => {
-            this._stopAll();
+            if (!matchesScheme(this.model.uri, 'output')) {
+                this._stopAll();
+            }
         }));
         this.toUnhook.add(editor.onDidChangeModel((e) => {
             if (!e.newModelUrl && e.oldModelUrl) {
@@ -258,7 +211,22 @@ let WordHighlighter = class WordHighlighter {
             const newValue = this.editor.getOption(81 /* EditorOption.occurrencesHighlight */);
             if (this.occurrencesHighlight !== newValue) {
                 this.occurrencesHighlight = newValue;
-                this._stopAll();
+                switch (newValue) {
+                    case 'off':
+                        this._stopAll();
+                        break;
+                    case 'singleFile':
+                        this._stopAll(WordHighlighter_1.query?.modelInfo?.model);
+                        break;
+                    case 'multiFile':
+                        if (WordHighlighter_1.query) {
+                            this._run(true);
+                        }
+                        break;
+                    default:
+                        console.warn('Unknown occurrencesHighlight setting value:', newValue);
+                        break;
+                }
             }
         }));
         this.decorations = this.editor.createDecorationsCollection();
@@ -279,6 +247,7 @@ let WordHighlighter = class WordHighlighter {
         if (this.occurrencesHighlight === 'off') {
             return;
         }
+        this.runDelayer.cancel();
         this._run();
     }
     _getSortedHighlights() {
@@ -328,26 +297,26 @@ let WordHighlighter = class WordHighlighter {
         if (!this.editor.hasModel()) {
             return;
         }
-        const currentDecorationIDs = WordHighlighter_1.storedDecorations.get(this.editor.getModel().uri);
+        const currentDecorationIDs = WordHighlighter_1.storedDecorationIDs.get(this.editor.getModel().uri);
         if (!currentDecorationIDs) {
             return;
         }
         this.editor.removeDecorations(currentDecorationIDs);
-        WordHighlighter_1.storedDecorations.delete(this.editor.getModel().uri);
+        WordHighlighter_1.storedDecorationIDs.delete(this.editor.getModel().uri);
         if (this.decorations.length > 0) {
             this.decorations.clear();
             this._hasWordHighlights.set(false);
         }
     }
-    _removeAllDecorations() {
+    _removeAllDecorations(preservedModel) {
         const currentEditors = this.codeEditorService.listCodeEditors();
         const deleteURI = [];
         // iterate over editors and store models in currentModels
         for (const editor of currentEditors) {
-            if (!editor.hasModel()) {
+            if (!editor.hasModel() || isEqual(editor.getModel().uri, preservedModel?.uri)) {
                 continue;
             }
-            const currentDecorationIDs = WordHighlighter_1.storedDecorations.get(editor.getModel().uri);
+            const currentDecorationIDs = WordHighlighter_1.storedDecorationIDs.get(editor.getModel().uri);
             if (!currentDecorationIDs) {
                 continue;
             }
@@ -364,7 +333,7 @@ let WordHighlighter = class WordHighlighter {
             }
         }
         for (const uri of deleteURI) {
-            WordHighlighter_1.storedDecorations.delete(uri);
+            WordHighlighter_1.storedDecorationIDs.delete(uri);
         }
     }
     _stopSingular() {
@@ -397,11 +366,11 @@ let WordHighlighter = class WordHighlighter {
             this.workerRequestCompleted = true;
         }
     }
-    _stopAll() {
+    _stopAll(preservedModel) {
         // Remove any existing decorations
         // TODO: @Yoyokrazy -- this triggers as notebooks scroll, causing highlights to disappear momentarily.
         // maybe a nb type check?
-        this._removeAllDecorations();
+        this._removeAllDecorations(preservedModel);
         // Cancel any renderDecorationsTimer
         if (this.renderDecorationsTimer !== -1) {
             clearTimeout(this.renderDecorationsTimer);
@@ -497,11 +466,12 @@ let WordHighlighter = class WordHighlighter {
         }
         return currentModels;
     }
-    _run() {
+    _run(multiFileConfigChange) {
         let workerRequestIsValid;
         const hasTextFocus = this.editor.hasTextFocus();
         if (!hasTextFocus) { // new nb cell scrolled in, didChangeModel fires
             if (!WordHighlighter_1.query) { // no previous query, nothing to highlight off of
+                this._stopAll();
                 return;
             }
         }
@@ -553,10 +523,20 @@ let WordHighlighter = class WordHighlighter {
                 this._beginRenderDecorations();
             }
         }
-        else {
+        else if (isEqual(this.editor.getModel().uri, WordHighlighter_1.query.modelInfo?.model.uri)) { // only trigger new worker requests from the primary model that initiated the query
             // case d)
-            // Stop all previous actions and start fresh
-            this._stopAll();
+            // check if the new queried word is contained in the range of a stored decoration for this model
+            if (!multiFileConfigChange) {
+                const currentModelDecorationRanges = this.decorations.getRanges();
+                for (const storedRange of currentModelDecorationRanges) {
+                    if (storedRange.containsPosition(this.editor.getPosition())) {
+                        return;
+                    }
+                }
+            }
+            // stop all previous actions if new word is highlighted
+            // if we trigger the run off a setting change -> multifile highlighting, we do not want to remove decorations from this model
+            this._stopAll(multiFileConfigChange ? this.model : undefined);
             const myRequestId = ++this.workerRequestTokenId;
             this.workerRequestCompleted = false;
             const otherModelsToHighlight = this.getOtherModelsToHighlight(this.editor.getModel());
@@ -564,7 +544,7 @@ let WordHighlighter = class WordHighlighter {
             // 		1) we have text focus, and a valid query was updated.
             // 		2) we do not have text focus, and a valid query is cached.
             // the query will ALWAYS have the correct data for the current highlight request, so it can always be passed to the workerRequest safely
-            if (!WordHighlighter_1.query.modelInfo || WordHighlighter_1.query.modelInfo.model.isDisposed()) {
+            if (!WordHighlighter_1.query || !WordHighlighter_1.query.modelInfo || WordHighlighter_1.query.modelInfo.model.isDisposed()) {
                 return;
             }
             this.workerRequest = this.computeWithModel(WordHighlighter_1.query.modelInfo.model, WordHighlighter_1.query.modelInfo.selection, WordHighlighter_1.query.word, otherModelsToHighlight);
@@ -614,7 +594,7 @@ let WordHighlighter = class WordHighlighter {
             const newDecorations = [];
             const uri = editor.getModel()?.uri;
             if (uri && this.workerRequestValue.has(uri)) {
-                const oldDecorationIDs = WordHighlighter_1.storedDecorations.get(uri);
+                const oldDecorationIDs = WordHighlighter_1.storedDecorationIDs.get(uri);
                 const newDocumentHighlights = this.workerRequestValue.get(uri);
                 if (newDocumentHighlights) {
                     for (const highlight of newDocumentHighlights) {
@@ -631,7 +611,7 @@ let WordHighlighter = class WordHighlighter {
                 editor.changeDecorations((changeAccessor) => {
                     newDecorationIDs = changeAccessor.deltaDecorations(oldDecorationIDs ?? [], newDecorations);
                 });
-                WordHighlighter_1.storedDecorations = WordHighlighter_1.storedDecorations.set(uri, newDecorationIDs);
+                WordHighlighter_1.storedDecorationIDs = WordHighlighter_1.storedDecorationIDs.set(uri, newDecorationIDs);
                 if (newDecorations.length > 0) {
                     editorHighlighterContrib.wordHighlighter?.decorations.set(newDecorations);
                     editorHighlighterContrib.wordHighlighter?._hasWordHighlights.set(true);
@@ -758,7 +738,7 @@ class TriggerWordHighlightAction extends EditorAction {
             id: 'editor.action.wordHighlight.trigger',
             label: nls.localize('wordHighlight.trigger.label', "Trigger Symbol Highlight"),
             alias: 'Trigger Symbol Highlight',
-            precondition: ctxHasWordHighlights.toNegated(),
+            precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
                 primary: 0,
@@ -778,4 +758,4 @@ registerEditorContribution(WordHighlighterContribution.ID, WordHighlighterContri
 registerEditorAction(NextWordHighlightAction);
 registerEditorAction(PrevWordHighlightAction);
 registerEditorAction(TriggerWordHighlightAction);
-// registerEditorFeature(TextualMultiDocumentHighlightFeature);
+registerEditorFeature(TextualMultiDocumentHighlightFeature);

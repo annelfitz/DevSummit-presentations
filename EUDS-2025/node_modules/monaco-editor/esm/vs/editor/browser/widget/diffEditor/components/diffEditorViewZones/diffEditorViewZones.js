@@ -30,6 +30,7 @@ import { Position } from '../../../../../common/core/position.js';
 import { InlineDecoration } from '../../../../../common/viewModel.js';
 import { IClipboardService } from '../../../../../../platform/clipboard/common/clipboardService.js';
 import { IContextMenuService } from '../../../../../../platform/contextview/browser/contextView.js';
+import { Range } from '../../../../../common/core/range.js';
 /**
  * Ensures both editors have the same height by aligning unchanged lines.
  * In inline view mode, inserts viewzones to show deleted code from the original text model in the modified code editor.
@@ -510,7 +511,8 @@ export function allowsTrueInlineDiffRendering(mapping) {
     if (!mapping.innerChanges) {
         return false;
     }
-    return mapping.innerChanges.every(c => rangeIsSingleLine(c.modifiedRange) && rangeIsSingleLine(c.originalRange));
+    return mapping.innerChanges.every(c => (rangeIsSingleLine(c.modifiedRange) && rangeIsSingleLine(c.originalRange))
+        || c.originalRange.equalsRange(new Range(1, 1, 1, 1)));
 }
 function rangeIsSingleLine(range) {
     return range.startLineNumber === range.endLineNumber;

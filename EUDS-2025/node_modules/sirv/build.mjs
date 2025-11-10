@@ -1,5 +1,5 @@
 import * as fs from 'node:fs';
-import { join, normalize, resolve } from 'node:path';
+import { join, normalize, resolve, sep } from 'node:path';
 import { totalist } from 'totalist/sync';
 import { parse } from '@polka/url';
 import { lookup } from 'mrmime';
@@ -39,7 +39,10 @@ function viaLocal(dir, isEtag, uri, extns) {
 	let i=0, arr=toAssume(uri, extns);
 	let abs, stats, name, headers;
 	for (; i < arr.length; i++) {
-		abs = normalize(join(dir, name=arr[i]));
+		abs = normalize(
+			join(dir, name=arr[i])
+		);
+
 		if (abs.startsWith(dir) && fs.existsSync(abs)) {
 			stats = fs.statSync(abs);
 			if (stats.isDirectory()) continue;
@@ -161,7 +164,7 @@ export default function (dir, opts={}) {
 		});
 	}
 
-	let lookup = opts.dev ? viaLocal.bind(0, dir, isEtag) : viaCache.bind(0, FILES);
+	let lookup = opts.dev ? viaLocal.bind(0, dir + sep, isEtag) : viaCache.bind(0, FILES);
 
 	return function (req, res, next) {
 		let extns = [''];

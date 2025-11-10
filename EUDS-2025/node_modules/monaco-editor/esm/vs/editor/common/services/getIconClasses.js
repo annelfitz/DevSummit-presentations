@@ -99,5 +99,5 @@ function detectLanguageId(modelService, languageService, resource) {
     return languageService.guessLanguageIdByFilepathOrFirstLine(resource);
 }
 function cssEscape(str) {
-    return str.replace(/[\x11\x12\x14\x15\x40]/g, '/'); // HTML class names can not contain certain whitespace characters, use / instead, which doesn't exist in file names.
+    return str.replace(/[\s]/g, '/'); // HTML class names can not contain certain whitespace characters (https://dom.spec.whatwg.org/#interface-domtokenlist), use / instead, which doesn't exist in file names.
 }

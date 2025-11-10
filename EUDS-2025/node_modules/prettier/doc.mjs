@@ -56,6 +56,15 @@ var at = (isOptionalObject, object, index) => {
 };
 var at_default = at;
 
+// node_modules/trim-newlines/index.js
+function trimNewlinesEnd(string) {
+  let end = string.length;
+  while (end > 0 && (string[end - 1] === "\r" || string[end - 1] === "\n")) {
+    end--;
+  }
+  return end < string.length ? string.slice(0, end) : string;
+}
+
 // src/document/utils/get-doc-type.js
 function getDocType(doc) {
   if (typeof doc === "string") {
@@ -355,7 +364,7 @@ function stripTrailingHardlineFromDoc(doc) {
     case DOC_TYPE_ARRAY:
       return stripTrailingHardlineFromParts(doc);
     case DOC_TYPE_STRING:
-      return doc.replace(/[\n\r]*$/u, "");
+      return trimNewlinesEnd(doc);
     case DOC_TYPE_ALIGN:
     case DOC_TYPE_CURSOR:
     case DOC_TYPE_TRIM:

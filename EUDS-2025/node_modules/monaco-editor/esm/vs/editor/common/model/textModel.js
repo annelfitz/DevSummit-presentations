@@ -21,7 +21,6 @@ import * as strings from '../../../base/common/strings.js';
 import { URI } from '../../../base/common/uri.js';
 import { countEOL } from '../core/eolCounter.js';
 import { normalizeIndentation } from '../core/indentation.js';
-import { LineRange } from '../core/lineRange.js';
 import { Position } from '../core/position.js';
 import { Range } from '../core/range.js';
 import { Selection } from '../core/selection.js';
@@ -39,7 +38,9 @@ import { PieceTreeTextBuffer } from './pieceTreeTextBuffer/pieceTreeTextBuffer.j
 import { PieceTreeTextBufferBuilder } from './pieceTreeTextBuffer/pieceTreeTextBufferBuilder.js';
 import { SearchParams, TextModelSearch } from './textModelSearch.js';
 import { TokenizationTextModelPart } from './tokenizationTextModelPart.js';
+import { AttachedViews } from './tokens.js';
 import { InternalModelContentChangeEvent, LineInjectedText, ModelInjectedTextChangedEvent, ModelRawContentChangedEvent, ModelRawEOLChanged, ModelRawFlush, ModelRawLineChanged, ModelRawLinesDeleted, ModelRawLinesInserted } from '../textModelEvents.js';
+import { IInstantiationService } from '../../../platform/instantiation/common/instantiation.js';
 import { IUndoRedoService } from '../../../platform/undoRedo/common/undoRedo.js';
 export function createTextBufferFactory(text) {
     const builder = new PieceTreeTextBufferBuilder();
@@ -149,11 +150,12 @@ let TextModel = class TextModel extends Disposable {
     get tokenization() { return this._tokenizationTextModelPart; }
     get bracketPairs() { return this._bracketPairs; }
     get guides() { return this._guidesTextModelPart; }
-    constructor(source, languageIdOrSelection, creationOptions, associatedResource = null, _undoRedoService, _languageService, _languageConfigurationService) {
+    constructor(source, languageIdOrSelection, creationOptions, associatedResource = null, _undoRedoService, _languageService, _languageConfigurationService, instantiationService) {
         super();
         this._undoRedoService = _undoRedoService;
         this._languageService = _languageService;
         this._languageConfigurationService = _languageConfigurationService;
+        this.instantiationService = instantiationService;
         //#region Events
         this._onWillDispose = this._register(new Emitter());
         this.onWillDispose = this._onWillDispose.event;
@@ -190,7 +192,7 @@ let TextModel = class TextModel extends Disposable {
         this._bracketPairs = this._register(new BracketPairsTextModelPart(this, this._languageConfigurationService));
         this._guidesTextModelPart = this._register(new GuidesTextModelPart(this, this._languageConfigurationService));
         this._decorationProvider = this._register(new ColorizedBracketPairsDecorationProvider(this));
-        this._tokenizationTextModelPart = new TokenizationTextModelPart(this._languageService, this._languageConfigurationService, this, this._bracketPairs, languageId, this._attachedViews);
+        this._tokenizationTextModelPart = this.instantiationService.createInstance(TokenizationTextModelPart, this, this._bracketPairs, languageId, this._attachedViews);
         const bufferLineCount = this._buffer.getLineCount();
         const bufferTextLength = this._buffer.getValueLengthInRange(new Range(1, 1, bufferLineCount, this._buffer.getLineLength(bufferLineCount) + 1), 0 /* model.EndOfLinePreference.TextDefined */);
         // !!! Make a decision in the ctor and permanently respect this decision !!!
@@ -1495,10 +1497,11 @@ let TextModel = class TextModel extends Disposable {
 TextModel = TextModel_1 = __decorate([
     __param(4, IUndoRedoService),
     __param(5, ILanguageService),
-    __param(6, ILanguageConfigurationService)
+    __param(6, ILanguageConfigurationService),
+    __param(7, IInstantiationService)
 ], TextModel);
 export { TextModel };
-function indentOfLine(line) {
+export function indentOfLine(line) {
     let indent = 0;
     for (const c of line) {
         if (c === ' ' || c === '\t') {
@@ -1892,35 +1895,5 @@ class DidChangeContentEmitter extends Disposable {
         }
         this._fastEmitter.fire(e);
         this._slowEmitter.fire(e);
-    }
-}
-/**
- * @internal
- */
-export class AttachedViews {
-    constructor() {
-        this._onDidChangeVisibleRanges = new Emitter();
-        this.onDidChangeVisibleRanges = this._onDidChangeVisibleRanges.event;
-        this._views = new Set();
-    }
-    attachView() {
-        const view = new AttachedViewImpl((state) => {
-            this._onDidChangeVisibleRanges.fire({ view, state });
-        });
-        this._views.add(view);
-        return view;
-    }
-    detachView(view) {
-        this._views.delete(view);
-        this._onDidChangeVisibleRanges.fire({ view, state: undefined });
-    }
-}
-class AttachedViewImpl {
-    constructor(handleStateChange) {
-        this.handleStateChange = handleStateChange;
-    }
-    setVisibleLines(visibleLines, stabilized) {
-        const visibleLineRanges = visibleLines.map((line) => new LineRange(line.startLineNumber, line.endLineNumber + 1));
-        this.handleStateChange({ visibleLineRanges, stabilized });
     }
 }

@@ -31,7 +31,7 @@ import { CompletionOptions, getSnippetSuggestSupport, provideSuggestionItems, Qu
 import { ILanguageFeaturesService } from '../../../common/services/languageFeatures.js';
 import { FuzzyScoreOptions } from '../../../../base/common/filters.js';
 import { assertType } from '../../../../base/common/types.js';
-import { InlineCompletionContextKeys } from '../../inlineCompletions/browser/inlineCompletionContextKeys.js';
+import { InlineCompletionContextKeys } from '../../inlineCompletions/browser/controller/inlineCompletionContextKeys.js';
 import { SnippetController2 } from '../../snippet/browser/snippetController2.js';
 import { IEnvironmentService } from '../../../../platform/environment/common/environment.js';
 export class LineContext {
@@ -169,7 +169,10 @@ let SuggestModel = SuggestModel_1 = class SuggestModel {
                 let set = supportsByTriggerCharacter.get(ch);
                 if (!set) {
                     set = new Set();
-                    set.add(getSnippetSuggestSupport());
+                    const suggestSupport = getSnippetSuggestSupport();
+                    if (suggestSupport) {
+                        set.add(suggestSupport);
+                    }
                     supportsByTriggerCharacter.set(ch, set);
                 }
                 set.add(support);

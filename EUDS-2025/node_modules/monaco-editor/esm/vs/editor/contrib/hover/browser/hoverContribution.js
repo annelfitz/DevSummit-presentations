@@ -9,11 +9,13 @@ import { registerThemingParticipant } from '../../../../platform/theme/common/th
 import { HoverParticipantRegistry } from './hoverTypes.js';
 import { MarkdownHoverParticipant } from './markdownHoverParticipant.js';
 import { MarkerHoverParticipant } from './markerHoverParticipant.js';
-import { HoverController } from './hoverController.js';
+import { ContentHoverController } from './contentHoverController2.js';
+import { MarginHoverController } from './marginHoverController.js';
 import './hover.css';
 import { AccessibleViewRegistry } from '../../../../platform/accessibility/browser/accessibleViewRegistry.js';
 import { ExtHoverAccessibleView, HoverAccessibilityHelp, HoverAccessibleView } from './hoverAccessibleViews.js';
-registerEditorContribution(HoverController.ID, HoverController, 2 /* EditorContributionInstantiation.BeforeFirstInteraction */);
+registerEditorContribution(ContentHoverController.ID, ContentHoverController, 2 /* EditorContributionInstantiation.BeforeFirstInteraction */);
+registerEditorContribution(MarginHoverController.ID, MarginHoverController, 2 /* EditorContributionInstantiation.BeforeFirstInteraction */);
 registerEditorAction(ShowOrFocusHoverAction);
 registerEditorAction(ShowDefinitionPreviewHoverAction);
 registerEditorAction(ScrollUpHoverAction);

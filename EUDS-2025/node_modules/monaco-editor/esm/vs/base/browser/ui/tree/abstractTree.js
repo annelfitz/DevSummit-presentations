@@ -28,6 +28,7 @@ import './media/tree.css';
 import { localize } from '../../../../nls.js';
 import { createInstantHoverDelegate, getDefaultHoverDelegate } from '../hover/hoverDelegateFactory.js';
 import { autorun, constObservable } from '../../../common/observable.js';
+import { alert } from '../aria/aria.js';
 class TreeElementsDragAndDropData extends ElementsDragAndDropData {
     constructor(data) {
         super(data.elements.map(node => node.element));
@@ -758,6 +759,7 @@ class FindController {
     render() {
         const noMatches = this.filter.totalCount > 0 && this.filter.matchCount === 0;
         if (this.pattern && noMatches) {
+            alert(localize('replFindNoResults', "No results"));
             if (this.tree.options.showNotFoundMessage ?? true) {
                 this.widget?.showMessage({ type: 2 /* MessageType.WARNING */, content: localize('not found', "No elements found.") });
             }
@@ -767,6 +769,9 @@ class FindController {
         }
         else {
             this.widget?.clearMessage();
+            if (this.pattern) {
+                alert(localize('replFindResults', "{0} results", this.filter.matchCount));
+            }
         }
     }
     shouldAllowFocus(node) {

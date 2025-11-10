@@ -1001,7 +1001,7 @@ export class ListView {
             item.row.domNode.style.height = '';
             item.size = item.row.domNode.offsetHeight;
             if (item.size === 0 && !isAncestor(item.row.domNode, getWindow(item.row.domNode).document.body)) {
-                console.warn('Measuring item node that is not in DOM! Add ListView to the DOM before measuring row height!');
+                console.warn('Measuring item node that is not in DOM! Add ListView to the DOM before measuring row height!', new Error().stack);
             }
             item.lastDynamicHeightWidth = this.renderWidth;
             return item.size - size;

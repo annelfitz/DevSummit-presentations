@@ -9,13 +9,15 @@ import { ViewPart } from './viewPart.js';
 export class ViewOverlays extends ViewPart {
     constructor(context) {
         super(context);
-        this._visibleLines = new VisibleLinesCollection(this);
+        this._dynamicOverlays = [];
+        this._isFocused = false;
+        this._visibleLines = new VisibleLinesCollection({
+            createLine: () => new ViewOverlayLine(this._dynamicOverlays)
+        });
         this.domNode = this._visibleLines.domNode;
         const options = this._context.configuration.options;
         const fontInfo = options.get(50 /* EditorOption.fontInfo */);
         applyFontInfo(this.domNode, fontInfo);
-        this._dynamicOverlays = [];
-        this._isFocused = false;
         this.domNode.setClassName('view-overlays');
     }
     shouldRender() {
@@ -41,11 +43,6 @@ export class ViewOverlays extends ViewPart {
     getDomNode() {
         return this.domNode;
     }
-    // ---- begin IVisibleLinesHost
-    createVisibleLine() {
-        return new ViewOverlayLine(this._dynamicOverlays);
-    }
-    // ---- end IVisibleLinesHost
     addDynamicOverlay(overlay) {
         this._dynamicOverlays.push(overlay);
     }

@@ -11,7 +11,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import '../../common/languages/languageConfigurationRegistry.js';
 import './standaloneCodeEditorService.js';
 import './standaloneLayoutService.js';
 import '../../../platform/undoRedo/common/undoRedoService.js';
@@ -92,12 +91,16 @@ import { IQuickInputService } from '../../../platform/quickinput/common/quickInp
 import { IStorageService, InMemoryStorageService } from '../../../platform/storage/common/storage.js';
 import { DefaultConfiguration } from '../../../platform/configuration/common/configurations.js';
 import { IAccessibilitySignalService } from '../../../platform/accessibilitySignal/browser/accessibilitySignalService.js';
+import { ILanguageFeaturesService } from '../../common/services/languageFeatures.js';
+import { ILanguageConfigurationService } from '../../common/languages/languageConfigurationRegistry.js';
 import { LogService } from '../../../platform/log/common/logService.js';
 import { getEditorFeatures } from '../../common/editorFeatures.js';
 import { onUnexpectedError } from '../../../base/common/errors.js';
 import { IEnvironmentService } from '../../../platform/environment/common/environment.js';
 import { mainWindow } from '../../../base/browser/window.js';
 import { ResourceMap } from '../../../base/common/map.js';
+import { ITreeSitterParserService } from '../../common/services/treeSitterParserService.js';
+import { StandaloneTreeSitterParserService } from './standaloneTreeSitterService.js';
 class SimpleModel {
     constructor(model) {
         this.disposed = false;
@@ -641,6 +644,23 @@ StandaloneContextMenuService = __decorate([
     __param(4, IMenuService),
     __param(5, IContextKeyService)
 ], StandaloneContextMenuService);
+export const standaloneEditorWorkerDescriptor = {
+    amdModuleId: 'vs/editor/common/services/editorSimpleWorker',
+    esmModuleLocation: undefined,
+    label: 'editorWorkerService'
+};
+let StandaloneEditorWorkerService = class StandaloneEditorWorkerService extends EditorWorkerService {
+    constructor(modelService, configurationService, logService, languageConfigurationService, languageFeaturesService) {
+        super(standaloneEditorWorkerDescriptor, modelService, configurationService, logService, languageConfigurationService, languageFeaturesService);
+    }
+};
+StandaloneEditorWorkerService = __decorate([
+    __param(0, IModelService),
+    __param(1, ITextResourceConfigurationService),
+    __param(2, ILogService),
+    __param(3, ILanguageConfigurationService),
+    __param(4, ILanguageFeaturesService)
+], StandaloneEditorWorkerService);
 class StandaloneAccessbilitySignalService {
     async playSignal(cue, options) {
     }
@@ -664,7 +684,7 @@ registerSingleton(IContextKeyService, ContextKeyService, 0 /* InstantiationType.
 registerSingleton(IProgressService, StandaloneProgressService, 0 /* InstantiationType.Eager */);
 registerSingleton(IEditorProgressService, StandaloneEditorProgressService, 0 /* InstantiationType.Eager */);
 registerSingleton(IStorageService, InMemoryStorageService, 0 /* InstantiationType.Eager */);
-registerSingleton(IEditorWorkerService, EditorWorkerService, 0 /* InstantiationType.Eager */);
+registerSingleton(IEditorWorkerService, StandaloneEditorWorkerService, 0 /* InstantiationType.Eager */);
 registerSingleton(IBulkEditService, StandaloneBulkEditService, 0 /* InstantiationType.Eager */);
 registerSingleton(IWorkspaceTrustManagementService, StandaloneWorkspaceTrustManagementService, 0 /* InstantiationType.Eager */);
 registerSingleton(ITextModelService, StandaloneTextModelService, 0 /* InstantiationType.Eager */);
@@ -679,6 +699,7 @@ registerSingleton(IClipboardService, BrowserClipboardService, 0 /* Instantiation
 registerSingleton(IContextMenuService, StandaloneContextMenuService, 0 /* InstantiationType.Eager */);
 registerSingleton(IMenuService, MenuService, 0 /* InstantiationType.Eager */);
 registerSingleton(IAccessibilitySignalService, StandaloneAccessbilitySignalService, 0 /* InstantiationType.Eager */);
+registerSingleton(ITreeSitterParserService, StandaloneTreeSitterParserService, 0 /* InstantiationType.Eager */);
 /**
  * We don't want to eagerly instantiate services because embedders get a one time chance
  * to override services when they create the first editor.

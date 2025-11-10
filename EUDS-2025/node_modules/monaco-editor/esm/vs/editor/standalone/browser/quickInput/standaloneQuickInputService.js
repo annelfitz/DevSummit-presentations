@@ -91,11 +91,11 @@ let StandaloneQuickInputService = class StandaloneQuickInputService {
         this.codeEditorService = codeEditorService;
         this.mapEditorToService = new Map();
     }
-    pick(picks, options = {}, token = CancellationToken.None) {
+    pick(picks, options, token = CancellationToken.None) {
         return this.activeService /* TS fail */.pick(picks, options, token);
     }
-    createQuickPick() {
-        return this.activeService.createQuickPick();
+    createQuickPick(options = { useSeparators: false }) {
+        return this.activeService.createQuickPick(options);
     }
     createInputBox() {
         return this.activeService.createInputBox();

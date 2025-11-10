@@ -19,6 +19,7 @@ import { IInstantiationService } from '../../instantiation/common/instantiation.
 import { WorkbenchObjectTree } from '../../list/browser/listService.js';
 import { IThemeService } from '../../theme/common/themeService.js';
 import { Disposable, DisposableStore } from '../../../base/common/lifecycle.js';
+import { QuickPickFocus } from '../common/quickInput.js';
 import { StandardKeyboardEvent } from '../../../base/browser/keyboardEvent.js';
 import { OS } from '../../../base/common/platform.js';
 import { memoize } from '../../../base/common/decorators.js';
@@ -35,9 +36,8 @@ import { ltrim } from '../../../base/common/strings.js';
 import { RenderIndentGuides } from '../../../base/browser/ui/tree/abstractTree.js';
 import { ThrottledDelayer } from '../../../base/common/async.js';
 import { isCancellationError } from '../../../base/common/errors.js';
-import { QuickPickFocus } from '../common/quickInput.js';
 import { IAccessibilityService } from '../../accessibility/common/accessibility.js';
-import { observableValue, observableValueOpts } from '../../../base/common/observable.js';
+import { observableValue, observableValueOpts, transaction } from '../../../base/common/observable.js';
 import { equals } from '../../../base/common/arrays.js';
 const $ = dom.$;
 class BaseQuickPickItemElement {
@@ -427,6 +427,11 @@ class QuickPickSeparatorElementRenderer extends BaseQuickInputListRenderer {
     isSeparatorVisible(separator) {
         return this._visibleSeparatorsFrequency.has(separator);
     }
+    renderTemplate(container) {
+        const data = super.renderTemplate(container);
+        data.checkbox.style.display = 'none';
+        return data;
+    }
     renderElement(node, index, data) {
         const element = node.element;
         data.element = element;
@@ -562,6 +567,24 @@ let QuickInputTree = class QuickInputTree extends Disposable {
         this._separatorRenderer = new QuickPickSeparatorElementRenderer(hoverDelegate);
         this._itemRenderer = instantiationService.createInstance(QuickPickItemElementRenderer, hoverDelegate);
         this._tree = this._register(instantiationService.createInstance((WorkbenchObjectTree), 'QuickInput', this._container, new QuickInputItemDelegate(), [this._itemRenderer, this._separatorRenderer], {
+            filter: {
+                filter(element) {
+                    return element.hidden
+                        ? 0 /* TreeVisibility.Hidden */
+                        : element instanceof QuickPickSeparatorElement
+                            ? 2 /* TreeVisibility.Recurse */
+                            : 1 /* TreeVisibility.Visible */;
+                },
+            },
+            sorter: {
+                compare: (element, otherElement) => {
+                    if (!this.sortByLabel || !this._lastQueryString) {
+                        return 0;
+                    }
+                    const normalizedSearchValue = this._lastQueryString.toLowerCase();
+                    return compareEntries(element, otherElement, normalizedSearchValue);
+                },
+            },
             accessibilityProvider: new QuickInputAccessibilityProvider(),
             setRowLineHeight: false,
             multipleSelectionSupport: false,
@@ -832,6 +855,7 @@ let QuickInputTree = class QuickInputTree extends Disposable {
     }
     setElements(inputElements) {
         this._elementDisposable.clear();
+        this._lastQueryString = undefined;
         this._inputElements = inputElements;
         this._hasCheckboxes = this.parent.classList.contains('show-checkboxes');
         let currentSeparatorElement;
@@ -1121,6 +1145,7 @@ let QuickInputTree = class QuickInputTree extends Disposable {
         this._tree.layout();
     }
     filter(query) {
+        this._lastQueryString = query;
         if (!(this._sortByLabel || this._matchOnLabel || this._matchOnDescription || this._matchOnDetail)) {
             this._tree.layout();
             return false;
@@ -1143,7 +1168,7 @@ let QuickInputTree = class QuickInputTree extends Disposable {
         // Filter by value (since we support icons in labels, use $(..) aware fuzzy matching)
         else {
             let currentSeparator;
-            this._elementTree.forEach(element => {
+            this._itemElements.forEach(element => {
                 let labelHighlights;
                 if (this.matchOnLabelMode === 'fuzzy') {
                     labelHighlights = this.matchOnLabel ? matchesFuzzyIconAware(query, parseLabelWithIcons(element.saneLabel)) ?? undefined : undefined;
@@ -1174,8 +1199,10 @@ let QuickInputTree = class QuickInputTree extends Disposable {
                 }
                 // we can show the separator unless the list gets sorted by match
                 if (!this.sortByLabel) {
-                    const previous = element.index && this._inputElements[element.index - 1];
-                    currentSeparator = previous && previous.type === 'separator' ? previous : currentSeparator;
+                    const previous = element.index && this._inputElements[element.index - 1] || undefined;
+                    if (previous?.type === 'separator' && !previous.buttons) {
+                        currentSeparator = previous;
+                    }
                     if (currentSeparator && !element.hidden) {
                         element.separator = currentSeparator;
                         currentSeparator = undefined;
@@ -1183,32 +1210,11 @@ let QuickInputTree = class QuickInputTree extends Disposable {
                 }
             });
         }
-        const shownElements = this._elementTree.filter(element => !element.hidden);
-        // Sort by value
-        if (this.sortByLabel && query) {
-            const normalizedSearchValue = query.toLowerCase();
-            shownElements.sort((a, b) => {
-                return compareEntries(a, b, normalizedSearchValue);
-            });
-        }
-        let currentSeparator;
-        const finalElements = shownElements.reduce((result, element, index) => {
-            if (element instanceof QuickPickItemElement) {
-                if (currentSeparator) {
-                    currentSeparator.children.push(element);
-                }
-                else {
-                    result.push(element);
-                }
-            }
-            else if (element instanceof QuickPickSeparatorElement) {
-                element.children = [];
-                currentSeparator = element;
-                result.push(element);
-            }
-            return result;
-        }, new Array());
-        this._setElementsToTree(finalElements);
+        this._setElementsToTree(this._sortByLabel && query
+            // We don't render any separators if we're sorting so just render the elements
+            ? this._itemElements
+            // Render the full tree
+            : this._elementTree);
         this._tree.layout();
         return true;
     }
@@ -1292,10 +1298,12 @@ let QuickInputTree = class QuickInputTree extends Disposable {
         return whenNoneVisible;
     }
     _updateCheckedObservables() {
-        this._allVisibleCheckedObservable.set(this._allVisibleChecked(this._itemElements, false), undefined);
-        const checkedCount = this._itemElements.filter(element => element.checked).length;
-        this._checkedCountObservable.set(checkedCount, undefined);
-        this._checkedElementsObservable.set(this.getCheckedElements(), undefined);
+        transaction((tx) => {
+            this._allVisibleCheckedObservable.set(this._allVisibleChecked(this._itemElements, false), tx);
+            const checkedCount = this._itemElements.filter(element => element.checked).length;
+            this._checkedCountObservable.set(checkedCount, tx);
+            this._checkedElementsObservable.set(this.getCheckedElements(), tx);
+        });
     }
     /**
      * Disposes of the hover and shows a new one for the given index if it has a tooltip.

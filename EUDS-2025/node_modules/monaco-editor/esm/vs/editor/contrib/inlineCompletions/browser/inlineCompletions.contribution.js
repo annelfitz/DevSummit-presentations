@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 import { registerEditorAction, registerEditorContribution } from '../../../browser/editorExtensions.js';
 import { HoverParticipantRegistry } from '../../hover/browser/hoverTypes.js';
-import { TriggerInlineSuggestionAction, ShowNextInlineSuggestionAction, ShowPreviousInlineSuggestionAction, AcceptNextWordOfInlineCompletion, AcceptInlineCompletion, HideInlineCompletion, ToggleAlwaysShowInlineSuggestionToolbar, AcceptNextLineOfInlineCompletion } from './commands.js';
-import { InlineCompletionsHoverParticipant } from './hoverParticipant.js';
+import { TriggerInlineSuggestionAction, ShowNextInlineSuggestionAction, ShowPreviousInlineSuggestionAction, AcceptNextWordOfInlineCompletion, AcceptInlineCompletion, HideInlineCompletion, ToggleAlwaysShowInlineSuggestionToolbar, AcceptNextLineOfInlineCompletion } from './controller/commands.js';
+import { InlineCompletionsHoverParticipant } from './hintsWidget/hoverParticipant.js';
 import { InlineCompletionsAccessibleView } from './inlineCompletionsAccessibleView.js';
-import { InlineCompletionsController } from './inlineCompletionsController.js';
+import { InlineCompletionsController } from './controller/inlineCompletionsController.js';
 import { AccessibleViewRegistry } from '../../../../platform/accessibility/browser/accessibleViewRegistry.js';
 import { registerAction2 } from '../../../../platform/actions/common/actions.js';
 registerEditorContribution(InlineCompletionsController.ID, InlineCompletionsController, 3 /* EditorContributionInstantiation.Eventually */);

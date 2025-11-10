@@ -79,7 +79,7 @@ let QuickAccessController = class QuickAccessController extends Disposable {
         // Create a picker for the provider to use with the initial value
         // and adjust the filtering to exclude the prefix from filtering
         const disposables = new DisposableStore();
-        const picker = disposables.add(this.quickInputService.createQuickPick());
+        const picker = disposables.add(this.quickInputService.createQuickPick({ useSeparators: true }));
         picker.value = value;
         this.adjustValueSelection(picker, descriptor, options);
         picker.placeholder = options?.placeholder ?? descriptor?.placeholder;

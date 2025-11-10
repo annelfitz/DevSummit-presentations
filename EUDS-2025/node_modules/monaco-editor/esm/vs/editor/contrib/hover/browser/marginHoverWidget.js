@@ -2,14 +2,28 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+var MarginHoverWidget_1;
 import * as dom from '../../../../base/browser/dom.js';
 import { Disposable, DisposableStore } from '../../../../base/common/lifecycle.js';
 import { MarkdownRenderer } from '../../../browser/widget/markdownRenderer/browser/markdownRenderer.js';
+import { ILanguageService } from '../../../common/languages/language.js';
 import { HoverOperation } from './hoverOperation.js';
+import { IOpenerService } from '../../../../platform/opener/common/opener.js';
 import { HoverWidget } from '../../../../base/browser/ui/hover/hoverWidget.js';
 import { MarginHoverComputer } from './marginHoverComputer.js';
+import { isMousePositionWithinElement } from './hoverUtils.js';
 const $ = dom.$;
-export class MarginHoverWidget extends Disposable {
+let MarginHoverWidget = class MarginHoverWidget extends Disposable {
+    static { MarginHoverWidget_1 = this; }
     static { this.ID = 'editor.contrib.modesGlyphHoverWidget'; }
     constructor(editor, languageService, openerService) {
         super();
@@ -31,6 +45,9 @@ export class MarginHoverWidget extends Disposable {
                 this._updateFont();
             }
         }));
+        this._register(dom.addStandardDisposableListener(this._hover.containerDomNode, 'mouseleave', (e) => {
+            this._onMouseLeave(e);
+        }));
         this._editor.addOverlayWidget(this);
     }
     dispose() {
@@ -38,7 +55,7 @@ export class MarginHoverWidget extends Disposable {
         super.dispose();
     }
     getId() {
-        return MarginHoverWidget.ID;
+        return MarginHoverWidget_1.ID;
     }
     getDomNode() {
         return this._hover.containerDomNode;
@@ -132,4 +149,16 @@ export class MarginHoverWidget extends Disposable {
         this._hover.containerDomNode.style.left = `${left}px`;
         this._hover.containerDomNode.style.top = `${Math.max(Math.round(top), 0)}px`;
     }
-}
+    _onMouseLeave(e) {
+        const editorDomNode = this._editor.getDomNode();
+        const isMousePositionOutsideOfEditor = !editorDomNode || !isMousePositionWithinElement(editorDomNode, e.x, e.y);
+        if (isMousePositionOutsideOfEditor) {
+            this.hide();
+        }
+    }
+};
+MarginHoverWidget = MarginHoverWidget_1 = __decorate([
+    __param(1, ILanguageService),
+    __param(2, IOpenerService)
+], MarginHoverWidget);
+export { MarginHoverWidget };

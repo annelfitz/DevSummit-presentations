@@ -22,9 +22,7 @@ import './referencesWidget.css';
 import { EmbeddedCodeEditorWidget } from '../../../../browser/widget/codeEditor/embeddedCodeEditorWidget.js';
 import { Range } from '../../../../common/core/range.js';
 import { ModelDecorationOptions, TextModel } from '../../../../common/model/textModel.js';
-import { ILanguageConfigurationService } from '../../../../common/languages/languageConfigurationRegistry.js';
 import { PLAINTEXT_LANGUAGE_ID } from '../../../../common/languages/modesRegistry.js';
-import { ILanguageService } from '../../../../common/languages/language.js';
 import { ITextModelService } from '../../../../common/services/resolverService.js';
 import { AccessibilityProvider, DataSource, Delegate, FileReferencesRenderer, IdentityProvider, OneReferenceRenderer, StringRepresentationProvider } from './referencesTree.js';
 import * as peekView from '../../../peekView/browser/peekView.js';
@@ -34,7 +32,6 @@ import { IKeybindingService } from '../../../../../platform/keybinding/common/ke
 import { ILabelService } from '../../../../../platform/label/common/label.js';
 import { WorkbenchAsyncDataTree } from '../../../../../platform/list/browser/listService.js';
 import { IThemeService } from '../../../../../platform/theme/common/themeService.js';
-import { IUndoRedoService } from '../../../../../platform/undoRedo/common/undoRedo.js';
 import { FileReferences, OneReference } from '../referencesModel.js';
 class DecorationsManager {
     static { this.DecorationOptions = ModelDecorationOptions.register({
@@ -169,7 +166,7 @@ class ReferencesTree extends WorkbenchAsyncDataTree {
  * ZoneWidget that is shown inside the editor
  */
 let ReferenceWidget = class ReferenceWidget extends peekView.PeekViewWidget {
-    constructor(editor, _defaultTreeKeyboardSupport, layoutData, themeService, _textModelResolverService, _instantiationService, _peekViewService, _uriLabel, _undoRedoService, _keybindingService, _languageService, _languageConfigurationService) {
+    constructor(editor, _defaultTreeKeyboardSupport, layoutData, themeService, _textModelResolverService, _instantiationService, _peekViewService, _uriLabel, _keybindingService) {
         super(editor, { showFrame: false, showArrow: true, isResizeable: true, isAccessible: true, supportOnTitleClick: true }, _instantiationService);
         this._defaultTreeKeyboardSupport = _defaultTreeKeyboardSupport;
         this.layoutData = layoutData;
@@ -177,21 +174,23 @@ let ReferenceWidget = class ReferenceWidget extends peekView.PeekViewWidget {
         this._instantiationService = _instantiationService;
         this._peekViewService = _peekViewService;
         this._uriLabel = _uriLabel;
-        this._undoRedoService = _undoRedoService;
         this._keybindingService = _keybindingService;
-        this._languageService = _languageService;
-        this._languageConfigurationService = _languageConfigurationService;
         this._disposeOnNewModel = new DisposableStore();
         this._callOnDispose = new DisposableStore();
         this._onDidSelectReference = new Emitter();
         this.onDidSelectReference = this._onDidSelectReference.event;
         this._dim = new dom.Dimension(0, 0);
+        this._isClosing = false; // whether or not a dispose is already in progress
         this._applyTheme(themeService.getColorTheme());
         this._callOnDispose.add(themeService.onDidColorThemeChange(this._applyTheme.bind(this)));
         this._peekViewService.addExclusiveWidget(editor, this);
         this.create();
     }
+    get isClosing() {
+        return this._isClosing;
+    }
     dispose() {
+        this._isClosing = true;
         this.setModel(undefined);
         this._callOnDispose.dispose();
         this._disposeOnNewModel.dispose();
@@ -259,7 +258,7 @@ let ReferenceWidget = class ReferenceWidget extends peekView.PeekViewWidget {
         };
         this._preview = this._instantiationService.createInstance(EmbeddedCodeEditorWidget, this._previewContainer, options, {}, this.editor);
         dom.hide(this._previewContainer);
-        this._previewNotAvailableMessage = new TextModel(nls.localize('missingPreviewMessage', "no preview available"), PLAINTEXT_LANGUAGE_ID, TextModel.DEFAULT_CREATION_OPTIONS, null, this._undoRedoService, this._languageService, this._languageConfigurationService);
+        this._previewNotAvailableMessage = this._instantiationService.createInstance(TextModel, nls.localize('missingPreviewMessage', "no preview available"), PLAINTEXT_LANGUAGE_ID, TextModel.DEFAULT_CREATION_OPTIONS, null);
         // tree
         this._treeContainer = dom.append(containerElement, dom.$('div.ref-tree.inline'));
         const treeOptions = {
@@ -475,9 +474,6 @@ ReferenceWidget = __decorate([
     __param(5, IInstantiationService),
     __param(6, peekView.IPeekViewService),
     __param(7, ILabelService),
-    __param(8, IUndoRedoService),
-    __param(9, IKeybindingService),
-    __param(10, ILanguageService),
-    __param(11, ILanguageConfigurationService)
+    __param(8, IKeybindingService)
 ], ReferenceWidget);
 export { ReferenceWidget };

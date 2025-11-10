@@ -307,6 +307,41 @@ normalizeUrl('www.sindresorhus.com?b=two&a=one&c=three', {
 //=> 'http://sindresorhus.com/?b=two&a=one&c=three'
 ```
 
+##### removePath
+
+Type: `boolean`\
+Default: `false`
+
+Removes the entire URL path, leaving only the domain.
+
+```js
+normalizeUrl('https://example.com/path/to/page', {
+	removePath: true
+});
+//=> 'https://example.com'
+```
+
+##### transformPath
+
+Type: `Function`\
+Default: `false`
+
+Custom function to transform the URL path components. The function receives an array of non-empty path components and should return a modified array.
+
+```js
+// Keep only the first path component
+normalizeUrl('https://example.com/api/v1/users', {
+	transformPath: (pathComponents) => pathComponents.slice(0, 1)
+});
+//=> 'https://example.com/api'
+
+// Remove specific components
+normalizeUrl('https://example.com/admin/users', {
+	transformPath: (pathComponents) => pathComponents.filter(c => c !== 'admin')
+});
+//=> 'https://example.com/users'
+```
+
 ## Related
 
 - [compare-urls](https://github.com/sindresorhus/compare-urls) - Compare URLs by first normalizing them

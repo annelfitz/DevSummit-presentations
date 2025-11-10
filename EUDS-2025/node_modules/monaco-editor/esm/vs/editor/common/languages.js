@@ -393,6 +393,10 @@ export class LazyTokenizationSupport {
  * @internal
  */
 export const TokenizationRegistry = new TokenizationRegistryImpl();
+/**
+ * @internal
+ */
+export const TreeSitterTokenizationRegistry = new TokenizationRegistryImpl();
 export var InlineEditTriggerKind;
 (function (InlineEditTriggerKind) {
     InlineEditTriggerKind[InlineEditTriggerKind["Invoke"] = 0] = "Invoke";

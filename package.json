@@ -11,6 +11,7 @@
     "vue": "^3.5.13"
   },
   "devDependencies": {
+    "@arcgis/eslint-config": "~4.32.11",
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
     "playwright-chromium": "^1.51.0",

@@ -587,7 +587,7 @@ class AutoClosedAction {
         return true;
     }
 }
-class CommandExecutor {
+export class CommandExecutor {
     static executeCommands(model, selectionsBefore, commands) {
         const ctx = {
             model: model,

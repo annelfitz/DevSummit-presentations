@@ -62,7 +62,6 @@ let View = class View extends ViewEventHandler {
         this._shouldRecomputeGlyphMarginLanes = false;
         this._selections = [new Selection(1, 1, 1, 1)];
         this._renderAnimationFrame = null;
-        this._overflowWidgetsDomNode = overflowWidgetsDomNode ?? null;
         const viewController = new ViewController(configuration, model, userInputEvents, commandDelegate);
         // The view context is passed on to most classes (basically to reduce param. counts in ctors)
         this._context = new ViewContext(configuration, colorTheme, model);
@@ -190,7 +189,6 @@ let View = class View extends ViewEventHandler {
     _createPointerHandlerHelper() {
         return {
             viewDomNode: this.domNode.domNode,
-            overflowWidgetsDomNode: this._overflowWidgetsDomNode,
             linesContentDomNode: this._linesContent.domNode,
             viewLinesDomNode: this._viewLines.getDomNode().domNode,
             focusTextArea: () => {
@@ -301,7 +299,7 @@ let View = class View extends ViewEventHandler {
         if (this._renderAnimationFrame === null) {
             const rendering = this._createCoordinatedRendering();
             this._renderAnimationFrame = EditorRenderingCoordinator.INSTANCE.scheduleCoordinatedRendering({
-                window: dom.getWindow(this.domNode.domNode),
+                window: dom.getWindow(this.domNode?.domNode),
                 prepareRenderText: () => {
                     if (this._store.isDisposed) {
                         throw new BugIndicatingError();

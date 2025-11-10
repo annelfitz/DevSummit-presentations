@@ -89,9 +89,15 @@ let ReferencesController = class ReferencesController {
             modelPromise.cancel();
             if (this._widget) {
                 this._storageService.store(storageKey, JSON.stringify(this._widget.layoutData), 0 /* StorageScope.PROFILE */, 1 /* StorageTarget.MACHINE */);
+                if (!this._widget.isClosing) {
+                    // to prevent calling this too many times, check whether it was already closing.
+                    this.closeWidget();
+                }
                 this._widget = undefined;
             }
-            this.closeWidget();
+            else {
+                this.closeWidget();
+            }
         }));
         this._disposables.add(this._widget.onDidSelectReference(event => {
             const { element, kind } = event;

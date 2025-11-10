@@ -23,7 +23,7 @@ import { IInstantiationService } from '../../../../platform/instantiation/common
 import { InlineEditTriggerKind } from '../../../common/languages.js';
 import { ILanguageFeaturesService } from '../../../common/services/languageFeatures.js';
 import { CancellationTokenSource } from '../../../../base/common/cancellation.js';
-import { GhostText, GhostTextPart } from '../../inlineCompletions/browser/ghostText.js';
+import { GhostText, GhostTextPart } from '../../inlineCompletions/browser/model/ghostText.js';
 import { ICommandService } from '../../../../platform/commands/common/commands.js';
 import { InlineEditHintsWidget } from './inlineEditHintsWidget.js';
 import { createStyleSheet2 } from '../../../../base/browser/dom.js';

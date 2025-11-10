@@ -44,17 +44,16 @@ export var Schemas;
     Schemas.vscodeCustomEditor = 'vscode-custom-editor';
     Schemas.vscodeNotebookCell = 'vscode-notebook-cell';
     Schemas.vscodeNotebookCellMetadata = 'vscode-notebook-cell-metadata';
+    Schemas.vscodeNotebookCellMetadataDiff = 'vscode-notebook-cell-metadata-diff';
     Schemas.vscodeNotebookCellOutput = 'vscode-notebook-cell-output';
+    Schemas.vscodeNotebookCellOutputDiff = 'vscode-notebook-cell-output-diff';
+    Schemas.vscodeNotebookMetadata = 'vscode-notebook-metadata';
     Schemas.vscodeInteractiveInput = 'vscode-interactive-input';
     Schemas.vscodeSettings = 'vscode-settings';
     Schemas.vscodeWorkspaceTrust = 'vscode-workspace-trust';
     Schemas.vscodeTerminal = 'vscode-terminal';
     /** Scheme used for code blocks in chat. */
     Schemas.vscodeChatCodeBlock = 'vscode-chat-code-block';
-    /**
-     * Scheme used for backing documents created by copilot for chat.
-     */
-    Schemas.vscodeCopilotBackingChatCodeBlock = 'vscode-copilot-chat-code-block';
     /** Scheme used for LHS of code compare (aka diff) blocks in chat. */
     Schemas.vscodeChatCodeCompareBlock = 'vscode-chat-code-compare-block';
     /** Scheme used for the chat input editor. */
@@ -96,6 +95,10 @@ export var Schemas;
      * Scheme used for special rendering of settings in the release notes
      */
     Schemas.codeSetting = 'code-setting';
+    /**
+     * Scheme used for output panel resources
+     */
+    Schemas.outputChannel = 'output';
 })(Schemas || (Schemas = {}));
 export function matchesScheme(target, scheme) {
     if (URI.isUri(target)) {
@@ -163,6 +166,21 @@ class FileAccessImpl {
      *
      * **Note:** use `dom.ts#asCSSUrl` whenever the URL is to be used in CSS context.
      */
+    asBrowserUri(resourcePath) {
+        // ESM-comment-begin
+        // 		const uri = this.toUri(resourcePath, require);
+        // ESM-comment-end
+        // ESM-uncomment-begin
+        const uri = this.toUri(resourcePath);
+        // ESM-uncomment-end
+        return this.uriToBrowserUri(uri);
+    }
+    /**
+     * Returns a URI to use in contexts where the browser is responsible
+     * for loading (e.g. fetch()) or when used within the DOM.
+     *
+     * **Note:** use `dom.ts#asCSSUrl` whenever the URL is to be used in CSS context.
+     */
     uriToBrowserUri(uri) {
         // Handle remote URIs via `RemoteAuthorities`
         if (uri.scheme === Schemas.vscodeRemote) {
@@ -189,6 +207,22 @@ class FileAccessImpl {
             });
         }
         return uri;
+    }
+    toUri(uriOrModule, moduleIdToUrl) {
+        if (URI.isUri(uriOrModule)) {
+            return uriOrModule;
+        }
+        if (globalThis._VSCODE_FILE_ROOT) {
+            const rootUriOrPath = globalThis._VSCODE_FILE_ROOT;
+            // File URL (with scheme)
+            if (/^\w[\w\d+.-]*:\/\//.test(rootUriOrPath)) {
+                return URI.joinPath(URI.parse(rootUriOrPath, true), uriOrModule);
+            }
+            // File Path (no scheme)
+            const modulePath = paths.join(rootUriOrPath, uriOrModule);
+            return URI.file(modulePath);
+        }
+        return URI.parse(moduleIdToUrl.toUrl(uriOrModule));
     }
 }
 export const FileAccess = new FileAccessImpl();

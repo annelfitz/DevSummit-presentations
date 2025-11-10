@@ -1390,6 +1390,7 @@ export const posix = {
 posix.win32 = win32.win32 = win32;
 posix.posix = win32.posix = posix;
 export const normalize = (platformIsWin32 ? win32.normalize : posix.normalize);
+export const join = (platformIsWin32 ? win32.join : posix.join);
 export const resolve = (platformIsWin32 ? win32.resolve : posix.resolve);
 export const relative = (platformIsWin32 ? win32.relative : posix.relative);
 export const dirname = (platformIsWin32 ? win32.dirname : posix.dirname);

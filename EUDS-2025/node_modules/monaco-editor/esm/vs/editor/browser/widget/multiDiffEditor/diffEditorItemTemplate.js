@@ -24,6 +24,8 @@ import { MenuWorkbenchToolBar } from '../../../../platform/actions/browser/toolb
 import { MenuId } from '../../../../platform/actions/common/actions.js';
 import { IInstantiationService } from '../../../../platform/instantiation/common/instantiation.js';
 import { ActionRunnerWithContext } from './utils.js';
+import { IContextKeyService } from '../../../../platform/contextkey/common/contextkey.js';
+import { ServiceCollection } from '../../../../platform/instantiation/common/serviceCollection.js';
 export class TemplateData {
     constructor(viewModel, deltaScrollVertical) {
         this.viewModel = viewModel;
@@ -34,7 +36,7 @@ export class TemplateData {
     }
 }
 let DiffEditorItemTemplate = class DiffEditorItemTemplate extends Disposable {
-    constructor(_container, _overflowWidgetsDomNode, _workbenchUIElementFactory, _instantiationService) {
+    constructor(_container, _overflowWidgetsDomNode, _workbenchUIElementFactory, _instantiationService, _parentContextKeyService) {
         super();
         this._container = _container;
         this._overflowWidgetsDomNode = _overflowWidgetsDomNode;
@@ -89,7 +91,7 @@ let DiffEditorItemTemplate = class DiffEditorItemTemplate extends Disposable {
         this._resourceLabel2 = this._workbenchUIElementFactory.createResourceLabel
             ? this._register(this._workbenchUIElementFactory.createResourceLabel(this._elements.secondaryPath))
             : undefined;
-        this._dataStore = new DisposableStore();
+        this._dataStore = this._register(new DisposableStore());
         this._headerHeight = 40;
         this._lastScrollTop = -1;
         this._isSettingScrollTop = false;
@@ -135,13 +137,15 @@ let DiffEditorItemTemplate = class DiffEditorItemTemplate extends Disposable {
         }));
         this._container.appendChild(this._elements.root);
         this._outerEditorHeight = this._headerHeight;
-        this._register(this._instantiationService.createInstance(MenuWorkbenchToolBar, this._elements.actions, MenuId.MultiDiffEditorFileToolbar, {
+        this._contextKeyService = this._register(_parentContextKeyService.createScoped(this._elements.actions));
+        const instantiationService = this._register(this._instantiationService.createChild(new ServiceCollection([IContextKeyService, this._contextKeyService])));
+        this._register(instantiationService.createInstance(MenuWorkbenchToolBar, this._elements.actions, MenuId.MultiDiffEditorFileToolbar, {
             actionRunner: this._register(new ActionRunnerWithContext(() => (this._viewModel.get()?.modifiedUri))),
             menuOptions: {
                 shouldForwardArgs: true,
             },
             toolbarOptions: { primaryGroup: g => g.startsWith('navigation') },
-            actionViewItemProvider: (action, options) => createActionViewItem(_instantiationService, action, options),
+            actionViewItemProvider: (action, options) => createActionViewItem(instantiationService, action, options),
         }));
     }
     setScrollLeft(left) {
@@ -219,6 +223,11 @@ let DiffEditorItemTemplate = class DiffEditorItemTemplate extends Disposable {
                 this.setData(undefined);
             }
         });
+        if (data.viewModel.documentDiffItem.contextKeys) {
+            for (const [key, value] of Object.entries(data.viewModel.documentDiffItem.contextKeys)) {
+                this._contextKeyService.createKey(key, value);
+            }
+        }
     }
     render(verticalRange, width, editorScroll, viewPort) {
         this._elements.root.style.visibility = 'visible';
@@ -253,6 +262,7 @@ let DiffEditorItemTemplate = class DiffEditorItemTemplate extends Disposable {
     }
 };
 DiffEditorItemTemplate = __decorate([
-    __param(3, IInstantiationService)
+    __param(3, IInstantiationService),
+    __param(4, IContextKeyService)
 ], DiffEditorItemTemplate);
 export { DiffEditorItemTemplate };

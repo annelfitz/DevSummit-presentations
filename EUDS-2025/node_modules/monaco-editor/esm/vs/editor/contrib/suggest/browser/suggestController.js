@@ -421,16 +421,29 @@ let SuggestController = class SuggestController {
         this._alertCompletionItem(item);
         // clear only now - after all tasks are done
         Promise.all(tasks).finally(() => {
-            this._reportSuggestionAcceptedTelemetry(item, model, isResolved, _commandExectionDuration, _additionalEditsAppliedAsync);
+            this._reportSuggestionAcceptedTelemetry(item, model, isResolved, _commandExectionDuration, _additionalEditsAppliedAsync, event.index, event.model.items);
             this.model.clear();
             cts.dispose();
         });
     }
-    _reportSuggestionAcceptedTelemetry(item, model, itemResolved, commandExectionDuration, additionalEditsAppliedAsync) {
+    _reportSuggestionAcceptedTelemetry(item, model, itemResolved, commandExectionDuration, additionalEditsAppliedAsync, index, completionItems) {
         if (Math.floor(Math.random() * 100) === 0) {
             // throttle telemetry event because accepting completions happens a lot
             return;
         }
+        const labelMap = new Map();
+        for (let i = 0; i < Math.min(30, completionItems.length); i++) {
+            const label = completionItems[i].textLabel;
+            if (labelMap.has(label)) {
+                labelMap.get(label).push(i);
+            }
+            else {
+                labelMap.set(label, [i]);
+            }
+        }
+        const firstIndexArray = labelMap.get(item.textLabel);
+        const hasDuplicates = firstIndexArray && firstIndexArray.length > 1;
+        const firstIndex = hasDuplicates ? firstIndexArray[0] : -1;
         this._telemetryService.publicLog2('suggest.acceptedSuggestion', {
             extensionId: item.extensionId?.value ?? 'unknown',
             providerId: item.provider._debugDisplayName ?? 'unknown',
@@ -441,7 +454,9 @@ let SuggestController = class SuggestController {
             resolveInfo: !item.provider.resolveCompletionItem ? -1 : itemResolved ? 1 : 0,
             resolveDuration: item.resolveDuration,
             commandDuration: commandExectionDuration,
-            additionalEditsAsync: additionalEditsAppliedAsync
+            additionalEditsAsync: additionalEditsAppliedAsync,
+            index,
+            firstIndex,
         });
     }
     getOverwriteInfo(item, toggleMode) {
@@ -839,13 +854,13 @@ registerEditorCommand(new SuggestCommand({
             group: 'right',
             order: 1,
             when: ContextKeyExpr.and(SuggestContext.DetailsVisible, SuggestContext.CanResolve),
-            title: nls.localize('detail.more', "show less")
+            title: nls.localize('detail.more', "Show Less")
         }, {
             menuId: suggestWidgetStatusbarMenu,
             group: 'right',
             order: 1,
             when: ContextKeyExpr.and(SuggestContext.DetailsVisible.toNegated(), SuggestContext.CanResolve),
-            title: nls.localize('detail.less', "show more")
+            title: nls.localize('detail.less', "Show More")
         }]
 }));
 registerEditorCommand(new SuggestCommand({

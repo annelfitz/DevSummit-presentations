@@ -333,7 +333,7 @@ let QuickInputController = class QuickInputController extends Disposable {
                 resolve(undefined);
                 return;
             }
-            const input = this.createQuickPick();
+            const input = this.createQuickPick({ useSeparators: true });
             let activeItem;
             const disposables = [
                 input,
@@ -398,6 +398,9 @@ let QuickInputController = class QuickInputController extends Disposable {
                 }),
             ];
             input.title = options.title;
+            if (options.value) {
+                input.value = options.value;
+            }
             input.canSelectMany = !!options.canPickMany;
             input.placeholder = options.placeHolder;
             input.ignoreFocusOut = !!options.ignoreFocusLost;
@@ -427,7 +430,7 @@ let QuickInputController = class QuickInputController extends Disposable {
             });
         });
     }
-    createQuickPick() {
+    createQuickPick(options = { useSeparators: false }) {
         const ui = this.getUI(true);
         return new QuickPick(ui);
     }

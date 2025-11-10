@@ -114,6 +114,7 @@ export class Table {
     get onDidDispose() { return this.list.onDidDispose; }
     constructor(user, container, virtualDelegate, columns, renderers, _options) {
         this.virtualDelegate = virtualDelegate;
+        this.columns = columns;
         this.domId = `table_id_${++Table.InstanceCount}`;
         this.disposables = new DisposableStore();
         this.cachedWidth = 0;

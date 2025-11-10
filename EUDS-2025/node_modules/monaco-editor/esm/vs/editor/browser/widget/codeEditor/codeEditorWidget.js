@@ -419,7 +419,8 @@ let CodeEditorWidget = class CodeEditorWidget extends Disposable {
         if (!this._modelData) {
             return -1;
         }
-        return CodeEditorWidget_1._getVerticalOffsetAfterPosition(this._modelData, lineNumber, 1, includeViewZones);
+        const maxCol = this._modelData.model.getLineMaxColumn(lineNumber);
+        return CodeEditorWidget_1._getVerticalOffsetAfterPosition(this._modelData, lineNumber, maxCol, includeViewZones);
     }
     setHiddenAreas(ranges, source) {
         this._modelData?.viewModel.setHiddenAreas(ranges.map(r => Range.lift(r)), source);
