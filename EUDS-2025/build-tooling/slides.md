@@ -271,24 +271,10 @@ layout: center
 
 ---
 
-# Custom plugins
-
-- Vite plugins are flexible and easy to write
-- Powerful way to enhance builds or developer workflows
-
----
-layout: center
----
-
-# Demo: [Add custom plugins](https://github.com/annelfitz/DevSummit-presentations/tree/main/EUDS-2025/build-tooling/demo/8-plugins)
-
----
-
 # Demo summaries
 
 - **Lazy loading 🚀** improves app performance
 - **Testing with Vitest 🧪** makes it easy to write and maintain tests
-- **Custom plugins 🔌** provides a powerful way to enhance workflows
 
 ---
 
@@ -308,14 +294,7 @@ layout: center
 ArcGIS Maps SDK for JavaScript: Fast Development and Build Tooling
 
 Demos and additional resources available at:
-[arcg.is/esri-2025-build-tooling](https://arcg.is/esri-2025-build-tooling)
-
-<img src="./assets/qr-code.svg" alt="" style="margin: 0 auto">
-
-<!--
-If you wish to dive deeper, you can find our demos and
-additional resources at the URL above, or you can scan the QR code.
--->
+[esriurl.com/eudts25-build-tooling](https://esriurl.com/eudts25-build-tooling)
 
 ---
 src: ../.meta/footer.md
