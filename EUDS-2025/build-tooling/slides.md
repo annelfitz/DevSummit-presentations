@@ -27,7 +27,6 @@ is: feedback
 - Enhance the app
   - Lazy load parts of the application
   - Add tests with Vitest
-  - Add custom plugins
 
 <!--
 Quick tour of app building...based on what Esri teams are doing
