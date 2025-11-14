@@ -16,11 +16,12 @@ const placesServiceInfo = {
 };
 
 const worker = setupWorker(
+  // override request to the places service to return mock data
   http.get(placesServiceInfo.endpoint, () =>
     HttpResponse.json(nearbySchoolsStub),
   ),
   http.get("*", () => {
-    passthrough();
+    passthrough(); // pass through remaining requests
   }),
 );
 
@@ -48,6 +49,7 @@ const it = itBase.extend({
 let map: HTMLArcgisMapElement;
 let results: ReturnType<typeof render>;
 
+// render the app and send in the places service info, wait for map to stop updating
 beforeEach(async () => {
   results = render(<App placesServiceInfo={placesServiceInfo} />);
   map = results.container.querySelector("arcgis-map")!;
@@ -56,6 +58,8 @@ beforeEach(async () => {
   });
 });
 
+
+// assert that app contains the elements we expect
 it("renders", () => {
   const { container } = results;
   expect(container.querySelector("calcite-shell")).toBeInTheDocument();
@@ -63,6 +67,7 @@ it("renders", () => {
   expect(container.querySelector("arcgis-map")).toBeInTheDocument();
 });
 
+// simulate map click and assert that popup shows details for clicked feature
 it("shows a popup details when a feature is clicked", async () => {
   const { container } = results;
   const mapPoint = new Point({ latitude: 40.9384275, longitude: -73.735152 });
@@ -78,6 +83,7 @@ it("shows a popup details when a feature is clicked", async () => {
   });
 });
 
+// simulate loading nearby schools for selected feature
 it("loads nearby schools for the selected feature", async () => {
   const { container } = results;
   const mapPoint = new Point({ latitude: 40.9384275, longitude: -73.735152 });
@@ -96,10 +102,12 @@ it("loads nearby schools for the selected feature", async () => {
   );
 });
 
+// simulate error when loading nearby schools
 it("shows an error when loading schools fails", async () => {
   const { container } = results;
   worker.use(
     http.get(placesServiceInfo.endpoint, () =>
+      // return a 500 error instead of stub response
       HttpResponse.json({ error: "error" }, { status: 500 }),
     ),
   );

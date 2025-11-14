@@ -8,3 +8,4 @@ it("renders a link", () => {
   expect(link).toBeInTheDocument();
   expect(link).toHaveTextContent("Open app");
 });
+// npm run test Splash

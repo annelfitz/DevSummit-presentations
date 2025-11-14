@@ -13,12 +13,14 @@ export default defineConfig({
       },
     },
   },
+  // plugin for react to compile jsx syntax
   plugins: [react()],
+  // test property declares how we want our tests to run
   test: {
     setupFiles: "./src/setupTests.ts",
     browser: {
-      enabled: true,
-      provider: "playwright",
+      enabled: true, // will run in browser
+      provider: "playwright", // driver for the browser
       // https://vitest.dev/guide/browser/playwright
       instances: [{ browser: "chromium" }],
     },
