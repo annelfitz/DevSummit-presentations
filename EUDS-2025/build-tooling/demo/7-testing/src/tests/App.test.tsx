@@ -84,16 +84,21 @@ it("shows a popup details when a feature is clicked", async () => {
 });
 
 // simulate loading nearby schools for selected feature
+// simulate loading nearby schools for selected feature
 it("loads nearby schools for the selected feature", async () => {
   const { container } = results;
   const mapPoint = new Point({ latitude: 40.9384275, longitude: -73.735152 });
   const event = new CustomEvent("arcgisViewClick", { detail: { mapPoint } });
 
   fireEvent(map, event);
-  const popup = container.querySelector("arcgis-features")!;
+  const popup = queryShadowDOM<HTMLArcgisFeaturesElement>(
+    "arcgis-features",
+    container,
+  )!;
   await vi.waitFor(() => expect(popup.features).toHaveLength(1));
-  const action = container.querySelector<HTMLCalciteActionElement>(
-    "calcite-action[data-action-id=load-schools]",
+  const action = queryShadowDOM<HTMLCalciteActionElement>(
+    "calcite-action[title='Load nearby schools']",
+    popup.shadowRoot!,
   );
   action!.click();
 
@@ -115,10 +120,14 @@ it("shows an error when loading schools fails", async () => {
   const event = new CustomEvent("arcgisViewClick", { detail: { mapPoint } });
 
   fireEvent(map, event);
-  const popup = container.querySelector("arcgis-features")!;
+  const popup = queryShadowDOM<HTMLArcgisFeaturesElement>(
+    "arcgis-features",
+    container,
+  )!;
   await vi.waitFor(() => expect(popup.features).toHaveLength(1));
-  const action = container.querySelector<HTMLCalciteActionElement>(
-    "calcite-action[data-action-id=load-schools]",
+  const action = queryShadowDOM<HTMLCalciteActionElement>(
+    "calcite-action[title='Load nearby schools']",
+    popup.shadowRoot!,
   );
   action!.click();
 
@@ -126,3 +135,55 @@ it("shows an error when loading schools fails", async () => {
     expect(container.querySelector("calcite-alert")).toBeInTheDocument(),
   );
 });
+
+// Test utilities
+function queryShadowDOM<T extends Element>(
+  selector: string,
+  root: Document | DocumentFragment | Element = document,
+): T | null {
+  return _queryShadowDOM(selector, root) as T | null;
+}
+
+function queryShadowDOMAll<T extends Element>(
+  selector: string,
+  root: Document | DocumentFragment | Element = document,
+): T[] {
+  return _queryShadowDOMAll(selector, root) as T[];
+}
+
+function _queryShadowDOM(
+  selector: string,
+  root: Document | DocumentFragment | Element = document,
+): Element | null {
+  let element = root.querySelector(selector);
+  if (element) return element;
+
+  const allElements = root.querySelectorAll("*");
+  for (const el of allElements) {
+    if (el.shadowRoot) {
+      element = queryShadowDOM(selector, el.shadowRoot);
+      if (element) return element;
+    }
+  }
+
+  return null;
+}
+
+function _queryShadowDOMAll(
+  selector: string,
+  root: Document | DocumentFragment | Element = document,
+): Element[] {
+  const results: Element[] = [];
+
+  results.push(...Array.from(root.querySelectorAll(selector)));
+
+  const allElements = root.querySelectorAll("*");
+  for (const el of allElements) {
+    if (el.shadowRoot) {
+      results.push(...queryShadowDOMAll(selector, el.shadowRoot));
+    }
+  }
+
+  return results;
+}
+ 
