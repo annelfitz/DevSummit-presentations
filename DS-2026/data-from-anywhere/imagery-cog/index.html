@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>ImageryTileLayer from COG</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1"></script>
+
+    <!-- Load the ArcGIS Maps SDK for JavaScript from CDN -->
+    <script type="module" src="https://js.arcgis.com/5.0/"></script>
+
+    <link rel="stylesheet" href="./main.css" />
+  </head>
+
+  <body>
+    <arcgis-map
+      basemap="topo-vector"
+      zoom="9"
+      center="-67.365, -13.015"
+    >
+      <arcgis-zoom slot="top-left"></arcgis-zoom>
+      <calcite-panel
+        id="panel"
+        slot="top-right"
+        heading="Landsat 8 COG"
+        description="Click the imagery to compute NDVI and plot a spectral profile."
+      >
+        <div style="padding: 12px">
+          <calcite-label scale="s">
+            Band composition (RGB)
+            <calcite-select id="band-ids-select" scale="s">
+              <calcite-option value="3,2,1" selected
+                >4,3,2 — Natural color</calcite-option
+              >
+              <calcite-option value="6,5,3"
+                >7,6,4 — Short-wave infrared</calcite-option
+              >
+              <calcite-option value="4,3,2"
+                >5,4,3 — Color infrared</calcite-option
+              >
+              <calcite-option value="5,4,1">6,5,2 — Agriculture</calcite-option>
+              <calcite-option value="3,2,0">4,3,1 — Bathymetric</calcite-option>
+              <calcite-option value="6,5,1">7,6,2 — Geology</calcite-option>
+            </calcite-select>
+          </calcite-label>
+
+          <calcite-notice id="hint" kind="info" scale="s" open width="full">
+            <div slot="message">
+              Tip: Click inside the raster footprint to sample pixel values.
+            </div>
+          </calcite-notice>
+
+          <calcite-notice id="status" kind="warning" scale="s" width="full">
+            <div slot="message" id="status-message"></div>
+          </calcite-notice>
+
+          <div id="ndvi-div" hidden>
+            <span>NDVI:</span>
+            <span class="ndvi-value">
+              <output id="ndvi-value-element" style="font-weight: 600"></output>
+              <calcite-loader
+                id="chart-loader"
+                label="Loading"
+                type="indeterminate"
+                hidden
+              ></calcite-loader>
+            </span>
+          </div>
+
+          <div id="chart-div" hidden>
+            <canvas id="spectral-chart" height="280"></canvas>
+          </div>
+        </div>
+      </calcite-panel>
+    </arcgis-map>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

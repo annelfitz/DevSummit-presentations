@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Intro to WCSLayer | Sample | ArcGIS Maps SDK for JavaScript</title>
+
+    <!-- Load the ArcGIS Maps SDK for JavaScript from CDN -->
+    <script type="module" src="https://js.arcgis.com/5.0/"></script>
+
+    <style>
+      html,
+      body,
+      arcgis-map {
+        height: 100%;
+        margin: 0;
+      }
+      #sliderDiv {
+        padding: 10px;
+        width: 150px;
+        background-color: white;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+      }
+      arcgis-slider {
+        height: 250px;
+        width: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <arcgis-map center="-121, 36" zoom="4">
+      <arcgis-zoom slot="top-left"></arcgis-zoom>
+      <div id="sliderDiv" slot="top-right">
+        Depth (StdZ):
+        <arcgis-slider
+          min="-5000"
+          max="0"
+          values="0"
+          steps="-5000,-4000,-3000,-2500,-2000,-1500,-1250,-1000,-900,-800,-700,-600,-500,-400,-350,-300,-250,-200,-150,-125,-100,-90,-80,-70,-60,-50,-40,-30,-20,-10,0"
+          layout="vertical"
+          precision="0"
+          value-labels-display="always"
+          value-labels-placement="end"
+        ></arcgis-slider>
+      </div>
+      <arcgis-expand slot="bottom-left">
+        <arcgis-legend></arcgis-legend>
+      </arcgis-expand>
+    </arcgis-map>
+
+    <script type="module">
+      const [Map, WCSLayer] = await $arcgis.import([
+        "@arcgis/core/Map.js",
+        "@arcgis/core/layers/WCSLayer.js",
+      ]);
+
+      const viewElement = document.querySelector("arcgis-map");
+      const slider = viewElement.querySelector("arcgis-slider");
+
+      slider.labelFormatter = (value, type, defaultFormatter) => {
+        const formatted = defaultFormatter(value);
+        switch (type) {
+          case "value":
+            // eslint-disable-next-line prefer-template
+            return `${formatted} m`;
+          default:
+            return formatted;
+        }
+      };
+
+      // raster stretch renderer with 3 standard-deviations
+      // and with a multipart color ramps
+      const renderer = {
+        type: "raster-stretch",
+        stretchType: "standard-deviation",
+        customStatistics: [{ min: 0.236999, max: 29.722 }],
+        numberOfStandardDeviations: 3,
+        colorRamp: {
+          type: "multipart",
+          colorRamps: [
+            {
+              fromColor: [0, 0, 255],
+              toColor: [0, 255, 255],
+            },
+            {
+              fromColor: [0, 255, 255],
+              toColor: [255, 255, 0],
+            },
+            {
+              fromColor: [255, 255, 0],
+              toColor: [255, 0, 0],
+            },
+          ],
+        },
+      };
+
+      // multi dimension definition for the layer
+      const multidimensionalDefinition = [
+        {
+          variableName: "water_temp",
+          dimensionName: "StdTime",
+          values: [1363478400000], // March 16, 2013 00:00:00
+        },
+        {
+          variableName: "water_temp", // water temp at sea level
+          dimensionName: "StdZ",
+          values: [0],
+        },
+      ];
+
+      const layer = new WCSLayer({
+        url: "https://ra-ampc.dev.geocloud.com/server/services/mynetcdf_xpose_crf/ImageServer/WCSServer",
+        coverageId: "Coverage1",
+        renderer: renderer,
+        multidimensionalDefinition: multidimensionalDefinition,
+        opacity: 0.75,
+        title: "Sea temperature",
+      });
+
+      const map = new Map({
+        basemap: "gray-vector",
+        layers: [layer],
+      });
+      viewElement.map = map;
+      await viewElement.viewOnReady();
+
+      viewElement.whenLayerView(layer).then(() => {
+        layer.popupTemplate = layer.defaultPopupTemplate;
+      });
+
+      slider.addEventListener("arcgisChange", () => {
+        const value = slider.values[0];
+        layer.multidimensionalDefinition = [
+          {
+            variableName: "water_temp",
+            dimensionName: "StdTime",
+            values: [1363478400000],
+          },
+          {
+            variableName: "water_temp", // water temp
+            dimensionName: "StdZ",
+            values: [value],
+          },
+        ];
+      });
+    </script>
+  </body>
+</html>

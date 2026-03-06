@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>NYC car accidents</title>
+    <link rel="stylesheet" href="./main.css" />
+    <!-- Load the ArcGIS Maps SDK for JavaScript -->
+    <script type="module" src="https://js.arcgis.com/5.0/"></script>
+  </head>
+  <body>
+    <calcite-shell content-behind>
+      <calcite-navigation slot="header">
+        <calcite-navigation-logo
+          icon="image-layer"
+          alt="Application logo"
+          slot="logo"
+          heading="Client-side queries and analysis | NYC Car Accidents"
+          description="2026 Esri Developer & Technology Summit"
+        />
+      </calcite-navigation>
+      <calcite-shell-panel slot="panel-end" display-mode="float">
+        <calcite-panel heading="Maps SDK for JavaScript">
+          <calcite-block heading="Queries" open>
+            <calcite-label layout="inline">
+              Server-side
+              <calcite-switch id="client-side"></calcite-switch>
+              Client-side
+            </calcite-label>
+          </calcite-block>
+          <calcite-block heading="Radius (km)" open>
+            <calcite-slider
+              id="radius"
+              value="1"
+              label-handles
+              label-ticks
+              min="0"
+              max="5"
+              ticks="5"
+            />
+          </calcite-block>
+          <calcite-block heading="Statistics" open>
+            <calcite-label>
+              Number of accidents
+              <span id="num-accidents">0</span>
+            </calcite-label>
+            <calcite-label>
+              People injured
+              <span id="injuries">0</span>
+            </calcite-label>
+            <calcite-label>
+              Deaths
+              <span id="deaths">0</span>
+            </calcite-label>
+          </calcite-block>
+          <calcite-notice open scale="s" slot="footer">
+            <span slot="title">What is being demonstrated?</span>
+            <span slot="message">
+              This application demonstrates and compares client-side and
+              server-side queries.
+            </span>
+          </calcite-notice>
+        </calcite-panel>
+      </calcite-shell-panel>
+      <arcgis-map item-id="966d82c61301428e911d4895953a3ac3">
+        <arcgis-zoom slot="top-left"></arcgis-zoom>
+        <arcgis-legend slot="bottom-left"></arcgis-legend>
+      </arcgis-map>
+    </calcite-shell>
+    <script type="module" src="./main.js"></script>
+    </script>
+  </body>
+</html>

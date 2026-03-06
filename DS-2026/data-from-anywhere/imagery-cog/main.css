@@ -1,0 +1,50 @@
+html,
+body,
+arcgis-map {
+  height: 100%;
+  margin: 0;
+}
+
+#panel {
+  width: min(360px, 92vw);
+  max-height: 78vh;
+  overflow: auto;
+}
+
+calcite-loader {
+  --calcite-loader-size: 1em;
+  --calcite-loader-spacing: 0;
+}
+
+#ndvi-div {
+  align-items: center;
+  gap: 8px;
+}
+
+.ndvi-value {
+  position: relative;
+  display: inline-block;
+  min-width: 4.5ch;
+  min-height: 1.2em;
+  line-height: 1.2;
+}
+
+.ndvi-value output {
+  display: inline-block;
+  min-width: 4.5ch;
+}
+
+.ndvi-value calcite-loader {
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+}
+
+#chart-div {
+  margin-top: 12px;
+}
+
+#spectral-chart {
+  width: 100%;
+}

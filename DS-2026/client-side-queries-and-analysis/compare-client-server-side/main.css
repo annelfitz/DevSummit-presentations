@@ -1,0 +1,53 @@
+html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+
+      body {
+        --calcite-color-brand: #00c291;
+        --calcite-color-brand-hover: #00ad82;
+        --calcite-color-brand-press: #00916d;
+        --calcite-color-background: #f2f7f4;
+        --calcite-color-foreground-1: #fafffd;
+        --calcite-color-foreground-2: #edf7f3;
+        --calcite-color-foreground-3: #e4ebe8;
+        --calcite-color-foreground-current: #c7ffda;
+        --calcite-color-info: #007f99;
+        --calcite-color-success: #47ac35;
+        --calcite-color-warning: #eeb417;
+        --calcite-color-danger: #d92024;
+        --calcite-color-danger-hover: #a91e20;
+        --calcite-color-danger-press: #7c1315;
+        --calcite-color-text-1: #222927;
+        --calcite-color-text-2: #333d3a;
+        --calcite-color-text-3: #3a4541;
+        --calcite-color-text-inverse: #fafffd;
+        --calcite-color-text-link: #04716c;
+        --calcite-color-border-1: #c3c7c5;
+        --calcite-color-border-2: #cdd4d0;
+        --calcite-color-border-3: #dfe8e3;
+        --calcite-color-border-input: #727d77;
+      }
+
+      calcite-menu-item {
+        --calcite-menu-background-color: var(--calcite-color-background);
+      }
+
+      calcite-navigation-logo {
+        --calcite-navigation-logo-heading-color: var(--calcite-color-brand);
+      }
+
+      calcite-shell-panel[slot="panel-start"] calcite-panel {
+        border-top: 0;
+      }
+
+      calcite-action-pad {
+        margin-inline-end: 0.5rem;
+      }
+      #num-accidents,
+      #injuries,
+      #deaths {
+        font-weight: bold;
+        color: var(--calcite-color-brand);
+      }
