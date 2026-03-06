@@ -1,4 +1,0 @@
-export { v as variantAria, b as variantBreakpoints, c as variantChildren, f as variantColorsMediaOrClass, d as variantCombinators, e as variantContainerQuery, o as variantCssLayer, m as variantCustomMedia, g as variantDataAttribute, k as variantImportant, p as variantInternalLayer, j as variantLanguageDirections, t as variantNegative, y as variantPartClasses, l as variantPrint, w as variantPseudoClassFunctions, u as variantPseudoClassesAndElements, q as variantScope, n as variantSelector, z as variantStartingStyle, A as variantSupports, a as variantTaggedAriaAttributes, h as variantTaggedDataAttributes, x as variantTaggedPseudoClasses, s as variantTheme, r as variantVariables, i as variants } from './shared/preset-mini.qZ_LpAyQ.mjs';
-import '@unocss/core';
-import '@unocss/rule-utils';
-import './shared/preset-mini.Cdp6npIx.mjs';

@@ -1,0 +1,11 @@
+.DS_Store
+
+# Dependencies (at any depth)
+node_modules/
+**/node_modules/
+
+# Build outputs / caches
+dist/
+_site/
+.jekyll-cache/
+.bundle/
