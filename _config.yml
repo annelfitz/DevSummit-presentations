@@ -3,12 +3,12 @@ theme: jekyll-theme-cayman
 # GitHub Pages / Jekyll should never try to render dependency trees.
 # (Jekyll excludes only top-level `node_modules` by default; nested ones can slip through.)
 exclude:
-	- node_modules
-	- EUDS-2025/node_modules
-	- vendor
-	- _site
-	- .jekyll-cache
-	- package.json
-	- package-lock.json
-	- Gemfile
-	- Gemfile.lock
+  - node_modules
+  - EUDS-2025/node_modules
+  - vendor
+  - _site
+  - .jekyll-cache
+  - package.json
+  - package-lock.json
+  - Gemfile
+  - Gemfile.lock
