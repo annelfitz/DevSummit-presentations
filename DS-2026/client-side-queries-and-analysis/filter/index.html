@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>seismic-events-with-filter</title>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+
+      body {
+        --calcite-color-brand: #00c291;
+        --calcite-color-brand-hover: #00ad82;
+        --calcite-color-brand-press: #00916d;
+        --calcite-color-background: #f2f7f4;
+        --calcite-color-foreground-1: #fafffd;
+        --calcite-color-foreground-2: #edf7f3;
+        --calcite-color-foreground-3: #e4ebe8;
+        --calcite-color-foreground-current: #c7ffda;
+        --calcite-color-info: #007f99;
+        --calcite-color-success: #47ac35;
+        --calcite-color-warning: #eeb417;
+        --calcite-color-danger: #d92024;
+        --calcite-color-danger-hover: #a91e20;
+        --calcite-color-danger-press: #7c1315;
+        --calcite-color-text-1: #222927;
+        --calcite-color-text-2: #333d3a;
+        --calcite-color-text-3: #3a4541;
+        --calcite-color-text-inverse: #fafffd;
+        --calcite-color-text-link: #04716c;
+        --calcite-color-border-1: #c3c7c5;
+        --calcite-color-border-2: #cdd4d0;
+        --calcite-color-border-3: #dfe8e3;
+        --calcite-color-border-input: #727d77;
+      }
+
+      calcite-menu-item {
+        --calcite-menu-background-color: var(--calcite-color-background);
+      }
+
+      calcite-navigation-logo {
+        --calcite-navigation-logo-heading-color: var(--calcite-color-brand);
+      }
+
+      calcite-shell-panel[slot="panel-start"] calcite-panel {
+        border-top: 0;
+      }
+
+      calcite-action-pad {
+        margin-inline-end: 0.5rem;
+      }
+    </style>
+
+    <script type="module" src="https://js.arcgis.com/5.0/"></script>
+  </head>
+  <body>
+    <calcite-shell content-behind>
+      <calcite-navigation slot="header">
+        <calcite-navigation-logo
+          icon="image-layer"
+          alt="Application logo"
+          slot="logo"
+          heading="Client-side queries and analysis | Seismic events with client-side filters"
+          description="2026 Esri Developer & Technology Summit"
+        />
+      </calcite-navigation>
+      <calcite-shell-panel slot="panel-end" display-mode="float">
+        <calcite-panel heading="Maps SDK for JavaScript">
+          <calcite-block heading="Event filter" open>
+            <calcite-radio-button-group
+              name="Options"
+              layout="vertical"
+              id="seismic-type"
+            >
+              <calcite-label layout="inline">
+                <calcite-radio-button value="all" checked></calcite-radio-button>
+                All
+              </calcite-label>
+              <calcite-label layout="inline">
+                <calcite-radio-button value="earthquake"></calcite-radio-button>
+                Earthquake
+              </calcite-label>
+              <calcite-label layout="inline">
+                <calcite-radio-button value="rock burst"></calcite-radio-button>
+                Rock Burst
+              </calcite-label>
+              <calcite-label layout="inline">
+                <calcite-radio-button value="nuclear explosion"></calcite-radio-button>
+                Nuclear Explosion
+              </calcite-label>
+              <calcite-label layout="inline">
+                <calcite-radio-button value="volcanic eruption"></calcite-radio-button>
+                Volcanic Eruption
+              </calcite-label>
+            </calcite-radio-button-group>
+          </calcite-block>
+          <calcite-block heading="Time filter" open>
+            <calcite-slider
+              id="time-slider"
+              min-value="1900"
+              max-value="2020"
+              min="1900"
+              max="2020"
+              precise
+              ticks="10"
+              label-ticks
+              label-handles
+              snap
+              step="1"
+            >
+            </calcite-slider>
+          </calcite-block>
+          <calcite-notice open scale="s" slot="footer">
+            <span slot="title">What is being demonstrated?</span>
+            <span slot="message">
+              This application demonstrates client-side filters.
+            </span>
+          </calcite-notice>
+        </calcite-panel>
+      </calcite-shell-panel>
+      <arcgis-map basemap="gray" zoom="2">
+        <arcgis-zoom position="top-left"></arcgis-zoom>
+      </arcgis-map>
+    </calcite-shell>
+    <script>
+      document.querySelector("arcgis-map").addEventListener("arcgisViewReadyChange", async () => {
+        const FeatureLayer = await $arcgis.import("@arcgis/core/layers/FeatureLayer");
+
+        const viewElement = document.querySelector("arcgis-map");
+
+        const url = "https://services.arcgis.com/6DIQcwlPy8knb6sg/arcgis/rest/services/quakes/FeatureServer/0";
+        const MAGNITUDE_MIN = 5;
+
+        const layer = new FeatureLayer({
+          url,
+          definitionExpression: `mag >= ${MAGNITUDE_MIN}`,
+          renderer: {
+            type: "simple",
+            symbol: {
+              type: "simple-marker",
+              style: "circle",
+              size: 7,
+              color: "#FF7F00",
+              outline: {
+                style: "solid",
+                color: "#3A3B3B",
+                width: 0.5,
+              },
+            },
+          },
+          popupTemplate: {
+            title: "{place}",
+            content: [
+              {
+                type: "fields",
+                fieldInfos: [
+                  { label: "Id", fieldName: "id" },
+                  { label: "Time", fieldName: "time" },
+                  { label: "Latitude", fieldName: "latitude" },
+                  { label: "Longitude", fieldName: "longitude" },
+                  { label: "Depth", fieldName: "depth" },
+                  { label: "Magnitude", fieldName: "mag" },
+                  { label: "Type", fieldName: "type" },
+                ],
+              },
+            ],
+          },
+        });
+        viewElement.map.add(layer);
+        const layerView = await viewElement.whenLayerView(layer);
+
+        document
+          .getElementById("seismic-type")
+          .addEventListener("calciteRadioButtonGroupChange", () => {
+            updateLayerView();
+          });
+
+        document
+          .getElementById("time-slider")
+          .addEventListener("calciteSliderInput", () => {
+            updateLayerView();
+          });
+
+        function updateLayerView() {
+          const { minValue, maxValue } = document.getElementById("time-slider");
+          const { value } = document.getElementById("seismic-type").selectedItem;
+
+          const timeExtent = {
+            start: new Date(minValue, 0, 1),
+            end: new Date(maxValue, 0, 1),
+          };
+          const where = value === "all" ? null : `type='${value}'`;
+
+          layerView.filter = { timeExtent, where };
+        }
+      });
+    </script>
+  </body>
+</html>
